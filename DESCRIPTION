@@ -1,11 +1,25 @@
 Package: areal
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Area Weighted Interpolation
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author@R: c(
+person("Charlie","Revord", , "charlie.revord@slu.edu", c("aut", "cre")),
+person("Christopher", "Prener", , "chris.prener@slu.edu", c("aut"))
+)
+Description: A suite of functions that validate similarities between source and target data sets and perform interpolation 
+calculations from a source data set to a target data set.
+License: GPL-3
+URL: https://github.com/slu-openGIS/areal
+BugReports: https://github.com/slu-openGIS/areal/issues
 Encoding: UTF-8
 LazyData: true
+Imports:
+  dplyr,
+  measurements,
+  sf,
+  units
+RoxygenNote: 6.1.0
+Suggests:
+  knitr,
+  rmarkdown
+VignetteBuilder: knitr
