@@ -3,8 +3,8 @@ Type: Package
 Title: Area Weighted Interpolation
 Version: 0.1.0
 Authors@R: c(
-    person("Charlie","Revord", , "charlie.revord@slu.edu", c("aut", "cre")),
-    person("Christopher", "Prener", , "chris.prener@slu.edu", c("aut"))
+    person("Christopher", "Prener", , "chris.prener@slu.edu", c("aut", "cre")),
+    person("Charlie","Revord", , "charlie.revord@slu.edu", c("aut"))
     )
 Description: A suite of functions that validate similarities between source and 
     target data sets and perform interpolation calculations from a source data 
