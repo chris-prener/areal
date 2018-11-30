@@ -29,7 +29,7 @@ aw_strip_df <- function(.data, id, value){
 
   } else {
 
-    # additiona nse for value
+    # additional nse for value
     if (!is.character(paramList$value)) {
       valueQ <- rlang::enquo(value)
     } else if (is.character(paramList$value)) {

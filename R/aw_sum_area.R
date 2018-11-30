@@ -12,19 +12,19 @@
 #'
 #' @return An intersection file of class sf with a new field for total area by source id
 #'
-aw_sum_area <- function(.data, id, areaVar, totalVar){
+aw_sum_area <- function(.data, sid, areaVar, totalVar){
 
   # save parameters to list
   paramList <- as.list(match.call())
 
   # nse
-  if (!is.character(paramList$id)) {
-    idQ <- rlang::enquo(id)
-  } else if (is.character(paramList$id)) {
-    idQ <- rlang::quo(!! rlang::sym(id))
+  if (!is.character(paramList$sid)) {
+    sidQ <- rlang::enquo(sid)
+  } else if (is.character(paramList$sid)) {
+    sidQ <- rlang::quo(!! rlang::sym(sid))
   }
 
-  idQN <- rlang::quo_name(rlang::enquo(id))
+  sidQN <- rlang::quo_name(rlang::enquo(sid))
 
   if (!is.character(paramList$areaVar)) {
     areaVarQ <- rlang::enquo(areaVar)
@@ -40,11 +40,11 @@ aw_sum_area <- function(.data, id, areaVar, totalVar){
 
   # calculate total area
   df %>%
-    dplyr::group_by(!!idQ) %>%
+    dplyr::group_by(!!sidQ) %>%
     dplyr::summarize(!!totalVarQN := base::sum(!!areaVarQ)) -> sum
 
   # join to input data
-  out <- dplyr::left_join(.data, sum, by = idQN)
+  out <- dplyr::left_join(.data, sum, by = sidQN)
 
   # return output
   return(out)

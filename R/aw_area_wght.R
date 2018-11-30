@@ -3,7 +3,7 @@
 #' @description \code{aw_area_wght()} This function creates an area weight field
 #' by dividing intersection area field by total area field
 #'
-#' @param intersection A given intersected dataset
+#' @param .data A given intersected dataset
 #'
 #' @param areaVar A given area variable
 #'
@@ -11,7 +11,7 @@
 #'
 #' @return An intersected file of class sf with field for area weight
 #'
-aw_area_wght<- function(intersection, areaVar, totalVar){
+aw_area_wght<- function(.data, areaVar, totalVar){
 
   # save parameters to list
   paramList <- as.list(match.call())

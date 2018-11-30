@@ -4,25 +4,25 @@
 #'
 #' @param intersection A given intersected dataset
 #'
-#' @param id A given target id
+#' @param tid A given target id
 #'
 #' @param newField A given new esimation field
 #'
 #' @return A target dataset with a new field for properly calculated field of interest by target IDs
 #'
-aw_aggregate <- function(.data, id, newField){
+aw_aggregate <- function(.data, tid, newField){
 
   # save parameters to list
   paramList <- as.list(match.call())
 
   # nse
-  if (!is.character(paramList$id)) {
-    idQ <- rlang::enquo(id)
-  } else if (is.character(paramList$id)) {
-    idQ <- rlang::quo(!! rlang::sym(id))
+  if (!is.character(paramList$tid)) {
+    tidQ <- rlang::enquo(tid)
+  } else if (is.character(paramList$tid)) {
+    tidQ <- rlang::quo(!! rlang::sym(tid))
   }
 
-  idQN <- rlang::quo_name(rlang::enquo(id))
+  tidQN <- rlang::quo_name(rlang::enquo(tid))
 
   if (!is.character(paramList$newFieldQ)) {
     newFieldQ <- rlang::enquo(newFieldQ)
@@ -38,11 +38,11 @@ aw_aggregate <- function(.data, id, newField){
 
   # calculate total area
   df %>%
-    dplyr::group_by(!!idQ) %>%
+    dplyr::group_by(!!tidQ) %>%
     dplyr::summarize(!!newFieldQN := base::sum(!!newFieldQ)) -> sum
 
   # join to input data
-  out <- dplyr::left_join(.data, sum, by = idQN)
+  out <- dplyr::left_join(.data, sum, by = tidQN)
 
   # return output
   return(out)
