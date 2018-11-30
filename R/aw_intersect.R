@@ -4,16 +4,36 @@
 #' area field in the intersection
 #'
 #' @param source A given source dataset
+#'
 #' @param target A given target dataset
 #'
-#' @return An intersected object of class sf
+#' @param areaVar A given area variable
 #'
-aw_intersect <- function(source, target){
+#' @return An intersected object of class sf with calculated geometric area
+#'
+aw_intersect <- function(source, target, areaVar) {
 
-  # performs the spatial intersection
-  intersection <- st_intersection(source, target)
+  # save parameters to list
+  paramList <- as.list(match.call())
 
-  # generates new field for geometric area of intersection
-  intersection <- mutate(intersection, geom_area = st_area(geometry))
+  # nse
+  if (!is.character(paramList$areaVar)) {
+    areaVarQ <- rlang::enquo(areaVar)
+  } else if (is.character(paramList$areaVar)) {
+    areaVarQ <- rlang::quo(!! rlang::sym(areaVar))
+  }
+
+  areaVarQN <- rlang::quo_name(rlang::enquo(areaVar))
+
+  # preform intersection
+  intersection <- sf::st_intersection(source, target)
+
+  # calculate area
+  intersection %>%
+    dplyr::mutate(!!areaVarQN := sf::st_area(geometry)) %>%
+    aw_strip_units(var = !!areaVarQ) -> out
+
+  # return output
+  return(out)
 
 }

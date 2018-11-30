@@ -6,9 +6,10 @@
 #'
 #'
 #' @param source A given source dataset
+#'
 #' @param target A given target dataset
 #'
-#' @return A logical value
+#' @return A logical value output
 #'
 aw_validate_units <- function(source, target){
 
@@ -18,13 +19,13 @@ aw_validate_units <- function(source, target){
 
   # conditional code if both objects share same unit type
   if(source_unit_type == target_unit_type){
-    out_test2 <- TRUE
+    out <- TRUE
 
   # conditional code if unit types between objects differ
   } else if(source_unit_type != tracts_unit_type) {
-    out_test2 <- FALSE
+    out <- FALSE
   }
   # return result output
-  out_test2
+  return(out)
 
 }

@@ -7,27 +7,38 @@
 #'
 #'
 #' @param source A given source dataset
+#'
 #' @param target A given target dataset
 #'
-#' @return A logical value
+#' @return A logical value output
 #'
-aw_validate_data <- function(source, target){
+aw_validate_data <- function(source, target, verbose = FALSE){
 
   # store results from all three validate subfunctions
-  result_1 <- aw_validate_sf(source, target)
-  result_2 <- aw_validate_units(source, target)
-  result_3 <- aw_validate_crs(source, target)
+  sf_result <- aw_validate_sf(source, target)
+  unit_result <- aw_validate_units(source, target)
+  crs_result <- aw_validate_crs(source, target)
 
-  # conditional code if all results are TRUE
-  if(result_1 == "TRUE" & result_2 == "TRUE" & result_3 == "TRUE"){
-    results <- TRUE
-
-  # conditional code if any validate result is individually FALSE
-  } else if (result_1 == "FALSE" | result_2 == "FALSE" | result_3 == "FALSE"){
-    results <- FALSE
+  # conditional code if verbose is assigned FALSE
+  if(verbose == FALSE){
+    if(sf_result == "TRUE" & unit_result == "TRUE" & crs_result == "TRUE") {
+      out <- TRUE
+    } else if (sf_result == "FALSE" | unit_result == "FALSE" | crs_result == "FALSE"){
+      out <- FALSE
+    }
   }
 
-  # return result output
-    results
+  # conditional code if verbose is assigned TRUE
+  else if (verbose == TRUE){
+    table <- data.frame(
+      test = c("sf", "unit", "crs", "overall"),
+      result = c(sf_result, unit_result, crs_result, result),
+      StringsAsFactors = FALSE)
+   out <- as_tibble(table)
+  }
+
+  # return output
+  return(out)
 
 }
+
