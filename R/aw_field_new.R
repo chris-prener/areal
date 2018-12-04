@@ -10,17 +10,16 @@
 #'
 #' @return An intersected file of class sf with a new field of interest recalculated with area weight
 #'
-aw_field_new <- function(.data, newField, initialVals){
+aw_field_new <- function(.data, newField, initialVals, areaWeight){
 
   # save parameters to list
   paramList <- as.list(match.call())
 
   # nse
-
-  if (!is.character(paramList$newField)) {
-    newFieldQ <- rlang::enquo(newField)
-  } else if (is.character(paramList$newField)) {
-    newFieldQ <- rlang::quo(!! rlang::sym(newField))
+  if (!is.character(paramList$areaWeight)) {
+    areaWeightQ <- rlang::enquo(areaWeight)
+  } else if (is.character(paramList$areaWeight)) {
+    areaWeightQ <- rlang::quo(!! rlang::sym(areaWeight))
   }
 
   newFieldQN <- rlang::quo_name(rlang::enquo(newField))
@@ -32,7 +31,7 @@ aw_field_new <- function(.data, newField, initialVals){
   }
 
   # recalculate source values of interest using area weight and assign as new field
-  out <- dplyr::mutate(.data, !!newFieldQN := !!initialValsQ * area_wght)
+  out <- dplyr::mutate(.data, !!newFieldQN := !!initialValsQ * !!areaWeightQ)
 
   # return output
   return(out)
