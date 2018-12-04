@@ -12,10 +12,27 @@
 #'
 aw_field_new <- function(.data, newField, initialVals){
 
+  # save parameters to list
+  paramList <- as.list(match.call())
 
+  # nse
+
+  if (!is.character(paramList$newField)) {
+    newFieldQ <- rlang::enquo(newField)
+  } else if (is.character(paramList$newField)) {
+    newFieldQ <- rlang::quo(!! rlang::sym(newField))
+  }
+
+  newFieldQN <- rlang::quo_name(rlang::enquo(newField))
+
+  if (!is.character(paramList$initialVals)) {
+    initialValsQ <- rlang::enquo(initialVals)
+  } else if (is.character(paramList$initialVals)) {
+    initialValsQ <- rlang::quo(!! rlang::sym(initialVals))
+  }
 
   # recalculate source values of interest using area weight and assign as new field
-  out <- dplyr::mutate(.data, newField = initialVals * area_wght)
+  out <- dplyr::mutate(.data, !!newFieldQN := !!initialValsQ * area_wght)
 
   # return output
   return(out)

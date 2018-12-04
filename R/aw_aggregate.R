@@ -10,7 +10,7 @@
 #'
 #' @return A target dataset with a new field for properly calculated field of interest by target IDs
 #'
-aw_aggregate <- function(.data, tid, newField){
+aw_aggregate <- function(.data, target, tid, newField){
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -24,25 +24,24 @@ aw_aggregate <- function(.data, tid, newField){
 
   tidQN <- rlang::quo_name(rlang::enquo(tid))
 
-  if (!is.character(paramList$newFieldQ)) {
-    newFieldQ <- rlang::enquo(newFieldQ)
-  } else if (is.character(paramList$newFieldQ)) {
-    newFieldQ <- rlang::quo(!! rlang::sym(newFieldQ))
+  if (!is.character(paramList$newField)) {
+    newFieldQ <- rlang::enquo(newField)
+  } else if (is.character(paramList$newField)) {
+    newFieldQ <- rlang::quo(!! rlang::sym(newField))
   }
 
   newFieldQN <- rlang::quo_name(rlang::enquo(newField))
 
   # remove geometry
-  df <- .data
-  st_geometry(df) <- NULL
+  st_geometry(.data) <- NULL
 
   # calculate total area
-  df %>%
+  .data %>%
     dplyr::group_by(!!tidQ) %>%
     dplyr::summarize(!!newFieldQN := base::sum(!!newFieldQ)) -> sum
 
   # join to input data
-  out <- dplyr::left_join(.data, sum, by = tidQN)
+  out <- dplyr::left_join(target, sum, by = tidQN)
 
   # return output
   return(out)
