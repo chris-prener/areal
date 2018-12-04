@@ -24,10 +24,14 @@ aw_area_wght<- function(.data, areaVar, totalVar){
     areaVarQ <- rlang::quo(!! rlang::sym(areaVar))
   }
 
-  totalVarQN <- rlang::quo_name(rlang::enquo(totalVar))
+  if (!is.character(paramList$totalVar)) {
+    totalVarQ <- rlang::enquo(totalVar)
+  } else if (is.character(paramList$totalVar)) {
+    totalVarQ <- rlang::quo(!! rlang::sym(totalVar))
+  }
 
   # calculate area weight of intersection slivers
-  out <- dplyr::mutate(.data, area_wght = !!areaVarQ / !!totalVarQN)
+  out <- dplyr::mutate(.data, area_wght := !!areaVarQ / !!totalVarQ)
 
   # return output
   return(out)
