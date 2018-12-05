@@ -30,14 +30,14 @@
 aw_interpolater <- function(source, target, verbose = FALSE, intersection, sid, tid, vals, areaVar, totalVar, newField, areaWeight) {
 
   # validate source and target data
-  aw_validate()
+  aw_validate(source, target)
 
   # strip source and target dataframes
   source <- aw_strip_df(source, sid)
   target <- aw_strip_df(target, tid)
 
   # create intersection
-  intersection <- aw_intersect()
+  intersection <- aw_intersect(source, target)
 
   # calculate summed area by source ID
   intersection <- aw_sum_area(intersection)
@@ -49,7 +49,7 @@ aw_interpolater <- function(source, target, verbose = FALSE, intersection, sid, 
   intersection <- aw_calculate(intersection)
 
   # aggregate new field by target ID to target output
-  aw_aggregate(intersection)
+  out <- aw_aggregate(intersection)
 
   # return target output
   return(out)
