@@ -9,7 +9,7 @@
 #'
 #' @param areaVar A given area variable
 #'
-#' @return An intersected object of class sf with calculated geometric area
+#' @return An intersected object of class sf with calculated geometric area field
 #'
 aw_intersect <- function(source, target, areaVar) {
 

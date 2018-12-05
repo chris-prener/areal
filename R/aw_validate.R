@@ -10,6 +10,8 @@
 #'
 #' @param target A given target dataset
 #'
+#' @param verbose An option for simple or verbose validation output
+#'
 #' @return A logical value output
 #'
 aw_validate <- function(source, target, verbose = FALSE){

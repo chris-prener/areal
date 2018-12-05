@@ -1,7 +1,8 @@
 #' Testing for sf object status for source and target data
 #'
-#' @description \code{aw_validate_sf()} This function logically tests for sf object status
-#' between source and target data. Output is either TRUE for shared sf object status or FALSE.
+#' @description \code{aw_validate_sf()} This function logically tests for shared
+#' sf status. Output is either TRUE for shared unit type or FALSE if sf class is not present
+#' in at least one file.
 #'
 #' @param source A given source dataset
 #'

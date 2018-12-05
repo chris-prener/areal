@@ -9,7 +9,7 @@
 #'
 #' @param totalVar A given total area field estimated by source id
 #'
-#' @param areaWght A given name for the area weight calculation field
+#' @param areaWeight A given name for the area weight calculation field
 #'
 #' @return An intersected file of class sf with field for area weight
 #'

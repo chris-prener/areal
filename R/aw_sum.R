@@ -4,7 +4,7 @@
 #'
 #' @param .data A given dataframe
 #'
-#' @param id A given source id field
+#' @param sid A given source id field
 #'
 #' @param areaVar A given area variable
 #'

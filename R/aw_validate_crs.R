@@ -1,7 +1,7 @@
 #' Testing for shared coordinates for source and target data
 #'
-#' @description \code{aw_validate_crs()} This function logically tests for shared coordinates
-#' between source and target data. Output is either TRUE for shared coordinates or FALSE if they differ.
+#' @description \code{aw_validate_crs()} This function logically tests for shared coordinate
+#' projection. Output is either TRUE for shared coordinates or FALSE if they differ.
 #'
 #' @param source A given source dataset
 #'
