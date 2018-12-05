@@ -6,11 +6,11 @@
 #'
 #' @param id A given source id field
 #'
-#' @param value A given variable to perform interpolation calculations on
+#' @param vals A given variable of estimations to perform interpolation calculations on
 #'
 #' @return A dataframe stripped of nonessential variables
 #'
-aw_strip_df <- function(.data, id, value){
+aw_strip_df <- function(.data, id, vals){
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -23,20 +23,20 @@ aw_strip_df <- function(.data, id, value){
   }
 
   # strip variables
-  if (missing(value)){
+  if (missing(vals)){
 
     out <- dplyr::select(.data, !!idQ)
 
   } else {
 
     # additional nse for value
-    if (!is.character(paramList$value)) {
-      valueQ <- rlang::enquo(value)
-    } else if (is.character(paramList$value)) {
-      valueQ <- rlang::quo(!! rlang::sym(value))
+    if (!is.character(paramList$vals)) {
+      valsQ <- rlang::enquo(vals)
+    } else if (is.character(paramList$vals)) {
+      valsQ <- rlang::quo(!! rlang::sym(vals))
     }
 
-    out <- dplyr::select(.data, !!idQ, !!valueQ)
+    out <- dplyr::select(.data, !!idQ, !!valsQ)
 
   }
 

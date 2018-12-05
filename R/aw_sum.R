@@ -1,6 +1,6 @@
 #' Create new total area field in intersection
 #'
-#' @description \code{aw_sum_area()} Produces new total area field that reflects total area by source id
+#' @description \code{aw_sum()} Produces new total area field that reflects total area by source id
 #'
 #' @param .data A given dataframe
 #'
@@ -12,7 +12,7 @@
 #'
 #' @return An intersection file of class sf with a new field for total area by source id
 #'
-aw_sum_area <- function(.data, sid, areaVar, totalVar){
+aw_sum <- function(.data, sid, areaVar, totalVar){
 
   # save parameters to list
   paramList <- as.list(match.call())

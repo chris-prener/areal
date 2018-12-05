@@ -2,6 +2,8 @@
 #'
 #' @description \code{aw_aggregate()} Distributes new field estimate values by target IDs and is joined to target dataset
 #'
+#' @param target A given target dataset
+#'
 #' @param intersection A given intersected dataset
 #'
 #' @param tid A given target id
@@ -10,7 +12,7 @@
 #'
 #' @return A target dataset with a new field for properly calculated field of interest by target IDs
 #'
-aw_aggregate <- function(.data, target, tid, newField){
+aw_aggregate <- function(target, intersection, tid, newField){
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -33,10 +35,10 @@ aw_aggregate <- function(.data, target, tid, newField){
   newFieldQN <- rlang::quo_name(rlang::enquo(newField))
 
   # remove geometry
-  st_geometry(.data) <- NULL
+  st_geometry(intersection) <- NULL
 
   # calculate total area
-  .data %>%
+  intersection %>%
     dplyr::group_by(!!tidQ) %>%
     dplyr::summarize(!!newFieldQN := base::sum(!!newFieldQ)) -> sum
 

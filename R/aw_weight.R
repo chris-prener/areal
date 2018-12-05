@@ -1,6 +1,6 @@
 #' Calculate area weight using source ID areas
 #'
-#' @description \code{aw_area_wght()} This function creates an area weight field
+#' @description \code{aw_weight()} This function creates an area weight field
 #' by dividing intersection area field by total area field
 #'
 #' @param .data A given intersected dataset
@@ -9,9 +9,11 @@
 #'
 #' @param totalVar A given total area field estimated by source id
 #'
+#' @param areaWght A given name for the area weight calculation field
+#'
 #' @return An intersected file of class sf with field for area weight
 #'
-aw_area_wght<- function(.data, areaVar, totalVar){
+aw_weight <- function(.data, areaVar, totalVar, areaWeight){
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -31,7 +33,7 @@ aw_area_wght<- function(.data, areaVar, totalVar){
   }
 
   # calculate area weight of intersection slivers
-  out <- dplyr::mutate(.data, area_wght := !!areaVarQ / !!totalVarQ)
+  out <- dplyr::mutate(.data, areaWeight := !!areaVarQ / !!totalVarQ)
 
   # return output
   return(out)

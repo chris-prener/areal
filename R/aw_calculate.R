@@ -1,16 +1,16 @@
 #' Make field new variable
 #'
-#' @description \code{aw_fieldnew()} Recalculates existing field by area weight and yields new field
+#' @description \code{aw_calculate()} Recalculates existing field by area weight and yields new field
 #'
 #' @param .data A given intersected dataset
 #'
 #' @param newField A new field name
 #'
-#' @param initialVals A given source field of interest estimates
+#' @param vals A given variable of estimations to perform interpolation calculations on
 #'
 #' @return An intersected file of class sf with a new field of interest recalculated with area weight
 #'
-aw_field_new <- function(.data, newField, initialVals, areaWeight){
+aw_calculate <- function(.data, newField, vals, areaWeight){
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -24,14 +24,14 @@ aw_field_new <- function(.data, newField, initialVals, areaWeight){
 
   newFieldQN <- rlang::quo_name(rlang::enquo(newField))
 
-  if (!is.character(paramList$initialVals)) {
-    initialValsQ <- rlang::enquo(initialVals)
-  } else if (is.character(paramList$initialVals)) {
-    initialValsQ <- rlang::quo(!! rlang::sym(initialVals))
+  if (!is.character(paramList$vals)) {
+    valsQ <- rlang::enquo(vals)
+  } else if (is.character(paramList$vals)) {
+    valsQ <- rlang::quo(!! rlang::sym(vals))
   }
 
   # recalculate source values of interest using area weight and assign as new field
-  out <- dplyr::mutate(.data, !!newFieldQN := !!initialValsQ * !!areaWeightQ)
+  out <- dplyr::mutate(.data, !!newFieldQN := !!valsQ * !!areaWeightQ)
 
   # return output
   return(out)
