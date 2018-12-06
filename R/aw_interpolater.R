@@ -40,10 +40,10 @@ aw_interpolater <- function(source, target, verbose = FALSE, intersection, sid, 
   intersection <- aw_intersect(source, target)
 
   # calculate summed area by source ID
-  intersection <- aw_sum_area(intersection)
+  intersection <- aw_sum(intersection)
 
   # calculate area weight
-  intersection <- aw_area_wght(intersection)
+  intersection <- aw_weight(intersection)
 
   # calculate new field
   intersection <- aw_calculate(intersection)
