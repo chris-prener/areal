@@ -12,7 +12,7 @@
 #'
 #' @return A target dataset with a new field for properly calculated field of interest by target IDs
 #'
-aw_aggregate <- function(target, intersection, tid, newField){
+aw_aggregate <- function(.data, target, tid, newField){
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -35,10 +35,10 @@ aw_aggregate <- function(target, intersection, tid, newField){
   newFieldQN <- rlang::quo_name(rlang::enquo(newField))
 
   # remove geometry
-  st_geometry(intersection) <- NULL
+  st_geometry(.data) <- NULL
 
   # calculate total area
-  intersection %>%
+  .data %>%
     dplyr::group_by(!!tidQ) %>%
     dplyr::summarize(!!newFieldQN := base::sum(!!newFieldQ)) -> sum
 

@@ -86,23 +86,24 @@ aw_interpolater <- function(source, sid, value, target, tid, areaVar, totalVar, 
   }
 
   # strip source and target dataframes
-  source <- aw_strip_df(source, id = sidQN, vals = valueQN)
-  target <- aw_strip_df(target, id = tidQN)
+  sourceS <- aw_strip_df(source, id = sidQN, vals = valueQN)
+  targetS <- aw_strip_df(target, id = tidQN)
 
   # create intersection
-  intersection <- aw_intersect(source, target, areaVar = !!areaVarQ)
+  aw_intersect(source = sourceS, target = targetS, areaVar = !!areaVarQ) %>%
+    aw_sum(sid = !!sidQ, areaVar = !!areaVarQ, totalVar = !!totalVarQ) %>%
+    aw_weight(areaVar = !!areaVarQ, totalVar = !!totalVarQ, areaWeight = !!areaWeightQ) %>%
+    aw_calculate(newField = !!valueQ, vals = !!valueQ, areaWeight = !!areaWeightQ) %>%
+    aw_aggregate(target, tid = !!tidQ, newField = !!valueQ) -> out
 
-  # calculate summed area by source ID
-  intersection <- aw_sum(intersection, sid = !!sidQ, areaVar = !!areaVarQ, totalVar = !!totalVarQ)
+  # verify result
+  verify <- aw_verify(source = source, result = out, value = valueQN)
 
-  # calculate area weight
-  intersection <- aw_weight(intersection, areaVar = !!areaVarQ, totalVar = !!totalVarQ, areaWeight = !!areaWeightQ)
+  if (verify == FALSE){
 
-  # calculate new field
-  intersection <- aw_calculate(intersection, newField = !!valueQ, vals = !!valueQ, areaWeight = !!areaWeightQ)
+    stop("Interpolation error - the sum of the result's value does not equal the sum of the source's value.")
 
-  # aggregate new field by target ID to target output
-  out <- aw_aggregate(target, intersection, tid = !!tidQ, newField = !!valueQ)
+  }
 
   # return target output
   return(out)
