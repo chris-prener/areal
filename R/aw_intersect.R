@@ -23,7 +23,7 @@ aw_intersect <- function(source, target, areaVar) {
     areaVarQ <- rlang::quo(!! rlang::sym(areaVar))
   }
 
-  areaVarQN <- rlang::quo_name(rlang::enquo(areaVar))
+  areaVarQN <- rlang::quo_name(rlang::enquo(areaVarQ))
 
   # preform intersection
   intersection <- sf::st_intersection(source, target)

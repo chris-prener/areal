@@ -27,18 +27,54 @@
 #'
 #' @param areaWeight A given name for the area weight calculation field
 #'
-aw_interpolater <- function(source, sid, value, target, tid, areaVar = "area", totalVar = "totalArea", areaWeight = "areaWeight") {
+aw_interpolater <- function(source, sid, value, target, tid, areaVar, totalVar, areaWeight) {
 
   # save parameters to list
   paramList <- as.list(match.call())
 
   # nse
+  if (!is.character(paramList$sid)) {
+    sidQ <- rlang::enquo(sid)
+  } else if (is.character(paramList$sid)) {
+    sidQ <- rlang::quo(!! rlang::sym(sid))
+  }
+
   sidQN <- rlang::quo_name(rlang::enquo(sid))
+
+  if (!is.character(paramList$value)) {
+    valueQ <- rlang::enquo(value)
+  } else if (is.character(paramList$value)) {
+    valueQ <- rlang::quo(!! rlang::sym(value))
+  }
+
   valueQN <- rlang::quo_name(rlang::enquo(value))
+
+  if (!is.character(paramList$tid)) {
+    tidQ <- rlang::enquo(tid)
+  } else if (is.character(paramList$tid)) {
+    tidQ <- rlang::quo(!! rlang::sym(tid))
+  }
+
   tidQN <- rlang::quo_name(rlang::enquo(tid))
-  areaVarQN <- rlang::quo_name(rlang::enquo(areaVar))
-  totalVarQN <- rlang::quo_name(rlang::enquo(totalVar))
-  areaWeightQN <- rlang::quo_name(rlang::enquo(areaWeight))
+
+  if (!is.character(paramList$areaVar)) {
+    areaVarQ <- rlang::enquo(areaVar)
+  } else if (is.character(paramList$areaVar)) {
+    areaVarQ <- rlang::quo(!! rlang::sym(areaVar))
+  }
+
+  if (!is.character(paramList$totalVar)) {
+    totalVarQ <- rlang::enquo(totalVar)
+  } else if (is.character(paramList$totalVar)) {
+    totalVarQ <- rlang::quo(!! rlang::sym(totalVar))
+  }
+
+  if (!is.character(paramList$areaWeight)) {
+    areaWeightQ <- rlang::enquo(areaWeight)
+  } else if (is.character(paramList$areaWeight)) {
+    areaWeightQ <- rlang::quo(!! rlang::sym(areaWeight))
+  }
+
 
   # validate source and target data
   val <- aw_validate(source, target)
@@ -54,23 +90,21 @@ aw_interpolater <- function(source, sid, value, target, tid, areaVar = "area", t
   target <- aw_strip_df(target, id = tidQN)
 
   # create intersection
-  intersection <- aw_intersect(source, target, areaVar = areaVarQN)
+  intersection <- aw_intersect(source, target, areaVar = !!areaVarQ)
 
   # calculate summed area by source ID
-  intersection <- aw_sum(intersection, sid = sidQN, areaVar = areaVarQN, totalVar = totalVarQN)
+  intersection <- aw_sum(intersection, sid = !!sidQ, areaVar = !!areaVarQ, totalVar = !!totalVarQ)
 
   # calculate area weight
-  # intersection <- aw_weight(intersection)
+  intersection <- aw_weight(intersection, areaVar = !!areaVarQ, totalVar = !!totalVarQ, areaWeight = !!areaWeightQ)
 
   # calculate new field
-  # intersection <- aw_calculate(intersection)
-
-  return(intersection)
+  intersection <- aw_calculate(intersection, newField = !!valueQ, vals = !!valueQ, areaWeight = !!areaWeightQ)
 
   # aggregate new field by target ID to target output
-  # out <- aw_aggregate(intersection)
+  out <- aw_aggregate(target, intersection, tid = !!tidQ, newField = !!valueQ)
 
   # return target output
-  # return(out)
+  return(out)
 
 }

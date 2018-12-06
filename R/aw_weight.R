@@ -32,8 +32,10 @@ aw_weight <- function(.data, areaVar, totalVar, areaWeight){
     totalVarQ <- rlang::quo(!! rlang::sym(totalVar))
   }
 
+  areaWeightQN <- rlang::quo_name(rlang::enquo(areaWeight))
+
   # calculate area weight of intersection slivers
-  out <- dplyr::mutate(.data, areaWeight := !!areaVarQ / !!totalVarQ)
+  out <- dplyr::mutate(.data, !!areaWeightQN := !!areaVarQ / !!totalVarQ)
 
   # return output
   return(out)

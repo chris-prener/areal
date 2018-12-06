@@ -20,7 +20,7 @@ aw_strip_units <- function(.data, var){
     varQ <- rlang::quo(!! rlang::sym(var))
   }
 
-  varQN <- rlang::quo_name(rlang::enquo(var))
+  varQN <- rlang::quo_name(rlang::enquo(varQ))
 
   # remove units
   out <- dplyr::mutate(.data, !!varQN := as.numeric(as.character(!!varQ)))
