@@ -1,7 +1,7 @@
 #' Interpolate
 #'
 #' @export
-aw_interpolate <- function(.data, tid, source, sid, ...){
+aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
 
   args <- rlang::list2(...)
 
@@ -58,7 +58,7 @@ aw_interpolate <- function(.data, tid, source, sid, ...){
     targetS <- aw_strip_df(.data, id = tidQN)
 
     # interpolate
-    out <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
+    est <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
                            tid = !!tidQ, class = "sf")
 
   } else if (length(args) > 1) {
@@ -80,7 +80,19 @@ aw_interpolate <- function(.data, tid, source, sid, ...){
       dplyr::select(dplyr::one_of(vars)) -> data
 
     # left join with target data
-    out <- dplyr::left_join(.data, data, by = tidQN)
+    est <- dplyr::left_join(.data, data, by = tidQN)
+
+  }
+
+  # structure output
+  if (output == "sf"){
+
+    out <- est
+
+  } else if (output == "tibble"){
+
+    sf::st_geometry(est) <- NULL
+    out <- dplyr::as_tibble(est)
 
   }
 
