@@ -3,7 +3,7 @@
 #' @export
 aw_interpolate <- function(.data, tid, source, sid, ...){
 
-  args <- c(...)
+  args <- rlang::list2(...)
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -41,29 +41,46 @@ aw_interpolate <- function(.data, tid, source, sid, ...){
 
   } else if (length(args) == 1) {
 
+    # store argument as scalar
+    value <- args[[1]]
+
     # nse
-    if (!is.character(args)) {
-      valueQ <- rlang::enquo(args)
-    } else if (is.character(args)) {
-      valueQ <- rlang::quo(!! rlang::sym(args))
+    if (!is.character(value)) {
+      valueQ <- rlang::enquo(value)
+    } else if (is.character(value)) {
+      valueQ <- rlang::quo(!! rlang::sym(value))
     }
 
-    valueQN <- rlang::quo_name(rlang::enquo(args))
+    valueQN <- rlang::quo_name(rlang::enquo(valueQ))
 
     # strip source and target dataframes
     sourceS <- aw_strip_df(source, id = sidQN, vals = valueQN)
     targetS <- aw_strip_df(.data, id = tidQN)
 
     # interpolate
-    out <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS, tid = !!tidQ)
+    out <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
+                           tid = !!tidQ, class = "sf")
 
   } else if (length(args) > 1) {
 
+    # convert dots list to vector
+    values <- unlist(args, recursive = TRUE)
+    vars <- c(tidQN, values)
 
+    # strip target dataframe
+    targetS <- aw_strip_df(.data, id = tidQN)
 
-  } else {
+    # create list of sf objects
+    values %>%
+      split(values) %>%
+      purrr::map(~ dplyr::select(source, !!sidQ, .x)) %>%
+      purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!!rlang::quo(!! rlang::sym(.y))),
+                                    target = targetS, tid = !!tidQ, class = "tibble")) %>%
+      purrr::reduce(.f = dplyr::bind_cols) %>%
+      dplyr::select(dplyr::one_of(vars)) -> data
 
-    out <- FALSE
+    # left join with target data
+    out <- dplyr::left_join(.data, data, by = tidQN)
 
   }
 
@@ -132,7 +149,7 @@ aw_strip_df <- function(.data, id, vals){
 #' @param target A given target dataset
 #' @param tid A given target ID field
 #'
-aw_interpolater <- function(source, sid, value, target, tid) {
+aw_interpolater <- function(source, sid, value, target, tid, class) {
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -171,6 +188,13 @@ aw_interpolater <- function(source, sid, value, target, tid) {
   if (verify == FALSE){
 
     stop("Interpolation error - the sum of the result's value does not equal the sum of the source's value.")
+
+  }
+
+  # clean output
+  if (class == "tibble"){
+
+    sf::st_geometry(out) <- NULL
 
   }
 

@@ -10,4 +10,8 @@ wards <- stlWards
 
 aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", "TOTAL_E")
 
+aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", "TOTAL_E", "WHITE_E")
+
 aw_interpolater(source = race, sid = "GEOID", value = "TOTAL_E", target = wards, tid = WARD)
+
+x <- aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", "TOTAL_E", "WHITE_E")
