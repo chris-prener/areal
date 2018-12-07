@@ -1,7 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# areal
+# areal <img src="man/figures/arealLogo.png" align="right" />
+
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![CRAN\_status\_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 
 While methods to interpolate multiple spatial data sets are currently
 available in the ArcGIS Suite and the `R` package `sf`, `areal` offers

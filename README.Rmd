@@ -13,7 +13,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-# areal
+# areal <img src="man/figures/arealLogo.png" align="right" />
+
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![CRAN_status_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
+
 While methods to interpolate multiple spatial data sets are currently available in the ArcGIS Suite and the `R` package `sf`, `areal` offers an intuitive assortment of options to validate, interpolate, and compare fields between a source and target data set. 
 
 ## Installation
