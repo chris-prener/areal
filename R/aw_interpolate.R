@@ -74,7 +74,7 @@ aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
     values %>%
       split(values) %>%
       purrr::map(~ dplyr::select(source, !!sidQ, .x)) %>%
-      purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!!rlang::quo(!! rlang::sym(.y))),
+      purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
                                     target = targetS, tid = !!tidQ, class = "tibble")) %>%
       purrr::reduce(.f = dplyr::bind_cols) %>%
       dplyr::select(dplyr::one_of(vars)) -> data
