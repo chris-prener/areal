@@ -1,17 +1,22 @@
 #' Calculate area weight using source ID areas
 #'
-#' @description \code{aw_weight()} This function creates an area weight field
-#' by dividing intersection area field by total area field
+#' @description \code{aw_weight} creates an area weight field by dividing the area
+#'     field by the total area field. This is the third step in the interpolation
+#'     process after \link{aw_intersect}.
 #'
-#' @param .data A given intersected dataset
+#' @param .data A \code{sf} object that has been intersected using \link{aw_intersect}
+#' @param areaVar The name of the variable measuring a feature's area
+#' @param totalVar The name of the variable containg total area field by \code{source} id
+#' @param areaWeight The name of a new area weight field to be calculated
 #'
-#' @param areaVar A given area variable
+#' @return A \code{sf} object with the intersected data and new area weight field.
 #'
-#' @param totalVar A given total area field estimated by source id
-#'
-#' @param areaWeight A given name for the area weight calculation field
-#'
-#' @return An intersected file of class sf with field for area weight
+#' @importFrom dplyr mutate
+#' @importFrom rlang :=
+#' @importFrom rlang enquo
+#' @importFrom rlang quo
+#' @importFrom rlang quo_name
+#' @importFrom rlang sym
 #'
 #' @export
 aw_weight <- function(.data, areaVar, totalVar, areaWeight){

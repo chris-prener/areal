@@ -4,9 +4,10 @@
 #'     the total area by \code{source} id. This is the second step in the
 #'     interpolation process after \link{aw_intersect}.
 #'
-#' @param .data A \code{sf} object that data should be interpolated to
+#' @param .data A \code{sf} object that has been intersected using \link{aw_intersect}
 #' @param sid A unique identification number within \code{source}
-#' @param areaVar The name of the a variable measuring a feature's area
+#' @param areaVar The name of the variable measuring a feature's area, which is
+#'     created as part of \link{aw_intersect}
 #' @param totalVar The name of a new total area field to be calculated
 #'
 #' @return A \code{sf} object with the intersected data and new total area field.

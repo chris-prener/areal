@@ -7,18 +7,19 @@
 aw_weight(.data, areaVar, totalVar, areaWeight)
 }
 \arguments{
-\item{.data}{A given intersected dataset}
+\item{.data}{A \code{sf} object that has been intersected using \link{aw_intersect}}
 
-\item{areaVar}{A given area variable}
+\item{areaVar}{The name of the variable measuring a feature's area}
 
-\item{totalVar}{A given total area field estimated by source id}
+\item{totalVar}{The name of the variable containg total area field by \code{source} id}
 
-\item{areaWeight}{A given name for the area weight calculation field}
+\item{areaWeight}{The name of a new area weight field to be calculated}
 }
 \value{
-An intersected file of class sf with field for area weight
+A \code{sf} object with the intersected data and new area weight field.
 }
 \description{
-\code{aw_weight()} This function creates an area weight field
-by dividing intersection area field by total area field
+\code{aw_weight} creates an area weight field by dividing the area
+    field by the total area field. This is the third step in the interpolation
+    process after \link{aw_intersect}.
 }

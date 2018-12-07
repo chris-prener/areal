@@ -7,11 +7,12 @@
 aw_sum(.data, sid, areaVar, totalVar)
 }
 \arguments{
-\item{.data}{A \code{sf} object that data should be interpolated to}
+\item{.data}{A \code{sf} object that has been intersected using \link{aw_intersect}}
 
 \item{sid}{A unique identification number within \code{source}}
 
-\item{areaVar}{The name of the a variable measuring a feature's area}
+\item{areaVar}{The name of the variable measuring a feature's area, which is
+created as part of \link{aw_intersect}}
 
 \item{totalVar}{The name of a new total area field to be calculated}
 }
