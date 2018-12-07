@@ -7,16 +7,18 @@
 aw_intersect(.data, source, areaVar)
 }
 \arguments{
-\item{source}{A given source dataset}
+\item{.data}{A \code{sf} object that data should be interpolated to}
 
-\item{areaVar}{A given area variable}
+\item{source}{A \code{sf} object with data to be interpolated}
 
-\item{target}{A given target dataset}
+\item{areaVar}{The name of the new area variable to be calculated.}
 }
 \value{
-An intersected object of class sf with calculated geometric area field
+A \code{sf} object with the intersected data and new area field.
 }
 \description{
-\code{aw_intersect()} This function intersects source and target datasets and computes a new geometric
-area field in the intersection
+\code{aw_intersect} intersects the source and target datasets and
+    computes a new area field for the intersected data using the units associated
+    with whatever project the data are currently in. This is the first step in the
+    interpolation process after data validation and subsetting.
 }

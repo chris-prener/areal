@@ -1,16 +1,26 @@
 #' Create new total area field in intersection
 #'
-#' @description \code{aw_sum()} Produces new total area field that reflects total area by source id
+#' @description \code{aw_sum} produces a new total area field that contains
+#'     the total area by \code{source} id. This is the second step in the
+#'     interpolation process after \link{aw_intersect}.
 #'
-#' @param .data A given dataframe
+#' @param .data A \code{sf} object that data should be interpolated to
+#' @param sid A unique identification number within \code{source}
+#' @param areaVar The name of the a variable measuring a feature's area
+#' @param totalVar The name of a new total area field to be calculated
 #'
-#' @param sid A given source id field
+#' @return A \code{sf} object with the intersected data and new total area field.
 #'
-#' @param areaVar A given area variable
-#'
-#' @param totalVar A new total area field to be estimated
-#'
-#' @return An intersection file of class sf with a new field for total area by source id
+#' @importFrom dplyr %>%
+#' @importFrom dplyr group_by
+#' @importFrom dplyr left_join
+#' @importFrom dplyr summarize
+#' @importFrom rlang :=
+#' @importFrom rlang enquo
+#' @importFrom rlang quo
+#' @importFrom rlang quo_name
+#' @importFrom rlang sym
+#' @importFrom sf st_geometry
 #'
 #' @export
 aw_sum <- function(.data, sid, areaVar, totalVar){
@@ -37,7 +47,7 @@ aw_sum <- function(.data, sid, areaVar, totalVar){
 
   # remove geometry
   df <- .data
-  st_geometry(df) <- NULL
+  sf::st_geometry(df) <- NULL
 
   # calculate total area
   df %>%

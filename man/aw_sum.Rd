@@ -7,17 +7,19 @@
 aw_sum(.data, sid, areaVar, totalVar)
 }
 \arguments{
-\item{.data}{A given dataframe}
+\item{.data}{A \code{sf} object that data should be interpolated to}
 
-\item{sid}{A given source id field}
+\item{sid}{A unique identification number within \code{source}}
 
-\item{areaVar}{A given area variable}
+\item{areaVar}{The name of the a variable measuring a feature's area}
 
-\item{totalVar}{A new total area field to be estimated}
+\item{totalVar}{The name of a new total area field to be calculated}
 }
 \value{
-An intersection file of class sf with a new field for total area by source id
+A \code{sf} object with the intersected data and new total area field.
 }
 \description{
-\code{aw_sum()} Produces new total area field that reflects total area by source id
+\code{aw_sum} produces a new total area field that contains
+    the total area by \code{source} id. This is the second step in the
+    interpolation process after \link{aw_intersect}.
 }

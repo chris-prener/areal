@@ -2,18 +2,20 @@
 % Please edit documentation in R/aw_intersect.R
 \name{aw_strip_units}
 \alias{aw_strip_units}
-\title{Strip dataframe variable of attached units}
+\title{Strip variable of attached units}
 \usage{
 aw_strip_units(.data, areaVar)
 }
 \arguments{
 \item{.data}{Dataframe that variable to strip units from is located}
 
-\item{var}{A given variable to strip units from}
+\item{areaVar}{A given variable to strip units from}
 }
 \value{
-A dataframe with a variable stripped of attached units
+A \code{sf} object with the new area field as a numeric class.
 }
 \description{
-\code{aw_strip_units()} Strips dataframe variable of unit class type
+\code{aw_strip_units} strips a given variable of its
+    units class and instead returns a numeric value. This is called
+    by \code{aw_intersect}.
 }

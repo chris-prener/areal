@@ -6,6 +6,15 @@
 \usage{
 aw_area(.data, areaVar)
 }
+\arguments{
+\item{.data}{A \code{sf} object that data should be interpolated to}
+
+\item{areaVar}{The name of the new area variable to be calculated.}
+}
+\value{
+A \code{sf} object with the new area field.
+}
 \description{
-Calculate area
+Calculate the area of a feature in the units of the current
+    coordinate system. This is called by \code{aw_intersect}.
 }

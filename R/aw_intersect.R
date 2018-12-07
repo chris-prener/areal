@@ -1,15 +1,22 @@
 #' Intersect Source and Target Data
 #'
-#' @description \code{aw_intersect()} This function intersects source and target datasets and computes a new geometric
-#' area field in the intersection
+#' @description \code{aw_intersect} intersects the source and target datasets and
+#'     computes a new area field for the intersected data using the units associated
+#'     with whatever project the data are currently in. This is the first step in the
+#'     interpolation process after data validation and subsetting.
 #'
-#' @param source A given source dataset
+#' @param .data A \code{sf} object that data should be interpolated to
+#' @param source A \code{sf} object with data to be interpolated
+#' @param areaVar The name of the new area variable to be calculated.
 #'
-#' @param target A given target dataset
+#' @return A \code{sf} object with the intersected data and new area field.
 #'
-#' @param areaVar A given area variable
-#'
-#' @return An intersected object of class sf with calculated geometric area field
+#' @importFrom dplyr %>%
+#' @importFrom rlang enquo
+#' @importFrom rlang quo
+#' @importFrom rlang quo_name
+#' @importFrom rlang sym
+#' @importFrom sf st_intersection
 #'
 #' @export
 aw_intersect <- function(.data, source, areaVar) {
@@ -41,6 +48,19 @@ aw_intersect <- function(.data, source, areaVar) {
 
 #' Calculate area
 #'
+#' @description Calculate the area of a feature in the units of the current
+#'     coordinate system. This is called by \code{aw_intersect}.
+#'
+#' @param .data A \code{sf} object that data should be interpolated to
+#' @param areaVar The name of the new area variable to be calculated.
+#'
+#' @return A \code{sf} object with the new area field.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom rlang :=
+#' @importFrom rlang quo_name
+#' @importFrom sf st_area
+#'
 aw_area <- function(.data, areaVar){
 
   # save parameters to list
@@ -57,14 +77,23 @@ aw_area <- function(.data, areaVar){
 
 }
 
-#' Strip dataframe variable of attached units
+#' Strip variable of attached units
 #'
-#' @description \code{aw_strip_units()} Strips dataframe variable of unit class type
+#' @description \code{aw_strip_units} strips a given variable of its
+#'     units class and instead returns a numeric value. This is called
+#'     by \code{aw_intersect}.
 #'
 #' @param .data Dataframe that variable to strip units from is located
-#' @param var A given variable to strip units from
+#' @param areaVar A given variable to strip units from
 #'
-#' @return A dataframe with a variable stripped of attached units
+#' @return A \code{sf} object with the new area field as a numeric class.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom rlang :=
+#' @importFrom rlang enquo
+#' @importFrom rlang quo
+#' @importFrom rlang quo_name
+#' @importFrom rlang sym
 #'
 aw_strip_units <- function(.data, areaVar){
 
