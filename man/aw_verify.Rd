@@ -4,8 +4,24 @@
 \alias{aw_verify}
 \title{Verify Correct Interpolation}
 \usage{
-aw_verify(source, result, value)
+aw_verify(source, sourceValue, result, resultValue)
+}
+\arguments{
+\item{source}{A \code{sf} object with data to be interpolated}
+
+\item{sourceValue}{A column within \code{source} to be interpolated}
+
+\item{result}{A \code{sf} object with interpolated data}
+
+\item{resultValue}{A column within \code{result} with the interpolated values}
+}
+\value{
+A logical scalar; if \code{TRUE}, these two values are equal.
 }
 \description{
 Verify Correct Interpolation
+}
+\details{
+\code{aw_verify} ensures that the sum of the resulting interpolated
+    value is equal to the sum of the origina source value.
 }

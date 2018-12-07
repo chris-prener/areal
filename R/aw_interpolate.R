@@ -248,7 +248,7 @@ aw_interpolater <- function(source, sid, value, target, tid, class) {
     aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> out
 
   # verify result
-  verify <- aw_verify(source = source, result = out, value = valueQN)
+  verify <- aw_verify(source = source, sourceValue = valueQN, result = out, resultValue = valueQN)
 
   if (verify == FALSE){
 
