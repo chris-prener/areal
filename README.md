@@ -34,8 +34,8 @@ interpolated at once:
 ``` r
 > library(areal)
 >
-> race <- stlRace
-> wards <- stlWards
+> race <- aw_stl_race
+> wards <- aw_stl_wards
 >
 > aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", output = "tibble", "TOTAL_E", "WHITE_E")
 # A tibble: 28 x 5
