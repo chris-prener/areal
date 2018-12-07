@@ -7,15 +7,16 @@
 aw_validate_units(source, target)
 }
 \arguments{
-\item{source}{A given source dataset}
+\item{source}{A \code{sf} object with data to be interpolated}
 
-\item{target}{A given target dataset}
+\item{target}{A \code{sf} object that data should be interpolated to}
 }
 \value{
-A logical value output
+A logical scalar; if \code{TRUE}, the test is passed.
 }
 \description{
-\code{aw_validate_units()} This function logically tests for shared
-unit type status. Output is either TRUE for shared unit type or FALSE if unit types
-differ.
+\code{aw_validate_units} conducts a logic test for shared
+    measurement units, which are a requirement for interpolation. This
+    should not be an issue if \link{aw_validate_crs} is passed, and
+    may not be included in the release version.
 }

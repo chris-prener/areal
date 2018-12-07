@@ -2,23 +2,23 @@
 % Please edit documentation in R/aw_validate.R
 \name{aw_validate}
 \alias{aw_validate}
-\title{Testing for sf object status, shared unit type, and coordinate type for source
-and target data.}
+\title{Valdating Data for Interpolation}
 \usage{
 aw_validate(source, target, verbose = FALSE)
 }
 \arguments{
-\item{source}{A given source dataset}
+\item{source}{A \code{sf} object with data to be interpolated}
 
-\item{target}{A given target dataset}
+\item{target}{A \code{sf} object that data should be interpolated to}
 
-\item{verbose}{An option for simple or verbose validation output}
+\item{verbose}{A logical scalar; if \code{TRUE}, a tibble with test results is returned}
 }
 \value{
-A logical value output
+If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TRUE}
+    is all tests are passed and \code{FALSE} if one or more tests is failed. If \code{verbose}
+    is \code{TRUE}, a tibble with detailed test results is returned.
 }
 \description{
-\code{aw_validate()} This function logically tests for sf object status,
-shared unit types, and shared coordinates between source and target data. Output is either TRUE
-if all the test results are TRUE or FALSE if any individual test is FALSE.
+\code{aw_validate} executes a series of logic tests for \code{sf} object status,
+shared unit types, and shared coordinates between source and target data.
 }

@@ -16,9 +16,9 @@ Encoding: UTF-8
 LazyData: true
 Imports:
   dplyr,
-  measurements,
-  sf,
-  here
+  purrr,
+  rlang,
+  sf
 RoxygenNote: 6.1.1
 Suggests:
   knitr,

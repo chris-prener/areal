@@ -7,14 +7,14 @@
 aw_validate_crs(source, target)
 }
 \arguments{
-\item{source}{A given source dataset}
+\item{source}{A \code{sf} object with data to be interpolated}
 
-\item{target}{A given target dataset}
+\item{target}{A \code{sf} object that data should be interpolated to}
 }
 \value{
-A logical value output
+A logical scalar; if \code{TRUE}, the test is passed.
 }
 \description{
-\code{aw_validate_crs()} This function logically tests for shared coordinate
-projection. Output is either TRUE for shared coordinates or FALSE if they differ.
+\code{aw_validate_crs} conducts a logic test for shared coordinate
+    coordinate systems, which are a requirement for interpolation.
 }

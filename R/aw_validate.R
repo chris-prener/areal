@@ -1,32 +1,41 @@
-#' Testing for sf object status, shared unit type, and coordinate type for source
-#' and target data.
+#' Valdating Data for Interpolation
 #'
-#' @description \code{aw_validate()} This function logically tests for sf object status,
-#' shared unit types, and shared coordinates between source and target data. Output is either TRUE
-#' if all the test results are TRUE or FALSE if any individual test is FALSE.
+#' @description \code{aw_validate} executes a series of logic tests for \code{sf} object status,
+#' shared unit types, and shared coordinates between source and target data.
 #'
+#' @param source A \code{sf} object with data to be interpolated
+#' @param target A \code{sf} object that data should be interpolated to
+#' @param verbose A logical scalar; if \code{TRUE}, a tibble with test results is returned
 #'
-#' @param source A given source dataset
-#'
-#' @param target A given target dataset
-#'
-#' @param verbose An option for simple or verbose validation output
-#'
-#' @return A logical value output
+#' @return If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TRUE}
+#'     is all tests are passed and \code{FALSE} if one or more tests is failed. If \code{verbose}
+#'     is \code{TRUE}, a tibble with detailed test results is returned.
 #'
 #' @export
 aw_validate <- function(source, target, verbose = FALSE){
 
   # store results from all three validate subfunctions
   sf_result <- aw_validate_sf(source, target)
-  unit_result <- aw_validate_units(source, target)
-  crs_result <- aw_validate_crs(source, target)
 
+  # execute additional tests if both are sf, otherwise set results to NA
+  if (sf_result == FALSE){
+
+    unit_result <- NA
+    crs_result <- NA
+
+  } else if (sf_result == TRUE){
+
+    unit_result <- aw_validate_units(source, target)
+    crs_result <- aw_validate_crs(source, target)
+
+  }
+
+  # determine if overall test is passed
   if(sf_result == "TRUE" & unit_result == "TRUE" & crs_result == "TRUE") {
 
     result <- TRUE
 
-  } else if (sf_result == "FALSE" | unit_result == "FALSE" | crs_result == "FALSE"){
+  } else {
 
     result <- FALSE
 
@@ -55,26 +64,32 @@ aw_validate <- function(source, target, verbose = FALSE){
 
 }
 
-#' Testing for shared coordinates for source and target data
+#' Testing for sf object status for source and target data
 #'
-#' @description \code{aw_validate_crs()} This function logically tests for shared coordinate
-#' projection. Output is either TRUE for shared coordinates or FALSE if they differ.
+#' @description \code{aw_validate_sf} conducts a logic test for shared coordinate
+#'     coordinate systems, which are a requirement for interpolation.
 #'
-#' @param source A given source dataset
+#' @param source A \code{sf} object with data to be interpolated
+#' @param target A \code{sf} object that data should be interpolated to
 #'
-#' @param target A given target dataset
+#' @return A logical scalar; if \code{TRUE}, the test is passed.
 #'
-#' @return A logical value output
-#'
-aw_validate_crs <- function(source, target){
+aw_validate_sf <- function(source, target){
 
-  # conditional code if both objects share crs
-  if(st_crs(source) == st_crs(target)) {
+  # identify sf object in class
+  source_sf <- "sf" %in% class(source)
+  target_sf <- "sf" %in% class(target)
+
+  if(source_sf == TRUE & target_sf == TRUE){
+
+    # if both objects are sf
     out <- TRUE
 
-    # conditional code if objects have different crs
-  } else if(st_crs(source) != st_crs(target)) {
+  } else if(source_sf == FALSE | target_sf == FALSE){
+
+    # if one or both are not sf
     out <- FALSE
+
   }
 
   # return result output
@@ -82,33 +97,29 @@ aw_validate_crs <- function(source, target){
 
 }
 
-#' Testing for sf object status for source and target data
+#' Testing for shared coordinates for source and target data
 #'
-#' @description \code{aw_validate_sf()} This function logically tests for shared
-#' sf status. Output is either TRUE for shared unit type or FALSE if sf class is not present
-#' in at least one file.
+#' @description \code{aw_validate_crs} conducts a logic test for shared coordinate
+#'     coordinate systems, which are a requirement for interpolation.
 #'
-#' @param source A given source dataset
+#' @param source A \code{sf} object with data to be interpolated
+#' @param target A \code{sf} object that data should be interpolated to
 #'
-#' @param target A given target dataset
+#' @return A logical scalar; if \code{TRUE}, the test is passed.
 #'
-#' @return A logical value output
+#' @importFrom sf st_crs
 #'
-aw_validate_sf <- function(source, target){
+aw_validate_crs <- function(source, target){
 
-  source_sf <- "sf" %in% class(source)
-  target_sf <- "sf" %in% class(target)
+  if(sf::st_crs(source) == sf::st_crs(target)) {
 
-  # conditional code if both objects are sf
-  if(source_sf == TRUE & target_sf == TRUE){
-
+    # if both objects share crs
     out <- TRUE
 
-    # conditional code if one object or more is not sf
-  } else if(source_sf == FALSE | target_sf == FALSE){
+  } else if(sf::st_crs(source) != sf::st_crs(target)) {
 
+    # if objects have different crs
     out <- FALSE
-
   }
 
   # return result output
@@ -118,31 +129,36 @@ aw_validate_sf <- function(source, target){
 
 #' Testing for shared unit type status for source and target data
 #'
-#' @description \code{aw_validate_units()} This function logically tests for shared
-#' unit type status. Output is either TRUE for shared unit type or FALSE if unit types
-#' differ.
+#' @description \code{aw_validate_units} conducts a logic test for shared
+#'     measurement units, which are a requirement for interpolation. This
+#'     should not be an issue if \link{aw_validate_crs} is passed, and
+#'     may not be included in the release version.
 #'
+#' @param source A \code{sf} object with data to be interpolated
+#' @param target A \code{sf} object that data should be interpolated to
 #'
-#' @param source A given source dataset
+#' @return A logical scalar; if \code{TRUE}, the test is passed.
 #'
-#' @param target A given target dataset
-#'
-#' @return A logical value output
+#' @importFrom sf st_area
 #'
 aw_validate_units <- function(source, target){
 
   # extract unit types of source and target data
-  source_unit_type <- as.character(units(st_area(source)))
-  target_unit_type <- as.character(units(st_area(target)))
+  source_unit_type <- as.character(units(sf::st_area(source)))
+  target_unit_type <- as.character(units(sf::st_area(target)))
 
-  # conditional code if both objects share same unit type
   if(source_unit_type == target_unit_type){
+
+    # if both objects share same unit type
     out <- TRUE
 
-    # conditional code if unit types between objects differ
   } else if(source_unit_type != tracts_unit_type) {
+
+    # if there are not shared units
     out <- FALSE
+
   }
+
   # return result output
   return(out)
 
