@@ -24,7 +24,7 @@ left_join(stlTracts, stlRace, by = "GEOID") %>%
   st_transform(crs = 26915) -> stlRace
 
 st_read("inst/extdata/STL_POLITICS_Wards10.shp", stringsAsFactors = FALSE) %>%
-  select(WARD10, Shape_Area) %>%
+  select(-Shape_Leng) %>%
   rename(AREA = Shape_Area,
          WARD = WARD10) %>%
   st_transform(crs = 26915) -> stlWards
