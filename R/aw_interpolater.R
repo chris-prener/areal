@@ -6,28 +6,12 @@
 #' intersection related calculations to aggregate source estimates to target.
 #'
 #' @param source A given source dataset
-#'
-#' @param target A given target dataset
-#'
-#' @param verbose An option for simple or verbose validation output
-#'
-#' @param intersection A given intersection of source and target data
-#'
 #' @param sid A given source ID field
-#'
+#' @param value A given variable of estimations to perform interpolation calculations on
+#' @param target A given target dataset
 #' @param tid A given target ID field
 #'
-#' @param vals A given variable of estimations to perform interpolation calculations on
-#'
-#' @param areaVar A given area variable
-#'
-#' @param totalVar A new total area field to be estimated
-#'
-#' @param newField A new field name
-#'
-#' @param areaWeight A given name for the area weight calculation field
-#'
-aw_interpolater <- function(source, sid, value, target, tid, areaVar, totalVar, areaWeight) {
+aw_interpolater <- function(source, sid, value, target, tid) {
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -57,44 +41,16 @@ aw_interpolater <- function(source, sid, value, target, tid, areaVar, totalVar, 
 
   tidQN <- rlang::quo_name(rlang::enquo(tid))
 
-  if (!is.character(paramList$areaVar)) {
-    areaVarQ <- rlang::enquo(areaVar)
-  } else if (is.character(paramList$areaVar)) {
-    areaVarQ <- rlang::quo(!! rlang::sym(areaVar))
-  }
-
-  if (!is.character(paramList$totalVar)) {
-    totalVarQ <- rlang::enquo(totalVar)
-  } else if (is.character(paramList$totalVar)) {
-    totalVarQ <- rlang::quo(!! rlang::sym(totalVar))
-  }
-
-  if (!is.character(paramList$areaWeight)) {
-    areaWeightQ <- rlang::enquo(areaWeight)
-  } else if (is.character(paramList$areaWeight)) {
-    areaWeightQ <- rlang::quo(!! rlang::sym(areaWeight))
-  }
-
-
-  # validate source and target data
-  val <- aw_validate(source, target)
-
-  if (val == FALSE){
-
-    stop("Data validation failed. Use st_validate with verbose = TRUE to identify concerns.")
-
-  }
-
   # strip source and target dataframes
   sourceS <- aw_strip_df(source, id = sidQN, vals = valueQN)
   targetS <- aw_strip_df(target, id = tidQN)
 
   # create intersection
-  aw_intersect(source = sourceS, target = targetS, areaVar = !!areaVarQ) %>%
-    aw_sum(sid = !!sidQ, areaVar = !!areaVarQ, totalVar = !!totalVarQ) %>%
-    aw_weight(areaVar = !!areaVarQ, totalVar = !!totalVarQ, areaWeight = !!areaWeightQ) %>%
-    aw_calculate(newField = !!valueQ, vals = !!valueQ, areaWeight = !!areaWeightQ) %>%
-    aw_aggregate(target, tid = !!tidQ, newField = !!valueQ) -> out
+  aw_intersect(targetS, source = sourceS, areaVar = "area") %>%
+    aw_sum(sid = !!sidQ, areaVar = "area", totalVar = "totalArea") %>%
+    aw_weight(areaVar = "area", totalVar = "totalArea", areaWeight = "areaWeight") %>%
+    aw_calculate(newField = !!valueQ, vals = !!valueQ, areaWeight = "areaWeight") %>%
+    aw_aggregate(target = target, tid = !!tidQ, newField = !!valueQ) -> out
 
   # verify result
   verify <- aw_verify(source = source, result = out, value = valueQN)
