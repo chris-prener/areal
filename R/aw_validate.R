@@ -152,7 +152,7 @@ aw_validate_units <- function(source, target){
     # if both objects share same unit type
     out <- TRUE
 
-  } else if(source_unit_type != tracts_unit_type) {
+  } else if(source_unit_type != target_unit_type) {
 
     # if there are not shared units
     out <- FALSE

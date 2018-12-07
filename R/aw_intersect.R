@@ -63,6 +63,9 @@ aw_intersect <- function(.data, source, areaVar) {
 #'
 aw_area <- function(.data, areaVar){
 
+  # undefined global variables note
+  geometry = NULL
+
   # save parameters to list
   paramList <- as.list(match.call())
 
