@@ -1,4 +1,14 @@
-#' Interpolate
+#' Interpolate Values
+#'
+#' @description This is the core function within the package. It evalues both the input
+#'     data sources and validates them before interpolating one or more listed values
+#'     from the source data into the target data.
+#'
+#' @details Areal weighted interpolation can be used for generating demographic
+#'     estimates for overlapping but incongruent polygon features. It assumes that
+#'     individual members of a population are evenly dispersed within the source features
+#'     (an assumption not likely to hold in the real world). It also functions best
+#'     when data are in a projected coordinate system, like the UTM coordinate system.
 #'
 #' @param .data A \code{sf} object that data should be interpolated to (this is referred
 #'     to as the \code{target} elsewhere in the package).

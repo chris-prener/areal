@@ -2,7 +2,7 @@
 % Please edit documentation in R/aw_interpolate.R
 \name{aw_interpolate}
 \alias{aw_interpolate}
-\title{Interpolate}
+\title{Interpolate Values}
 \usage{
 aw_interpolate(.data, tid, source, sid, output = "sf", ...)
 }
@@ -27,5 +27,14 @@ A \code{sf} object or a \code{tibble} with the value or values interpolated into
     the \code{target} data.
 }
 \description{
-Interpolate
+This is the core function within the package. It evalues both the input
+    data sources and validates them before interpolating one or more listed values
+    from the source data into the target data.
+}
+\details{
+Areal weighted interpolation can be used for generating demographic
+    estimates for overlapping but incongruent polygon features. It assumes that
+    individual members of a population are evenly dispersed within the source features
+    (an assumption not likely to hold in the real world). It also functions best
+    when data are in a projected coordinate system, like the UTM coordinate system.
 }
