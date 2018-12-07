@@ -245,7 +245,7 @@ aw_interpolater <- function(source, sid, value, target, tid, class) {
     aw_sum(sid = !!sidQ, areaVar = "area", totalVar = "totalArea") %>%
     aw_weight(areaVar = "area", totalVar = "totalArea", areaWeight = "areaWeight") %>%
     aw_calculate(value = !!valueQ, areaWeight = "areaWeight", newVar = !!valueQ) %>%
-    aw_aggregate(target = target, tid = !!tidQ, newField = !!valueQ) -> out
+    aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> out
 
   # verify result
   verify <- aw_verify(source = source, result = out, value = valueQN)
