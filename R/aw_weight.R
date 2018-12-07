@@ -4,6 +4,8 @@
 #'     field by the total area field. This is the third step in the interpolation
 #'     process after \link{aw_sum}.
 #'
+#' @usage aw_weight(.data, areaVar, totalVar, areaWeight)
+#'
 #' @param .data A \code{sf} object that has been intersected using \link{aw_intersect}
 #' @param areaVar The name of the variable measuring a feature's area
 #' @param totalVar The name of the variable containg total area field by \code{source} id

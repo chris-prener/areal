@@ -1,7 +1,9 @@
 #' Valdating Data for Interpolation
 #'
 #' @description \code{aw_validate} executes a series of logic tests for \code{sf} object status,
-#' shared unit types, and shared coordinates between source and target data.
+#'     shared unit types, and shared coordinates between source and target data.
+#'
+#' @usage aw_validate(source, target, verbose = FALSE)
 #'
 #' @param source A \code{sf} object with data to be interpolated
 #' @param target A \code{sf} object that data should be interpolated to

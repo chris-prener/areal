@@ -3,6 +3,8 @@
 #' @description \code{aw_calculate} multiplies the given \code{value} by the area weight. This
 #'     is the fourth step in the interpolation process after \link{aw_weight}.
 #'
+#' @usage aw_calculate(.data, value, areaWeight, newVar)
+#'
 #' @param .data A given intersected dataset
 #' @param value A column within \code{source} to be interpolated
 #' @param areaWeight The name of the variable containg area weight per feature

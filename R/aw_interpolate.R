@@ -4,6 +4,8 @@
 #'     data sources and validates them before interpolating one or more listed values
 #'     from the source data into the target data.
 #'
+#' @usage aw_interpolate(.data, tid, source, sid, output = "sf", ...)
+#'
 #' @details Areal weighted interpolation can be used for generating demographic
 #'     estimates for overlapping but incongruent polygon features. It assumes that
 #'     individual members of a population are evenly dispersed within the source features

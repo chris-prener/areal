@@ -5,6 +5,8 @@
 #'     with whatever project the data are currently in. This is the first step in the
 #'     interpolation process after data validation and subsetting.
 #'
+#' @usage aw_intersect(.data, source, areaVar)
+#'
 #' @param .data A \code{sf} object that data should be interpolated to
 #' @param source A \code{sf} object with data to be interpolated
 #' @param areaVar The name of the new area variable to be calculated.

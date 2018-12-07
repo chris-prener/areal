@@ -20,5 +20,5 @@ If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TR
 }
 \description{
 \code{aw_validate} executes a series of logic tests for \code{sf} object status,
-shared unit types, and shared coordinates between source and target data.
+    shared unit types, and shared coordinates between source and target data.
 }
