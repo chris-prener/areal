@@ -20,7 +20,8 @@ aw_interpolater(source, sid, value, target, tid, class)
 \item{class}{If \code{"tibble"}, will return a tibble instead of an \code{sf} object.}
 }
 \value{
-A \code{sf} object with \code{value} interpolated into the \code{target} data.
+A \code{sf} object or tibble with \code{value} interpolated into
+   the \code{target} data.
 }
 \description{
 \code{aw_interpolater} performs pipeline of interpolation specific

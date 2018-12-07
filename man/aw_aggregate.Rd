@@ -4,20 +4,22 @@
 \alias{aw_aggregate}
 \title{Aggregate new field of interest by target IDs}
 \usage{
-aw_aggregate(.data, target, tid, newField)
+aw_aggregate(.data, target, tid, newVar)
 }
 \arguments{
-\item{target}{A given target dataset}
+\item{.data}{A given intersected dataset}
 
-\item{tid}{A given target id}
+\item{target}{A \code{sf} object that data should be interpolated to}
 
-\item{newField}{A given new esimation field}
+\item{tid}{A unique identification number within \code{target}}
 
-\item{intersection}{A given intersected dataset}
+\item{newVar}{A new field name to store the interpolated value in}
 }
 \value{
-A target dataset with a new field for properly calculated field of interest by target IDs
+A \code{sf} object with the interpolated value added to it.
 }
 \description{
-\code{aw_aggregate()} Distributes new field estimate values by target IDs and is joined to target dataset
+\code{aw_aggregate} sums the new estimates produced by \link{aw_calculate}
+    based on the target id. These are then joined with the target data. This is
+    the fourth step in the interpolation process after \link{aw_weight}.
 }

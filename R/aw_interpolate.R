@@ -204,7 +204,8 @@ aw_strip_df <- function(.data, id, value){
 #' @param tid A unique identification number within \code{target}
 #' @param class If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
 #'
-#' @return A \code{sf} object with \code{value} interpolated into the \code{target} data.
+#' @return A \code{sf} object or tibble with \code{value} interpolated into
+#'    the \code{target} data.
 #'
 #' @importFrom dplyr select
 #' @importFrom rlang enquo
