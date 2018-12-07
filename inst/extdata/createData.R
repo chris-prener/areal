@@ -15,21 +15,22 @@ get_acs(geography = "tract", state = 29, county = 510, year = 2017, table = "B02
          ASIAN_E = B02001_005E, ASIAN_M = B02001_005M,
          NHPI_E = B02001_006E, NHPI_M = B02001_006M,
          OTHER_E = B02001_007E, OTHER_M = B02001_007M,
-         TWOPLUS_E = B02001_008E, TWOPLUS_M = B02001_008M) -> stlRace
+         TWOPLUS_E = B02001_008E, TWOPLUS_M = B02001_008M) %>%
+  select(-B02001_009E, -B02001_009M, -B02001_010E, -B02001_010M) -> stlRace
 
 tracts(state = 29, county = 510, class = "sf") %>%
   select(GEOID, STATEFP, COUNTYFP, TRACTCE, NAMELSAD, ALAND, AWATER) -> stlTracts
 
 left_join(stlTracts, stlRace, by = "GEOID") %>%
-  st_transform(crs = 26915) -> stlRace
+  st_transform(crs = 26915) -> aw_stl_race
 
 st_read("inst/extdata/STL_POLITICS_Wards10.shp", stringsAsFactors = FALSE) %>%
   select(-Shape_Leng) %>%
   rename(AREA = Shape_Area,
          WARD = WARD10) %>%
-  st_transform(crs = 26915) -> stlWards
+  st_transform(crs = 26915) -> aw_stl_wards
 
-use_data(stlRace, overwrite = TRUE)
-use_data(stlWards, overwrite = TRUE)
+use_data(aw_stl_race, overwrite = TRUE)
+use_data(aw_stl_wards, overwrite = TRUE)
 
-rm(stlRace, stlTracts, stlWards)
+rm(stlTracts, aw_stl_race, aw_stl_wards)
