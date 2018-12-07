@@ -2,7 +2,7 @@
 #'
 #' @description \code{aw_weight} creates an area weight field by dividing the area
 #'     field by the total area field. This is the third step in the interpolation
-#'     process after \link{aw_intersect}.
+#'     process after \link{aw_sum}.
 #'
 #' @param .data A \code{sf} object that has been intersected using \link{aw_intersect}
 #' @param areaVar The name of the variable measuring a feature's area

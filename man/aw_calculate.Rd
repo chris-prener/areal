@@ -4,18 +4,21 @@
 \alias{aw_calculate}
 \title{Make field new variable}
 \usage{
-aw_calculate(.data, newField, vals, areaWeight)
+aw_calculate(.data, value, areaWeight, newVar)
 }
 \arguments{
 \item{.data}{A given intersected dataset}
 
-\item{newField}{A new field name}
+\item{value}{A column within \code{source} to be interpolated}
 
-\item{vals}{A given variable of estimations to perform interpolation calculations on}
+\item{areaWeight}{The name of the variable containg area weight per feature}
+
+\item{newVar}{A new field name to store the interpolated value in}
 }
 \value{
 An intersected file of class sf with a new field of interest recalculated with area weight
 }
 \description{
-\code{aw_calculate()} Recalculates existing field by area weight and yields new field
+\code{aw_calculate} multiplies the given \code{value} by the area weight. This
+    is the fourth step in the interpolation process after \link{aw_weight}.
 }
