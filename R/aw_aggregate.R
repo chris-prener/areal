@@ -12,6 +12,7 @@
 #'
 #' @return A target dataset with a new field for properly calculated field of interest by target IDs
 #'
+#' @export
 aw_aggregate <- function(.data, target, tid, newField){
 
   # save parameters to list

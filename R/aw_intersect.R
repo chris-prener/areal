@@ -11,6 +11,7 @@
 #'
 #' @return An intersected object of class sf with calculated geometric area field
 #'
+#' @export
 aw_intersect <- function(.data, source, areaVar) {
 
   # save parameters to list

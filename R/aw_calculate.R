@@ -10,6 +10,7 @@
 #'
 #' @return An intersected file of class sf with a new field of interest recalculated with area weight
 #'
+#' @export
 aw_calculate <- function(.data, newField, vals, areaWeight){
 
   # save parameters to list

@@ -13,6 +13,7 @@
 #'
 #' @return An intersected file of class sf with field for area weight
 #'
+#' @export
 aw_weight <- function(.data, areaVar, totalVar, areaWeight){
 
   # save parameters to list

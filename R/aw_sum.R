@@ -12,6 +12,7 @@
 #'
 #' @return An intersection file of class sf with a new field for total area by source id
 #'
+#' @export
 aw_sum <- function(.data, sid, areaVar, totalVar){
 
   # save parameters to list
