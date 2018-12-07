@@ -4,15 +4,17 @@
 \alias{aw_intersect}
 \title{Intersect Source and Target Data}
 \usage{
-aw_intersect(source, target)
+aw_intersect(.data, source, areaVar)
 }
 \arguments{
 \item{source}{A given source dataset}
 
+\item{areaVar}{A given area variable}
+
 \item{target}{A given target dataset}
 }
 \value{
-An intersected object of class sf
+An intersected object of class sf with calculated geometric area field
 }
 \description{
 \code{aw_intersect()} This function intersects source and target datasets and computes a new geometric

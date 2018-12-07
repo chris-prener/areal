@@ -4,14 +4,20 @@
 \alias{aw_aggregate}
 \title{Aggregate new field of interest by target IDs}
 \usage{
-aw_aggregate(intersection)
+aw_aggregate(.data, target, tid, newField)
 }
 \arguments{
+\item{target}{A given target dataset}
+
+\item{tid}{A given target id}
+
+\item{newField}{A given new esimation field}
+
 \item{intersection}{A given intersected dataset}
 }
 \value{
 A target dataset with a new field for properly calculated field of interest by target IDs
 }
 \description{
-\code{aw_aggregate()} Aggregates new field by target IDs and is joined to target dataset
+\code{aw_aggregate()} Distributes new field estimate values by target IDs and is joined to target dataset
 }

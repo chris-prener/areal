@@ -202,7 +202,7 @@ aw_strip_df <- function(.data, id, value){
 #' @importFrom rlang quo
 #' @importFrom rlang quo_name
 #' @importFrom rlang sym
-#' @importFrom sf t_geometry
+#' @importFrom sf st_geometry
 #'
 aw_interpolater <- function(source, sid, value, target, tid, class) {
 
