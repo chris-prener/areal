@@ -35,7 +35,7 @@
 #'   \item{geometry}{simple features geometry}
 #'   }
 #'
-#' @source \link{tidycensus} package
+#' @source \code{tidycensus} package
 #'
 #' @examples
 #' str(aw_stl_race)

@@ -32,7 +32,7 @@
   \item{geometry}{simple features geometry}
   }}
 \source{
-\link{tidycensus} package
+\code{tidycensus} package
 }
 \usage{
 data(aw_stl_race)
