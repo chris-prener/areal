@@ -27,7 +27,6 @@
 #' @importFrom dplyr bind_cols
 #' @importFrom dplyr left_join
 #' @importFrom dplyr one_of
-#' @importFrom dplyr select
 #' @importFrom purrr imap
 #' @importFrom purrr map
 #' @importFrom purrr reduce
@@ -110,7 +109,7 @@ aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
     # create list of sf objects
     values %>%
       split(values) %>%
-      purrr::map(~ dplyr::select(source, !!sidQ, .x)) %>%
+      purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
       purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
                                     target = targetS, tid = !!tidQ, class = "tibble")) %>%
       purrr::reduce(.f = dplyr::bind_cols) %>%
