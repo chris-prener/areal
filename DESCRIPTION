@@ -20,7 +20,8 @@ Imports:
   dplyr,
   purrr,
   rlang,
-  sf
+  sf,
+  tibble
 RoxygenNote: 6.1.1
 Suggests:
   knitr,
