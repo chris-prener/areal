@@ -1,5 +1,32 @@
 #' Interpolate
 #'
+#' @param .data A \code{sf} object that data should be interpolated to (this is referred
+#'     to as the \code{target} elsewhere in the package).
+#' @param tid A unique identification number within \code{target}
+#' @param source A \code{sf} object with data to be interpolated
+#' @param sid A unique identification number within \code{source}
+#' @param output If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
+#' @param ... A list of columns from \code{source}, with each name quoted, that should
+#'     interpolated into the \code{target} data (these are referred to as the \code{value}
+#'     elsewhere in the package).
+#'
+#' @return A \code{sf} object or a \code{tibble} with the value or values interpolated into
+#'     the \code{target} data.
+#'
+#' @importFrom dplyr as_tibble
+#' @importFrom dplyr bind_cols
+#' @importFrom dplyr left_join
+#' @importFrom dplyr one_of
+#' @importFrom dplyr select
+#' @importFrom purrr imap
+#' @importFrom purrr map
+#' @importFrom purrr reduce
+#' @importFrom rlang enquo
+#' @importFrom rlang quo
+#' @importFrom rlang quo_name
+#' @importFrom rlang sym
+#' @importFrom sf st_geometry
+#'
 #' @export
 aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
 
@@ -54,7 +81,7 @@ aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
     valueQN <- rlang::quo_name(rlang::enquo(valueQ))
 
     # strip source and target dataframes
-    sourceS <- aw_strip_df(source, id = sidQN, vals = valueQN)
+    sourceS <- aw_strip_df(source, id = sidQN, value = valueQN)
     targetS <- aw_strip_df(.data, id = tidQN)
 
     # interpolate
@@ -103,17 +130,23 @@ aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
 
 #' Strip dataframe of all non-essential variables
 #'
-#' @description \code{aw_strip_df()} Strips dataframe of nonessential variables and keeps variables listed in parameters
+#' @description \code{aw_strip_df} is called by \code{aw_interpolate}. It
+#'     strips \code{sf} objects of nonessential variables but keeps
+#'     variables listed in parameters.
 #'
-#' @param .data A given dataframe to strip
-#'
+#' @param .data A \code{sf} object
 #' @param id A given source id field
+#' @param value Optional; the variable that estimations will be based on
 #'
-#' @param vals A given variable of estimations to perform interpolation calculations on
+#' @return A \code{sf} object with only the \code{id} and, if provided, the
+#'     \code{value} column as well.
 #'
-#' @return A dataframe stripped of nonessential variables
+#' @importFrom dplyr select
+#' @importFrom rlang enquo
+#' @importFrom rlang quo
+#' @importFrom rlang sym
 #'
-aw_strip_df <- function(.data, id, vals){
+aw_strip_df <- function(.data, id, value){
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -126,17 +159,17 @@ aw_strip_df <- function(.data, id, vals){
   }
 
   # strip variables
-  if (missing(vals)){
+  if (missing(value)){
 
     out <- dplyr::select(.data, !!idQ)
 
   } else {
 
     # additional nse for value
-    if (!is.character(paramList$vals)) {
-      valsQ <- rlang::enquo(vals)
-    } else if (is.character(paramList$vals)) {
-      valsQ <- rlang::quo(!! rlang::sym(vals))
+    if (!is.character(paramList$value)) {
+      valsQ <- rlang::enquo(value)
+    } else if (is.character(paramList$value)) {
+      valsQ <- rlang::quo(!! rlang::sym(value))
     }
 
     out <- dplyr::select(.data, !!idQ, !!valsQ)
@@ -148,18 +181,28 @@ aw_strip_df <- function(.data, id, vals){
 
 }
 
-#' Carry out interpolation calculation esimates from source to target data
+#' Carry Out Interpolation
 #'
-#' @description \code{aw_interpolater()} Perform suite of interpolation specific calculations
-#' including validation checks of coordinates, unit types, and sf status on source and target
-#' spatial dataframes, strip dataframes for pertinent values only, carry out intersection and
-#' intersection related calculations to aggregate source estimates to target.
+#' @description \code{aw_interpolater} performs pipeline of interpolation specific
+#'     calculations with \code{aw_intersect}, \code{aw_sum}, \code{aw_weight},
+#'     \code{aw_calculate}, and \code{aw_aggregate}. The interpolated total is then
+#'     verified against the total calculated from the source data using \code{aw_verify}.
 #'
-#' @param source A given source dataset
-#' @param sid A given source ID field
-#' @param value A given variable of estimations to perform interpolation calculations on
-#' @param target A given target dataset
-#' @param tid A given target ID field
+#' @param source A \code{sf} object with data to be interpolated
+#' @param sid A unique identification number within \code{source}
+#' @param value A column within \code{source} to be interpolated
+#' @param target A \code{sf} object that data should be interpolated to
+#' @param tid A unique identification number within \code{target}
+#' @param class If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
+#'
+#' @return A \code{sf} object with \code{value} interpolated into the \code{target} data.
+#'
+#' @importFrom dplyr select
+#' @importFrom rlang enquo
+#' @importFrom rlang quo
+#' @importFrom rlang quo_name
+#' @importFrom rlang sym
+#' @importFrom sf t_geometry
 #'
 aw_interpolater <- function(source, sid, value, target, tid, class) {
 
