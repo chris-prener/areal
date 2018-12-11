@@ -14,7 +14,7 @@
 #'     is \code{TRUE}, a tibble with detailed test results is returned.
 #'
 #' @export
-aw_validate <- function(source, target, verbose = FALSE){
+aw_validate <- function(source, target, varList, verbose = FALSE){
 
   # store results from all three validate subfunctions
   sf_result <- aw_validate_sf(source, target)
@@ -24,16 +24,31 @@ aw_validate <- function(source, target, verbose = FALSE){
 
     unit_result <- NA
     crs_result <- NA
+    longlat_result <- NA
+    vars_result <- NA
 
   } else if (sf_result == TRUE){
 
-    unit_result <- aw_validate_units(source, target)
+    # do both source and target have same CRS?
     crs_result <- aw_validate_crs(source, target)
+
+    # do both source and target have same measurement units?
+    unit_result <- aw_validate_units(source, target)
+
+    # are both source and target CRS values in planar?
+    longlat_result1 <- aw_validate_longlat(source)
+    longlat_result2 <- aw_validate_longlat(target)
+
+    longlat_result <- all(longlat_result1, longlat_result2)
+
+    # are there no conflicts with target variable names?
+    vars_result <- aw_validate_vars(target, varList = varList)
 
   }
 
   # determine if overall test is passed
-  if(sf_result == "TRUE" & unit_result == "TRUE" & crs_result == "TRUE") {
+  if(sf_result == "TRUE" & unit_result == "TRUE" & crs_result == "TRUE" &
+     longlat_result == "TRUE" & vars_result == "TRUE") {
 
     result <- TRUE
 
@@ -54,8 +69,9 @@ aw_validate <- function(source, target, verbose = FALSE){
   else if (verbose == TRUE){
 
     table <- data.frame(
-      test = c("SF object", "Measurement units match", "CRS match", "Overall"),
-      result = c(sf_result, unit_result, crs_result, result),
+      test = c("sf Objects", "CRS Match", "CRS Units Match", "CRS Is Planar",
+               "No Variable Conflicts", "Overall Evaluation"),
+      result = c(sf_result, crs_result, unit_result, longlat_result, vars_result, result),
       stringsAsFactors = FALSE)
 
     out <- as_tibble(table)
@@ -158,6 +174,72 @@ aw_validate_units <- function(source, target){
 
     # if there are not shared units
     out <- FALSE
+
+  }
+
+  # return result output
+  return(out)
+
+}
+
+#' Testing for type of coordinates
+#'
+#' @description \code{aw_validate_longlat} conducts a logic test for
+#'     whether or not the data are in planar format.
+#'
+#' @param .data A sf object
+#'
+#' @return A logical scalar; if \code{TRUE}, the test is passed
+#'
+#' @importFrom sf st_is_longlat
+#'
+aw_validate_longlat <- function(.data){
+
+  result <- sf::st_is_longlat(.data)
+
+  if (result == TRUE){
+
+    # if object is in lat long
+    out <- FALSE
+
+  } else if (result == FALSE){
+
+    # if object is in planar
+    out <- TRUE
+
+  }
+
+  # return result output
+  return(out)
+
+}
+
+#' Testing for Variable Conflicts
+#'
+#' @description \code{aw_validate_vars} conducts a logic test for
+#'     whether or not any of the variables to be created in the target
+#'     data already exist as named columns.
+#'
+#' @param .data A sf object
+#' @param varList A vector of variables to be created
+#'
+#' @return A logical scalar; if \code{TRUE}, the test is passed
+#'
+aw_validate_vars <- function(.data, varList){
+
+  # create logical vector
+  resultVector <- varList %in% colnames(.data)
+  result <- any(resultVector)
+
+  if (result == TRUE){
+
+    # if at least one variable name is in target
+    out <- FALSE
+
+  } else if (result == FALSE){
+
+    # if no existing variable names are in target
+    out <- TRUE
 
   }
 

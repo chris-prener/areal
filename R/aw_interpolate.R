@@ -64,11 +64,11 @@ aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
   tidQN <- rlang::quo_name(rlang::enquo(tid))
 
   # validate source and target data
-  val <- aw_validate(source = source, target = .data)
+  val <- aw_validate(source = source, target = .data, varList = args)
 
   if (val == FALSE){
 
-    stop("Data validation failed. Use st_validate with verbose = TRUE to identify concerns.")
+    stop("Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
 
   }
 
@@ -254,7 +254,7 @@ aw_interpolater <- function(source, sid, value, target, tid, class) {
 
   if (verify == FALSE){
 
-    stop("Interpolation error - the sum of the result's value does not equal the sum of the source's value.")
+    warning("Possibly problematic interpolation result - the sum of the result's value does not equal the sum of the source's value.")
 
   }
 
