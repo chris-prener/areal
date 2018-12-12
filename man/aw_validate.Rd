@@ -4,12 +4,14 @@
 \alias{aw_validate}
 \title{Valdating Data for Interpolation}
 \usage{
-aw_validate(source, target, verbose = FALSE)
+aw_validate(source, target, varList, verbose = FALSE)
 }
 \arguments{
 \item{source}{A \code{sf} object with data to be interpolated}
 
 \item{target}{A \code{sf} object that data should be interpolated to}
+
+\item{varList}{A vector of variable names to be added to the \code{target} object}
 
 \item{verbose}{A logical scalar; if \code{TRUE}, a tibble with test results is returned}
 }

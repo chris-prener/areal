@@ -45,6 +45,12 @@ aw_weight <- function(.data, areaVar, totalVar, areaWeight){
 
   totalVarQN <- rlang::quo_name(rlang::enquo(totalVar))
 
+  if (!is.character(paramList$areaWeight)) {
+    areaWeightQ <- rlang::enquo(areaWeight)
+  } else if (is.character(paramList$areaWeight)) {
+    areaWeightQ <- rlang::quo(!! rlang::sym(areaWeight))
+  }
+
   areaWeightQN <- rlang::quo_name(rlang::enquo(areaWeight))
 
   intersectQN <- rlang::quo_name(rlang::enquo(.data))

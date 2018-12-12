@@ -3,10 +3,11 @@
 #' @description \code{aw_validate} executes a series of logic tests for \code{sf} object status,
 #'     shared unit types, and shared coordinates between source and target data.
 #'
-#' @usage aw_validate(source, target, verbose = FALSE)
+#' @usage aw_validate(source, target, varList, verbose = FALSE)
 #'
 #' @param source A \code{sf} object with data to be interpolated
 #' @param target A \code{sf} object that data should be interpolated to
+#' @param varList A vector of variable names to be added to the \code{target} object
 #' @param verbose A logical scalar; if \code{TRUE}, a tibble with test results is returned
 #'
 #' @return If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TRUE}
