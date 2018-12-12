@@ -14,6 +14,7 @@
 #' @return A \code{sf} object with the intersected data and new area weight field.
 #'
 #' @importFrom dplyr mutate
+#' @importFrom glue glue
 #' @importFrom rlang :=
 #' @importFrom rlang enquo
 #' @importFrom rlang quo

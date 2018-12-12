@@ -18,6 +18,7 @@
 #' @importFrom dplyr group_by
 #' @importFrom dplyr left_join
 #' @importFrom dplyr summarize
+#' @importFrom glue glue
 #' @importFrom rlang :=
 #' @importFrom rlang enquo
 #' @importFrom rlang quo

@@ -13,6 +13,7 @@
 #' @return An intersected file of class sf with a new field of interest recalculated with area weight
 #'
 #' @importFrom dplyr mutate
+#' @importFrom glue glue
 #' @importFrom rlang :=
 #' @importFrom rlang enquo
 #' @importFrom rlang quo

@@ -14,6 +14,7 @@
 #' @return A \code{sf} object with the intersected data and new area field.
 #'
 #' @importFrom dplyr %>%
+#' @importFrom glue glue
 #' @importFrom rlang enquo
 #' @importFrom rlang quo
 #' @importFrom rlang quo_name

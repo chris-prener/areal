@@ -12,6 +12,8 @@
 #'
 #' @return A logical scalar; if \code{TRUE}, these two values are equal.
 #'
+#' @importFrom glue glue
+#'
 #' @export
 aw_verify <- function(source, sourceValue, result, resultValue){
 

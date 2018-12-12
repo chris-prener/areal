@@ -13,6 +13,8 @@
 #'     is all tests are passed and \code{FALSE} if one or more tests is failed. If \code{verbose}
 #'     is \code{TRUE}, a tibble with detailed test results is returned.
 #'
+#' @importFrom glue glue
+#'
 #' @export
 aw_validate <- function(source, target, varList, verbose = FALSE){
 
