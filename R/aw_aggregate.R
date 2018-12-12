@@ -46,6 +46,33 @@ aw_aggregate <- function(.data, target, tid, newVar){
 
   newFieldQN <- rlang::quo_name(rlang::enquo(newVar))
 
+  intersectQN <- rlang::quo_name(rlang::enquo(.data))
+  targetQN <- rlang::quo_name(rlang::enquo(target))
+
+  # validate intersected data exists
+  if (intersectQN != "."){
+
+    if (!exists(intersectQN)) {
+
+      stop(glue::glue("Object '{intersectQN}' not found."))
+
+    }
+
+  }
+
+  # validate target exists
+  if (!exists(targetQN)) {
+
+    stop(glue::glue("Object '{targetQN}' not found."))
+
+  }
+
+  # check variables
+  if(!!tidQN %in% colnames(target) == FALSE) {
+    stop(glue::glue("Variable '{var}', given for the target ID ('tid'), cannot be found in the given target object.",
+                    var = tidQ))
+  }
+
   # remove geometry
   sf::st_geometry(.data) <- NULL
 

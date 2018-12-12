@@ -35,6 +35,27 @@ aw_intersect <- function(.data, source, areaVar) {
 
   areaVarQN <- rlang::quo_name(rlang::enquo(areaVarQ))
 
+  targetQN <- rlang::quo_name(rlang::enquo(.data))
+  sourceQN <- rlang::quo_name(rlang::enquo(source))
+
+  # validate target exists
+  if (targetQN != "."){
+
+    if (!exists(targetQN)) {
+
+      stop(glue::glue("Object '{targetQN}' not found."))
+
+    }
+
+  }
+
+  # validate source exists
+  if (!exists(sourceQN)) {
+
+    stop(glue::glue("Object '{sourceQN}' not found."))
+
+  }
+
   # preform intersection
   intersection <- suppressWarnings(sf::st_intersection(source, .data))
 

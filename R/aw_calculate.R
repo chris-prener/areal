@@ -32,12 +32,44 @@ aw_calculate <- function(.data, value, areaWeight, newVar){
     areaWeightQ <- rlang::quo(!! rlang::sym(areaWeight))
   }
 
+  areaWeightQN <- rlang::quo_name(rlang::enquo(areaWeight))
+
   newFieldQN <- rlang::quo_name(rlang::enquo(newVar))
 
   if (!is.character(paramList$value)) {
     valsQ <- rlang::enquo(value)
   } else if (is.character(paramList$value)) {
     valsQ <- rlang::quo(!! rlang::sym(value))
+  }
+
+  valsQN <- rlang::quo_name(rlang::enquo(value))
+
+  intersectQN <- rlang::quo_name(rlang::enquo(.data))
+
+  # validate intersected data exists
+  if (intersectQN != "."){
+
+    if (!exists(intersectQN)) {
+
+      stop(glue::glue("Object '{intersectQN}' not found."))
+
+    }
+
+  }
+
+  # check variables
+  if(!!valsQN %in% colnames(.data) == FALSE) {
+    stop(glue::glue("Variable '{var}', given for the value, cannot be found in the given intersected object.",
+                    var = valsQ))
+  }
+
+  if (!!areaWeightQN != "...areaWeight"){
+
+    if(!!areaWeightQN %in% colnames(.data) == FALSE) {
+      stop(glue::glue("Variable '{var}', given for the area weight, cannot be found in the given intersected object.",
+                      var = areaWeightQ))
+    }
+
   }
 
   # recalculate source values of interest using area weight and assign as new field

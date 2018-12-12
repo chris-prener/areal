@@ -87,12 +87,12 @@ aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
 
   # check variables
   if(!!sidQN %in% colnames(source) == FALSE) {
-    stop(glue::glue("Variable '{var}', given for the source ID ('sid'), cannot be found in the given source object",
+    stop(glue::glue("Variable '{var}', given for the source ID ('sid'), cannot be found in the given source object.",
                     var = sidQ))
   }
 
   if(!!tidQN %in% colnames(.data) == FALSE) {
-    stop(glue::glue("Variable '{var}', given for the target ID ('tid'), cannot be found in the given target object",
+    stop(glue::glue("Variable '{var}', given for the target ID ('tid'), cannot be found in the given target object.",
                     var = tidQ))
   }
 
@@ -276,14 +276,15 @@ aw_interpolater <- function(source, sid, value, target, tid, class) {
   }
 
   # create intersection
-  aw_intersect(target, source = source, areaVar = "...area") %>%
+  target %>%
+    aw_intersect(source = source, areaVar = "...area") %>%
     aw_sum(sid = !!sidQ, areaVar = "...area", totalVar = "...totalArea") %>%
     aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
     aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
-    aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> out
+    aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> Interpolated.Data.Out
 
   # verify result
-  verify <- aw_verify(source = source, sourceValue = valueQN, result = out, resultValue = valueQN)
+  verify <- aw_verify(source = source, sourceValue = !!valueQ, result = Interpolated.Data.Out, resultValue = !!valueQ)
 
   if (verify == FALSE){
 
@@ -294,11 +295,11 @@ aw_interpolater <- function(source, sid, value, target, tid, class) {
   # clean output
   if (class == "tibble"){
 
-    sf::st_geometry(out) <- NULL
+    sf::st_geometry(Interpolated.Data.Out) <- NULL
 
   }
 
   # return target output
-  return(out)
+  return(Interpolated.Data.Out)
 
 }

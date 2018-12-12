@@ -46,7 +46,37 @@ aw_sum <- function(.data, sid, areaVar, totalVar){
     areaVarQ <- rlang::quo(!! rlang::sym(areaVar))
   }
 
+  areaVarQN <- rlang::quo_name(rlang::enquo(areaVar))
+
   totalVarQN <- rlang::quo_name(rlang::enquo(totalVar))
+
+  intersectQN <- rlang::quo_name(rlang::enquo(.data))
+
+  # validate intersected data exists
+  if (intersectQN != "."){
+
+    if (!exists(intersectQN)) {
+
+      stop(glue::glue("Object '{intersectQN}' not found."))
+
+    }
+
+  }
+
+  # check variables
+  if(!!sidQN %in% colnames(.data) == FALSE) {
+    stop(glue::glue("Variable '{var}', given for the source ID ('sid'), cannot be found in the given intersected object.",
+                    var = sidQ))
+  }
+
+  if (!!areaVarQN != "...area"){
+
+    if(!!areaVarQN %in% colnames(.data) == FALSE) {
+      stop(glue::glue("Variable '{var}', given for the area, cannot be found in the given intersected object.",
+                      var = areaVarQ))
+    }
+
+  }
 
   # remove geometry
   df <- .data

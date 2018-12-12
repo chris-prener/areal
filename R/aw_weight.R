@@ -34,13 +34,58 @@ aw_weight <- function(.data, areaVar, totalVar, areaWeight){
     areaVarQ <- rlang::quo(!! rlang::sym(areaVar))
   }
 
+  areaVarQN <- rlang::quo_name(rlang::enquo(areaVar))
+
   if (!is.character(paramList$totalVar)) {
     totalVarQ <- rlang::enquo(totalVar)
   } else if (is.character(paramList$totalVar)) {
     totalVarQ <- rlang::quo(!! rlang::sym(totalVar))
   }
 
+  totalVarQN <- rlang::quo_name(rlang::enquo(totalVar))
+
   areaWeightQN <- rlang::quo_name(rlang::enquo(areaWeight))
+
+  intersectQN <- rlang::quo_name(rlang::enquo(.data))
+
+  # validate intersected data exists
+  if (intersectQN != "."){
+
+    if (!exists(intersectQN)) {
+
+      stop(glue::glue("Object '{intersectQN}' not found."))
+
+    }
+
+  }
+
+  # check variables
+  if (!!areaVarQN != "...area"){
+
+    if(!!areaVarQN %in% colnames(.data) == FALSE) {
+      stop(glue::glue("Variable '{var}', given for the area, cannot be found in the given intersected object.",
+                      var = areaVarQ))
+    }
+
+  }
+
+  if (!!areaWeightQN != "...areaWeight"){
+
+    if(!!areaWeightQN %in% colnames(.data) == FALSE) {
+      stop(glue::glue("Variable '{var}', given for the area weight, cannot be found in the given intersected object.",
+                      var = areaWeightQ))
+    }
+
+  }
+
+  if (!!totalVarQN != "...totalArea"){
+
+    if(!!totalVarQN %in% colnames(.data) == FALSE) {
+      stop(glue::glue("Variable '{var}', given for the total area, cannot be found in the given intersected object.",
+                      var = totalVarQ))
+    }
+
+  }
 
   # calculate area weight of intersection slivers
   out <- dplyr::mutate(.data, !!areaWeightQN := !!areaVarQ / !!totalVarQ)
