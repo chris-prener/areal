@@ -113,7 +113,7 @@ aw_interpolate <- function(.data, tid, source, sid, type = "extensive", output =
   # call aw_interpolater
   if (length(args) == 0) {
 
-    stop("Error")
+    stop("Interpolation failed - specify one or more variables to interpolate.")
 
   } else if (length(args) == 1) {
 
