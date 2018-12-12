@@ -41,6 +41,7 @@
 #' @export
 aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
 
+  # save arguments to list
   args <- rlang::list2(...)
 
   # save parameters to list
@@ -62,6 +63,38 @@ aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
   }
 
   tidQN <- rlang::quo_name(rlang::enquo(tid))
+
+  targetQN <- rlang::quo_name(rlang::enquo(.data))
+  sourceQN <- rlang::quo_name(rlang::enquo(source))
+
+  # validate target exists
+  if (targetQN != "."){
+
+    if (!exists(targetQN)) {
+
+      stop(glue::glue("Object '{targetQN}' not found."))
+
+    }
+
+  }
+
+  # validate source exists
+  if (!exists(sourceQN)) {
+
+    stop(glue::glue("Object '{sourceQN}' not found."))
+
+  }
+
+  # check variables
+  if(!!sidQN %nin% colnames(source)) {
+    stop(glue::glue("Variable '{var}', given for the source ID ('sid'), cannot be found in the given source object",
+                    var = sidQ))
+  }
+
+  if(!!tidQN %nin% colnames(.data)) {
+    stop(glue::glue("Variable '{var}', given for the target ID ('tid'), cannot be found in the given target object",
+                    var = tidQ))
+  }
 
   # validate source and target data
   val <- aw_validate(source = source, target = .data, varList = args)
@@ -243,10 +276,10 @@ aw_interpolater <- function(source, sid, value, target, tid, class) {
   }
 
   # create intersection
-  aw_intersect(target, source = source, areaVar = "area") %>%
-    aw_sum(sid = !!sidQ, areaVar = "area", totalVar = "totalArea") %>%
-    aw_weight(areaVar = "area", totalVar = "totalArea", areaWeight = "areaWeight") %>%
-    aw_calculate(value = !!valueQ, areaWeight = "areaWeight", newVar = !!valueQ) %>%
+  aw_intersect(target, source = source, areaVar = "...area") %>%
+    aw_sum(sid = !!sidQ, areaVar = "...area", totalVar = "...totalArea") %>%
+    aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
+    aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
     aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> out
 
   # verify result
@@ -269,3 +302,29 @@ aw_interpolater <- function(source, sid, value, target, tid, class) {
   return(out)
 
 }
+
+#' Not In Operator
+#'
+#' Provides the compliment to the base R \code{\%in\%} operator. Included here instead of via import
+#' due to stability issues with the source package, \href{https://github.com/harrelfe/Hmisc/blob/master/R/in.operator.s}{\code{Hmsic}},
+#' during original package development in October, 2017. Used under terms of
+#' \href{https://CRAN.R-project.org/package=Hmisc}{\code{Hmisc}}'s
+#' \href{https://cran.r-project.org/web/licenses/GPL-3}{GPL-3 License}.
+#'
+#' @param x vector or \code{NULL}: the values to be matched
+#' @param y vector or \code{NULL}: the values to be matched against
+#'
+#' @source \href{https://github.com/harrelfe/Hmisc/blob/master/R/in.operator.s}{\code{Hmsic}}
+#'
+#' @examples
+#' x <- 2
+#' y <- 2
+#' z <- 3
+#'
+#' x %in% y
+#' x %nin% y
+#'
+#' x %in% z
+#' x %nin% z
+#'
+"%nin%" <- function(x, y) match(x, y, nomatch = 0) == 0
