@@ -86,12 +86,12 @@ aw_interpolate <- function(.data, tid, source, sid, output = "sf", ...){
   }
 
   # check variables
-  if(!!sidQN %nin% colnames(source)) {
+  if(!!sidQN %in% colnames(source) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the source ID ('sid'), cannot be found in the given source object",
                     var = sidQ))
   }
 
-  if(!!tidQN %nin% colnames(.data)) {
+  if(!!tidQN %in% colnames(.data) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the target ID ('tid'), cannot be found in the given target object",
                     var = tidQ))
   }
@@ -302,29 +302,3 @@ aw_interpolater <- function(source, sid, value, target, tid, class) {
   return(out)
 
 }
-
-#' Not In Operator
-#'
-#' Provides the compliment to the base R \code{\%in\%} operator. Included here instead of via import
-#' due to stability issues with the source package, \href{https://github.com/harrelfe/Hmisc/blob/master/R/in.operator.s}{\code{Hmsic}},
-#' during original package development in October, 2017. Used under terms of
-#' \href{https://CRAN.R-project.org/package=Hmisc}{\code{Hmisc}}'s
-#' \href{https://cran.r-project.org/web/licenses/GPL-3}{GPL-3 License}.
-#'
-#' @param x vector or \code{NULL}: the values to be matched
-#' @param y vector or \code{NULL}: the values to be matched against
-#'
-#' @source \href{https://github.com/harrelfe/Hmisc/blob/master/R/in.operator.s}{\code{Hmsic}}
-#'
-#' @examples
-#' x <- 2
-#' y <- 2
-#' z <- 3
-#'
-#' x %in% y
-#' x %nin% y
-#'
-#' x %in% z
-#' x %nin% z
-#'
-"%nin%" <- function(x, y) match(x, y, nomatch = 0) == 0
