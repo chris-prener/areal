@@ -14,8 +14,9 @@ aw_interpolate(wards, tid = WARD, source = race2, sid = "GEOID", output = "tibbl
 
 wards %>%
   select(-OBJECTID, -AREA) %>%
-  aw_interpolate(tid = WARD, source = race, sid = "GEOID", output = "sf", "TOTAL_E", "WHITE_E", "BLACK_E")
+  aw_interpolate(tid = WARD, source = race, sid = "GEOID", type = "extensive", output = "sf",
+                 "TOTAL_E", "WHITE_E", "BLACK_E")
 
 wards2 <- select(wards, -OBJECTID, -AREA)
 
-aw_interpolate(wards2, tid = WARD, source = race, sid = "GEOID", output = "sf", "TOTAL_E")
+aw_interpolate(wards2, tid = WARD, source = race, sid = "GEOID", type = "extensive", output = "sf", "TOTAL_E")

@@ -4,7 +4,7 @@
 \alias{aw_interpolate}
 \title{Interpolate Values}
 \usage{
-aw_interpolate(.data, tid, source, sid, output = "sf", ...)
+aw_interpolate(.data, tid, source, sid, type = "extensive", output = "sf", ...)
 }
 \arguments{
 \item{.data}{A \code{sf} object that data should be interpolated to (this is referred
@@ -15,6 +15,11 @@ to as the \code{target} elsewhere in the package).}
 \item{source}{A \code{sf} object with data to be interpolated}
 
 \item{sid}{A unique identification number within \code{source}}
+
+\item{type}{One of either \code{"extensive"} (if the data are spatitally extensive e.g.
+population counts) or \code{"intensive"} (if the data are spatially intensive e.g.
+population density). If \code{"extensive"}, the sum is returned for the interpolated
+value. If \code{"intensive"}, the mean is returned for the interpolated value.}
 
 \item{output}{If \code{"tibble"}, will return a tibble instead of an \code{sf} object.}
 

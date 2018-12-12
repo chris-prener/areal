@@ -4,7 +4,7 @@
 \alias{aw_interpolater}
 \title{Carry Out Interpolation}
 \usage{
-aw_interpolater(source, sid, value, target, tid, class)
+aw_interpolater(source, sid, value, target, tid, type, class)
 }
 \arguments{
 \item{source}{A \code{sf} object with data to be interpolated}
@@ -16,6 +16,11 @@ aw_interpolater(source, sid, value, target, tid, class)
 \item{target}{A \code{sf} object that data should be interpolated to}
 
 \item{tid}{A unique identification number within \code{target}}
+
+\item{type}{One of either \code{"extensive"} (if the data are spatitally extensive e.g.
+population counts) or \code{"intensive"} (if the data are spatially intensive e.g.
+population density). If \code{"extensive"}, the sum is returned for the interpolated
+value. If \code{"intensive"}, the mean is returned for the interpolated value.}
 
 \item{class}{If \code{"tibble"}, will return a tibble instead of an \code{sf} object.}
 }
