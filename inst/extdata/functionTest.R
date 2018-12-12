@@ -16,5 +16,6 @@ wards %>%
   select(-OBJECTID, -AREA) %>%
   aw_interpolate(tid = WARD, source = race, sid = "GEOID", output = "sf", "TOTAL_E", "WHITE_E", "BLACK_E")
 
-wards %>%
-  aw_intersect()
+wards2 <- select(wards, -OBJECTID, -AREA)
+
+aw_interpolate(wards2, tid = WARD, source = race, sid = "GEOID", output = "sf", "TOTAL_E")
