@@ -25,6 +25,7 @@ Imports:
   tibble
 RoxygenNote: 6.1.1
 Suggests:
-  knitr,
-  rmarkdown
+    knitr,
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
