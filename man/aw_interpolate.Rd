@@ -4,7 +4,7 @@
 \alias{aw_interpolate}
 \title{Interpolate Values}
 \usage{
-aw_interpolate(.data, tid, source, sid, type, output, ...)
+aw_interpolate(.data, tid, source, sid, type, weight, output, ...)
 }
 \arguments{
 \item{.data}{A \code{sf} object that data should be interpolated to (this is referred
@@ -23,6 +23,9 @@ intensive values). If \code{"extensive"}, the sum is returned for the interpolat
 value. If \code{"intensive"}, the mean is returned for the interpolated value.
 If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
 the relevant variable names should be specified in the dots.}
+
+\item{weight}{For \code{"extensive"} interpolations, should be either \code{"total"} or
+\code{"sum"}. For \code{"intensive"} interpolations, should be \code{"sum"}.}
 
 \item{output}{One of either \code{"sf"} or \code{"tibble"}}
 

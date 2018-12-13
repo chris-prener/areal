@@ -4,17 +4,23 @@
 \alias{aw_sum}
 \title{Create new total area field in intersection}
 \usage{
-aw_sum(.data, sid, areaVar, totalVar)
+aw_sum(.data, source, id, areaVar, totalVar, type, weight)
 }
 \arguments{
 \item{.data}{A \code{sf} object that has been intersected using \link{aw_intersect}}
 
-\item{sid}{A unique identification number within \code{source}}
+\item{source}{A \code{sf} object with data to be interpolated}
+
+\item{id}{A unique identification number}
 
 \item{areaVar}{The name of the variable measuring a feature's area, which is
 created as part of \link{aw_intersect}}
 
 \item{totalVar}{The name of a new total area field to be calculated}
+
+\item{type}{One of \code{"intensive"} or \code{"extensive"}}
+
+\item{weight}{One of \code{"sum"} or \code{"total"}}
 }
 \value{
 A \code{sf} object with the intersected data and new total area field.

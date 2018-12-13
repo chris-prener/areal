@@ -42,3 +42,6 @@ wards %>%
                  extensive = c("TOTAL_E", "BLACK_E"), intensive = "pctAsthma")
 
 
+wards %>%
+  aw_intersect(source = race, areaVar = area) -> pkg
+

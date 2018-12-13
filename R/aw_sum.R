@@ -4,19 +4,24 @@
 #'     the total area by \code{source} id. This is the second step in the
 #'     interpolation process after \link{aw_intersect}.
 #'
-#' @usage aw_sum(.data, sid, areaVar, totalVar)
+#' @usage aw_sum(.data, source, id, areaVar, totalVar, type, weight)
 #'
 #' @param .data A \code{sf} object that has been intersected using \link{aw_intersect}
-#' @param sid A unique identification number within \code{source}
+#' @param source A \code{sf} object with data to be interpolated
+#' @param id A unique identification number
 #' @param areaVar The name of the variable measuring a feature's area, which is
 #'     created as part of \link{aw_intersect}
 #' @param totalVar The name of a new total area field to be calculated
+#' @param type One of \code{"intensive"} or \code{"extensive"}
+#' @param weight One of \code{"sum"} or \code{"total"}
 #'
 #' @return A \code{sf} object with the intersected data and new total area field.
 #'
 #' @importFrom dplyr %>%
 #' @importFrom dplyr group_by
 #' @importFrom dplyr left_join
+#' @importFrom dplyr mutate
+#' @importFrom dplyr select
 #' @importFrom dplyr summarize
 #' @importFrom glue glue
 #' @importFrom rlang :=
@@ -27,18 +32,21 @@
 #' @importFrom sf st_geometry
 #'
 #' @export
-aw_sum <- function(.data, sid, areaVar, totalVar){
+aw_sum <- function(.data, source, id, areaVar, totalVar, type, weight){
 
   # save parameters to list
   paramList <- as.list(match.call())
+
+  # global binding
+  geometry = NULL
 
   # check for missing parameters
   if (missing(.data)) {
     stop("A sf object containing intersected data must be specified for the '.data' argument.")
   }
 
-  if (missing(sid)) {
-    stop("A variable name must be specified for the 'sid' argument.")
+  if (missing(id)) {
+    stop("A variable name must be specified for the 'id' argument.")
   }
 
   if (missing(areaVar)) {
@@ -49,14 +57,16 @@ aw_sum <- function(.data, sid, areaVar, totalVar){
     stop("A variable name must be specified for the 'totalVar' argument.")
   }
 
+  # need errors for type and weight
+
   # nse
-  if (!is.character(paramList$sid)) {
-    sidQ <- rlang::enquo(sid)
-  } else if (is.character(paramList$sid)) {
-    sidQ <- rlang::quo(!! rlang::sym(sid))
+  if (!is.character(paramList$id)) {
+    idQ <- rlang::enquo(id)
+  } else if (is.character(paramList$id)) {
+    idQ <- rlang::quo(!! rlang::sym(id))
   }
 
-  sidQN <- rlang::quo_name(rlang::enquo(sid))
+  idQN <- rlang::quo_name(rlang::enquo(id))
 
   if (!is.character(paramList$areaVar)) {
     areaVarQ <- rlang::enquo(areaVar)
@@ -81,10 +91,12 @@ aw_sum <- function(.data, sid, areaVar, totalVar){
 
   }
 
+  # need to validate that source data exists
+
   # check variables
-  if(!!sidQN %in% colnames(.data) == FALSE) {
-    stop(glue::glue("Variable '{var}', given for the source ID ('sid'), cannot be found in the given intersected object.",
-                    var = sidQ))
+  if(!!idQN %in% colnames(.data) == FALSE) {
+    stop(glue::glue("Variable '{var}', given for the ID ('id'), cannot be found in the given intersected object.",
+                    var = idQ))
   }
 
   if (!!areaVarQN != "...area"){
@@ -96,17 +108,33 @@ aw_sum <- function(.data, sid, areaVar, totalVar){
 
   }
 
-  # remove geometry
-  df <- .data
-  sf::st_geometry(df) <- NULL
+  if (type == "intensive" | (type == "extensive" & weight == "sum")){
 
-  # calculate total area
-  df %>%
-    dplyr::group_by(!!sidQ) %>%
-    dplyr::summarize(!!totalVarQN := base::sum(!!areaVarQ)) -> sum
+    # remove geometry
+    df <- .data
+    sf::st_geometry(df) <- NULL
 
-  # join to input data
-  out <- dplyr::left_join(.data, sum, by = sidQN)
+    # calculate sum of source area
+    df %>%
+      dplyr::group_by(!!idQ) %>%
+      dplyr::summarize(!!totalVarQN := base::sum(!!areaVarQ)) -> sum
+
+    # join to input data
+    out <- dplyr::left_join(.data, sum, by = idQN)
+
+  } else if (type == "extensive" & weight == "total"){
+
+    # calculate total source area
+    source %>%
+      dplyr::select(!!idQ) %>%
+      dplyr::mutate(!!totalVarQN := unclass(sf::st_area(geometry))) -> total
+
+    sf::st_geometry(total) <- NULL
+
+    # join to input data
+    out <- dplyr::left_join(.data, total, by = idQN)
+
+  }
 
   # return output
   return(out)

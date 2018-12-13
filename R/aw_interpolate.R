@@ -4,7 +4,7 @@
 #'     data sources and validates them before interpolating one or more listed values
 #'     from the source data into the target data.
 #'
-#' @usage aw_interpolate(.data, tid, source, sid, type, output, ...)
+#' @usage aw_interpolate(.data, tid, source, sid, type, weight, output, ...)
 #'
 #' @details Areal weighted interpolation can be used for generating demographic
 #'     estimates for overlapping but incongruent polygon features. It assumes that
@@ -24,6 +24,8 @@
 #'     value. If \code{"intensive"}, the mean is returned for the interpolated value.
 #'     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
 #'     the relevant variable names should be specified in the dots.
+#' @param weight For \code{"extensive"} interpolations, should be either \code{"total"} or
+#'     \code{"sum"}. For \code{"intensive"} interpolations, should be \code{"sum"}.
 #' @param output One of either \code{"sf"} or \code{"tibble"}
 #' @param ... If the \code{class} argument is \code{"extensive"} or \code{"intensive"},
 #'     this should be a list of columns from \code{source}, with each name quoted, that should
@@ -52,7 +54,7 @@
 #' @importFrom sf st_geometry
 #'
 #' @export
-aw_interpolate <- function(.data, tid, source, sid, type, output, ...){
+aw_interpolate <- function(.data, tid, source, sid, type, weight, output, ...){
 
   # save arguments to list
   args <- rlang::list2(...)
@@ -187,7 +189,7 @@ aw_interpolate <- function(.data, tid, source, sid, type, output, ...){
 
     # interpolate
     est <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
-                           tid = !!tidQ, type = type, class = "sf")
+                           tid = !!tidQ, type = type, weight = weight, class = "sf")
 
   } else if ((type == "extensive" | type == "intensive") & length(args) > 1) {
 
@@ -203,7 +205,8 @@ aw_interpolate <- function(.data, tid, source, sid, type, output, ...){
       split(values) %>%
       purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
       purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
-                                    target = targetS, tid = !!tidQ, type = type, class = "tibble")) %>%
+                                    target = targetS, tid = !!tidQ, type = type,
+                                    weight = weight, class = "tibble")) %>%
       purrr::reduce(.f = dplyr::bind_cols) %>%
       dplyr::select(dplyr::one_of(vars)) -> data
 
@@ -233,7 +236,7 @@ aw_interpolate <- function(.data, tid, source, sid, type, output, ...){
 
       # interpolate
       extensive <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
-                             tid = !!tidQ, type = "extensive", class = "tibble")
+                             tid = !!tidQ, type = "extensive", weight = weight, class = "tibble")
 
     } else if (length(args$extensive) > 1){
 
@@ -249,7 +252,8 @@ aw_interpolate <- function(.data, tid, source, sid, type, output, ...){
         split(values) %>%
         purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
         purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
-                                      target = targetS, tid = !!tidQ, type = "extensive", class = "tibble")) %>%
+                                      target = targetS, tid = !!tidQ, type = "extensive",  weight = weight,
+                                      class = "tibble")) %>%
         purrr::reduce(.f = dplyr::bind_cols) %>%
         dplyr::select(dplyr::one_of(vars)) -> extensive
 
@@ -292,7 +296,8 @@ aw_interpolate <- function(.data, tid, source, sid, type, output, ...){
         split(values) %>%
         purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
         purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
-                                      target = targetS, tid = !!tidQ, type = "intensive", class = "tibble")) %>%
+                                      target = targetS, tid = !!tidQ, type = "intensive",
+                                      class = "tibble")) %>%
         purrr::reduce(.f = dplyr::bind_cols) %>%
         dplyr::select(dplyr::one_of(vars)) -> intensive
 
@@ -395,6 +400,8 @@ aw_strip_df <- function(.data, id, value){
 #'     value. If \code{"intensive"}, the mean is returned for the interpolated value.
 #'     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
 #'     the relevant variable names should be specified in the dots.
+#' @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
+#'     \code{"sum"}.
 #' @param class If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
 #'
 #' @return A \code{sf} object or tibble with \code{value} interpolated into
@@ -407,7 +414,7 @@ aw_strip_df <- function(.data, id, value){
 #' @importFrom rlang sym
 #' @importFrom sf st_geometry
 #'
-aw_interpolater <- function(source, sid, value, target, tid, type, class) {
+aw_interpolater <- function(source, sid, value, target, tid, type, weight, class) {
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -438,23 +445,25 @@ aw_interpolater <- function(source, sid, value, target, tid, type, class) {
 
     target %>%
       aw_intersect(source = source, areaVar = "...area") %>%
-      aw_sum(sid = !!sidQ, areaVar = "...area", totalVar = "...totalArea") %>%
+      aw_sum(source = source, id = !!sidQ, areaVar = "...area", totalVar = "...totalArea",
+             type = "extensive", weight = weight) %>%
       aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
       aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
       aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> Interpolated.Data.Out
 
     # verify result
-    if (aw_verify(source = source, sourceValue = !!valueQ, result = Interpolated.Data.Out, resultValue = !!valueQ) == FALSE){
+    # if (aw_verify(source = source, sourceValue = !!valueQ, result = Interpolated.Data.Out, resultValue = !!valueQ) == FALSE){
 
-      warning("Possibly problematic interpolation result - the sum of the result's value does not equal the sum of the source's value.")
+    #  warning("Possibly problematic interpolation result - the sum of the result's value does not equal the sum of the source's value.")
 
-    }
+    # }
 
   } else if (type == "intensive"){
 
     target %>%
       aw_intersect(source = source, areaVar = "...area") %>%
-      aw_sum(sid = !!tidQ, areaVar = "...area", totalVar = "...totalArea") %>%
+      aw_sum(source = source, id = !!tidQ, areaVar = "...area", totalVar = "...totalArea",
+             weight = weight, type = "intensive") %>%
       aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
       aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
       aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> Interpolated.Data.Out

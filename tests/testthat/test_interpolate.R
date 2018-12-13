@@ -17,12 +17,16 @@ asthmaCompare <- sf::st_interpolate_aw(asthma["ASTHMA"], wards, extensive = FALS
 
 # test results ------------------------------------------------
 
-totalResult <- aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "extensive",
-                          output = "sf", "TOTAL_E")
+totalResult1 <- aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "extensive",
+                               weight = "sum", output = "sf", "TOTAL_E")
+
+totalResult2 <- aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "extensive",
+                               weight = "total", output = "sf", "TOTAL_E")
 
 asthmaResult <- aw_interpolate(wards, tid = WARD, source = asthma, sid = "GEOID", type = "intensive",
-                              output = "sf", "ASTHMA")
+                               output = "sf", weight = "sum", "ASTHMA")
 
 test_that("interpolated values are equal", {
+  expect_equal(totalCompare$TOTAL_E, totalResult2$TOTAL_E)
   expect_equal(asthmaCompare$ASTHMA, asthmaResult$ASTHMA)
 })
