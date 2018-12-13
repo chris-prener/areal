@@ -4,7 +4,7 @@
 \alias{aw_interpolate}
 \title{Interpolate Values}
 \usage{
-aw_interpolate(.data, tid, source, sid, type = "extensive", output = "sf", ...)
+aw_interpolate(.data, tid, source, sid, type, output, ...)
 }
 \arguments{
 \item{.data}{A \code{sf} object that data should be interpolated to (this is referred
@@ -24,7 +24,7 @@ value. If \code{"intensive"}, the mean is returned for the interpolated value.
 If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
 the relevant variable names should be specified in the dots.}
 
-\item{output}{If \code{"tibble"}, will return a tibble instead of an \code{sf} object.}
+\item{output}{One of either \code{"sf"} or \code{"tibble"}}
 
 \item{...}{If the \code{class} argument is \code{"extensive"} or \code{"intensive"},
 this should be a list of columns from \code{source}, with each name quoted, that should

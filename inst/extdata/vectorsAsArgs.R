@@ -2,11 +2,11 @@ test <- function(...){
 
   args <- rlang::list2(...)
 
-  out <- args[[1]][2]
+  out <- c(args$extensive, args$intensive)
 
   return(out)
 
 }
 
 
-test(c("ham", "intensive"), c("cars", "extensive"))
+test(extensive = c("ham", "bacon"), intensive = c("eggs"))

@@ -19,4 +19,8 @@ wards %>%
 
 wards2 <- select(wards, -OBJECTID, -AREA)
 
-aw_interpolate(wards2, tid = WARD, source = race, sid = "GEOID", type = "extensive", output = "sf", "TOTAL_E")
+aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "extensive", output = "sf", "TOTAL_E")
+
+aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "mixed", output = "sf", "TOTAL_E")
+
+aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "ham", output = "sf", "TOTAL_E")

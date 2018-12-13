@@ -4,7 +4,7 @@
 #'     data sources and validates them before interpolating one or more listed values
 #'     from the source data into the target data.
 #'
-#' @usage aw_interpolate(.data, tid, source, sid, type = "extensive", output = "sf", ...)
+#' @usage aw_interpolate(.data, tid, source, sid, type, output, ...)
 #'
 #' @details Areal weighted interpolation can be used for generating demographic
 #'     estimates for overlapping but incongruent polygon features. It assumes that
@@ -24,7 +24,7 @@
 #'     value. If \code{"intensive"}, the mean is returned for the interpolated value.
 #'     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
 #'     the relevant variable names should be specified in the dots.
-#' @param output If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
+#' @param output One of either \code{"sf"} or \code{"tibble"}
 #' @param ... If the \code{class} argument is \code{"extensive"} or \code{"intensive"},
 #'     this should be a list of columns from \code{source}, with each name quoted, that should
 #'     interpolated into the \code{target} data (these are referred to as the \code{value}
@@ -52,13 +52,57 @@
 #' @importFrom sf st_geometry
 #'
 #' @export
-aw_interpolate <- function(.data, tid, source, sid, type = "extensive", output = "sf", ...){
+aw_interpolate <- function(.data, tid, source, sid, type, output, ...){
 
   # save arguments to list
   args <- rlang::list2(...)
 
   # save parameters to list
   paramList <- as.list(match.call())
+
+  # check for missing parameters
+  if (missing(tid)) {
+    stop("A variable name must be specified for the 'tid' argument.")
+  }
+
+  if (missing(source)) {
+    stop("A sf object must be specified for the 'source' argument.")
+  }
+
+  if (missing(sid)) {
+    stop("A variable name must be specified for the 'sid' argument.")
+  }
+
+  if (missing(type)) {
+    stop("An interpolation type must be specified for the 'type' argument.")
+  }
+
+  if (missing(output)) {
+    stop("An output type must be specified for the 'output' argument.")
+  }
+
+  # check for misspecified parameters
+  if (type %in% c("extensive", "intensive", "mixed") == FALSE){
+    stop(glue::glue("The given interpolation type '{var}' is not valid. 'type' must be one of 'extensive', 'intensive', or 'mixed'.",
+                    var = type))
+  }
+
+  if ((type == "extensive" | type == "intensive") & length(args) == 0){
+    stop("Specify one or more variables to interpolate.")
+  }
+
+  if ((type == "extensive" | type == "intensive") & ("extensive" %in% names(args) == TRUE | "intensive" %in% names(args) == TRUE)){
+    stop("If you have vectors named 'extensive' and 'intensive' specified in the dots, 'type' must be 'mixed'.")
+  }
+
+  if (type == "mixed" & ("extensive" %in% names(args) == FALSE | "intensive" %in% names(args) == FALSE)){
+    stop("Two vectors named 'extensive' and 'intensive' must be specified in the dots if 'type' is 'mixed'.")
+  }
+
+  if (output %in% c("sf", "tibble") == FALSE){
+    stop(glue::glue("The given output type '{var}' is not valid. 'output' must be either 'sf' or 'tibble'.",
+                    var = output))
+  }
 
   # nse
   if (!is.character(paramList$sid)) {
@@ -81,13 +125,9 @@ aw_interpolate <- function(.data, tid, source, sid, type = "extensive", output =
   sourceQN <- rlang::quo_name(rlang::enquo(source))
 
   # validate target exists
-  if (targetQN != "."){
+  if (targetQN != "." & !exists(targetQN)){
 
-    if (!exists(targetQN)) {
-
-      stop(glue::glue("Object '{targetQN}' not found."))
-
-    }
+    stop(glue::glue("Object '{targetQN}' not found."))
 
   }
 
@@ -110,20 +150,24 @@ aw_interpolate <- function(.data, tid, source, sid, type = "extensive", output =
   }
 
   # validate source and target data
-  val <- aw_validate(source = source, target = .data, varList = args)
+  if (type == "extensive" | type == "intensive"){
 
-  if (val == FALSE){
+    vars <- args
+
+  } else if (type == "mixed"){
+
+    vars <- c(args$extensive, args$intensive)
+
+  }
+
+  if (aw_validate(source = source, target = .data, varList = vars) == FALSE){
 
     stop("Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
 
   }
 
   # call aw_interpolater
-  if (length(args) == 0) {
-
-    stop("Interpolation failed. Specify one or more variables to interpolate.")
-
-  } else if (length(args) == 1) {
+  if ((type == "extensive" | type == "intensive") & length(args) == 1) {
 
     # store argument as scalar
     value <- args[[1]]
@@ -145,7 +189,7 @@ aw_interpolate <- function(.data, tid, source, sid, type = "extensive", output =
     est <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
                            tid = !!tidQ, type = type, class = "sf")
 
-  } else if (length(args) > 1) {
+  } else if ((type == "extensive" | type == "intensive") & length(args) > 1) {
 
     # convert dots list to vector
     values <- unlist(args, recursive = TRUE)
@@ -165,6 +209,10 @@ aw_interpolate <- function(.data, tid, source, sid, type = "extensive", output =
 
     # left join with target data
     est <- dplyr::left_join(.data, data, by = tidQN)
+
+  } else if (type == "mixed"){
+
+    stop('mixed not enabled yet')
 
   }
 
