@@ -2,6 +2,7 @@
 
 library(dplyr)
 library(sf)
+library(stldata)
 library(tidycensus)
 library(tigris)
 library(usethis)
@@ -30,7 +31,14 @@ st_read("inst/extdata/STL_POLITICS_Wards10.shp", stringsAsFactors = FALSE) %>%
          WARD = WARD10) %>%
   st_transform(crs = 26915) -> aw_stl_wards
 
+stl_tbl_asthma %>%
+  rename(GEOID = geoID, ASTHMA = pctAsthma) %>%
+  select(GEOID, ASTHMA) %>%
+  left_join(aw_stl_race, ., by = "GEOID") %>%
+  select(GEOID, STATEFP, COUNTYFP, TRACTCE, NAMELSAD, ALAND, AWATER, ASTHMA) -> aw_stl_asthma
+
 use_data(aw_stl_race, overwrite = TRUE)
 use_data(aw_stl_wards, overwrite = TRUE)
+use_data(aw_stl_asthma, overwrite = TRUE)
 
-rm(stlTracts, aw_stl_race, aw_stl_wards)
+rm(stlRace, stlTracts, aw_stl_race, aw_stl_wards, aw_stl_asthma)
