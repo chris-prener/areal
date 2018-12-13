@@ -354,9 +354,7 @@ aw_interpolater <- function(source, sid, value, target, tid, type, class) {
       aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> Interpolated.Data.Out
 
     # verify result
-    verify <- aw_verify(source = source, sourceValue = !!valueQ, result = Interpolated.Data.Out, resultValue = !!valueQ)
-
-    if (verify == FALSE){
+    if (aw_verify(source = source, sourceValue = !!valueQ, result = Interpolated.Data.Out, resultValue = !!valueQ) == FALSE){
 
       warning("Possibly problematic interpolation result - the sum of the result's value does not equal the sum of the source's value.")
 
@@ -364,11 +362,9 @@ aw_interpolater <- function(source, sid, value, target, tid, type, class) {
 
   } else if (type == "intensive"){
 
-    stop("intensive interpolation not enabled")
-
     target %>%
       aw_intersect(source = source, areaVar = "...area") %>%
-      aw_sum(sid = !!sidQ, areaVar = "...area", totalVar = "...totalArea") %>%
+      aw_sum(sid = !!tidQ, areaVar = "...area", totalVar = "...totalArea") %>%
       aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
       aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
       aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> Interpolated.Data.Out
