@@ -212,7 +212,97 @@ aw_interpolate <- function(.data, tid, source, sid, type, output, ...){
 
   } else if (type == "mixed"){
 
-    stop('mixed not enabled yet')
+    # conduct spatially extensive interpolations
+    if (length(args$extensive) == 1){
+
+      # store argument as scalar
+      value <- args$extensive[[1]]
+
+      # nse
+      if (!is.character(value)) {
+        valueQ <- rlang::enquo(value)
+      } else if (is.character(value)) {
+        valueQ <- rlang::quo(!! rlang::sym(value))
+      }
+
+      valueQN <- rlang::quo_name(rlang::enquo(valueQ))
+
+      # strip source and target dataframes
+      sourceS <- aw_strip_df(source, id = sidQN, value = valueQN)
+      targetS <- aw_strip_df(.data, id = tidQN)
+
+      # interpolate
+      extensive <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
+                             tid = !!tidQ, type = "extensive", class = "tibble")
+
+    } else if (length(args$extensive) > 1){
+
+      # convert dots list to vector
+      values <- args$extensive
+      vars <- c(tidQN, args$extensive)
+
+      # strip target dataframe
+      targetS <- aw_strip_df(.data, id = tidQN)
+
+      # create list of sf objects
+      values %>%
+        split(values) %>%
+        purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
+        purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
+                                      target = targetS, tid = !!tidQ, type = "extensive", class = "tibble")) %>%
+        purrr::reduce(.f = dplyr::bind_cols) %>%
+        dplyr::select(dplyr::one_of(vars)) -> extensive
+
+    }
+
+    # conduct spatially intensive interpolations
+    if (length(args$intensive) == 1){
+
+      # store argument as scalar
+      value <- args$intensive[[1]]
+
+      # nse
+      if (!is.character(value)) {
+        valueQ <- rlang::enquo(value)
+      } else if (is.character(value)) {
+        valueQ <- rlang::quo(!! rlang::sym(value))
+      }
+
+      valueQN <- rlang::quo_name(rlang::enquo(valueQ))
+
+      # strip source and target dataframes
+      sourceS <- aw_strip_df(source, id = sidQN, value = valueQN)
+      targetS <- aw_strip_df(.data, id = tidQN)
+
+      # interpolate
+      intensive <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
+                                   tid = !!tidQ, type = "intensive", class = "tibble")
+
+    } else if (length(args$intensive) > 1){
+
+      # convert dots list to vector
+      values <- args$intensive
+      vars <- c(tidQN, args$intensive)
+
+      # strip target dataframe
+      targetS <- aw_strip_df(.data, id = tidQN)
+
+      # create list of sf objects
+      values %>%
+        split(values) %>%
+        purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
+        purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
+                                      target = targetS, tid = !!tidQ, type = "intensive", class = "tibble")) %>%
+        purrr::reduce(.f = dplyr::bind_cols) %>%
+        dplyr::select(dplyr::one_of(vars)) -> intensive
+
+    }
+
+    # combine spatially extensive and intensive data
+    data <- dplyr::left_join(extensive, intensive, by = tidQN)
+
+    # left join with target data
+    est <- dplyr::left_join(.data, data, by = tidQN)
 
   }
 
