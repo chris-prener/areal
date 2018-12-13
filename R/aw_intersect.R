@@ -27,6 +27,19 @@ aw_intersect <- function(.data, source, areaVar) {
   # save parameters to list
   paramList <- as.list(match.call())
 
+  # check for missing parameters
+  if (missing(.data)) {
+    stop("A sf object containing target data must be specified for the '.data' argument.")
+  }
+
+  if (missing(source)) {
+    stop("A sf object containing source data must be specified for the 'source' argument.")
+  }
+
+  if (missing(areaVar)) {
+    stop("A variable name must be specified for the 'areaVar' argument.")
+  }
+
   # nse
   if (!is.character(paramList$areaVar)) {
     areaVarQ <- rlang::enquo(areaVar)

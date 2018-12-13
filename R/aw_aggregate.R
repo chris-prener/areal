@@ -30,6 +30,23 @@ aw_aggregate <- function(.data, target, tid, newVar){
   # save parameters to list
   paramList <- as.list(match.call())
 
+  # check for missing parameters
+  if (missing(.data)) {
+    stop("A sf object containing intersected data must be specified for the '.data' argument.")
+  }
+
+  if (missing(target)) {
+    stop("A sf object must be specified for the 'target' argument.")
+  }
+
+  if (missing(tid)) {
+    stop("A variable name must be specified for the 'tid' argument.")
+  }
+
+  if (missing(newVar)) {
+    stop("A variable name must be specified for the 'newVar' argument.")
+  }
+
   # nse
   if (!is.character(paramList$tid)) {
     tidQ <- rlang::enquo(tid)

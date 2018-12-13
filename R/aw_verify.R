@@ -20,6 +20,24 @@ aw_verify <- function(source, sourceValue, result, resultValue){
   # save parameters to list
   paramList <- as.list(match.call())
 
+  # check for missing parameters
+  if (missing(source)) {
+    stop("A sf object containing source data must be specified for the 'source' argument.")
+  }
+
+  if (missing(sourceValue)) {
+    stop("A variable name must be specified for the 'sourceValue' argument.")
+  }
+
+  if (missing(result)) {
+    stop("A sf object containing interpolated data must be specified for the 'result' argument.")
+  }
+
+
+  if (missing(resultValue)) {
+    stop("A variable name must be specified for the 'resultValue' argument.")
+  }
+
   # nse
   if (!is.character(paramList$sourceValue)) {
     sourceValueQ <- rlang::enquo(sourceValue)
@@ -59,9 +77,17 @@ aw_verify <- function(source, sourceValue, result, resultValue){
   }
 
   # check variables
+  if (length(sourceValueQN) > 1){
+    stop("The 'sourceVar' parameter should have only one variable name given.")
+  }
+
   if(!!sourceValueQN %in% colnames(source) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the source value, cannot be found in the given source object.",
                     var = sourceValueQ))
+  }
+
+  if (length(resultValueQN) > 1){
+    stop("The 'resultVar' parameter should have only one variable name given.")
   }
 
   if(!!resultValueQN %in% colnames(result) == FALSE) {

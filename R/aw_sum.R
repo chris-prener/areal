@@ -32,6 +32,23 @@ aw_sum <- function(.data, sid, areaVar, totalVar){
   # save parameters to list
   paramList <- as.list(match.call())
 
+  # check for missing parameters
+  if (missing(.data)) {
+    stop("A sf object containing intersected data must be specified for the '.data' argument.")
+  }
+
+  if (missing(sid)) {
+    stop("A variable name must be specified for the 'sid' argument.")
+  }
+
+  if (missing(areaVar)) {
+    stop("A variable name must be specified for the 'areaVar' argument.")
+  }
+
+  if (missing(totalVar)) {
+    stop("A variable name must be specified for the 'totalVar' argument.")
+  }
+
   # nse
   if (!is.character(paramList$sid)) {
     sidQ <- rlang::enquo(sid)

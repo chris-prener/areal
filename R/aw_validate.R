@@ -19,6 +19,20 @@
 #' @export
 aw_validate <- function(source, target, varList, verbose = FALSE){
 
+  # check for missing parameters
+  if (missing(source)) {
+    stop("A sf object containing source data must be specified for the 'source' argument.")
+  }
+
+  if (missing(target)) {
+    stop("A sf object containing target data must be specified for the 'target' argument.")
+  }
+
+
+  if (missing(varList)) {
+    stop("A variable name must be specified for the 'varList' argument.")
+  }
+
   # nse
   sourceQN <- rlang::quo_name(rlang::enquo(source))
   targetQN <- rlang::quo_name(rlang::enquo(target))

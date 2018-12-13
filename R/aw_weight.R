@@ -27,8 +27,24 @@ aw_weight <- function(.data, areaVar, totalVar, areaWeight){
   # save parameters to list
   paramList <- as.list(match.call())
 
-  # nse
+  # check for missing parameters
+  if (missing(.data)) {
+    stop("A sf object containing intersected data must be specified for the '.data' argument.")
+  }
 
+  if (missing(areaVar)) {
+    stop("A variable name must be specified for the 'areaVar' argument.")
+  }
+
+  if (missing(totalVar)) {
+    stop("A variable name must be specified for the 'totalVar' argument.")
+  }
+
+  if (missing(areaWeight)) {
+    stop("A variable name must be specified for the 'areaWeight' argument.")
+  }
+
+  # nse
   if (!is.character(paramList$areaVar)) {
     areaVarQ <- rlang::enquo(areaVar)
   } else if (is.character(paramList$areaVar)) {
