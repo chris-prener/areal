@@ -50,7 +50,9 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
     unit_result <- NA
     crs_result <- NA
     longlat_result <- NA
-    vars_result <- NA
+    vars_exist_result <- NA
+    vars_conflict_result <- NA
+
 
   } else if (sf_result == TRUE){
 
@@ -67,13 +69,15 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
     longlat_result <- all(longlat_result1, longlat_result2)
 
     # are there no conflicts with target variable names?
-    vars_result <- aw_validate_vars(target, varList = varList)
+    vars_conflict_result <- aw_validate_vars_conflict(target, varList = varList)
+    vars_exist_result <- aw_validate_vars_exist(source, varList = varList)
 
   }
 
   # determine if overall test is passed
   if(sf_result == "TRUE" & unit_result == "TRUE" & crs_result == "TRUE" &
-     longlat_result == "TRUE" & vars_result == "TRUE") {
+     longlat_result == "TRUE" & vars_exist_result == "TRUE" &
+     vars_conflict_result == "TRUE") {
 
     result <- TRUE
 
@@ -95,8 +99,10 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
 
     table <- data.frame(
       test = c("sf Objects", "CRS Match", "CRS Units Match", "CRS Is Planar",
-               "No Variable Conflicts", "Overall Evaluation"),
-      result = c(sf_result, crs_result, unit_result, longlat_result, vars_result, result),
+               "Variables Exist in Source", "No Variable Conflicts in Target",
+               "Overall Evaluation"),
+      result = c(sf_result, crs_result, unit_result, longlat_result, vars_exist_result,
+                 vars_conflict_result, result),
       stringsAsFactors = FALSE)
 
     out <- as_tibble(table)
@@ -239,9 +245,9 @@ aw_validate_longlat <- function(.data){
 
 }
 
-#' Testing for Variable Conflicts
+#' Testing for Variable Conflicts in Target
 #'
-#' @description \code{aw_validate_vars} conducts a logic test for
+#' @description \code{aw_validate_vars_conflict} conducts a logic test for
 #'     whether or not any of the variables to be created in the target
 #'     data already exist as named columns.
 #'
@@ -250,7 +256,7 @@ aw_validate_longlat <- function(.data){
 #'
 #' @return A logical scalar; if \code{TRUE}, the test is passed
 #'
-aw_validate_vars <- function(.data, varList){
+aw_validate_vars_conflict <- function(.data, varList){
 
   # create logical vector
   resultVector <- varList %in% colnames(.data)
@@ -267,6 +273,27 @@ aw_validate_vars <- function(.data, varList){
     out <- TRUE
 
   }
+
+  # return result output
+  return(out)
+
+}
+
+#' Testing for Variables Existing in Source
+#'
+#' @description \code{aw_validate_vars_exist} conducts a logic test for
+#'     whether or not all variables exist in the source data.
+#'
+#' @param .data A sf object
+#' @param varList A vector of variables assumed to exist.
+#'
+#' @return A logical scalar; if \code{TRUE}, the test is passed
+#'
+aw_validate_vars_exist <- function(.data, varList){
+
+  # create logical vector
+  resultVector <- varList %in% colnames(.data)
+  out <- all(resultVector)
 
   # return result output
   return(out)
