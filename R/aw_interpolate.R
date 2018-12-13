@@ -18,16 +18,24 @@
 #' @param source A \code{sf} object with data to be interpolated
 #' @param sid A unique identification number within \code{source}
 #' @param type One of either \code{"extensive"} (if the data are spatitally extensive e.g.
-#'     population counts) or \code{"intensive"} (if the data are spatially intensive e.g.
-#'     population density). If \code{"extensive"}, the sum is returned for the interpolated
+#'     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
+#'     population density), or \code{"mixed"} (if the data include both extensive and
+#'     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
 #'     value. If \code{"intensive"}, the mean is returned for the interpolated value.
+#'     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
+#'     the relevant variable names should be specified in the dots.
 #' @param output If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
-#' @param ... A list of columns from \code{source}, with each name quoted, that should
+#' @param ... If the \code{class} argument is \code{"extensive"} or \code{"intensive"},
+#'     this should be a list of columns from \code{source}, with each name quoted, that should
 #'     interpolated into the \code{target} data (these are referred to as the \code{value}
-#'     elsewhere in the package).
+#'     elsewhere in the package). If the \code{class} argument is \code{"mixed"}, this should
+#'     contain two vectors created using \code{c()} named \code{"extensive"} and \code{"intensive"}
+#'     containing the relevant variable names.
 #'
 #' @return A \code{sf} object or a \code{tibble} with the value or values interpolated into
 #'     the \code{target} data.
+#'
+#' @seealso \link{c}
 #'
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr bind_cols
@@ -113,7 +121,7 @@ aw_interpolate <- function(.data, tid, source, sid, type = "extensive", output =
   # call aw_interpolater
   if (length(args) == 0) {
 
-    stop("Interpolation failed - specify one or more variables to interpolate.")
+    stop("Interpolation failed. Specify one or more variables to interpolate.")
 
   } else if (length(args) == 1) {
 
@@ -243,9 +251,12 @@ aw_strip_df <- function(.data, id, value){
 #' @param target A \code{sf} object that data should be interpolated to
 #' @param tid A unique identification number within \code{target}
 #' @param type One of either \code{"extensive"} (if the data are spatitally extensive e.g.
-#'     population counts) or \code{"intensive"} (if the data are spatially intensive e.g.
-#'     population density). If \code{"extensive"}, the sum is returned for the interpolated
+#'     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
+#'     population density), or \code{"mixed"} (if the data include both extensive and
+#'     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
 #'     value. If \code{"intensive"}, the mean is returned for the interpolated value.
+#'     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
+#'     the relevant variable names should be specified in the dots.
 #' @param class If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
 #'
 #' @return A \code{sf} object or tibble with \code{value} interpolated into

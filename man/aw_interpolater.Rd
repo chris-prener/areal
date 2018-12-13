@@ -18,9 +18,12 @@ aw_interpolater(source, sid, value, target, tid, type, class)
 \item{tid}{A unique identification number within \code{target}}
 
 \item{type}{One of either \code{"extensive"} (if the data are spatitally extensive e.g.
-population counts) or \code{"intensive"} (if the data are spatially intensive e.g.
-population density). If \code{"extensive"}, the sum is returned for the interpolated
-value. If \code{"intensive"}, the mean is returned for the interpolated value.}
+population counts), \code{"intensive"} (if the data are spatially intensive e.g.
+population density), or \code{"mixed"} (if the data include both extensive and
+intensive values). If \code{"extensive"}, the sum is returned for the interpolated
+value. If \code{"intensive"}, the mean is returned for the interpolated value.
+If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
+the relevant variable names should be specified in the dots.}
 
 \item{class}{If \code{"tibble"}, will return a tibble instead of an \code{sf} object.}
 }
