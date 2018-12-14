@@ -8,10 +8,10 @@ data(aw_stl_wards, package = "areal")
 # source data
 data(aw_stl_race, package = "areal")
 data(aw_stl_asthma, package = "areal")
+load(system.file("testdata", "combinedData.rda", package = "areal", mustWork = TRUE))
 
 # create comparison data
-load(system.file("extdata", "combinedData.rda", package = "areal", mustWork = TRUE))
-load(system.file("extdata", "totalCompare1.rda", package = "areal", mustWork = TRUE))
+load(system.file("testdata", "totalCompare1.rda", package = "areal", mustWork = TRUE))
 totalCompare2 <- suppressWarnings(sf::st_interpolate_aw(aw_stl_race["TOTAL_E"], aw_stl_wards, extensive = TRUE))
 asthmaCompare <- suppressWarnings(sf::st_interpolate_aw(aw_stl_asthma["ASTHMA"], aw_stl_wards, extensive = FALSE))
 
@@ -63,20 +63,6 @@ test_that("correctly specified functions execute without error", {
                               weight = "sum", output = "sf", intensive = "ASTHMA"), NA)
   expect_error(aw_interpolate(aw_stl_wards, tid = "WARD", source = aw_stl_asthma, sid = "GEOID",
                               weight = "sum", output = "sf", intensive = "ASTHMA"), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = "WARD", source = aw_stl_asthma, sid = "GEOID",
-                              weight = "sum", output = "sf", intensive = c("ASTHMA", "ASTHMA2")), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = "TOTAL_E",
-                              intensive = "ASTHMA"), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
-                              weight = "total", output = "sf", extensive = "TOTAL_E",
-                              intensive = "ASTHMA"), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
-                              intensive = c("ASTHMA", "ASTHMA2")), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = "WARD", source = combinedData, sid = "GEOID",
-                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
-                              intensive = c("ASTHMA", "ASTHMA2")), NA)
 })
 
 # test results ------------------------------------------------
