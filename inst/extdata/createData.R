@@ -37,8 +37,17 @@ stl_tbl_asthma %>%
   left_join(aw_stl_race, ., by = "GEOID") %>%
   select(GEOID, STATEFP, COUNTYFP, TRACTCE, NAMELSAD, ALAND, AWATER, ASTHMA) -> aw_stl_asthma
 
+st_read("inst/extdata/STL_POLITICS_WardsClipped.shp", stringsAsFactors = FALSE) %>%
+  select(-OBJECTID) %>%
+  st_transform(crs = 26915) -> aw_stl_wardsClipped
+
+aw_stl_wards %>%
+  select(-AREA) %>%
+  st_write(.,"inst/stlWards.shp", delete_dsn = TRUE)
+
 use_data(aw_stl_race, overwrite = TRUE)
 use_data(aw_stl_wards, overwrite = TRUE)
+use_data(aw_stl_wardsClipped, overwrite = TRUE)
 use_data(aw_stl_asthma, overwrite = TRUE)
 
-rm(stlRace, stlTracts, aw_stl_race, aw_stl_wards, aw_stl_asthma)
+rm(stlRace, stlTracts, aw_stl_race, aw_stl_wards, aw_stl_asthma, aw_stl_wardsClipped)
