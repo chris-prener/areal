@@ -12,18 +12,19 @@ Status](https://ci.appveyor.com/api/projects/status/github/slu-openGIS/areal?bra
 status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=master)
 [![CRAN\_status\_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 
-`areal` offers an intuitive assortment of options to validate,
-interpolate, and compare fields between a source and target data set.
-While methods for implementing areal weighted interpolation are
-available outside of the `R` ecosystem (ex - toolboxes in ArcGIS) and
-within `R` (the `sf` package’s `st_interpolate_aw`) function, `areal`
-fills a niche by providing additional functionality not available in
-`sf` while taking advantage of the reproducibility of `R`.
-
-`areal` currently implents only areal weighted interpolation, but a
-roadmap is being developed to add additional interpolation methods as
-well. This will be posted on the package’s website before the initial
-CRAN release.
+`areal` offers an intuitive toolkit for validating and interpolating
+spatial data. Areal interpolations is the process making estimates about
+the population features from a source set of polygons to an overlapping
+but incongruent set of target polygons - is the lack of easy to use
+tools for completing the processes. While methods for implementing
+various areal interpolation approaches are available outside of the `R`
+ecosystem (ex - toolboxes in ArcGIS) and within `R` (the `sf` package’s
+`st_interpolate_aw`) function, `areal` fills a niche by providing
+additional functionality not available in `sf` while taking advantage of
+the reproducibility of `R`. `areal` currently implents only areal
+weighted interpolation, but a roadmap is being developed to add
+additional interpolation methods as well. This will be posted on the
+package’s website before the initial CRAN release.
 
 ## Installation
 
