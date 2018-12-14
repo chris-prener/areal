@@ -34,9 +34,16 @@ wards <- aw_stl_wards
 [![Coverage status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=master)
 [![CRAN_status_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 
-While methods to interpolate multiple spatial data sets are currently available in the ArcGIS Suite and the `R` package `sf`, `areal` offers an intuitive assortment of options to validate, interpolate, and compare fields between a source and target data set. 
+`areal` offers an intuitive assortment of options to validate, interpolate, and compare fields between a source and target data set. While methods for implementing areal weighted interpolation are available outside of the `R` ecosystem (ex - toolboxes in ArcGIS) and within `R` (the `sf` package's `st_interpolate_aw`) function, `areal` fills a niche by providing additional functionality not available in `sf` while taking advantage of the reproducibility of `R`. 
+
+`areal` currently implents only areal weighted interpolation, but a roadmap is being developed to add additional interpolation methods as well. This will be posted on the package's website before the initial CRAN release.
 
 ## Installation
+### Installing Dependencies
+
+You should check the [`sf` package website](https://r-spatial.github.io/sf/) for the latest details on installing dependencies for that package. Instructions vary significantly by operating system. For best results, have `sf` installed before you install `qualmap`. Other dependencies, like `dplyr`, will be installed automatically with `areal` if they are not already present.
+
+### Installing areal
 The development version of `areal` can be accessed from Github with `remotes`:
 
 ```r
@@ -97,10 +104,11 @@ Both extensive and intensive data can be interpolated simultaneously by setting 
 
 ```{r mixed}
 # remove sf geometry
-st_geometry(race) <- NULL
+raceTable <- race
+st_geometry(raceTable) <- NULL
 
 # create combined data
-race %>%
+raceTable %>%
   select(GEOID, TOTAL_E, WHITE_E, BLACK_E) %>%
   left_join(asthma, ., by = "GEOID") -> combinedData
 
@@ -115,7 +123,7 @@ aw_interpolate(wards, tid = WARD, source = combinedData, sid = "GEOID", type = "
 Output can be either a tibble (shown in the prior example) or an `sf` object:
 
 ```{r sf-output}
-aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "extensive", 
+aw_interpolate(wards, tid = "WARD", source = race, sid = "GEOID", type = "extensive", 
                weight = "sum", output = "sf", "TOTAL_E", "WHITE_E", "BLACK_E")
 ```
 
