@@ -36,7 +36,7 @@ A \code{sf} object or tibble with \code{value} interpolated into
 }
 \description{
 \code{aw_interpolater} performs pipeline of interpolation specific
-    calculations with \code{aw_intersect}, \code{aw_sum}, \code{aw_weight},
+    calculations with \code{aw_intersect}, \code{aw_total}, \code{aw_weight},
     \code{aw_calculate}, and \code{aw_aggregate}. The interpolated total is then
     verified against the total calculated from the source data using \code{aw_verify}.
 }

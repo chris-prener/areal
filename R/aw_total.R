@@ -1,10 +1,10 @@
 #' Create new total area field in intersection
 #'
-#' @description \code{aw_sum} produces a new total area field that contains
+#' @description \code{aw_total} produces a new total area field that contains
 #'     the total area by \code{source} id. This is the second step in the
 #'     interpolation process after \link{aw_intersect}.
 #'
-#' @usage aw_sum(.data, source, id, areaVar, totalVar, type, weight)
+#' @usage aw_total(.data, source, id, areaVar, totalVar, type, weight)
 #'
 #' @param .data A \code{sf} object that has been intersected using \link{aw_intersect}
 #' @param source A \code{sf} object with data to be interpolated
@@ -32,7 +32,7 @@
 #' @importFrom sf st_geometry
 #'
 #' @export
-aw_sum <- function(.data, source, id, areaVar, totalVar, type, weight){
+aw_total <- function(.data, source, id, areaVar, totalVar, type, weight){
 
   # save parameters to list
   paramList <- as.list(match.call())

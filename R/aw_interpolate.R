@@ -384,7 +384,7 @@ aw_strip_df <- function(.data, id, value){
 #' Carry Out Interpolation
 #'
 #' @description \code{aw_interpolater} performs pipeline of interpolation specific
-#'     calculations with \code{aw_intersect}, \code{aw_sum}, \code{aw_weight},
+#'     calculations with \code{aw_intersect}, \code{aw_total}, \code{aw_weight},
 #'     \code{aw_calculate}, and \code{aw_aggregate}. The interpolated total is then
 #'     verified against the total calculated from the source data using \code{aw_verify}.
 #'
@@ -445,24 +445,17 @@ aw_interpolater <- function(source, sid, value, target, tid, type, weight, class
 
     target %>%
       aw_intersect(source = source, areaVar = "...area") %>%
-      aw_sum(source = source, id = !!sidQ, areaVar = "...area", totalVar = "...totalArea",
+      aw_total(source = source, id = !!sidQ, areaVar = "...area", totalVar = "...totalArea",
              type = "extensive", weight = weight) %>%
       aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
       aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
       aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> Interpolated.Data.Out
 
-    # verify result
-    # if (aw_verify(source = source, sourceValue = !!valueQ, result = Interpolated.Data.Out, resultValue = !!valueQ) == FALSE){
-
-    #  warning("Possibly problematic interpolation result - the sum of the result's value does not equal the sum of the source's value.")
-
-    # }
-
   } else if (type == "intensive"){
 
     target %>%
       aw_intersect(source = source, areaVar = "...area") %>%
-      aw_sum(source = source, id = !!tidQ, areaVar = "...area", totalVar = "...totalArea",
+      aw_total(source = source, id = !!tidQ, areaVar = "...area", totalVar = "...totalArea",
              weight = weight, type = "intensive") %>%
       aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
       aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
