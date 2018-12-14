@@ -79,6 +79,20 @@ aw_preview_weights <- function(.data, tid, source, sid, type){
   targetQN <- rlang::quo_name(rlang::enquo(.data))
   sourceQN <- rlang::quo_name(rlang::enquo(source))
 
+  # validate target exists
+  if (targetQN != "." & !exists(targetQN)){
+
+    stop(glue::glue("Object '{targetQN}' not found."))
+
+  }
+
+  # validate source exists
+  if (!exists(sourceQN)) {
+
+    stop(glue::glue("Object '{sourceQN}' not found."))
+
+  }
+
   # check variables
   if(!!sidQN %in% colnames(source) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the source ID ('sid'), cannot be found in the given source object.",
