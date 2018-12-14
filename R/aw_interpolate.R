@@ -281,7 +281,7 @@ aw_interpolate <- function(.data, tid, source, sid, type, weight, output, ...){
 
       # interpolate
       intensive <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
-                                   tid = !!tidQ, type = "intensive", class = "tibble")
+                                   tid = !!tidQ, type = "intensive", weight = "sum", class = "tibble")
 
     } else if (length(args$intensive) > 1){
 
@@ -297,7 +297,7 @@ aw_interpolate <- function(.data, tid, source, sid, type, weight, output, ...){
         split(values) %>%
         purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
         purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
-                                      target = targetS, tid = !!tidQ, type = "intensive",
+                                      target = targetS, tid = !!tidQ, type = "intensive", weight = "sum",
                                       class = "tibble")) %>%
         purrr::reduce(.f = dplyr::bind_cols) %>%
         dplyr::select(dplyr::one_of(vars)) -> intensive
