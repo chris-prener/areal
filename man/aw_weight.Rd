@@ -21,5 +21,5 @@ A \code{sf} object with the intersected data and new area weight field.
 \description{
 \code{aw_weight} creates an area weight field by dividing the area
     field by the total area field. This is the third step in the interpolation
-    process after \link{aw_sum}.
+    process after \link{aw_weight}.
 }

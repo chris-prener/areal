@@ -26,8 +26,9 @@ The `aw_interpolate` function also passes the argument `weight` to `aw_total`. T
 In both examples in this section, we'll be interpolating data from `aw_stl_race`, measured at the census tract level, into City of St. Louis wards. The `aw_stl_wards` data is a product of the City of the St. Louis and is quite close to fully overlapping with the U.S. Census Bureau's TIGER boundaries for the city. However, there are a number of very small deviations at the edges where the ward boundaries are *smaller* than the tracts (but only just so). The `aw_stl_wardsClipped` data was created to illustrate a more extreme example. It has been clipped to the Mississippi River shoreline along the city's eastern boundary.
 
 ```{r, echo = FALSE}
-wards <- data(aw_stl_wardsClipped, package = "areal")
 tracts <- data(aw_stl_race, package = "areal")
+wards <- data(aw_stl_wards, package = "areal")
+wardsClipped <- data(aw_stl_wardsClipped, package = "areal")
 ```
 
 

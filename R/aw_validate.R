@@ -55,7 +55,7 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
 
   }
 
-  # store results from all three validate subfunctions
+  # store results from primary validate subfunctions
   sf_result <- aw_validate_sf(source, target)
 
   # execute additional tests if both are sf, otherwise set results to NA
@@ -117,6 +117,86 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
                "Overall Evaluation"),
       result = c(sf_result, crs_result, unit_result, longlat_result, vars_exist_result,
                  vars_conflict_result, result),
+      stringsAsFactors = FALSE)
+
+    out <- as_tibble(table)
+  }
+
+  # return output
+  return(out)
+
+}
+
+#' Lite Version of Validation for aw_preview_weights
+#'
+#' @description \code{aw_validate_preview} is designed to be called by
+#'     \code{aw_preview_weights} before the weights are calculated. It
+#'     lacks the variable validation functionality of \code{aw_validate}.
+#'
+#' @param source A \code{sf} object with data to be interpolated
+#' @param target A \code{sf} object that data should be interpolated to
+#' @param verbose A logical scalar; if \code{TRUE}, a tibble with test results is returned
+#'
+#' @return If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TRUE}
+#'     is all tests are passed and \code{FALSE} if one or more tests is failed. If \code{verbose}
+#'     is \code{TRUE}, a tibble with detailed test results is returned.
+#'
+#' @importFrom glue glue
+#'
+aw_validate_preview <- function(source, target, verbose = FALSE){
+
+  # store results from primary validate subfunctions
+  sf_result <- aw_validate_sf(source, target)
+
+  # execute additional tests if both are sf, otherwise set results to NA
+  if (sf_result == FALSE){
+
+    unit_result <- NA
+    crs_result <- NA
+    longlat_result <- NA
+
+  } else if (sf_result == TRUE){
+
+    # do both source and target have same CRS?
+    crs_result <- aw_validate_crs(source, target)
+
+    # do both source and target have same measurement units?
+    unit_result <- aw_validate_units(source, target)
+
+    # are both source and target CRS values in planar?
+    longlat_result1 <- aw_validate_longlat(source)
+    longlat_result2 <- aw_validate_longlat(target)
+
+    longlat_result <- all(longlat_result1, longlat_result2)
+
+  }
+
+  # determine if overall test is passed
+  if(sf_result == "TRUE" & unit_result == "TRUE" & crs_result == "TRUE" &
+     longlat_result == "TRUE") {
+
+    result <- TRUE
+
+  } else {
+
+    result <- FALSE
+
+  }
+
+  # conditional code if verbose is assigned FALSE
+  if(verbose == FALSE){
+
+    out <- result
+
+  }
+
+  # conditional code if verbose is assigned TRUE
+  else if (verbose == TRUE){
+
+    table <- data.frame(
+      test = c("sf Objects", "CRS Match", "CRS Units Match", "CRS Is Planar",
+               "Overall Evaluation"),
+      result = c(sf_result, crs_result, unit_result, longlat_result, result),
       stringsAsFactors = FALSE)
 
     out <- as_tibble(table)
