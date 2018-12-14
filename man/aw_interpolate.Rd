@@ -4,7 +4,8 @@
 \alias{aw_interpolate}
 \title{Interpolate Values}
 \usage{
-aw_interpolate(.data, tid, source, sid, type, weight, output, ...)
+aw_interpolate(.data, tid, source, sid, weight = "sum", output = "sf", extensive,
+    intensive)
 }
 \arguments{
 \item{.data}{A \code{sf} object that data should be interpolated to (this is referred
@@ -16,25 +17,17 @@ to as the \code{target} elsewhere in the package).}
 
 \item{sid}{A unique identification number within \code{source}}
 
-\item{type}{One of either \code{"extensive"} (if the data are spatitally extensive e.g.
-population counts), \code{"intensive"} (if the data are spatially intensive e.g.
-population density), or \code{"mixed"} (if the data include both extensive and
-intensive values). If \code{"extensive"}, the sum is returned for the interpolated
-value. If \code{"intensive"}, the mean is returned for the interpolated value.
-If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
-the relevant variable names should be specified in the dots.}
-
 \item{weight}{For \code{"extensive"} interpolations, should be either \code{"total"} or
-\code{"sum"}. For \code{"intensive"} interpolations, should be \code{"sum"}.}
+\code{"sum"}. For \code{"intensive"} interpolations, should be \code{"sum"}. For mixed
+interpolations, this will only impact the calculation of the extensive variables.}
 
 \item{output}{One of either \code{"sf"} or \code{"tibble"}}
 
-\item{...}{If the \code{class} argument is \code{"extensive"} or \code{"intensive"},
-this should be a list of columns from \code{source}, with each name quoted, that should
-interpolated into the \code{target} data (these are referred to as the \code{value}
-elsewhere in the package). If the \code{class} argument is \code{"mixed"}, this should
-contain two vectors created using \code{c()} named \code{"extensive"} and \code{"intensive"}
-containing the relevant variable names.}
+\item{extensive}{A vector of quoted variable names to be treated as spatiall extensive
+(e.g. population counts); optional if \code{intensive} is specified}
+
+\item{intensive}{A vector of quoted variable names to be treated as spatiall intensive
+(e.g. population density); optional if \code{extensive} is specified}
 }
 \value{
 A \code{sf} object or a \code{tibble} with the value or values interpolated into

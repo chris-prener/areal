@@ -17,8 +17,8 @@ aw_interpolate(wards, tid = WARD, source = race2, sid = "GEOID", output = "tibbl
 
 wards %>%
   select(-OBJECTID, -AREA) %>%
-  aw_interpolate(tid = WARD, source = race, sid = "GEOID", type = "extensive", weight = "sum", output = "sf",
-                 "TOTAL_E", "WHITE_E", "BLACK_E")
+  aw_interpolate(tid = WARD, source = race, sid = "GEOID", weight = "sum", output = "sf",
+                 extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 
 aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "extensive", output = "sf", "TOTAL_E")
 aw_interpolate(wards, tid = WARD, source = asthma, sid = "geoID", type = "intensive", output = "sf", "pctAsthma")
