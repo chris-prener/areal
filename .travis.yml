@@ -1,0 +1,37 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: required
+cache: packages
+
+r:
+  - oldrel
+  - release
+  - devel
+
+os:
+  - linux
+  - osx
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - r: devel
+      os: osx
+
+addons:
+  postgresql: "9.6"
+
+r_packages:
+  - devtools
+
+before_install:
+    - chmod +x ./.travis/install.sh
+    - ./.travis/install.sh
+
+after_success:
+  - dropdb postgis
+  - createdb postgis
+  - psql -d postgis -c "CREATE EXTENSION postgis;"
+  - psql -d postgis -c "GRANT CREATE ON DATABASE postgis TO travis"
+  - Rscript -e 'covr::codecov()'
