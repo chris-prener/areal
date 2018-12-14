@@ -124,8 +124,7 @@ Output can be either a tibble (shown in the prior example) or an `sf` object:
 
 ```{r sf-output}
 aw_interpolate(wards, tid = "WARD", source = race, sid = "GEOID",  
-               weight = "sum", output = "sf", 
-               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
+               weight = "sum", output = "sf", extensive = "TOTAL_E")
 ```
 
 ### Pipe Compatible
