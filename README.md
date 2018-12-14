@@ -109,8 +109,8 @@ interpolated at
 once:
 
 ``` r
-aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "extensive", 
-               weight = "sum", output = "tibble", "TOTAL_E", "WHITE_E", "BLACK_E")
+aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", weight = "sum", 
+               output = "tibble", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 #> # A tibble: 28 x 6
 #>    OBJECTID  WARD       AREA TOTAL_E WHITE_E BLACK_E
 #>  *    <dbl> <int>      <dbl>   <dbl>   <dbl>   <dbl>
@@ -132,12 +132,11 @@ aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "extensiv
 Both spatially extensive (i.e. counts; illustrated in the prior
 examples) and spatially intensive (i.e. ratios) data can be
 interpolated. For spatially intensive data, the average is returned
-rather than the
-sum:
+rather than the sum:
 
 ``` r
-aw_interpolate(wards, tid = WARD, source = asthma, sid = "GEOID", type = "intensive", 
-               weight = "sum", output = "tibble", "ASTHMA")
+aw_interpolate(wards, tid = WARD, source = asthma, sid = "GEOID", 
+               weight = "sum", output = "tibble", intensive = "ASTHMA")
 #> # A tibble: 28 x 2
 #>     WARD ASTHMA
 #>  * <int>  <dbl>
@@ -169,7 +168,7 @@ raceTable %>%
   left_join(asthma, ., by = "GEOID") -> combinedData
 
 # interpolate
-aw_interpolate(wards, tid = WARD, source = combinedData, sid = "GEOID", type = "mixed", 
+aw_interpolate(wards, tid = WARD, source = combinedData, sid = "GEOID",
                weight = "sum", output = "tibble", 
                extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
                intensive = c("ASTHMA"))
@@ -195,8 +194,9 @@ Output can be either a tibble (shown in the prior example) or an `sf`
 object:
 
 ``` r
-aw_interpolate(wards, tid = "WARD", source = race, sid = "GEOID", type = "extensive", 
-               weight = "sum", output = "sf", "TOTAL_E", "WHITE_E", "BLACK_E")
+aw_interpolate(wards, tid = "WARD", source = race, sid = "GEOID",  
+               weight = "sum", output = "sf", 
+               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 #> Simple feature collection with 28 features and 6 fields
 #> geometry type:  POLYGON
 #> dimension:      XY
@@ -236,8 +236,9 @@ fit easily into existing `tidyverse` workflows:
 ``` r
 wards %>%
   select(-OBJECTID, -AREA) %>%
-  aw_interpolate(tid = WARD, source = race, sid = "GEOID", type = "extensive", 
-               weight = "sum", output = "tibble", "TOTAL_E", "WHITE_E", "BLACK_E")
+  aw_interpolate(tid = WARD, source = race, sid = "GEOID", 
+               weight = "sum", output = "tibble", 
+               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 #> # A tibble: 28 x 4
 #>     WARD TOTAL_E WHITE_E BLACK_E
 #>  * <int>   <dbl>   <dbl>   <dbl>

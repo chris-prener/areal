@@ -88,16 +88,16 @@ aw_validate(source = asthma, target = wards, varList = c("ASTHMA"), verbose = TR
 One advantage of `areal` is that it allows for multiple values to be interpolated at a time. Here, both total estiatmed population (`TOTAL_E`), the estimated count of white residents (`WHITE_E`), and the estimated count of African American residents (`BLACK_E`) are interpolated at once:
 
 ```{r iteration}
-aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", type = "extensive", 
-               weight = "sum", output = "tibble", "TOTAL_E", "WHITE_E", "BLACK_E")
+aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", weight = "sum", 
+               output = "tibble", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 ```
 
 ### Interpolation Choices
 Both spatially extensive (i.e. counts; illustrated in the prior examples) and spatially intensive (i.e. ratios) data can be interpolated. For spatially intensive data, the average is returned rather than the sum:
 
 ```{r intensive}
-aw_interpolate(wards, tid = WARD, source = asthma, sid = "GEOID", type = "intensive", 
-               weight = "sum", output = "tibble", "ASTHMA")
+aw_interpolate(wards, tid = WARD, source = asthma, sid = "GEOID", 
+               weight = "sum", output = "tibble", intensive = "ASTHMA")
 ```
 
 Both extensive and intensive data can be interpolated simultaneously by setting `type` to `"mixed"` and naming two vectors `extensive` and `intensive`. These vectors should include the relevent variable names:
@@ -113,7 +113,7 @@ raceTable %>%
   left_join(asthma, ., by = "GEOID") -> combinedData
 
 # interpolate
-aw_interpolate(wards, tid = WARD, source = combinedData, sid = "GEOID", type = "mixed", 
+aw_interpolate(wards, tid = WARD, source = combinedData, sid = "GEOID",
                weight = "sum", output = "tibble", 
                extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
                intensive = c("ASTHMA"))
@@ -123,8 +123,9 @@ aw_interpolate(wards, tid = WARD, source = combinedData, sid = "GEOID", type = "
 Output can be either a tibble (shown in the prior example) or an `sf` object:
 
 ```{r sf-output}
-aw_interpolate(wards, tid = "WARD", source = race, sid = "GEOID", type = "extensive", 
-               weight = "sum", output = "sf", "TOTAL_E", "WHITE_E", "BLACK_E")
+aw_interpolate(wards, tid = "WARD", source = race, sid = "GEOID",  
+               weight = "sum", output = "sf", 
+               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 ```
 
 ### Pipe Compatible
@@ -134,8 +135,9 @@ One key advantage of `areal` is that is pipeable, meaning that it can fit easily
 ```{r pipe}
 wards %>%
   select(-OBJECTID, -AREA) %>%
-  aw_interpolate(tid = WARD, source = race, sid = "GEOID", type = "extensive", 
-               weight = "sum", output = "tibble", "TOTAL_E", "WHITE_E", "BLACK_E")
+  aw_interpolate(tid = WARD, source = race, sid = "GEOID", 
+               weight = "sum", output = "tibble", 
+               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 ```
 
 ### Transparent
