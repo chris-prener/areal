@@ -4,6 +4,12 @@
 # areal <img src="man/figures/arealLogo.png" align="right" />
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Travis-CI Build
+Status](https://travis-ci.org/slu-openGIS/areal?branch=master)](https://travis-ci.org/slu-openGIS/areal)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/slu-openGIS/areal?branch=master&svg=true)](https://ci.appveyor.com/project/chris-prener/areal)
+[![Coverage
+status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=master)
 [![CRAN\_status\_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 
 While methods to interpolate multiple spatial data sets are currently
