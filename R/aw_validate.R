@@ -194,7 +194,7 @@ aw_validate_preview <- function(source, target, verbose = FALSE){
   else if (verbose == TRUE){
 
     table <- data.frame(
-      test = c("sf Objects", "CRS Match", "CRS Units Match", "CRS Is Planar",
+      test = c("sf Objects", "CRS Match", "CRS Units Match", "CRS is Planar",
                "Overall Evaluation"),
       result = c(sf_result, crs_result, unit_result, longlat_result, result),
       stringsAsFactors = FALSE)
