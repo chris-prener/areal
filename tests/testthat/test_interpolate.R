@@ -10,8 +10,9 @@ data(aw_stl_asthma, package = "areal")
 data(aw_stl_wards, package = "areal")
 
 # create comparison data
-totalCompare <- sf::st_interpolate_aw(aw_stl_race["TOTAL_E"], aw_stl_wards, extensive = TRUE)
-asthmaCompare <- sf::st_interpolate_aw(aw_stl_asthma["ASTHMA"], aw_stl_wards, extensive = FALSE)
+load(system.file("extdata", "totalCompare1.rda", package = "areal", mustWork = TRUE))
+totalCompare2 <- suppressWarnings(sf::st_interpolate_aw(aw_stl_race["TOTAL_E"], aw_stl_wards, extensive = TRUE))
+asthmaCompare <- suppressWarnings(sf::st_interpolate_aw(aw_stl_asthma["ASTHMA"], aw_stl_wards, extensive = FALSE))
 
 # test errors ------------------------------------------------
 
@@ -27,6 +28,7 @@ asthmaResult <- aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_asthma,
                                type = "intensive", output = "sf", weight = "sum", "ASTHMA")
 
 test_that("interpolated values are equal", {
-  expect_equal(totalCompare$TOTAL_E, totalResult2$TOTAL_E)
+  expect_equal(totalCompare1$TOTAL_E, totalResult1$TOTAL_E)
+  expect_equal(totalCompare2$TOTAL_E, totalResult2$TOTAL_E)
   expect_equal(asthmaCompare$ASTHMA, asthmaResult$ASTHMA)
 })
