@@ -22,7 +22,7 @@ sf::st_geometry(race) <- NULL
 ### create combined data
 race %>%
   dplyr::select(GEOID, TOTAL_E, WHITE_E, BLACK_E) %>%
-  dplyr::left_join(asthma, ., by = "GEOID") -> x
+  dplyr::left_join(asthma, ., by = "GEOID") -> combinedData
 
 # create comparison data
 load(system.file("testdata", "totalCompare1.rda", package = "areal", mustWork = TRUE))
@@ -30,6 +30,15 @@ totalCompare2 <- suppressWarnings(sf::st_interpolate_aw(aw_stl_race["TOTAL_E"], 
 asthmaCompare <- suppressWarnings(sf::st_interpolate_aw(aw_stl_asthma["ASTHMA"], aw_stl_wards, extensive = FALSE))
 
 # test errors ------------------------------------------------
+
+test_that("errors with missing objects", {
+  expect_error(aw_interpolate(ham, tid = WARD, source = aw_stl_race, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = "TOTAL_E"),
+               "object 'ham' not found")
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = ham, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E")),
+               "object 'ham' not found")
+})
 
 test_that("errors with missing parameters", {
   expect_error(aw_interpolate(tid = WARD, source = aw_stl_race, sid = GEOID,
@@ -53,12 +62,6 @@ test_that("errors with missing parameters", {
 })
 
 test_that("errors with objects and id variables that do not exist", {
-  expect_error(aw_interpolate(ham, tid = WARD, source = aw_stl_race, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = "TOTAL_E"),
-               "object 'ham' not found")
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = ham, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = "TOTAL_E"),
-               "object 'ham' not found")
   expect_error(aw_interpolate(aw_stl_wards, tid = ham, source = aw_stl_race, sid = GEOID,
                               weight = "sum", output = "sf", extensive = "TOTAL_E"),
                "Variable 'ham', given for the target ID \\('tid'\\), cannot be found in the given target object.")
@@ -85,16 +88,7 @@ test_that("errors with weight and output", {
                "The given output type 'ham' is not valid. 'output' must be either 'sf' or 'tibble'.")
 })
 
-test_that("errors with missing objects", {
-  expect_error(aw_interpolate(ham, tid = WARD, source = aw_stl_race, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = "TOTAL_E"),
-               "object 'ham' not found")
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = ham, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E")),
-               "object 'ham' not found")
-})
-
-test_that("fore data validation failure", {
+test_that("force data validation failure", {
   expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
                               weight = "sum", output = "sf", extensive = "HAM"),
                "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
@@ -115,6 +109,20 @@ test_that("correctly specified functions execute without error", {
                               weight = "sum", output = "sf", intensive = "ASTHMA"), NA)
   expect_error(aw_interpolate(aw_stl_wards, tid = "WARD", source = aw_stl_asthma, sid = "GEOID",
                               weight = "sum", output = "sf", intensive = "ASTHMA"), NA)
+  expect_error(aw_interpolate(aw_stl_wards, tid = "WARD", source = combinedData, sid = "GEOID",
+                              weight = "sum", output = "sf", intensive = c("ASTHMA", "ASTHMA2")), NA)
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = "TOTAL_E",
+                              intensive = "ASTHMA"), NA)
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
+                              weight = "total", output = "sf", extensive = "TOTAL_E",
+                              intensive = "ASTHMA"), NA)
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
+                              intensive = c("ASTHMA", "ASTHMA2")), NA)
+  expect_error(aw_interpolate(aw_stl_wards, tid = "WARD", source = combinedData, sid = "GEOID",
+                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
+                              intensive = c("ASTHMA", "ASTHMA2")), NA)
 })
 
 # test results ------------------------------------------------
@@ -138,4 +146,17 @@ test_that("classes are created appropriately", {
   expect_equal("sf", class(totalResult1)[1])
   expect_equal("sf", class(totalResult2)[1])
   expect_equal("sf", class(asthmaResult)[1])
+})
+
+mixedResult <- aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = "GEOID",
+                              weight = "sum", output = "tibble", extensive = "TOTAL_E",
+                              intensive = "ASTHMA")
+
+test_that("interpolated values are equal", {
+  expect_equal(totalCompare1$TOTAL_E, mixedResult$TOTAL_E)
+  expect_equal(asthmaCompare$ASTHMA, mixedResult$ASTHMA)
+})
+
+test_that("classes are created appropriately", {
+  expect_equal("tbl_df", class(mixedResult)[1])
 })
