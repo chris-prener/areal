@@ -66,8 +66,12 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
     stop("A variable name must be specified for the 'sid' argument.")
   }
 
+  if (missing(weight)) {
+    stop("A weight type (either 'sum' or 'total') must be specified for the 'weight' argument.")
+  }
+
   if (missing(output)) {
-    stop("An output type must be specified for the 'output' argument.")
+    stop("An output type (either 'tibble' or 'sf') must be specified for the 'output' argument.")
   }
 
   # determine extensive and intensive
@@ -84,6 +88,15 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
   }
 
   # check for misspecified parameters
+  if (weight %in% c("sum", "total") == FALSE){
+    stop(glue::glue("The given weight type '{var}' is not valid. 'weight' must be either 'sum' or 'total'.",
+                    var = weight))
+  }
+
+  if (type == "intensive" & weight == "total"){
+    stop("Spatially intensive interpolations should be caclulated using 'sum' for 'weight'.")
+  }
+
   if (output %in% c("sf", "tibble") == FALSE){
     stop(glue::glue("The given output type '{var}' is not valid. 'output' must be either 'sf' or 'tibble'.",
                     var = output))

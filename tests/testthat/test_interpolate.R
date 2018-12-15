@@ -20,6 +20,18 @@ test_that("errors with missing parameters", {
   expect_error(aw_interpolate(aw_stl_wards, source = aw_stl_race, sid = GEOID,
                               weight = "sum", output = "sf", extensive = "TOTAL_E"),
                "A variable name must be specified for the 'tid' argument.")
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = "TOTAL_E"),
+               "A sf object must be specified for the 'source' argument.")
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race,
+                              weight = "sum", output = "sf", extensive = "TOTAL_E"),
+               "A variable name must be specified for the 'sid' argument.")
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
+                              output = "sf", extensive = "TOTAL_E"),
+               "A weight type \\(either 'sum' or 'total'\\) must be specified for the 'weight' argument.")
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
+                              weight = "sum", extensive = "TOTAL_E"),
+               "An output type \\(either 'tibble' or 'sf'\\) must be specified for the 'output' argument.")
 })
 
 test_that("errors with objects and id variables that do not exist", {
@@ -43,9 +55,32 @@ test_that("errors with objects and id variables that do not exist", {
                "Variable 'ham', given for the source ID \\('sid'\\), cannot be found in the given source object.")
 })
 
-# test_that("errors with weight and output", {
-#
-# })
+test_that("errors with weight and output", {
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
+                              weight = "ham", output = "sf", extensive = "TOTAL_E"),
+               "The given weight type 'ham' is not valid. 'weight' must be either 'sum' or 'total'.")
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_asthma, sid = GEOID,
+                              weight = "total", output = "sf", intensive = "ASTHMA"),
+               "Spatially intensive interpolations should be caclulated using 'sum' for 'weight'.")
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
+                              weight = "sum", output = "ham", extensive = "TOTAL_E"),
+               "The given output type 'ham' is not valid. 'output' must be either 'sf' or 'tibble'.")
+})
+
+test_that("errors with missing objects", {
+  expect_error(aw_interpolate(ham, tid = WARD, source = aw_stl_race, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = "TOTAL_E"),
+               "Object 'ham' not found.")
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = ham, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E")),
+               "Object 'ham' not found.")
+})
+
+test_that("fore data validation failure", {
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = "HAM"),
+               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+})
 
 # test inputs ------------------------------------------------
 
