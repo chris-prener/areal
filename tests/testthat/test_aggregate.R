@@ -18,6 +18,13 @@ aw_stl_wards %>%
 
 # test errors ------------------------------------------------
 
+test_that("errors with missing objects", {
+  expect_error(aw_aggregate(ham, target = aw_stl_wards, tid = WARD, newVar = "TOTAL_E"),
+               "object 'ham' not found")
+  expect_error(aw_aggregate(intersect, target = ham, tid = WARD, newVar = "TOTAL_E"),
+               "object 'ham' not found")
+})
+
 # test inputs ------------------------------------------------
 
 test_that("correctly specified functions execute without error", {
