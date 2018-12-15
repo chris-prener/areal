@@ -9,6 +9,21 @@ data(aw_stl_wards, package = "areal")
 data(aw_stl_race, package = "areal")
 data(aw_stl_asthma, package = "areal")
 
+## create modified asthma data
+aw_stl_asthma %>%
+  dplyr::select(-STATEFP, -COUNTYFP, -TRACTCE, -NAMELSAD, -ALAND, -AWATER) %>%
+  dplyr::mutate(ASTHMA2 = ASTHMA/2) -> asthma
+
+## create combined data
+### remove sf geometry
+race <- aw_stl_race
+sf::st_geometry(race) <- NULL
+
+### create combined data
+race %>%
+  dplyr::select(GEOID, TOTAL_E, WHITE_E, BLACK_E) %>%
+  dplyr::left_join(asthma, ., by = "GEOID") -> x
+
 # create comparison data
 load(system.file("testdata", "totalCompare1.rda", package = "areal", mustWork = TRUE))
 totalCompare2 <- suppressWarnings(sf::st_interpolate_aw(aw_stl_race["TOTAL_E"], aw_stl_wards, extensive = TRUE))
