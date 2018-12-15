@@ -17,6 +17,9 @@ asthmaCompare <- suppressWarnings(sf::st_interpolate_aw(aw_stl_asthma["ASTHMA"],
 # test errors ------------------------------------------------
 
 test_that("errors with missing parameters", {
+  expect_error(aw_interpolate(tid = WARD, source = aw_stl_race, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = "TOTAL_E"),
+               "A sf object containing target data must be specified for the '.data' argument.")
   expect_error(aw_interpolate(aw_stl_wards, source = aw_stl_race, sid = GEOID,
                               weight = "sum", output = "sf", extensive = "TOTAL_E"),
                "A variable name must be specified for the 'tid' argument.")
