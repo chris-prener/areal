@@ -69,19 +69,6 @@ aw_weight <- function(.data, areaVar, totalVar, areaWeight){
 
   areaWeightQN <- rlang::quo_name(rlang::enquo(areaWeight))
 
-  intersectQN <- rlang::quo_name(rlang::enquo(.data))
-
-  # validate intersected data exists
-  if (intersectQN != "."){
-
-    if (!exists(intersectQN)) {
-
-      stop(glue::glue("Object '{intersectQN}' not found."))
-
-    }
-
-  }
-
   # check variables
   if (!!areaVarQN != "...area"){
 

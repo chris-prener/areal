@@ -55,27 +55,6 @@ aw_verify <- function(source, sourceValue, result, resultValue){
 
   resultValueQN <- rlang::quo_name(rlang::enquo(resultValue))
 
-  sourceQN <- rlang::quo_name(rlang::enquo(source))
-  resultQN <- rlang::quo_name(rlang::enquo(result))
-
-  # validate source exists
-  if (!exists(sourceQN)) {
-
-    stop(glue::glue("Object '{sourceQN}' not found."))
-
-  }
-
-  # validate result exists
-  if (!!resultQN != "Interpolated.Data.Out"){
-
-    if (!exists(resultQN)) {
-
-      stop(glue::glue("Object '{resultQN}' not found."))
-
-    }
-
-  }
-
   # check variables
   if (length(sourceValueQN) > 1){
     stop("The 'sourceVar' parameter should have only one variable name given.")

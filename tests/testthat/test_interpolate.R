@@ -55,10 +55,10 @@ test_that("errors with missing parameters", {
 test_that("errors with objects and id variables that do not exist", {
   expect_error(aw_interpolate(ham, tid = WARD, source = aw_stl_race, sid = GEOID,
                               weight = "sum", output = "sf", extensive = "TOTAL_E"),
-               "Object 'ham' not found.")
+               "object 'ham' not found")
   expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = ham, sid = GEOID,
                               weight = "sum", output = "sf", extensive = "TOTAL_E"),
-               "Object 'ham' not found.")
+               "object 'ham' not found")
   expect_error(aw_interpolate(aw_stl_wards, tid = ham, source = aw_stl_race, sid = GEOID,
                               weight = "sum", output = "sf", extensive = "TOTAL_E"),
                "Variable 'ham', given for the target ID \\('tid'\\), cannot be found in the given target object.")
@@ -88,10 +88,10 @@ test_that("errors with weight and output", {
 test_that("errors with missing objects", {
   expect_error(aw_interpolate(ham, tid = WARD, source = aw_stl_race, sid = GEOID,
                               weight = "sum", output = "sf", extensive = "TOTAL_E"),
-               "Object 'ham' not found.")
+               "object 'ham' not found")
   expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = ham, sid = GEOID,
                               weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E")),
-               "Object 'ham' not found.")
+               "object 'ham' not found")
 })
 
 test_that("fore data validation failure", {

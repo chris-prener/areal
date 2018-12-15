@@ -78,21 +78,6 @@ aw_total <- function(.data, source, id, areaVar, totalVar, type, weight){
 
   totalVarQN <- rlang::quo_name(rlang::enquo(totalVar))
 
-  intersectQN <- rlang::quo_name(rlang::enquo(.data))
-
-  # validate intersected data exists
-  if (intersectQN != "."){
-
-    if (!exists(intersectQN)) {
-
-      stop(glue::glue("Object '{intersectQN}' not found."))
-
-    }
-
-  }
-
-  # need to validate that source data exists
-
   # check variables
   if(!!idQN %in% colnames(.data) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the ID ('id'), cannot be found in the given intersected object.",

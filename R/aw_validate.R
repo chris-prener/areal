@@ -33,28 +33,6 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
     stop("A variable name must be specified for the 'varList' argument.")
   }
 
-  # nse
-  sourceQN <- rlang::quo_name(rlang::enquo(source))
-  targetQN <- rlang::quo_name(rlang::enquo(target))
-
-  # validate source exists
-  if (!exists(sourceQN)) {
-
-    stop(glue::glue("Object '{sourceQN}' not found."))
-
-  }
-
-  # validate target exists
-  if (targetQN != ".data"){
-
-    if (!exists(targetQN)) {
-
-      stop(glue::glue("Object '{targetQN}' not found."))
-
-    }
-
-  }
-
   # store results from primary validate subfunctions
   sf_result <- aw_validate_sf(source, target)
 

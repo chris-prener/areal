@@ -62,19 +62,6 @@ aw_calculate <- function(.data, value, areaWeight, newVar){
 
   valsQN <- rlang::quo_name(rlang::enquo(value))
 
-  intersectQN <- rlang::quo_name(rlang::enquo(.data))
-
-  # validate intersected data exists
-  if (intersectQN != "."){
-
-    if (!exists(intersectQN)) {
-
-      stop(glue::glue("Object '{intersectQN}' not found."))
-
-    }
-
-  }
-
   # check variables
   if(!!valsQN %in% colnames(.data) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the value, cannot be found in the given intersected object.",

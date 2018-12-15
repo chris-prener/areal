@@ -14,12 +14,12 @@ aw_stl_wards %>%
   aw_total(source = aw_stl_race, id = GEOID, areaVar = "...area",
            totalVar = "...totalArea", weight = "sum", type = "extensive") %>%
   aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
-  aw_calculate(value = "TOTAL_E", areaWeight = "...areaWeight", newVar = "TOTAL_E") -> x
+  aw_calculate(value = "TOTAL_E", areaWeight = "...areaWeight", newVar = "TOTAL_E") -> intersect
 
 # test errors ------------------------------------------------
 
 # test inputs ------------------------------------------------
 
 test_that("correctly specified functions execute without error", {
-  expect_error(aw_aggregate(x, target = aw_stl_wards, tid = WARD, newVar = "TOTAL_E"), NA)
+  expect_error(aw_aggregate(intersect, target = aw_stl_wards, tid = WARD, newVar = "TOTAL_E"), NA)
 })

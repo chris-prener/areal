@@ -64,9 +64,6 @@ aw_aggregate <- function(.data, target, tid, newVar){
 
   newFieldQN <- rlang::quo_name(rlang::enquo(newVar))
 
-  intersectQN <- rlang::quo_name(rlang::enquo(.data))
-  targetQN <- rlang::quo_name(rlang::enquo(target))
-
   # check variables
   if(!!tidQN %in% colnames(target) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the target ID ('tid'), cannot be found in the given target object.",
