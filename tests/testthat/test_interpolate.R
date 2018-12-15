@@ -8,7 +8,6 @@ data(aw_stl_wards, package = "areal")
 # source data
 data(aw_stl_race, package = "areal")
 data(aw_stl_asthma, package = "areal")
-load(system.file("testdata", "combinedData.rda", package = "areal", mustWork = TRUE))
 
 # create comparison data
 load(system.file("testdata", "totalCompare1.rda", package = "areal", mustWork = TRUE))
@@ -87,4 +86,3 @@ test_that("classes are created appropriately", {
   expect_equal("sf", class(totalResult2)[1])
   expect_equal("sf", class(asthmaResult)[1])
 })
-
