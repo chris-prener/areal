@@ -4,7 +4,7 @@
 \alias{aw_interpolate_single}
 \title{Intermediate Function - Single Value}
 \usage{
-aw_interpolate_single(source, sid, value, target, tid, type, weight, class)
+aw_interpolate_single(source, sid, value, target, tid, type, weight)
 }
 \arguments{
 \item{source}{A \code{sf} object with data to be interpolated}
@@ -27,8 +27,6 @@ the relevant variable names should be specified in the dots.}
 
 \item{weight}{For \code{"extensive"} interpolations; should be either \code{"total"} or
 \code{"sum"}.}
-
-\item{class}{If \code{"tibble"}, will return a tibble instead of an \code{sf} object.}
 }
 \value{
 A \code{sf} object or tibble with \code{value} interpolated into

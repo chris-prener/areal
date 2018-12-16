@@ -33,14 +33,8 @@
 #' @seealso \link{c}
 #'
 #' @importFrom dplyr as_tibble
-#' @importFrom dplyr bind_cols
 #' @importFrom dplyr left_join
-#' @importFrom dplyr one_of
-#' @importFrom dplyr select
 #' @importFrom glue glue
-#' @importFrom purrr imap
-#' @importFrom purrr map
-#' @importFrom purrr reduce
 #' @importFrom rlang enquo
 #' @importFrom rlang quo
 #' @importFrom rlang quo_name
@@ -155,17 +149,14 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
     valueQ <- rlang::quo(!! rlang::sym(vars))
 
     # interpolate
-    est <- aw_interpolate_single(source = source, sid = !!sidQ, value = !!valueQ, target = .data,
-                                 tid = !!tidQ, type = type, weight = weight, class = "sf")
+    data <- aw_interpolate_single(source = source, sid = !!sidQ, value = !!valueQ, target = .data,
+                                 tid = !!tidQ, type = type, weight = weight)
 
   } else if ((type == "extensive" | type == "intensive") & length(vars) > 1) {
 
     # interpolate
     data <- aw_interpolate_multiple(source = source, sid = !!sidQ, values = vars, target = .data,
-                                 tid = !!tidQ, type = type, weight = weight, class = "tibble")
-
-    # left join with target data
-    est <- dplyr::left_join(.data, data, by = tidQN)
+                                 tid = !!tidQ, type = type, weight = weight)
 
   } else if (type == "mixed"){
 
@@ -177,13 +168,13 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 
       # interpolate
       exresults <- aw_interpolate_single(source = source, sid = !!sidQ, value = !!valueQ, target = .data,
-                                   tid = !!tidQ, type = "extensive", weight = weight, class = "tibble")
+                                   tid = !!tidQ, type = "extensive", weight = weight)
 
     } else if (length(extensive) > 1){
 
       # interpolate
       exresults <- aw_interpolate_multiple(source = source, sid = !!sidQ, values = extensive, target = .data,
-                                      tid = !!tidQ, type = "extensive", weight = weight, class = "tibble")
+                                      tid = !!tidQ, type = "extensive", weight = weight)
 
     }
 
@@ -195,33 +186,30 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 
       # interpolate
       inresults <- aw_interpolate_single(source = source, sid = !!sidQ, value = !!valueQ, target = .data,
-                                         tid = !!tidQ, type = "intensive", weight = "sum", class = "tibble")
+                                         tid = !!tidQ, type = "intensive", weight = "sum")
 
     } else if (length(intensive) > 1){
 
       # interpolate
       inresults <- aw_interpolate_multiple(source = source, sid = !!sidQ, values = extensive, target = .data,
-                                           tid = !!tidQ, type = "intensive", weight = "sum", class = "tibble")
+                                           tid = !!tidQ, type = "intensive", weight = "sum")
 
     }
 
     # combine spatially extensive and intensive data
     data <- dplyr::left_join(exresults, inresults, by = tidQN)
 
-    # left join with target data
-    est <- dplyr::left_join(.data, data, by = tidQN)
-
   }
 
   # structure output
   if (output == "sf"){
 
-    out <- est
+    # left join with target data
+    out <- dplyr::left_join(.data, data, by = tidQN)
 
   } else if (output == "tibble"){
 
-    sf::st_geometry(est) <- NULL
-    out <- dplyr::as_tibble(est)
+    out <- dplyr::as_tibble(data)
 
   }
 
@@ -246,12 +234,14 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 #'     the relevant variable names should be specified in the dots.
 #' @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
 #'     \code{"sum"}.
-#' @param class If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
 #'
 #' @return A \code{sf} object or tibble with \code{value} interpolated into
 #'    the \code{target} data.
 #'
-aw_interpolate_single <- function(source, sid, value, target, tid, type, weight, class){
+#' @importFrom rlang enquo
+#' @importFrom rlang quo_name
+#'
+aw_interpolate_single <- function(source, sid, value, target, tid, type, weight){
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -272,7 +262,7 @@ aw_interpolate_single <- function(source, sid, value, target, tid, type, weight,
 
   # interpolate
   out <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
-                         tid = !!tidQ, type = type, weight = weight, class = class)
+                         tid = !!tidQ, type = type, weight = weight)
 
   # return output
   return(out)
@@ -295,12 +285,21 @@ aw_interpolate_single <- function(source, sid, value, target, tid, type, weight,
 #'     the relevant variable names should be specified in the dots.
 #' @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
 #'     \code{"sum"}.
-#' @param class If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
+#'
+#' @importFrom dplyr %>%
+#' @importFrom dplyr bind_cols
+#' @importFrom dplyr one_of
+#' @importFrom dplyr select
+#' @importFrom purrr imap
+#' @importFrom purrr map
+#' @importFrom purrr reduce
+#' @importFrom rlang enquo
+#' @importFrom rlang quo_name
 #'
 #' @return A \code{sf} object or tibble with \code{value} interpolated into
 #'    the \code{target} data.
 #'
-aw_interpolate_multiple <- function(source, sid, values, target, tid, type, weight, class){
+aw_interpolate_multiple <- function(source, sid, values, target, tid, type, weight){
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -323,8 +322,7 @@ aw_interpolate_multiple <- function(source, sid, values, target, tid, type, weig
     split(values) %>%
     purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
     purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
-                                  target = targetS, tid = !!tidQ, type = type, weight = weight,
-                                  class = class)) %>%
+                                  target = targetS, tid = !!tidQ, type = type, weight = weight)) %>%
     purrr::reduce(.f = dplyr::bind_cols) %>%
     dplyr::select(dplyr::one_of(colNames)) -> out
 
@@ -348,8 +346,6 @@ aw_interpolate_multiple <- function(source, sid, values, target, tid, type, weig
 #'
 #' @importFrom dplyr select
 #' @importFrom rlang enquo
-#' @importFrom rlang quo
-#' @importFrom rlang sym
 #'
 aw_strip_df <- function(.data, id, value){
 
@@ -401,19 +397,16 @@ aw_strip_df <- function(.data, id, value){
 #'     the relevant variable names should be specified in the dots.
 #' @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
 #'     \code{"sum"}.
-#' @param class If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
 #'
 #' @return A \code{sf} object or tibble with \code{value} interpolated into
 #'    the \code{target} data.
 #'
 #' @importFrom dplyr select
 #' @importFrom rlang enquo
-#' @importFrom rlang quo
 #' @importFrom rlang quo_name
-#' @importFrom rlang sym
 #' @importFrom sf st_geometry
 #'
-aw_interpolater <- function(source, sid, value, target, tid, type, weight, class) {
+aw_interpolater <- function(source, sid, value, target, tid, type, weight) {
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -451,12 +444,8 @@ aw_interpolater <- function(source, sid, value, target, tid, type, weight, class
     aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
     aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> out
 
-  # clean output
-  if (class == "tibble"){
-
-    sf::st_geometry(out) <- NULL
-
-  }
+  # remove sf from output
+  sf::st_geometry(out) <- NULL
 
   # return target output
   return(out)
