@@ -28,9 +28,12 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
     stop("A sf object containing target data must be specified for the 'target' argument.")
   }
 
-
   if (missing(varList)) {
-    stop("A variable name must be specified for the 'varList' argument.")
+    stop("A variable name or vector of variable names must be specified for the 'varList' argument.")
+  }
+
+  if (verbose != TRUE & verbose != FALSE){
+    stop("The 'verbose' argument must be either 'TRUE' or 'FALSE'.")
   }
 
   # store results from primary validate subfunctions
