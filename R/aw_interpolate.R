@@ -152,11 +152,7 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
   if ((type == "extensive" | type == "intensive") & length(vars) == 1) {
 
     # nse
-    if (!is.character(vars)) {
-      valueQ <- rlang::enquo(vars)
-    } else if (is.character(vars)) {
-      valueQ <- rlang::quo(!! rlang::sym(vars))
-    }
+    valueQ <- rlang::quo(!! rlang::sym(vars))
 
     # interpolate
     est <- aw_interpolate_single(source = source, sid = !!sidQ, value = !!valueQ, target = .data,
@@ -177,11 +173,7 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
     if (length(extensive) == 1){
 
       # nse
-      if (!is.character(extensive)) {
-        valueQ <- rlang::enquo(extensive)
-      } else if (is.character(extensive)) {
-        valueQ <- rlang::quo(!! rlang::sym(extensive))
-      }
+      valueQ <- rlang::quo(!! rlang::sym(extensive))
 
       # interpolate
       exresults <- aw_interpolate_single(source = source, sid = !!sidQ, value = !!valueQ, target = .data,
@@ -199,11 +191,7 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
     if (length(intensive) == 1){
 
       # nse
-      if (!is.character(intensive)) {
-        valueQ <- rlang::enquo(intensive)
-      } else if (is.character(intensive)) {
-        valueQ <- rlang::quo(!! rlang::sym(intensive))
-      }
+      valueQ <- rlang::quo(!! rlang::sym(intensive))
 
       # interpolate
       inresults <- aw_interpolate_single(source = source, sid = !!sidQ, value = !!valueQ, target = .data,
@@ -269,28 +257,13 @@ aw_interpolate_single <- function(source, sid, value, target, tid, type, weight,
   paramList <- as.list(match.call())
 
   # nse
-  if (!is.character(paramList$sid)) {
-    sidQ <- rlang::enquo(sid)
-  } else if (is.character(paramList$sid)) {
-    sidQ <- rlang::quo(!! rlang::sym(sid))
-  }
-
+  sidQ <- rlang::enquo(sid)
   sidQN <- rlang::quo_name(rlang::enquo(sidQ))
 
-  if (!is.character(paramList$value)) {
-    valueQ <- rlang::enquo(value)
-  } else if (is.character(paramList$value)) {
-    valueQ <- rlang::quo(!! rlang::sym(value))
-  }
-
+  valueQ <- rlang::enquo(value)
   valueQN <- rlang::quo_name(rlang::enquo(value))
 
-  if (!is.character(paramList$tid)) {
-    tidQ <- rlang::enquo(tid)
-  } else if (is.character(paramList$tid)) {
-    tidQ <- rlang::quo(!! rlang::sym(tid))
-  }
-
+  tidQ <- rlang::enquo(tid)
   tidQN <- rlang::quo_name(rlang::enquo(tidQ))
 
   # strip source and target dataframes
@@ -333,20 +306,10 @@ aw_interpolate_multiple <- function(source, sid, values, target, tid, type, weig
   paramList <- as.list(match.call())
 
   # nse
-  if (!is.character(paramList$sid)) {
-    sidQ <- rlang::enquo(sid)
-  } else if (is.character(paramList$sid)) {
-    sidQ <- rlang::quo(!! rlang::sym(sid))
-  }
-
+  sidQ <- rlang::enquo(sid)
   sidQN <- rlang::quo_name(rlang::enquo(sidQ))
 
-  if (!is.character(paramList$tid)) {
-    tidQ <- rlang::enquo(tid)
-  } else if (is.character(paramList$tid)) {
-    tidQ <- rlang::quo(!! rlang::sym(tid))
-  }
-
+  tidQ <- rlang::enquo(tid)
   tidQN <- rlang::quo_name(rlang::enquo(tidQ))
 
   # create column list
@@ -394,26 +357,20 @@ aw_strip_df <- function(.data, id, value){
   paramList <- as.list(match.call())
 
   # nse
-  if (!is.character(paramList$id)) {
-    idQ <- rlang::enquo(id)
-  } else if (is.character(paramList$id)) {
-    idQ <- rlang::quo(!! rlang::sym(id))
-  }
+  idQ <- rlang::enquo(id)
 
   # strip variables
   if (missing(value)){
 
+    # strip all but id
     out <- dplyr::select(.data, !!idQ)
 
   } else {
 
     # additional nse for value
-    if (!is.character(paramList$value)) {
-      valsQ <- rlang::enquo(value)
-    } else if (is.character(paramList$value)) {
-      valsQ <- rlang::quo(!! rlang::sym(value))
-    }
+    valsQ <- rlang::enquo(value)
 
+    # strip all but id and value
     out <- dplyr::select(.data, !!idQ, !!valsQ)
 
   }
@@ -462,30 +419,18 @@ aw_interpolater <- function(source, sid, value, target, tid, type, weight, class
   paramList <- as.list(match.call())
 
   # nse
-  if (!is.character(paramList$sid)) {
-    sidQ <- rlang::enquo(sid)
-  } else if (is.character(paramList$sid)) {
-    sidQ <- rlang::quo(!! rlang::sym(sid))
-  }
+  sidQ <- rlang::enquo(sid)
 
-  if (!is.character(paramList$value)) {
-    valueQ <- rlang::enquo(value)
-  } else if (is.character(paramList$value)) {
-    valueQ <- rlang::quo(!! rlang::sym(value))
-  }
-
+  valueQ <- rlang::enquo(value)
   valueQN <- rlang::quo_name(rlang::enquo(value))
 
-  if (!is.character(paramList$tid)) {
-    tidQ <- rlang::enquo(tid)
-  } else if (is.character(paramList$tid)) {
-    tidQ <- rlang::quo(!! rlang::sym(tid))
-  }
+  tidQ <- rlang::enquo(tid)
 
+  # intersect data
   target %>%
     aw_intersect(source = source, areaVar = "...area") -> intersected
 
-  # interpolate values
+  # calculate total value for areal weight
   if (type == "extensive"){
 
     intersected %>%
@@ -500,6 +445,7 @@ aw_interpolater <- function(source, sid, value, target, tid, type, weight, class
 
   }
 
+  # caclulate areal weight and estimated value; aggregate
   totaled %>%
     aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
     aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
