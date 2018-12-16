@@ -442,7 +442,7 @@ aw_interpolater <- function(source, sid, value, target, tid, type, weight) {
   totaled %>%
     aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
     aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
-    aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> out
+    aw_aggregate(target = target, tid = !!tidQ, interVar = !!valueQ) -> out
 
   # remove sf from output
   sf::st_geometry(out) <- NULL

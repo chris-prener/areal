@@ -9,6 +9,7 @@
 #' @param .data A given intersected dataset
 #' @param target A \code{sf} object that data should be interpolated to
 #' @param tid A unique identification number within \code{target}
+#' @param interVar A variable containing an interpolated value created by \code{aw_calculate}
 #' @param newVar A new field name to store the interpolated value in
 #'
 #' @return A \code{sf} object with the interpolated value added to it.
@@ -25,7 +26,7 @@
 #' @importFrom sf st_geometry
 #'
 #' @export
-aw_aggregate <- function(.data, target, tid, newVar){
+aw_aggregate <- function(.data, target, tid, interVar, newVar){
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -43,8 +44,8 @@ aw_aggregate <- function(.data, target, tid, newVar){
     stop("A variable name must be specified for the 'tid' argument.")
   }
 
-  if (missing(newVar)) {
-    stop("A variable name must be specified for the 'newVar' argument.")
+  if (missing(interVar)) {
+    stop("A variable name must be specified for the 'interVar' argument.")
   }
 
   # nse
@@ -56,13 +57,29 @@ aw_aggregate <- function(.data, target, tid, newVar){
 
   tidQN <- rlang::quo_name(rlang::enquo(tid))
 
-  if (!is.character(paramList$newVar)) {
-    newFieldQ <- rlang::enquo(newVar)
-  } else if (is.character(paramList$newVar)) {
-    newFieldQ <- rlang::quo(!! rlang::sym(newVar))
+  if (!is.character(paramList$interVar)) {
+    interVarQ <- rlang::enquo(interVar)
+  } else if (is.character(paramList$interVar)) {
+    interVarQ <- rlang::quo(!! rlang::sym(interVar))
   }
 
-  newFieldQN <- rlang::quo_name(rlang::enquo(newVar))
+  interVarQN <- rlang::quo_name(rlang::enquo(interVarQ))
+
+  if (missing(newVar)){
+
+    newVarQN <- interVarQN
+
+  } else if (!missing(newVar)){
+
+    if (!is.character(paramList$newVar)) {
+      newVarQ <- rlang::enquo(newVar)
+    } else if (is.character(paramList$newVar)) {
+      newVarQ <- rlang::quo(!! rlang::sym(newVar))
+    }
+
+    newVarQN <- rlang::quo_name(rlang::enquo(newVarQ))
+
+  }
 
   # check variables
   if(!!tidQN %in% colnames(target) == FALSE) {
@@ -76,7 +93,7 @@ aw_aggregate <- function(.data, target, tid, newVar){
   # calculate total area
   .data %>%
     dplyr::group_by(!!tidQ) %>%
-    dplyr::summarize(!!newFieldQN := base::sum(!!newFieldQ)) -> sum
+    dplyr::summarize(!!newVarQN := base::sum(!!interVarQ)) -> sum
 
   # join to input data
   out <- dplyr::left_join(target, sum, by = tidQN)
