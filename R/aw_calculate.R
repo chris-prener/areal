@@ -39,10 +39,6 @@ aw_calculate <- function(.data, value, areaWeight, newVar){
     stop("A variable name must be specified for the 'areaWeight' argument.")
   }
 
-  if (missing(newVar)) {
-    stop("A variable name must be specified for the 'newVar' argument.")
-  }
-
   # nse
   if (!is.character(paramList$areaWeight)) {
     areaWeightQ <- rlang::enquo(areaWeight)
@@ -52,8 +48,6 @@ aw_calculate <- function(.data, value, areaWeight, newVar){
 
   areaWeightQN <- rlang::quo_name(rlang::enquo(areaWeight))
 
-  newFieldQN <- rlang::quo_name(rlang::enquo(newVar))
-
   if (!is.character(paramList$value)) {
     valsQ <- rlang::enquo(value)
   } else if (is.character(paramList$value)) {
@@ -61,6 +55,12 @@ aw_calculate <- function(.data, value, areaWeight, newVar){
   }
 
   valsQN <- rlang::quo_name(rlang::enquo(value))
+
+  if (missing(newVar)) {
+    newFieldQN <- valsQN
+  } else if (!missing(newVar)){
+    newFieldQN <- rlang::quo_name(rlang::enquo(newVar))
+  }
 
   # check variables
   if(!!valsQN %in% colnames(.data) == FALSE) {

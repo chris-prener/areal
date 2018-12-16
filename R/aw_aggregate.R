@@ -10,7 +10,7 @@
 #' @param target A \code{sf} object that data should be interpolated to
 #' @param tid A unique identification number within \code{target}
 #' @param interVar A variable containing an interpolated value created by \code{aw_calculate}
-#' @param newVar A new field name to store the interpolated value in
+#' @param newVar Optional; a new field name to store the interpolated value in
 #'
 #' @return A \code{sf} object with the interpolated value added to it.
 #'

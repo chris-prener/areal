@@ -14,7 +14,7 @@ aw_stl_wards %>%
   aw_total(source = aw_stl_race, id = GEOID, areaVar = "...area",
            totalVar = "...totalArea", weight = "sum", type = "extensive") %>%
   aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
-  aw_calculate(value = "TOTAL_E", areaWeight = "...areaWeight", newVar = "TOTAL_E") -> intersect
+  aw_calculate(value = "TOTAL_E", areaWeight = "...areaWeight") -> intersect
 
 # test errors ------------------------------------------------
 

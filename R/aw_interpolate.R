@@ -441,7 +441,7 @@ aw_interpolater <- function(source, sid, value, target, tid, type, weight) {
   # caclulate areal weight and estimated value; aggregate
   totaled %>%
     aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
-    aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
+    aw_calculate(value = !!valueQ, areaWeight = "...areaWeight") %>%
     aw_aggregate(target = target, tid = !!tidQ, interVar = !!valueQ) -> out
 
   # remove sf from output
