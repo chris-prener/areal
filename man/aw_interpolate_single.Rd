@@ -29,9 +29,9 @@ the relevant variable names should be specified in the dots.}
 \code{"sum"}.}
 }
 \value{
-A \code{sf} object or tibble with \code{value} interpolated into
-   the \code{target} data.
+A tibble with interpolated data, ready for final merge with \code{target}.
 }
 \description{
-Intermediate Function - Single Value
+Intermediate function called when there is only one variable to be interpolated.
+    This is used to simplify the code for \code{aw_interpolate}.
 }

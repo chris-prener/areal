@@ -220,6 +220,9 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 
 #' Intermediate Function - Single Value
 #'
+#' @description Intermediate function called when there is only one variable to be interpolated.
+#'     This is used to simplify the code for \code{aw_interpolate}.
+#'
 #' @param source A \code{sf} object with data to be interpolated
 #' @param sid A unique identification number within \code{source}
 #' @param value A column within \code{source} to be interpolated
@@ -235,8 +238,7 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 #' @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
 #'     \code{"sum"}.
 #'
-#' @return A \code{sf} object or tibble with \code{value} interpolated into
-#'    the \code{target} data.
+#' @return A tibble with interpolated data, ready for final merge with \code{target}.
 #'
 #' @importFrom rlang enquo
 #' @importFrom rlang quo_name
@@ -271,6 +273,9 @@ aw_interpolate_single <- function(source, sid, value, target, tid, type, weight)
 
 #' Intermediate Function - Multiple Values (iteration)
 #'
+#' @description Intermediate function called when are more than one variables to be interpolated.
+#'     This is used to simplify the code for \code{aw_interpolate}.
+#'
 #' @param source A \code{sf} object with data to be interpolated
 #' @param sid A unique identification number within \code{source}
 #' @param values A vector of columns within \code{source} to be interpolated
@@ -296,8 +301,7 @@ aw_interpolate_single <- function(source, sid, value, target, tid, type, weight)
 #' @importFrom rlang enquo
 #' @importFrom rlang quo_name
 #'
-#' @return A \code{sf} object or tibble with \code{value} interpolated into
-#'    the \code{target} data.
+#' @return A tibble with interpolated data, ready for final merge with \code{target}.
 #'
 aw_interpolate_multiple <- function(source, sid, values, target, tid, type, weight){
 
