@@ -19,61 +19,19 @@ matrix:
     - r: devel
       os: osx
 
-latex: false
-
 addons:
   postgresql: "9.6"
-  apt:
-    sources:
-      - sourceline: 'ppa:opencpu/jq'
-      - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
-      - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main'
-        key_url: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
-    packages:
-      - libprotobuf-dev
-      - protobuf-compiler
-      - libv8-3.14-dev
-      - libjq-dev
-      - libudunits2-dev
-      - libproj-dev
-      - libgeos-dev
-      - libspatialite-dev
-      - libgdal-dev
-      - libjson-c-dev
-      - libnetcdf-dev
-      - netcdf-bin
-      - postgresql-server-dev-9.6
 
 r_packages:
   - devtools
 
-r_github_packages:
-  - r-spatial/lwgeom
-
 before_install:
-  # install postgis from source, to avoid dependency conflict with GDAL >= 2.0:
-  - wget http://download.osgeo.org/postgis/source/postgis-2.4.3.tar.gz
-  - (mv postgis* /tmp; cd /tmp; tar xzf postgis-2.4.3.tar.gz)
-  - (cd /tmp/postgis-2.4.3 ; ./configure; make; sudo make install)
-
-  # activate liblwgeom by:
-  - sudo ldconfig
-  # create postgis databases:
-  - sudo service postgresql restart
-  - createdb postgis
-  - psql -d postgis -c "CREATE EXTENSION postgis;"
-  - psql -d postgis -c "GRANT CREATE ON DATABASE postgis TO travis"
-  - psql -d postgis -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO travis"
-  - createdb empty
-  - psql -d empty -c "CREATE EXTENSION postgis;"
+    - chmod +x ./.travis/install.sh
+    - ./.travis/install.sh
 
 after_success:
   - dropdb postgis
-  - dropdb empty
   - createdb postgis
   - psql -d postgis -c "CREATE EXTENSION postgis;"
   - psql -d postgis -c "GRANT CREATE ON DATABASE postgis TO travis"
-  - psql -d postgis -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO travis"
-  - createdb empty
-  - psql -d empty -c "CREATE EXTENSION postgis;"
   - Rscript -e 'covr::codecov()'
