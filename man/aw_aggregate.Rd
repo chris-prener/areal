@@ -4,7 +4,7 @@
 \alias{aw_aggregate}
 \title{Aggregate new field of interest by target IDs}
 \usage{
-aw_aggregate(.data, target, tid, newVar)
+aw_aggregate(.data, target, tid, interVar, newVar)
 }
 \arguments{
 \item{.data}{A given intersected dataset}

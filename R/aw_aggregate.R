@@ -4,7 +4,7 @@
 #'     based on the target id. These are then joined with the target data. This is
 #'     the fourth step in the interpolation process after \link{aw_weight}.
 #'
-#' @usage aw_aggregate(.data, target, tid, newVar)
+#' @usage aw_aggregate(.data, target, tid, interVar, newVar)
 #'
 #' @param .data A given intersected dataset
 #' @param target A \code{sf} object that data should be interpolated to
