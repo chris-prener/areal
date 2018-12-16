@@ -482,37 +482,37 @@ aw_interpolater <- function(source, sid, value, target, tid, type, weight, class
     tidQ <- rlang::quo(!! rlang::sym(tid))
   }
 
+  target %>%
+    aw_intersect(source = source, areaVar = "...area") -> intersected
+
   # interpolate values
   if (type == "extensive"){
 
-    target %>%
-      aw_intersect(source = source, areaVar = "...area") %>%
+    intersected %>%
       aw_total(source = source, id = !!sidQ, areaVar = "...area", totalVar = "...totalArea",
-             type = "extensive", weight = weight) %>%
-      aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
-      aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
-      aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> Interpolated.Data.Out
+             type = "extensive", weight = weight) -> totaled
 
   } else if (type == "intensive"){
 
-    target %>%
-      aw_intersect(source = source, areaVar = "...area") %>%
+    intersected %>%
       aw_total(source = source, id = !!tidQ, areaVar = "...area", totalVar = "...totalArea",
-             weight = weight, type = "intensive") %>%
-      aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
-      aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
-      aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> Interpolated.Data.Out
+             weight = weight, type = "intensive") -> totaled
 
   }
+
+  totaled %>%
+    aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") %>%
+    aw_calculate(value = !!valueQ, areaWeight = "...areaWeight", newVar = !!valueQ) %>%
+    aw_aggregate(target = target, tid = !!tidQ, newVar = !!valueQ) -> out
 
   # clean output
   if (class == "tibble"){
 
-    sf::st_geometry(Interpolated.Data.Out) <- NULL
+    sf::st_geometry(out) <- NULL
 
   }
 
   # return target output
-  return(Interpolated.Data.Out)
+  return(out)
 
 }
