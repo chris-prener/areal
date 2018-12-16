@@ -15,8 +15,6 @@ aw_stl_wards %>%
            totalVar = "...totalArea", weight = "sum", type = "extensive") %>%
   aw_weight(areaVar = "...area", totalVar = "...totalArea", areaWeight = "...areaWeight") -> intersect
 
-
-
 # test errors ------------------------------------------------
 
 test_that("errors with missing objects", {

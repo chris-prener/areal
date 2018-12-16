@@ -45,6 +45,10 @@ aw_total <- function(.data, source, id, areaVar, totalVar, type, weight){
     stop("A sf object containing intersected data must be specified for the '.data' argument.")
   }
 
+  if (missing(source)) {
+    stop("A sf object containing souce data must be specified for the 'source' argument.")
+  }
+
   if (missing(id)) {
     stop("A variable name must be specified for the 'id' argument.")
   }
@@ -57,7 +61,23 @@ aw_total <- function(.data, source, id, areaVar, totalVar, type, weight){
     stop("A variable name must be specified for the 'totalVar' argument.")
   }
 
-  # need errors for type and weight
+  if (missing(type)) {
+    stop("An interpolation type (either 'extensive' or 'intensive') must be specified for the 'type' argument.")
+  }
+
+  if (missing(weight)) {
+    stop("A weight type (either 'sum' or 'total') must be specified for the 'weight' argument.")
+  }
+
+  # check for misspecified parameters
+  if (weight %in% c("sum", "total") == FALSE){
+    stop(glue::glue("The given weight type '{var}' is not valid. 'weight' must be either 'sum' or 'total'.",
+                    var = weight))
+  }
+
+  if (type == "intensive" & weight == "total"){
+    stop("Spatially intensive interpolations should be caclulated using 'sum' for 'weight'.")
+  }
 
   # nse
   if (!is.character(paramList$id)) {
