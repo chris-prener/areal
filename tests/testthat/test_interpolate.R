@@ -97,69 +97,41 @@ test_that("force data validation failure", {
                "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
 })
 
-# test inputs ------------------------------------------------
-
-test_that("correctly specified functions execute without error", {
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = "TOTAL_E"), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E")), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = "WARD", source = aw_stl_race, sid = "GEOID",
-                              weight = "sum", output = "sf", extensive = "TOTAL_E"), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
-                              weight = "total", output = "sf", extensive = "TOTAL_E"), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_asthma, sid = GEOID,
-                              weight = "sum", output = "sf", intensive = "ASTHMA"), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = "WARD", source = aw_stl_asthma, sid = "GEOID",
-                              weight = "sum", output = "sf", intensive = "ASTHMA"), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = "WARD", source = combinedData, sid = "GEOID",
-                              weight = "sum", output = "sf", intensive = c("ASTHMA", "ASTHMA2")), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = "TOTAL_E",
-                              intensive = "ASTHMA"), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
-                              weight = "total", output = "sf", extensive = "TOTAL_E",
-                              intensive = "ASTHMA"), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
-                              intensive = c("ASTHMA", "ASTHMA2")), NA)
-  expect_error(aw_interpolate(aw_stl_wards, tid = "WARD", source = combinedData, sid = "GEOID",
-                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
-                              intensive = c("ASTHMA", "ASTHMA2")), NA)
-})
-
 # test results ------------------------------------------------
 
 totalResult1 <- aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
                                weight = "sum", output = "sf", extensive = "TOTAL_E")
 
-totalResult2 <- aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID,
-                               weight = "total", output = "sf", extensive = "TOTAL_E")
+totalResult2 <- aw_interpolate(aw_stl_wards, tid = "WARD", source = aw_stl_race, sid = "GEOID",
+                               weight = "total", output = "tibble", extensive = "TOTAL_E")
 
 asthmaResult <- aw_interpolate(aw_stl_wards, tid = WARD, source = aw_stl_asthma, sid = GEOID,
                                output = "sf", weight = "sum", intensive = "ASTHMA")
 
-test_that("interpolated values are equal", {
-  expect_equal(totalCompare1$TOTAL_E, totalResult1$TOTAL_E)
-  expect_equal(totalCompare2$TOTAL_E, totalResult2$TOTAL_E)
-  expect_equal(asthmaCompare$ASTHMA, asthmaResult$ASTHMA)
-})
-
-test_that("classes are created appropriately", {
-  expect_equal("sf", class(totalResult1)[1])
-  expect_equal("sf", class(totalResult2)[1])
-  expect_equal("sf", class(asthmaResult)[1])
-})
 
 mixedResult <- aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = "GEOID",
                               weight = "sum", output = "tibble", extensive = "TOTAL_E",
                               intensive = "ASTHMA")
 
 test_that("interpolated values are equal", {
+  expect_equal(totalCompare1$TOTAL_E, totalResult1$TOTAL_E)
+  expect_equal(totalCompare2$TOTAL_E, totalResult2$TOTAL_E)
+  expect_equal(asthmaCompare$ASTHMA, asthmaResult$ASTHMA)
   expect_equal(totalCompare1$TOTAL_E, mixedResult$TOTAL_E)
   expect_equal(asthmaCompare$ASTHMA, mixedResult$ASTHMA)
 })
 
 test_that("classes are created appropriately", {
+  expect_equal("sf", class(totalResult1)[1])
+  expect_equal("tbl_df", class(totalResult2)[1])
+  expect_equal("sf", class(asthmaResult)[1])
   expect_equal("tbl_df", class(mixedResult)[1])
+})
+
+# test inputs not otherwise tested above ------------------------------------------------
+
+test_that("correctly specified functions execute without error", {
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
+                              intensive = c("ASTHMA", "ASTHMA2")), NA)
 })
