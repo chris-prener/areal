@@ -132,6 +132,10 @@ test_that("classes are created appropriately", {
 
 test_that("correctly specified functions execute without error", {
   expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E")), NA)
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
+                              weight = "sum", output = "sf", intensive = c("ASTHMA", "ASTHMA2")), NA)
+  expect_error(aw_interpolate(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
                               weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
                               intensive = c("ASTHMA", "ASTHMA2")), NA)
 })
