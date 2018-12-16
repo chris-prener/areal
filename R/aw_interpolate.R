@@ -158,33 +158,15 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
       valueQ <- rlang::quo(!! rlang::sym(vars))
     }
 
-    valueQN <- rlang::quo_name(rlang::enquo(valueQ))
-
-    # strip source and target dataframes
-    sourceS <- aw_strip_df(source, id = sidQN, value = valueQN)
-    targetS <- aw_strip_df(.data, id = tidQN)
-
     # interpolate
-    est <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
-                           tid = !!tidQ, type = type, weight = weight, class = "sf")
+    est <- aw_interpolate_single(source = source, sid = !!sidQ, value = !!valueQ, target = .data,
+                                 tid = !!tidQ, type = type, weight = weight, class = "sf")
 
   } else if ((type == "extensive" | type == "intensive") & length(vars) > 1) {
 
-    # create column list
-    colNames <- c(tidQN, vars)
-
-    # strip target dataframe
-    targetS <- aw_strip_df(.data, id = tidQN)
-
-    # create list of sf objects
-    vars %>%
-      split(vars) %>%
-      purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
-      purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
-                                    target = targetS, tid = !!tidQ, type = type,
-                                    weight = weight, class = "tibble")) %>%
-      purrr::reduce(.f = dplyr::bind_cols) %>%
-      dplyr::select(dplyr::one_of(colNames)) -> data
+    # interpolate
+    data <- aw_interpolate_multiple(source = source, sid = !!sidQ, values = vars, target = .data,
+                                 tid = !!tidQ, type = type, weight = weight, class = "tibble")
 
     # left join with target data
     est <- dplyr::left_join(.data, data, by = tidQN)
@@ -201,33 +183,15 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
         valueQ <- rlang::quo(!! rlang::sym(extensive))
       }
 
-      valueQN <- rlang::quo_name(rlang::enquo(valueQ))
-
-      # strip source and target dataframes
-      sourceS <- aw_strip_df(source, id = sidQN, value = valueQN)
-      targetS <- aw_strip_df(.data, id = tidQN)
-
       # interpolate
-      extensive <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
-                             tid = !!tidQ, type = "extensive", weight = weight, class = "tibble")
+      exresults <- aw_interpolate_single(source = source, sid = !!sidQ, value = !!valueQ, target = .data,
+                                   tid = !!tidQ, type = "extensive", weight = weight, class = "tibble")
 
     } else if (length(extensive) > 1){
 
-      # create column list
-      colNames <- c(tidQN, extensive)
-
-      # strip target dataframe
-      targetS <- aw_strip_df(.data, id = tidQN)
-
-      # create list of sf objects
-      extensive %>%
-        split(extensive) %>%
-        purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
-        purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
-                                      target = targetS, tid = !!tidQ, type = "extensive",  weight = weight,
-                                      class = "tibble")) %>%
-        purrr::reduce(.f = dplyr::bind_cols) %>%
-        dplyr::select(dplyr::one_of(colNames)) -> extensive
+      # interpolate
+      exresults <- aw_interpolate_multiple(source = source, sid = !!sidQ, values = extensive, target = .data,
+                                      tid = !!tidQ, type = "extensive", weight = weight, class = "tibble")
 
     }
 
@@ -241,38 +205,20 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
         valueQ <- rlang::quo(!! rlang::sym(intensive))
       }
 
-      valueQN <- rlang::quo_name(rlang::enquo(valueQ))
-
-      # strip source and target dataframes
-      sourceS <- aw_strip_df(source, id = sidQN, value = valueQN)
-      targetS <- aw_strip_df(.data, id = tidQN)
-
       # interpolate
-      intensive <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
-                                   tid = !!tidQ, type = "intensive", weight = "sum", class = "tibble")
+      inresults <- aw_interpolate_single(source = source, sid = !!sidQ, value = !!valueQ, target = .data,
+                                         tid = !!tidQ, type = "intensive", weight = "sum", class = "tibble")
 
     } else if (length(intensive) > 1){
 
-      # create column list
-      colNames <- c(tidQN, intensive)
-
-      # strip target dataframe
-      targetS <- aw_strip_df(.data, id = tidQN)
-
-      # create list of sf objects
-      intensive %>%
-        split(intensive) %>%
-        purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
-        purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
-                                      target = targetS, tid = !!tidQ, type = "intensive", weight = "sum",
-                                      class = "tibble")) %>%
-        purrr::reduce(.f = dplyr::bind_cols) %>%
-        dplyr::select(dplyr::one_of(colNames)) -> intensive
+      # interpolate
+      inresults <- aw_interpolate_multiple(source = source, sid = !!sidQ, values = extensive, target = .data,
+                                           tid = !!tidQ, type = "intensive", weight = "sum", class = "tibble")
 
     }
 
     # combine spatially extensive and intensive data
-    data <- dplyr::left_join(extensive, intensive, by = tidQN)
+    data <- dplyr::left_join(exresults, inresults, by = tidQN)
 
     # left join with target data
     est <- dplyr::left_join(.data, data, by = tidQN)
@@ -290,6 +236,134 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
     out <- dplyr::as_tibble(est)
 
   }
+
+  # return output
+  return(out)
+
+}
+
+#' Intermediate Function - Single Value
+#'
+#' @param source A \code{sf} object with data to be interpolated
+#' @param sid A unique identification number within \code{source}
+#' @param value A column within \code{source} to be interpolated
+#' @param target A \code{sf} object that data should be interpolated to
+#' @param tid A unique identification number within \code{target}
+#' @param type One of either \code{"extensive"} (if the data are spatitally extensive e.g.
+#'     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
+#'     population density), or \code{"mixed"} (if the data include both extensive and
+#'     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
+#'     value. If \code{"intensive"}, the mean is returned for the interpolated value.
+#'     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
+#'     the relevant variable names should be specified in the dots.
+#' @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
+#'     \code{"sum"}.
+#' @param class If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
+#'
+#' @return A \code{sf} object or tibble with \code{value} interpolated into
+#'    the \code{target} data.
+#'
+aw_interpolate_single <- function(source, sid, value, target, tid, type, weight, class){
+
+  # save parameters to list
+  paramList <- as.list(match.call())
+
+  # nse
+  if (!is.character(paramList$sid)) {
+    sidQ <- rlang::enquo(sid)
+  } else if (is.character(paramList$sid)) {
+    sidQ <- rlang::quo(!! rlang::sym(sid))
+  }
+
+  sidQN <- rlang::quo_name(rlang::enquo(sidQ))
+
+  if (!is.character(paramList$value)) {
+    valueQ <- rlang::enquo(value)
+  } else if (is.character(paramList$value)) {
+    valueQ <- rlang::quo(!! rlang::sym(value))
+  }
+
+  valueQN <- rlang::quo_name(rlang::enquo(value))
+
+  if (!is.character(paramList$tid)) {
+    tidQ <- rlang::enquo(tid)
+  } else if (is.character(paramList$tid)) {
+    tidQ <- rlang::quo(!! rlang::sym(tid))
+  }
+
+  tidQN <- rlang::quo_name(rlang::enquo(tidQ))
+
+  # strip source and target dataframes
+  sourceS <- aw_strip_df(source, id = sidQN, value = valueQN)
+  targetS <- aw_strip_df(target, id = tidQN)
+
+  # interpolate
+  out <- aw_interpolater(source = sourceS, sid = !!sidQ, value = !!valueQ, target = targetS,
+                         tid = !!tidQ, type = type, weight = weight, class = class)
+
+  # return output
+  return(out)
+
+}
+
+#' Intermediate Function - Multiple Values (iteration)
+#'
+#' @param source A \code{sf} object with data to be interpolated
+#' @param sid A unique identification number within \code{source}
+#' @param values A vector of columns within \code{source} to be interpolated
+#' @param target A \code{sf} object that data should be interpolated to
+#' @param tid A unique identification number within \code{target}
+#' @param type One of either \code{"extensive"} (if the data are spatitally extensive e.g.
+#'     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
+#'     population density), or \code{"mixed"} (if the data include both extensive and
+#'     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
+#'     value. If \code{"intensive"}, the mean is returned for the interpolated value.
+#'     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
+#'     the relevant variable names should be specified in the dots.
+#' @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
+#'     \code{"sum"}.
+#' @param class If \code{"tibble"}, will return a tibble instead of an \code{sf} object.
+#'
+#' @return A \code{sf} object or tibble with \code{value} interpolated into
+#'    the \code{target} data.
+#'
+aw_interpolate_multiple <- function(source, sid, values, target, tid, type, weight, class){
+
+  # save parameters to list
+  paramList <- as.list(match.call())
+
+  # nse
+  if (!is.character(paramList$sid)) {
+    sidQ <- rlang::enquo(sid)
+  } else if (is.character(paramList$sid)) {
+    sidQ <- rlang::quo(!! rlang::sym(sid))
+  }
+
+  sidQN <- rlang::quo_name(rlang::enquo(sidQ))
+
+  if (!is.character(paramList$tid)) {
+    tidQ <- rlang::enquo(tid)
+  } else if (is.character(paramList$tid)) {
+    tidQ <- rlang::quo(!! rlang::sym(tid))
+  }
+
+  tidQN <- rlang::quo_name(rlang::enquo(tidQ))
+
+  # create column list
+  colNames <- c(tidQN, values)
+
+  # strip target dataframe
+  targetS <- aw_strip_df(target, id = tidQN)
+
+  # create list of sf objects
+  values %>%
+    split(values) %>%
+    purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
+    purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
+                                  target = targetS, tid = !!tidQ, type = type, weight = weight,
+                                  class = class)) %>%
+    purrr::reduce(.f = dplyr::bind_cols) %>%
+    dplyr::select(dplyr::one_of(colNames)) -> out
 
   # return output
   return(out)
