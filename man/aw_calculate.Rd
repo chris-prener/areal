@@ -13,7 +13,8 @@ aw_calculate(.data, value, areaWeight, newVar)
 
 \item{areaWeight}{The name of the variable containg area weight per feature}
 
-\item{newVar}{A new field name to store the interpolated value in}
+\item{newVar}{Optional; a new field name to store the interpolated value in. If not specified,
+the \code{value} argument will be used as the new field name.}
 }
 \value{
 An intersected file of class sf with a new field of interest recalculated with area weight

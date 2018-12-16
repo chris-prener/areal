@@ -13,7 +13,10 @@ aw_aggregate(.data, target, tid, newVar)
 
 \item{tid}{A unique identification number within \code{target}}
 
-\item{newVar}{A new field name to store the interpolated value in}
+\item{interVar}{A variable containing an interpolated value created by \code{aw_calculate}}
+
+\item{newVar}{Optional; a new field name to store the interpolated value in. If not specified,
+the \code{interVar} argument will be used as the new field name.}
 }
 \value{
 A \code{sf} object with the interpolated value added to it.

@@ -8,7 +8,8 @@
 #' @param .data A given intersected dataset
 #' @param value A column within \code{source} to be interpolated
 #' @param areaWeight The name of the variable containg area weight per feature
-#' @param newVar A new field name to store the interpolated value in
+#' @param newVar Optional; a new field name to store the interpolated value in. If not specified,
+#'     the \code{value} argument will be used as the new field name.
 #'
 #' @return An intersected file of class sf with a new field of interest recalculated with area weight
 #'
