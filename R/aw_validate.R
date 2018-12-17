@@ -116,7 +116,6 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
 #'
 #' @param source A \code{sf} object with data to be interpolated
 #' @param target A \code{sf} object that data should be interpolated to
-#' @param verbose A logical scalar; if \code{TRUE}, a tibble with test results is returned
 #'
 #' @return If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TRUE}
 #'     is all tests are passed and \code{FALSE} if one or more tests is failed. If \code{verbose}
@@ -124,7 +123,7 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
 #'
 #' @importFrom glue glue
 #'
-aw_validate_preview <- function(source, target, verbose = FALSE){
+aw_validate_preview <- function(source, target){
 
   # store results from primary validate subfunctions
   sf_result <- aw_validate_sf(source, target)
@@ -156,31 +155,12 @@ aw_validate_preview <- function(source, target, verbose = FALSE){
   if(sf_result == "TRUE" & unit_result == "TRUE" & crs_result == "TRUE" &
      longlat_result == "TRUE") {
 
-    result <- TRUE
+    out <- TRUE
 
   } else {
 
-    result <- FALSE
+    out <- FALSE
 
-  }
-
-  # conditional code if verbose is assigned FALSE
-  if(verbose == FALSE){
-
-    out <- result
-
-  }
-
-  # conditional code if verbose is assigned TRUE
-  else if (verbose == TRUE){
-
-    table <- data.frame(
-      test = c("sf Objects", "CRS Match", "CRS Units Match", "CRS is Planar",
-               "Overall Evaluation"),
-      result = c(sf_result, crs_result, unit_result, longlat_result, result),
-      stringsAsFactors = FALSE)
-
-    out <- as_tibble(table)
   }
 
   # return output
