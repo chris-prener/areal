@@ -6,4 +6,5 @@
 * Implement unit testing with both Travis and Appveyor as well as Code Coverage tracking
 * Add `.github` community files
 * Add `LICENSE` and `cran-comments.md`
-* Add vignettes for 
+* Add vignettes for getting started (`areal`), preparing data (`data-preparation`), and areal weighted interpolation (`areal-weighted-interpolation`)
+* Add pkgdown site functionality
