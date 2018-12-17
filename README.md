@@ -54,13 +54,13 @@ remotes::install_github("slu-openGIS/areal")
 
 The package contains four overlapping data sets:
 
-  - `aw_stl_race` (2017 ACS demographic counts at the census tract
+  - `ar_stl_race` (2017 ACS demographic counts at the census tract
     level; *n* = 106)
-  - `aw_stl_asthma` (2017 asthma rates at the census tract level; *n* =
+  - `ar_stl_asthma` (2017 asthma rates at the census tract level; *n* =
     106)
-  - `aw_stl_wards` (the 2010 political subdivisions in St. Louis; *n* =
+  - `ar_stl_wards` (the 2010 political subdivisions in St. Louis; *n* =
     28).
-  - `aw_stl_wardsClipped` (the 2010 political subdivisions in St. Louis
+  - `ar_stl_wardsClipped` (the 2010 political subdivisions in St. Louis
     clipped to the Mississippi River shoreline; *n* = 28).
 
 These can be used to illustrate the core functionality of the package.
