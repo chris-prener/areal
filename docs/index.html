@@ -98,7 +98,7 @@
 <a href="#areal" class="anchor"></a>areal <img src="reference/figures/arealLogo.png" align="right">
 </h1></div>
 
-<p><code>areal</code> offers an intuitive toolkit for validating and interpolating spatial data. Areal interpolations is the process making estimates about the population features from a source set of polygons to an overlapping but incongruent set of target polygons - is the lack of easy to use tools for completing the processes. While methods for implementing various areal interpolation approaches are available outside of the <code>R</code> ecosystem (ex - toolboxes in ArcGIS) and within <code>R</code> (the <code>sf</code> package’s <code>st_interpolate_aw</code>) function, <code>areal</code> fills a niche by providing additional functionality not available in <code>sf</code> while taking advantage of the reproducibility of <code>R</code>. <code>areal</code> currently implents only areal weighted interpolation, but a roadmap is being developed to add additional interpolation methods as well. This will be posted on the package’s website before the initial CRAN release.</p>
+<p>Areal interpolation is the process making estimates about the population features from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented, implementing them often involves “reinventing the wheel.” Within <code>R</code>, the <code>sf</code> package does offer a basic interface for areal weighted interpolation (<code>st_interpolate_aw</code>). The <code>areal</code> package is designed to provide a suite of interpolation functions that provide a more full-featured workflow that fits into both modern data management (e.g. <code>tidyverse</code>) and spatial data (e.g. <code>sf</code>) frameworks.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -115,169 +115,10 @@
 <a class="sourceLine" id="cb1-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"slu-openGIS/areal"</span>)</a></code></pre></div>
 </div>
 </div>
-<div id="usage" class="section level2">
+<div id="contributor-code-of-conduct" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<p>The package contains three overlapping data sets:</p>
-<ul>
-<li>
-<code>aw_stl_race</code> (2017 ACS demographic counts at the census tract level; <em>n</em> = 106)</li>
-<li>
-<code>aw_stl_asthma</code> (2017 asthma rates at the census tract level; <em>n</em> = 106)</li>
-<li>
-<code>aw_stl_wards</code> (the 2010 political subdivisions in St. Louis; <em>n</em> = 28).</li>
-</ul>
-<p>These can be used to illustrate the core functionality of the package.</p>
-<p>The basic usage of <code>areal</code> is through the <code><a href="reference/aw_interpolate.html">aw_interpolate()</a></code> function, which is illustrated below. The following examples assume:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(areal)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="er">&gt;</span><span class="st"> </span>race &lt;-<span class="st"> </span>aw_stl_race</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="op">&gt;</span><span class="st"> </span>asthma &lt;-<span class="st"> </span>aw_stl_asthma</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="op">&gt;</span><span class="st"> </span>wards &lt;-<span class="st"> </span>aw_stl_wards</a></code></pre></div>
-<div id="data-validation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-validation" class="anchor"></a>Data Validation</h3>
-<p><code>areal</code> contains a detailed data validation workflow that ensures that both the <code>source</code> and <code>target</code> data are compatible with each either. It can be run in a simple format:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/aw_validate.html">aw_validate</a></span>(<span class="dt">source =</span> asthma, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ASTHMA"</span>))</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
-<p>If <code><a href="reference/aw_validate.html">aw_validate()</a></code> returns a <code>FALSE</code> value, it can also be run in a verbose manner that returns a detailed tibble:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/aw_validate.html">aw_validate</a></span>(<span class="dt">source =</span> asthma, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ASTHMA"</span>), <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 7 x 2</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;   test                            result</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; 1 sf Objects                      TRUE  </span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; 2 CRS Match                       TRUE  </span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; 3 CRS Units Match                 TRUE  </span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; 4 CRS Is Planar                   TRUE  </span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; 5 Variables Exist in Source       TRUE  </span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; 6 No Variable Conflicts in Target TRUE  </span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; 7 Overall Evaluation              TRUE</span></a></code></pre></div>
-</div>
-<div id="built-in-iteration" class="section level3">
-<h3 class="hasAnchor">
-<a href="#built-in-iteration" class="anchor"></a>Built-in Iteration</h3>
-<p>One advantage of <code>areal</code> is that it allows for multiple values to be interpolated at a time. Here, both total estiatmed population (<code>TOTAL_E</code>), the estimated count of white residents (<code>WHITE_E</code>), and the estimated count of African American residents (<code>BLACK_E</code>) are interpolated at once:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/aw_interpolate.html">aw_interpolate</a></span>(wards, <span class="dt">tid =</span> WARD, <span class="dt">source =</span> race, <span class="dt">sid =</span> <span class="st">"GEOID"</span>, <span class="dt">weight =</span> <span class="st">"sum"</span>, </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">               <span class="dt">output =</span> <span class="st">"tibble"</span>, <span class="dt">extensive =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"TOTAL_E"</span>, <span class="st">"WHITE_E"</span>, <span class="st">"BLACK_E"</span>))</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; # A tibble: 28 x 6</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;    OBJECTID  WARD       AREA TOTAL_E WHITE_E BLACK_E</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;  *    &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;  1        1     1  46138761.   7992.    153.   7779.</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt;  2        2     2 267817711.  12145.   1323.  10639.</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;  3        3     3  66291644.   7344.    591.   6635.</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;  4        4     4  53210707.   8458.    160.   8203.</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;  5        5     5  60462396.   8783.   1526.   7056.</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;  6        6     6  64337271.  14050.   5840.   7439.</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;  7        7     7 101268146.  15840.   8220.   6629.</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;  8        8     8  45966410.  12188.   7604.   3796.</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;  9        9     9  73993891.  14217.   6838.   6413.</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt; 10       10    10  62915358.  11239.   8703.   1667.</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; # ... with 18 more rows</span></a></code></pre></div>
-</div>
-<div id="interpolation-choices" class="section level3">
-<h3 class="hasAnchor">
-<a href="#interpolation-choices" class="anchor"></a>Interpolation Choices</h3>
-<p>Both spatially extensive (i.e. counts; illustrated in the prior examples) and spatially intensive (i.e. ratios) data can be interpolated. For spatially intensive data, the average is returned rather than the sum:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="reference/aw_interpolate.html">aw_interpolate</a></span>(wards, <span class="dt">tid =</span> WARD, <span class="dt">source =</span> asthma, <span class="dt">sid =</span> <span class="st">"GEOID"</span>, </a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">               <span class="dt">weight =</span> <span class="st">"sum"</span>, <span class="dt">output =</span> <span class="st">"tibble"</span>, <span class="dt">intensive =</span> <span class="st">"ASTHMA"</span>)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; # A tibble: 28 x 2</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt;     WARD ASTHMA</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;  * &lt;int&gt;  &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  1     1  13.4 </span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  2     2  13.2 </span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;  3     3  14.1 </span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  4     4  13.6 </span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  5     5  13.8 </span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  6     6  11.7 </span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  7     7   9.72</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  8     8   9.82</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;  9     9  11.8 </span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; 10    10   9.44</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; # ... with 18 more rows</span></a></code></pre></div>
-<p>Both extensive and intensive data can be interpolated simultaneously by setting <code>type</code> to <code>"mixed"</code> and naming two vectors <code>extensive</code> and <code>intensive</code>. These vectors should include the relevent variable names:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># remove sf geometry</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">raceTable &lt;-<span class="st"> </span>race</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">st_geometry</span>(raceTable) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># create combined data</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">raceTable <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(GEOID, TOTAL_E, WHITE_E, BLACK_E) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="kw">left_join</span>(asthma, ., <span class="dt">by =</span> <span class="st">"GEOID"</span>) -&gt;<span class="st"> </span>combinedData</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co"># interpolate</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="kw"><a href="reference/aw_interpolate.html">aw_interpolate</a></span>(wards, <span class="dt">tid =</span> WARD, <span class="dt">source =</span> combinedData, <span class="dt">sid =</span> <span class="st">"GEOID"</span>,</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">               <span class="dt">weight =</span> <span class="st">"sum"</span>, <span class="dt">output =</span> <span class="st">"tibble"</span>, </a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">               <span class="dt">extensive =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"TOTAL_E"</span>, <span class="st">"WHITE_E"</span>, <span class="st">"BLACK_E"</span>),</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">               <span class="dt">intensive =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ASTHMA"</span>))</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; # A tibble: 28 x 7</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt;    OBJECTID  WARD       AREA TOTAL_E WHITE_E BLACK_E ASTHMA</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt;  *    &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt;  1        1     1  46138761.   7992.    153.   7779.  13.4 </span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt;  2        2     2 267817711.  12145.   1323.  10639.  13.2 </span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt;  3        3     3  66291644.   7344.    591.   6635.  14.1 </span></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt;  4        4     4  53210707.   8458.    160.   8203.  13.6 </span></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt;  5        5     5  60462396.   8783.   1526.   7056.  13.8 </span></a>
-<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt;  6        6     6  64337271.  14050.   5840.   7439.  11.7 </span></a>
-<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt;  7        7     7 101268146.  15840.   8220.   6629.   9.72</span></a>
-<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">#&gt;  8        8     8  45966410.  12188.   7604.   3796.   9.82</span></a>
-<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">#&gt;  9        9     9  73993891.  14217.   6838.   6413.  11.8 </span></a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">#&gt; 10       10    10  62915358.  11239.   8703.   1667.   9.44</span></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt; # ... with 18 more rows</span></a></code></pre></div>
-</div>
-<div id="output-choices" class="section level3">
-<h3 class="hasAnchor">
-<a href="#output-choices" class="anchor"></a>Output Choices</h3>
-<p>Output can be either a tibble (shown in the prior example) or an <code>sf</code> object:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="reference/aw_interpolate.html">aw_interpolate</a></span>(wards, <span class="dt">tid =</span> <span class="st">"WARD"</span>, <span class="dt">source =</span> race, <span class="dt">sid =</span> <span class="st">"GEOID"</span>,  </a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">               <span class="dt">weight =</span> <span class="st">"sum"</span>, <span class="dt">output =</span> <span class="st">"sf"</span>, <span class="dt">extensive =</span> <span class="st">"TOTAL_E"</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; Simple feature collection with 28 features and 2 fields</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; geometry type:  POLYGON</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; dimension:      XY</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; bbox:           xmin: 733361.8 ymin: 4268336 xmax: 746157.7 ymax: 4295504</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; epsg (SRID):    26915</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; proj4string:    +proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; First 10 features:</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;    WARD   TOTAL_E                       geometry</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; 1     1  7991.565 POLYGON ((740184.2 4286431,...</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; 2     2 12145.021 POLYGON ((742392.1 4289178,...</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; 3     3  7344.287 POLYGON ((742956.1 4284113,...</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 4     4  8457.672 POLYGON ((739557.6 4284080,...</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; 5     5  8783.377 POLYGON ((744883.8 4281632,...</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; 6     6 14050.399 POLYGON ((742501.6 4279976,...</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; 7     7 15840.086 POLYGON ((745618.6 4279867,...</span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; 8     8 12188.131 POLYGON ((739842.8 4277724,...</span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; 9     9 14217.149 POLYGON ((742619.4 4276734,...</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; 10   10 11239.213 POLYGON ((737257.7 4277050,...</span></a></code></pre></div>
-</div>
-<div id="pipe-compatible" class="section level3">
-<h3 class="hasAnchor">
-<a href="#pipe-compatible" class="anchor"></a>Pipe Compatible</h3>
-<p>One key advantage of <code>areal</code> is that is pipeable, meaning that it can fit easily into existing <code>tidyverse</code> workflows:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">wards <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>OBJECTID, <span class="op">-</span>AREA) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="reference/aw_interpolate.html">aw_interpolate</a></span>(<span class="dt">tid =</span> WARD, <span class="dt">source =</span> race, <span class="dt">sid =</span> <span class="st">"GEOID"</span>, </a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">               <span class="dt">weight =</span> <span class="st">"sum"</span>, <span class="dt">output =</span> <span class="st">"tibble"</span>, </a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">               <span class="dt">extensive =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"TOTAL_E"</span>, <span class="st">"WHITE_E"</span>, <span class="st">"BLACK_E"</span>))</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; # A tibble: 28 x 4</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;     WARD TOTAL_E WHITE_E BLACK_E</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;  * &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  1     1   7992.    153.   7779.</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt;  2     2  12145.   1323.  10639.</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt;  3     3   7344.    591.   6635.</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;  4     4   8458.    160.   8203.</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;  5     5   8783.   1526.   7056.</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;  6     6  14050.   5840.   7439.</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt;  7     7  15840.   8220.   6629.</span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt;  8     8  12188.   7604.   3796.</span></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt;  9     9  14217.   6838.   6413.</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; 10    10  11239.   8703.   1667.</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt; # ... with 18 more rows</span></a></code></pre></div>
-</div>
-<div id="transparent" class="section level3">
-<h3 class="hasAnchor">
-<a href="#transparent" class="anchor"></a>Transparent</h3>
-<p>Another advantage of <code>areal</code> is that the interpolation process is not a “black box”, but rather can be manually completed if necessary. Details on this will be available on the package’s website.</p>
-</div>
+<a href="#contributor-code-of-conduct" class="anchor"></a>Contributor Code of Conduct</h2>
+<p>Please note that this project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 </div>
   </div>

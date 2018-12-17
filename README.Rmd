@@ -34,11 +34,10 @@ wards <- aw_stl_wards
 [![Coverage status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=master)
 [![CRAN_status_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 
-`areal` offers an intuitive toolkit for validating and interpolating spatial data. Areal interpolation is the process making estimates about the population features from a source set of polygons to an overlapping but incongruent set of target polygons - is the lack of easy to use tools for completing the processes. While methods for implementing various areal interpolation approaches are available outside of the `R` ecosystem (ex - toolboxes in ArcGIS) and within `R` (the `sf` package's `st_interpolate_aw`) function, `areal` fills a niche by providing additional functionality not available in `sf` while taking advantage of the reproducibility of `R`. `areal` currently implents only areal weighted interpolation, but a roadmap is being developed to add additional interpolation methods as well. This will be posted on the package's website before the initial CRAN release.
+Areal interpolation is the process making estimates about the population features from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented, implementing them often involves "reinventing the wheel." Within `R`, the `sf` package does offer a basic interface for areal weighted interpolation (`st_interpolate_aw`). The `areal` package is designed to provide a suite of interpolation functions that provide a more full-featured workflow that fits into both modern data management (e.g. `tidyverse`) and spatial data (e.g. `sf`) frameworks.
 
 ## Installation
 ### Installing Dependencies
-
 You should check the [`sf` package website](https://r-spatial.github.io/sf/) for the latest details on installing dependencies for that package. Instructions vary significantly by operating system. For best results, have `sf` installed before you install `qualmap`. Other dependencies, like `dplyr`, will be installed automatically with `areal` if they are not already present.
 
 ### Installing areal
@@ -50,15 +49,15 @@ remotes::install_github("slu-openGIS/areal")
 ```
 
 ## Usage 
-The package contains three overlapping data sets: 
+### Data
+The package contains four overlapping data sets: 
 
 * `aw_stl_race` (2017 ACS demographic counts at the census tract level; *n* = 106) 
 * `aw_stl_asthma` (2017 asthma rates at the census tract level; *n* = 106)
 * `aw_stl_wards` (the 2010 political subdivisions in St. Louis; *n* = 28). 
+* `aw_stl_wardsClipped` (the 2010 political subdivisions in St. Louis clipped to the Mississippi River shoreline; *n* = 28). 
 
-These can be used to illustrate the core functionality of the package. 
-
-The basic usage of `areal` is through the `aw_interpolate()` function, which is illustrated below. The following examples assume:
+These can be used to illustrate the core functionality of the package. The following examples assume:
 
 ```r
 > library(areal)
@@ -68,75 +67,48 @@ The basic usage of `areal` is through the `aw_interpolate()` function, which is 
 > wards <- aw_stl_wards
 ```
 
-### Data Validation
-`areal` contains a detailed data validation workflow that ensures that both the `source` and `target` data are compatible with each either. It can be run in a simple format:
+### Areal Weighted Interpolation
+`areal` currently implements an approach to interpolation known as areal weighted interpolation. It is arguably the simplest and most common approach to areal interpolation, though it does have some drawbacks (see the [areal weighted interpolation vignette](https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html) for details). The basic usage of `areal` is through the `aw_interpolate()` function. This is a pipe-able function that allows for the simultaneous interpolation of multiple values.
 
-```{r validate-simple}
-aw_validate(source = asthma, target = wards, varList = c("ASTHMA"))
-```
-
-If `aw_validate()` returns a `FALSE` value, it can also be run in a verbose manner that returns a detailed tibble:
-
-```{r validate-verbose}
-aw_validate(source = asthma, target = wards, varList = c("ASTHMA"), verbose = TRUE)
-```
-
-### Built-in Iteration
-
-One advantage of `areal` is that it allows for multiple values to be interpolated at a time. Here, both total estiatmed population (`TOTAL_E`), the estimated count of white residents (`WHITE_E`), and the estimated count of African American residents (`BLACK_E`) are interpolated at once:
+In this first example, the total estimated population (`TOTAL_E`) of each ward is calculated from its overlapping census tracts:
 
 ```{r iteration}
-aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", weight = "sum", 
-               output = "tibble", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
+aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", 
+               weight = "sum", output = "sf", extensive = "TOTAL_E")
 ```
 
-### Interpolation Choices
-Both spatially extensive (i.e. counts; illustrated in the prior examples) and spatially intensive (i.e. ratios) data can be interpolated. For spatially intensive data, the average is returned rather than the sum:
+This example outputs a simple features (`sf`) object and uses one of two options for calculating weights. All of these arguments are documented both within the package (use `?aw_interpolate`) and on the [package's website](https://slu-opengis.github.io/areal/). 
 
-```{r intensive}
-aw_interpolate(wards, tid = WARD, source = asthma, sid = "GEOID", 
-               weight = "sum", output = "tibble", intensive = "ASTHMA")
-```
-
-Both extensive and intensive data can be interpolated simultaneously by setting `type` to `"mixed"` and naming two vectors `extensive` and `intensive`. These vectors should include the relevent variable names:
+Both extensive and intensive data can be interpolated simultaneously by using both the `extensive` and `intensive` arguments. In this second example, the asthma and race data are combined, and estimates for both the population values and asthma rates are calculated for each ward from its overlapping census tracts:
 
 ```{r mixed}
 # remove sf geometry
-raceTable <- race
-st_geometry(raceTable) <- NULL
+st_geometry(race) <- NULL
 
 # create combined data
-raceTable %>%
+race %>%
   select(GEOID, TOTAL_E, WHITE_E, BLACK_E) %>%
   left_join(asthma, ., by = "GEOID") -> combinedData
 
 # interpolate
-aw_interpolate(wards, tid = WARD, source = combinedData, sid = "GEOID",
-               weight = "sum", output = "tibble", 
-               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
-               intensive = c("ASTHMA"))
-```
-
-### Output Choices
-Output can be either a tibble (shown in the prior example) or an `sf` object:
-
-```{r sf-output}
-aw_interpolate(wards, tid = "WARD", source = race, sid = "GEOID",  
-               weight = "sum", output = "sf", extensive = "TOTAL_E")
-```
-
-### Pipe Compatible
-
-One key advantage of `areal` is that is pipeable, meaning that it can fit easily into existing `tidyverse` workflows:
-
-```{r pipe}
 wards %>%
   select(-OBJECTID, -AREA) %>%
-  aw_interpolate(tid = WARD, source = race, sid = "GEOID", 
-               weight = "sum", output = "tibble", 
-               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
+  aw_interpolate(tid = WARD, source = combinedData, sid = "GEOID", 
+               weight = "total", output = "tibble", 
+               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
+               intensive = "ASTHMA")
 ```
 
-### Transparent
+Another advantage of `areal` is that the interpolation process is not a "black box", but rather can be manually completed if necessary. Functions for validating data, previewing the areal weights, and walking step-by-step through the interpolation process are provided. See the [areal weighted interpolation vignette](https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html) for additional details about this workflow.
 
-Another advantage of `areal` is that the interpolation process is not a "black box", but rather can be manually completed if necessary. Details on this will be available on the package's website.
+## Road-map 
+We are planning to experiment with at least three additional techniques for areal interpolation for possible inclusion into the package. These include:
+
+- [Pycnophylactic method](https://github.com/slu-openGIS/areal/issues/1) (raster based, eliminates the sharp transitions in value between target features)
+- [Binary dasymetric method](https://github.com/slu-openGIS/areal/issues/2) (incorporates ancillary data so that population is not assumed to be evenly distributed within units)
+- [3-class regression dasymetric method](https://github.com/slu-openGIS/areal/issues/3) (allows for a more complex estimation based on multiple forms of ancillary data)
+
+We do not have a timeline for these experiments, though we are planning to begin experimenting with the pycnophylactic method in the coming months. We will be keeping the issues (linked to above) updated with progress. If you are interested in bringing these techniques to `R`, please feel free to contribute to the development of `areal`. The best place to start is bt checking in on our GitHub issues for each technique to see what help is needed!
+
+## Contributor Code of Conduct
+Please note that this project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.

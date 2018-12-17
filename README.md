@@ -12,19 +12,16 @@ Status](https://ci.appveyor.com/api/projects/status/github/slu-openGIS/areal?bra
 status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=master)
 [![CRAN\_status\_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 
-`areal` offers an intuitive toolkit for validating and interpolating
-spatial data. Areal interpolations is the process making estimates about
-the population features from a source set of polygons to an overlapping
-but incongruent set of target polygons - is the lack of easy to use
-tools for completing the processes. While methods for implementing
-various areal interpolation approaches are available outside of the `R`
-ecosystem (ex - toolboxes in ArcGIS) and within `R` (the `sf` package’s
-`st_interpolate_aw`) function, `areal` fills a niche by providing
-additional functionality not available in `sf` while taking advantage of
-the reproducibility of `R`. `areal` currently implents only areal
-weighted interpolation, but a roadmap is being developed to add
-additional interpolation methods as well. This will be posted on the
-package’s website before the initial CRAN release.
+Areal interpolation is the process making estimates about the population
+features from a source set of polygons to an overlapping but incongruent
+set of target polygons. One challenge with areal interpolation is that,
+while the processes themselves are well documented, implementing them
+often involves “reinventing the wheel.” Within `R`, the `sf` package
+does offer a basic interface for areal weighted interpolation
+(`st_interpolate_aw`). The `areal` package is designed to provide a
+suite of interpolation functions that provide a more full-featured
+workflow that fits into both modern data management (e.g. `tidyverse`)
+and spatial data (e.g. `sf`) frameworks.
 
 ## Installation
 
@@ -49,7 +46,9 @@ remotes::install_github("slu-openGIS/areal")
 
 ## Usage
 
-The package contains three overlapping data sets:
+### Data
+
+The package contains four overlapping data sets:
 
   - `aw_stl_race` (2017 ACS demographic counts at the census tract
     level; *n* = 106)
@@ -57,11 +56,11 @@ The package contains three overlapping data sets:
     106)
   - `aw_stl_wards` (the 2010 political subdivisions in St. Louis; *n* =
     28).
+  - `aw_stl_wardsClipped` (the 2010 political subdivisions in St. Louis
+    clipped to the Mississippi River shoreline; *n* = 28).
 
 These can be used to illustrate the core functionality of the package.
-
-The basic usage of `areal` is through the `aw_interpolate()` function,
-which is illustrated below. The following examples assume:
+The following examples assume:
 
 ``` r
 > library(areal)
@@ -71,181 +70,122 @@ which is illustrated below. The following examples assume:
 > wards <- aw_stl_wards
 ```
 
-### Data Validation
+### Areal Weighted Interpolation
 
-`areal` contains a detailed data validation workflow that ensures that
-both the `source` and `target` data are compatible with each either. It
-can be run in a simple format:
+`areal` currently implements an approach to interpolation known as areal
+weighted interpolation. It is arguably the simplest and most common
+approach to areal interpolation, though it does have some drawbacks (see
+the [areal weighted interpolation
+vignette](https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html)
+for details). The basic usage of `areal` is through the
+`aw_interpolate()` function. This is a pipe-able function that allows
+for the simultaneous interpolation of multiple values.
 
-``` r
-aw_validate(source = asthma, target = wards, varList = c("ASTHMA"))
-#> [1] TRUE
-```
-
-If `aw_validate()` returns a `FALSE` value, it can also be run in a
-verbose manner that returns a detailed
-tibble:
-
-``` r
-aw_validate(source = asthma, target = wards, varList = c("ASTHMA"), verbose = TRUE)
-#> # A tibble: 7 x 2
-#>   test                            result
-#>   <chr>                           <lgl> 
-#> 1 sf Objects                      TRUE  
-#> 2 CRS Match                       TRUE  
-#> 3 CRS Units Match                 TRUE  
-#> 4 CRS Is Planar                   TRUE  
-#> 5 Variables Exist in Source       TRUE  
-#> 6 No Variable Conflicts in Target TRUE  
-#> 7 Overall Evaluation              TRUE
-```
-
-### Built-in Iteration
-
-One advantage of `areal` is that it allows for multiple values to be
-interpolated at a time. Here, both total estiatmed population
-(`TOTAL_E`), the estimated count of white residents (`WHITE_E`), and the
-estimated count of African American residents (`BLACK_E`) are
-interpolated at
-once:
+In this first example, the total estimated population (`TOTAL_E`) of
+each ward is calculated from its overlapping census tracts:
 
 ``` r
-aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", weight = "sum", 
-               output = "tibble", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
-#> # A tibble: 28 x 6
-#>    OBJECTID  WARD       AREA TOTAL_E WHITE_E BLACK_E
-#>  *    <dbl> <int>      <dbl>   <dbl>   <dbl>   <dbl>
-#>  1        1     1  46138761.   7992.    153.   7779.
-#>  2        2     2 267817711.  12145.   1323.  10639.
-#>  3        3     3  66291644.   7344.    591.   6635.
-#>  4        4     4  53210707.   8458.    160.   8203.
-#>  5        5     5  60462396.   8783.   1526.   7056.
-#>  6        6     6  64337271.  14050.   5840.   7439.
-#>  7        7     7 101268146.  15840.   8220.   6629.
-#>  8        8     8  45966410.  12188.   7604.   3796.
-#>  9        9     9  73993891.  14217.   6838.   6413.
-#> 10       10    10  62915358.  11239.   8703.   1667.
-#> # ... with 18 more rows
-```
-
-### Interpolation Choices
-
-Both spatially extensive (i.e. counts; illustrated in the prior
-examples) and spatially intensive (i.e. ratios) data can be
-interpolated. For spatially intensive data, the average is returned
-rather than the sum:
-
-``` r
-aw_interpolate(wards, tid = WARD, source = asthma, sid = "GEOID", 
-               weight = "sum", output = "tibble", intensive = "ASTHMA")
-#> # A tibble: 28 x 2
-#>     WARD ASTHMA
-#>  * <int>  <dbl>
-#>  1     1  13.4 
-#>  2     2  13.2 
-#>  3     3  14.1 
-#>  4     4  13.6 
-#>  5     5  13.8 
-#>  6     6  11.7 
-#>  7     7   9.72
-#>  8     8   9.82
-#>  9     9  11.8 
-#> 10    10   9.44
-#> # ... with 18 more rows
-```
-
-Both extensive and intensive data can be interpolated simultaneously by
-setting `type` to `"mixed"` and naming two vectors `extensive` and
-`intensive`. These vectors should include the relevent variable names:
-
-``` r
-# remove sf geometry
-raceTable <- race
-st_geometry(raceTable) <- NULL
-
-# create combined data
-raceTable %>%
-  select(GEOID, TOTAL_E, WHITE_E, BLACK_E) %>%
-  left_join(asthma, ., by = "GEOID") -> combinedData
-
-# interpolate
-aw_interpolate(wards, tid = WARD, source = combinedData, sid = "GEOID",
-               weight = "sum", output = "tibble", 
-               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
-               intensive = c("ASTHMA"))
-#> # A tibble: 28 x 7
-#>    OBJECTID  WARD       AREA TOTAL_E WHITE_E BLACK_E ASTHMA
-#>  *    <dbl> <int>      <dbl>   <dbl>   <dbl>   <dbl>  <dbl>
-#>  1        1     1  46138761.   7992.    153.   7779.  13.4 
-#>  2        2     2 267817711.  12145.   1323.  10639.  13.2 
-#>  3        3     3  66291644.   7344.    591.   6635.  14.1 
-#>  4        4     4  53210707.   8458.    160.   8203.  13.6 
-#>  5        5     5  60462396.   8783.   1526.   7056.  13.8 
-#>  6        6     6  64337271.  14050.   5840.   7439.  11.7 
-#>  7        7     7 101268146.  15840.   8220.   6629.   9.72
-#>  8        8     8  45966410.  12188.   7604.   3796.   9.82
-#>  9        9     9  73993891.  14217.   6838.   6413.  11.8 
-#> 10       10    10  62915358.  11239.   8703.   1667.   9.44
-#> # ... with 18 more rows
-```
-
-### Output Choices
-
-Output can be either a tibble (shown in the prior example) or an `sf`
-object:
-
-``` r
-aw_interpolate(wards, tid = "WARD", source = race, sid = "GEOID",  
+aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", 
                weight = "sum", output = "sf", extensive = "TOTAL_E")
-#> Simple feature collection with 28 features and 2 fields
+#> Simple feature collection with 28 features and 4 fields
 #> geometry type:  POLYGON
 #> dimension:      XY
 #> bbox:           xmin: 733361.8 ymin: 4268336 xmax: 746157.7 ymax: 4295504
 #> epsg (SRID):    26915
 #> proj4string:    +proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
 #> First 10 features:
-#>    WARD   TOTAL_E                       geometry
-#> 1     1  7991.565 POLYGON ((740184.2 4286431,...
-#> 2     2 12145.021 POLYGON ((742392.1 4289178,...
-#> 3     3  7344.287 POLYGON ((742956.1 4284113,...
-#> 4     4  8457.672 POLYGON ((739557.6 4284080,...
-#> 5     5  8783.377 POLYGON ((744883.8 4281632,...
-#> 6     6 14050.399 POLYGON ((742501.6 4279976,...
-#> 7     7 15840.086 POLYGON ((745618.6 4279867,...
-#> 8     8 12188.131 POLYGON ((739842.8 4277724,...
-#> 9     9 14217.149 POLYGON ((742619.4 4276734,...
-#> 10   10 11239.213 POLYGON ((737257.7 4277050,...
+#>    OBJECTID WARD      AREA   TOTAL_E                       geometry
+#> 1         1    1  46138761  7991.565 POLYGON ((740184.2 4286431,...
+#> 2         2    2 267817711 12145.021 POLYGON ((742392.1 4289178,...
+#> 3         3    3  66291644  7344.287 POLYGON ((742956.1 4284113,...
+#> 4         4    4  53210707  8457.672 POLYGON ((739557.6 4284080,...
+#> 5         5    5  60462396  8783.377 POLYGON ((744883.8 4281632,...
+#> 6         6    6  64337271 14050.399 POLYGON ((742501.6 4279976,...
+#> 7         7    7 101268146 15840.086 POLYGON ((745618.6 4279867,...
+#> 8         8    8  45966410 12188.131 POLYGON ((739842.8 4277724,...
+#> 9         9    9  73993891 14217.149 POLYGON ((742619.4 4276734,...
+#> 10       10   10  62915358 11239.213 POLYGON ((737257.7 4277050,...
 ```
 
-### Pipe Compatible
+This example outputs a simple features (`sf`) object and uses one of two
+options for calculating weights. All of these arguments are documented
+both within the package (use `?aw_interpolate`) and on the [package’s
+website](https://slu-opengis.github.io/areal/).
 
-One key advantage of `areal` is that is pipeable, meaning that it can
-fit easily into existing `tidyverse` workflows:
+Both extensive and intensive data can be interpolated simultaneously by
+using both the `extensive` and `intensive` arguments. In this second
+example, the asthma and race data are combined, and estimates for both
+the population values and asthma rates are calculated for each ward from
+its overlapping census tracts:
 
 ``` r
+# remove sf geometry
+st_geometry(race) <- NULL
+
+# create combined data
+race %>%
+  select(GEOID, TOTAL_E, WHITE_E, BLACK_E) %>%
+  left_join(asthma, ., by = "GEOID") -> combinedData
+
+# interpolate
 wards %>%
   select(-OBJECTID, -AREA) %>%
-  aw_interpolate(tid = WARD, source = race, sid = "GEOID", 
-               weight = "sum", output = "tibble", 
-               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
-#> # A tibble: 28 x 4
-#>     WARD TOTAL_E WHITE_E BLACK_E
-#>  * <int>   <dbl>   <dbl>   <dbl>
-#>  1     1   7992.    153.   7779.
-#>  2     2  12145.   1323.  10639.
-#>  3     3   7344.    591.   6635.
-#>  4     4   8458.    160.   8203.
-#>  5     5   8783.   1526.   7056.
-#>  6     6  14050.   5840.   7439.
-#>  7     7  15840.   8220.   6629.
-#>  8     8  12188.   7604.   3796.
-#>  9     9  14217.   6838.   6413.
-#> 10    10  11239.   8703.   1667.
+  aw_interpolate(tid = WARD, source = combinedData, sid = "GEOID", 
+               weight = "total", output = "tibble", 
+               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
+               intensive = "ASTHMA")
+#> # A tibble: 28 x 5
+#>     WARD TOTAL_E WHITE_E BLACK_E ASTHMA
+#>    <int>   <dbl>   <dbl>   <dbl>  <dbl>
+#>  1     1   7991.    153.   7778.  13.4 
+#>  2     2  12042.   1308.  10552.  13.2 
+#>  3     3   7334.    589.   6627.  14.1 
+#>  4     4   8458.    160.   8203.  13.6 
+#>  5     5   8689.   1518.   6971.  13.8 
+#>  6     6  14022.   5833.   7418.  11.7 
+#>  7     7  15645.   8123.   6544.   9.72
+#>  8     8  12188.   7604.   3796.   9.82
+#>  9     9  14095.   6786.   6351.  11.8 
+#> 10    10  11239.   8703.   1667.   9.44
 #> # ... with 18 more rows
 ```
 
-### Transparent
-
 Another advantage of `areal` is that the interpolation process is not a
 “black box”, but rather can be manually completed if necessary.
-Details on this will be available on the package’s website.
+Functions for validating data, previewing the areal weights, and walking
+step-by-step through the interpolation process are provided. See the
+[areal weighted interpolation
+vignette](https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html)
+for additional details about this workflow.
+
+## Road-map
+
+We are planning to experiment with at least three additional techniques
+for areal interpolation for possible inclusion into the package. These
+include:
+
+  - [Pycnophylactic
+    method](https://github.com/slu-openGIS/areal/issues/1) (raster
+    based, eliminates the sharp transitions in value between target
+    features)
+  - [Binary dasymetric
+    method](https://github.com/slu-openGIS/areal/issues/2) (incorporates
+    ancillary data so that population is not assumed to be evenly
+    distributed within units)
+  - [3-class regression dasymetric
+    method](https://github.com/slu-openGIS/areal/issues/3) (allows for a
+    more complex estimation based on multiple forms of ancillary data)
+
+We do not have a timeline for these experiments, though we are planning
+to begin experimenting with the pycnophylactic method in the coming
+months. We will be keeping the issues (linked to above) updated with
+progress. If you are interested in bringing these techniques to `R`,
+please feel free to contribute to the development of `areal`. The best
+place to start is bt checking in on our GitHub issues for each technique
+to see what help is needed\!
+
+## Contributor Code of Conduct
+
+Please note that this project is released with a [Contributor Code of
+Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project
+you agree to abide by its terms.

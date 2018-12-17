@@ -16,18 +16,4 @@ knitr::opts_chunk$set(
 )
 ```
 
-Areal interpolation is the process making estimates about the population features from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is the 
-
-is the lack of easy to use tools for completing the processes. While methods for implementing various areal interpolation approaches are available outside of the `R` ecosystem (ex - toolboxes in ArcGIS) and within `R` (the `sf` package's `st_interpolate_aw`) function, `areal` fills a niche by providing additional functionality not available in `sf` while taking advantage of the reproducibility of `R`.
-
-## Areal Weighted Interpolation
-`areal` currently implements an approach 
-
-## Roadmap 
-We are planning to experiment with at least three additional techniques for areal interpolation for possible inclusion into the package. These include:
-
-- [Pycnophylactic method](https://github.com/slu-openGIS/areal/issues/1) (raster based, eliminates the sharp transitions in value between target features)
-- [Binary dasymetric method](https://github.com/slu-openGIS/areal/issues/2) (incorporates ancillary data so that population is not assumed to be evenly distributed within units)
-- [3-class regression dasymetric method](https://github.com/slu-openGIS/areal/issues/3) (allows for a more complex estimation based on multiple forms of ancillary data)
-
-We do not have a timeline for these experiments, though we are planning to begin experimenting with the pycnophylactic method in the coming months. This page will be updated with progress. If you are interested in bringing these techniques to `R`, please feel free to contribute to the development of `areal`. Check out our [Code of Conduct](https://slu-opengis.github.io/areal/CODE_OF_CONDUCT.html) and check in on our GitHub issues for each technique to see what help is needed!
+Areal interpolation...
