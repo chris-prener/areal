@@ -4,14 +4,12 @@
 \alias{aw_validate_preview}
 \title{Lite Version of Validation for aw_preview_weights}
 \usage{
-aw_validate_preview(source, target, verbose = FALSE)
+aw_validate_preview(source, target)
 }
 \arguments{
 \item{source}{A \code{sf} object with data to be interpolated}
 
 \item{target}{A \code{sf} object that data should be interpolated to}
-
-\item{verbose}{A logical scalar; if \code{TRUE}, a tibble with test results is returned}
 }
 \value{
 If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TRUE}
