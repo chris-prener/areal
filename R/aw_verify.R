@@ -61,12 +61,8 @@ aw_verify <- function(source, sourceValue, result, resultValue){
                     var = sourceValueQN))
   }
 
-  if (length(resultValueQN) > 1){
-    stop("The 'resultVar' parameter should have only one variable name given.")
-  }
-
   if(!!resultValueQN %in% colnames(result) == FALSE) {
-    stop(glue::glue("Variable '{var}', given for the result value, cannot be found in the given result object.",
+    stop(glue::glue("Variable '{var}', given for the result value, cannot be found in the given result object. Make sure only one existing variable is given.",
                     var = resultValueQN))
   }
 
