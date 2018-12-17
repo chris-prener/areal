@@ -2,7 +2,7 @@
 % Please edit documentation in R/aw_verify.R
 \name{aw_verify}
 \alias{aw_verify}
-\title{Verify Correct Interpolation}
+\title{Verify Correct Extensive-Sum Interpolation}
 \usage{
 aw_verify(source, sourceValue, result, resultValue)
 }
@@ -19,9 +19,11 @@ aw_verify(source, sourceValue, result, resultValue)
 A logical scalar; if \code{TRUE}, these two values are equal.
 }
 \description{
-Verify Correct Interpolation
+Verify Correct Extensive-Sum Interpolation
 }
 \details{
 \code{aw_verify} ensures that the sum of the resulting interpolated
-    value is equal to the sum of the origina source value.
+    value is equal to the sum of the origina source value. This functionality
+    only works for interpolations that are extensive and use the \code{sum}
+    approach to calculating areal weights.
 }

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Verify Correct Interpolation — aw_verify • areal</title>
+<title>Verify Correct Extensive-Sum Interpolation — aw_verify • areal</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Verify Correct Interpolation — aw_verify" />
+<meta property="og:title" content="Verify Correct Extensive-Sum Interpolation — aw_verify" />
 
-<meta property="og:description" content="Verify Correct Interpolation" />
+<meta property="og:description" content="Verify Correct Extensive-Sum Interpolation" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,14 +120,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Verify Correct Interpolation</h1>
+    <h1>Verify Correct Extensive-Sum Interpolation</h1>
     <small class="dont-index">Source: <a href='https://github.com/slu-openGIS/areal/blob/master/R/aw_verify.R'><code>R/aw_verify.R</code></a></small>
     <div class="hidden name"><code>aw_verify.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Verify Correct Interpolation</p>
+    <p>Verify Correct Extensive-Sum Interpolation</p>
     
     </div>
 
@@ -161,7 +161,9 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>aw_verify</code> ensures that the sum of the resulting interpolated
-    value is equal to the sum of the origina source value.</p>
+    value is equal to the sum of the origina source value. This functionality
+    only works for interpolations that are extensive and use the <code>sum</code>
+    approach to calculating areal weights.</p>
     
 
   </div>
