@@ -19,17 +19,17 @@ library(areal)
 library(dplyr)
 library(sf)
 
-data(aw_stl_asthma, package = "areal")
-asthma <- aw_stl_asthma
+data(ar_stl_asthma, package = "areal")
+asthma <- ar_stl_asthma
 
-data(aw_stl_race, package = "areal")
+data(ar_stl_race, package = "areal")
 race <- aw_stl_race
 
-data(aw_stl_wards, package = "areal")
-wards <- aw_stl_wards
+data(ar_stl_wards, package = "areal")
+wards <- ar_stl_wards
 
-data(aw_stl_wardsClipped, package = "areal")
-wardsClipped <- aw_stl_wardsClipped
+data(ar_stl_wardsClipped, package = "areal")
+wardsClipped <- ar_stl_wardsClipped
 ```
 
 Areal weighted interpolation is a technique for estimating the values for overlapping but incongruent polygon features. This article describes the `areal` package's approach to areal weighted interpolation. 
