@@ -58,7 +58,7 @@ test_that("errors with misspecified parameters", {
 
 test_that("correctly specified functions execute without error", {
   expect_error(aw_preview_weights(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID, type = "extensive"), NA)
-  expect_error(aw_preview_weights(aw_stl_wards, tid = WARD, source = aw_stl_asthma, sid = GEOID, type = "intensive"), NA)
+  expect_error(aw_preview_weights(aw_stl_wards, tid = "WARD", source = aw_stl_asthma, sid = "GEOID", type = "intensive"), NA)
   expect_error(aw_preview_weights(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID, type = "mixed"), NA)
 })
 

@@ -162,11 +162,7 @@ aw_calculate_weight <- function(.data, source, id, item){
   ...areaWeight = NULL
 
   # nse
-  if (!is.character(paramList$id)) {
-    idQ <- rlang::enquo(id)
-  } else if (is.character(paramList$id)) {
-    idQ <- rlang::quo(!! rlang::sym(id))
-  }
+  idQ <- rlang::enquo(id)
 
   # create type and weight from item
   if (item == "extensive_sum"){
