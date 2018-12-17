@@ -17,13 +17,13 @@ library(dplyr)
 library(sf)
 
 data(ar_stl_asthma, package = "areal")
-asthma <- aw_stl_asthma
+asthma <- ar_stl_asthma
 
 data(ar_stl_race, package = "areal")
-race <- aw_stl_race
+race <- ar_stl_race
 
 data(ar_stl_wards, package = "areal")
-wards <- aw_stl_wards
+wards <- ar_stl_wards
 ```
 
 # areal <img src="man/figures/arealLogo.png" align="right" />

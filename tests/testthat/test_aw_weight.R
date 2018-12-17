@@ -3,15 +3,15 @@ context("test aw_weight function")
 # load test data ------------------------------------------------
 
 # target data
-data(aw_stl_wards, package = "areal")
+data(ar_stl_wards, package = "areal")
 
 # source data
-data(aw_stl_race, package = "areal")
+data(ar_stl_race, package = "areal")
 
 # calculate intersection
-aw_stl_wards %>%
-  aw_intersect(source = aw_stl_race, areaVar = "...area") %>%
-  aw_total(source = aw_stl_race, id = GEOID, areaVar = "...area",
+ar_stl_wards %>%
+  aw_intersect(source = ar_stl_race, areaVar = "...area") %>%
+  aw_total(source = ar_stl_race, id = GEOID, areaVar = "...area",
            totalVar = "...totalArea", weight = "sum", type = "extensive")-> intersect
 
 # test errors ------------------------------------------------
