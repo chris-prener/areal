@@ -99,23 +99,23 @@
 <a href="#areal" class="anchor"></a>areal <img src="reference/figures/arealLogo.png" align="right">
 </h1></div>
 
-<p>Areal interpolation is the process making estimates about the population features from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented, implementing them often involves “reinventing the wheel.” Within <code>R</code>, the <code>sf</code> package does offer a basic interface for areal weighted interpolation (<code>st_interpolate_aw</code>). The <code>areal</code> package contains a suite tools for validation and estimation, providing a full-featured workflow that fits into both modern data management (e.g. <code>tidyverse</code>) and spatial data (e.g. <code>sf</code>) frameworks.</p>
-<div id="installation" class="section level2">
+<p>Areal interpolation is the process making estimates from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented, implementing them often involves “reinventing the wheel.” Within <code>R</code>, the <code>sf</code> package does offer a basic interface for areal weighted interpolation (<code>st_interpolate_aw</code>). The <code>areal</code> package contains a suite tools for validation and estimation, providing a full-featured workflow that fits into both modern data management (e.g. <code>tidyverse</code>) and spatial data (e.g. <code>sf</code>) frameworks.</p>
+<div id="resources" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<div id="installing-dependencies" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installing-dependencies" class="anchor"></a>Installing Dependencies</h3>
-<p>You should check the <a href="https://r-spatial.github.io/sf/"><code>sf</code> package website</a> for the latest details on installing dependencies for that package. Instructions vary significantly by operating system. For best results, have <code>sf</code> installed before you install <code>areal</code>. Other dependencies, like <code>dplyr</code>, will be installed automatically with <code>areal</code> if they are not already present.</p>
-<p>The one exception here is the dependency <code>lwgeom</code>, which Linux users will need to follow some <a href="https://github.com/r-spatial/lwgeom">spatial instructions</a> to install correctly.</p>
-</div>
-<div id="installing-areal" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installing-areal" class="anchor"></a>Installing areal</h3>
-<p>The development version of <code>areal</code> can be accessed from Github with <code>remotes</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"slu-openGIS/areal"</span>)</a></code></pre></div>
-</div>
+<a href="#resources" class="anchor"></a>Resources</h2>
+<ul>
+<li>The <a href="/areal/">Get started</a> article has:
+<ul>
+<li>a quick overview of getting up and running with <code>areal</code> including <strong>installation tips</strong>,</li>
+<li>some notes on <strong>preparing data</strong> for interpolation,</li>
+<li>a brief introduction to the <strong><code><a href="reference/aw_interpolate.html">aw_interpolate()</a></code> function</strong>,</li>
+<li>tips for <strong>getting help</strong>, <strong>submitting feedback</strong>,</li>
+<li>and the <code>areal</code> package’s development roadmap!</li>
+</ul>
+</li>
+<li>Additional details about preparing data are available in a <a href="/data-preparation/">dedicated article</a>.</li>
+<li>The areal weighted interpolation process is described in-depth in a <a href="/areal-weighted-interpolation/">dedicated article</a>.</li>
+</ul>
 </div>
 <div id="contributor-code-of-conduct" class="section level2">
 <h2 class="hasAnchor">

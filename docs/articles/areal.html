@@ -99,10 +99,101 @@
 
     
     
-<p>Areal interpolation…</p>
+<p>Areal interpolation is the process making estimates from a source set of polygons to an overlapping but incongruent set of target polygons. This is required if, for example, a researcher wants to derive population estimates for neighborhoods in a U.S. city from the Census Bureau’s census tracts. Neighborhoods do not typically aline with census tract boundaries, and areal interpolation can be used to produce estimates in this situation.</p>
+<div id="motivation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#motivation" class="anchor"></a>Motivation</h2>
+<p>As helpful as this may be, areal interpolation is not widely used. Many neighborhood researchers use census tracts, census block groups, or even zip codes as proxies for neighborhoods instead of interpolating values from these underlying sources into the actual neighborhoods. A key reason many researchers do not take this second step is that desktop GIS applications have not historically offered built-in tools for completing these calculations. Thus researchers wishing to use areal interpolation must “reinvent the wheel” (Qiu et al. 2012) when it comes to developing processes for carrying out areal interpolation.</p>
+<p>In <code>R</code>, the <code>sf</code> package does offer a basic interface for areal weighted interpolation (<code>st_interpolate_aw</code>). While this functionality is welcome and useful, its implementation requires extensive data cleaning to carry out multiple interpolations (or the use of a tool like <code>purrr</code>). The process is also a “black box” - the interpolations are produced without a means to disaggregate the process into its constituent elements.</p>
+<p><code>areal</code> is designed as an alternative to this approach. For its initial release, the package offers a specific approach to interpolation known as areal weighted interpolation with several distinct features. Iteration is built-in and does not require using the apply family of functions from <code>base</code> or tools from <code>purrr</code>. Users have multiple choices available both in terms of how interpolations are calculated and how output is structured. The key function, <code><a href="../reference/aw_interpolate.html">aw_interpolate()</a></code> is pipe-able, meaning it fits into existing <code>tidyverse</code> workflows. Helper functions are provided to validate data and make decisions about which areal weight to implement. And finally, the areal weighted interpolation process can be disaggregated by applying the necessary functions in sequence.</p>
+</div>
+<div id="getting-started" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-started" class="anchor"></a>Getting Started</h2>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
+<p>We recommend that users install <code>sf</code> before proceeding with the installation of <code>areal</code>. Windows users should be able to install <code>sf</code> without significant issues, but macOS and linux users will need to install several open source spatial libraries to get <code>sf</code> itself up and running. The easiest approach for macOS users is to install the GDAL 2.0 Complete framework from <a href="https://www.kyngchaos.com/software/frameworks/">Kyng Chaos</a>.</p>
+<p>For Linux users, steps will vary based on the falvor being used. Our <a href="https://github.com/slu-openGIS/areal/blob/master/.travis.yml">configuration file</a> for Travis CI and its associated <a href="https://github.com/slu-openGIS/areal/blob/master/.travis/install.sh">bash script</a> should be useful in determining the necessary components to install. Linux users will need to make sure the dependency <a href="https://github.com/r-spatial/lwgeom"><code>lwgeom</code></a> is also installed correctly.</p>
+<p>Once <code>sf</code> is installed, the development version of <code>areal</code> can be accessed from Github with <code>remotes</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"slu-openGIS/areal"</span>)</a></code></pre></div>
+</div>
+<div id="preparing-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#preparing-data" class="anchor"></a>Preparing Data</h3>
+<p><code>areal</code> assumes that all data are available as <code>sf</code> objects. The <code>st_read()</code> function is useful for importing data stored in a variety of formats into <code>sf</code> objects. Creating these objects is a pre-requistite to passing the validation steps before interpolations are completed.</p>
+<p>It is also recommended that all data are stored using a projected coordinate system as opposed to a geographic coordinate system like NAD 1983 or WGS 1984. There are many projected coordinate systems to choose from, but the key is that all of your data is projected using the same system. Here too the <code>sf</code> package has built-in functionality - the <code>st_transform()</code> function can be used for data re-projection.</p>
+<p>Finally, we strongly suggest that you clean out unnecessary columns from your data prior to projection. <code>sf</code> objects can be cleaned using <code>tidyverse</code> tools from <code>dplyr</code>, which makes it easy to <code>select()</code> the columns and <code><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter()</a></code> the observations you want to focus on for interpolation. Columns can also be easily renamed using <code>rename()</code>.</p>
+<p>Once data have been converted to <code>sf</code> objects, re-projected into the same planar coordinate systems, and cleaned, they are ready for interpolation!</p>
+<p>The data preparation process is described in greater detail in a <a href="https://slu-opengis.github.io/areal/articles/data-preparation.html">dedicated vignette</a>.</p>
+</div>
+<div id="areal-weighted-interpolation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#areal-weighted-interpolation" class="anchor"></a>Areal Weighted Interpolation</h3>
+<p>Areal weighted interpolation makes a single, albiet significant, assumption about your data - that populations are evenly distributed within the source data. Imagine you have a census tract with 3,000 residents. Areal weighted interpolation will assume that these 3,000 residents are evenly spread out within that tract. This may not matter in some tracts, but in tracts with large parks or dense housing developments alongside commercial buildings, this assumption is not likely to hold.</p>
+<p>The primary means for conducting interpolations, and possibly the only function you may need from <code>areal</code>, is the <code><a href="../reference/aw_interpolate.html">aw_interpolate()</a></code> function:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span>(wards, <span class="dt">tid =</span> WARD, <span class="dt">source =</span> race, <span class="dt">sid =</span> <span class="st">"GEOID"</span>, </a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">               <span class="dt">weight =</span> <span class="st">"sum"</span>, <span class="dt">output =</span> <span class="st">"sf"</span>, <span class="dt">extensive =</span> <span class="st">"TOTAL_E"</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; Simple feature collection with 28 features and 4 fields</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; geometry type:  POLYGON</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; dimension:      XY</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; bbox:           xmin: 733361.8 ymin: 4268336 xmax: 746157.7 ymax: 4295504</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; epsg (SRID):    26915</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; proj4string:    +proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; First 10 features:</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;    OBJECTID WARD      AREA   TOTAL_E                       geometry</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; 1         1    1  46138761  7991.565 POLYGON ((740184.2 4286431,...</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; 2         2    2 267817711 12145.021 POLYGON ((742392.1 4289178,...</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; 3         3    3  66291644  7344.287 POLYGON ((742956.1 4284113,...</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; 4         4    4  53210707  8457.672 POLYGON ((739557.6 4284080,...</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; 5         5    5  60462396  8783.377 POLYGON ((744883.8 4281632,...</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 6         6    6  64337271 14050.399 POLYGON ((742501.6 4279976,...</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; 7         7    7 101268146 15840.086 POLYGON ((745618.6 4279867,...</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; 8         8    8  45966410 12188.131 POLYGON ((739842.8 4277724,...</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; 9         9    9  73993891 14217.149 POLYGON ((742619.4 4276734,...</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; 10       10   10  62915358 11239.213 POLYGON ((737257.7 4277050,...</span></a></code></pre></div>
+<p>The function is capable of both spatially extensive and intensive interpolations, and can use two different strategies for calculating areal weights for extensive interpolations. It can also produce output as either <code>tibble</code> or <code>sf</code> objects. These options are all documented in both the function documentation (use <code><a href="../reference/aw_interpolate.html">?aw_interpolate</a></code>) as well as in a <a href="https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html">dedicated vignette</a>.</p>
+</div>
+</div>
+<div id="getting-help" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-help" class="anchor"></a>Getting Help</h2>
+<ul>
+<li>If you are new to <code>R</code> itself, welcome! Hadley Wickham’s <a href="http://r4ds.had.co.nz"><em>R for Data Science</em></a> is an excellent way to get started with data manipulation in the tidyverse, which <code>areal</code> is designed to integrate seemlessly with.</li>
+<li>If you are new to spatial analysis in <code>R</code>, we strongly encourage you check out the excellent new <a href="https://geocompr.robinlovelace.net"><em>Geocomputation in R</em></a> by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow.</li>
+<li>If you have questions about using <code>areal</code>, you are encouraged to use the <a href="https://community.rstudio.com">RStudio Community forums</a>. Please create a <a href="http://reprex.tidyverse.org/"><code>reprex</code></a> before posting. Feel free to tag Chris (<code>@chris.prener</code>) in any posts about <code>areal</code>.</li>
+<li>If you think you’ve found a bug, please create a <a href="http://reprex.tidyverse.org/"><code>reprex</code></a> and then open an issue on <a href="https://github.com/slu-openGIS/areal/issues/new/choose">GitHub</a>.</li>
+</ul>
+</div>
+<div id="suggesting-features-or-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#suggesting-features-or-changes" class="anchor"></a>Suggesting Features or Changes</h2>
+<p>We are planning to experiment with at least three additional techniques for areal interpolation for possible inclusion into the package. These include:</p>
+<ul>
+<li>
+<a href="https://github.com/slu-openGIS/areal/issues/1">Pycnophylactic method</a> (raster based, eliminates the sharp transitions in value between target features)</li>
+<li>
+<a href="https://github.com/slu-openGIS/areal/issues/2">Binary dasymetric method</a> (incorporates ancillary data so that population is not assumed to be evenly distributed within units)</li>
+<li>
+<a href="https://github.com/slu-openGIS/areal/issues/3">3-class regression dasymetric method</a> (allows for a more complex estimation based on multiple forms of ancillary data)</li>
+</ul>
+<p>We do not have a timeline for these experiments, though we are planning to begin experimenting with the pycnophylactic method in the coming months. We will be keeping the issues (linked to above) updated with progress. If you are interested in bringing these techniques to <code>R</code>, please feel free to contribute to the development of <code>areal</code>. The best place to start is bt checking in on our GitHub issues for each technique to see what help is needed!</p>
+<p>If you have other features or suggestions you want to see, please open an issue on <a href="https://github.com/slu-openGIS/areal/issues/new/choose">GitHub</a> (and ideally created a <a href="http://reprex.tidyverse.org/"><code>reprex</code></a> to go with it!).</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#motivation">Motivation</a></li>
+      <li><a href="#getting-started">Getting Started</a></li>
+      <li><a href="#getting-help">Getting Help</a></li>
+      <li><a href="#suggesting-features-or-changes">Suggesting Features or Changes</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

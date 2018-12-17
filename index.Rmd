@@ -23,19 +23,15 @@ knitr::opts_chunk$set(
 
 Areal interpolation is the process making estimates from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented, implementing them often involves "reinventing the wheel." Within `R`, the `sf` package does offer a basic interface for areal weighted interpolation (`st_interpolate_aw`). The `areal` package contains a suite tools for validation and estimation, providing a full-featured workflow that fits into both modern data management (e.g. `tidyverse`) and spatial data (e.g. `sf`) frameworks.
 
-## Installation
-### Installing Dependencies
-You should check the [`sf` package website](https://r-spatial.github.io/sf/) for the latest details on installing dependencies for that package. Instructions vary significantly by operating system. For best results, have `sf` installed before you install `areal`. Other dependencies, like `dplyr`, will be installed automatically with `areal` if they are not already present.
-
-The one exception here is the dependency `lwgeom`, which Linux users will need to follow some [spatial instructions](https://github.com/r-spatial/lwgeom) to install correctly.
-
-### Installing areal
-The development version of `areal` can be accessed from Github with `remotes`:
-
-```r
-# install.packages("remotes")
-remotes::install_github("slu-openGIS/areal")
-```
+## Resources
+* The [Get started](/areal/) article has:
+    * a quick overview of getting up and running with `areal` including **installation tips**,
+    * some notes on **preparing data** for interpolation,
+    * a brief introduction to the **`aw_interpolate()` function**,
+    * tips for **getting help**, **submitting feedback**, 
+    * and the `areal` package's development roadmap!
+* Additional details about preparing data are available in a [dedicated article](/data-preparation/).
+* The areal weighted interpolation process is described in-depth in a [dedicated article](/areal-weighted-interpolation/).
 
 ## Contributor Code of Conduct
 Please note that this project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.

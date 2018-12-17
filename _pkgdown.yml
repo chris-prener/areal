@@ -31,7 +31,7 @@ reference:
   - title: "Data"
     desc: "Data sets included in package."
     contents:
-    - aw_stl_asthma
-    - aw_stl_race
-    - aw_stl_wards
-    - aw_stl_wardsClipped
+    - ar_stl_asthma
+    - ar_stl_race
+    - ar_stl_wards
+    - ar_stl_wardsClipped

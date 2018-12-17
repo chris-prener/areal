@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+library(areal)
+
 data(ar_stl_asthma, package = "areal")
 asthma <- ar_stl_asthma
 
@@ -68,7 +70,7 @@ aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID",
                weight = "sum", output = "sf", extensive = "TOTAL_E")
 ```
 
-The function is capable of both spatially extensive and intensive interpolations, and can use two different strategies for calculating areal weights for extensive interpolations. It can also produce output as either `tibble` or `sf` objects. These options are all documented in both the function documentation (use `?aw_interpolate`) as well as in the [specific vignette](https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html).
+The function is capable of both spatially extensive and intensive interpolations, and can use two different strategies for calculating areal weights for extensive interpolations. It can also produce output as either `tibble` or `sf` objects. These options are all documented in both the function documentation (use `?aw_interpolate`) as well as in a [dedicated vignette](https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html).
 
 ## Getting Help
 * If you are new to `R` itself, welcome! Hadley Wickham's [*R for Data Science*](http://r4ds.had.co.nz) is an excellent way to get started with data manipulation in the tidyverse, which `areal` is designed to integrate seemlessly with.
@@ -85,4 +87,4 @@ We are planning to experiment with at least three additional techniques for area
 
 We do not have a timeline for these experiments, though we are planning to begin experimenting with the pycnophylactic method in the coming months. We will be keeping the issues (linked to above) updated with progress. If you are interested in bringing these techniques to `R`, please feel free to contribute to the development of `areal`. The best place to start is bt checking in on our GitHub issues for each technique to see what help is needed!
 
-If you have other features or suggestions you want to see, please open an issue (and ideally created a [`reprex`](http://reprex.tidyverse.org/) to go with it!).
+If you have other features or suggestions you want to see, please open an issue on [GitHub](https://github.com/slu-openGIS/areal/issues/new/choose) (and ideally created a [`reprex`](http://reprex.tidyverse.org/) to go with it!).
