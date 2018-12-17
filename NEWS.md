@@ -4,3 +4,6 @@
 * Develop areal weighted interpolation functionality (`aw_` functions)
 * Add core example data sets (`aw_` data)
 * Implement unit testing with both Travis and Appveyor as well as Code Coverage tracking
+* Add `.github` community files
+* Add `LICENSE` and `cran-comments.md`
+* Add vignettes for 
