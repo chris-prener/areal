@@ -6,4 +6,5 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^\.travis
+^\.github
 ^appveyor\.yml$
