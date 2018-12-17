@@ -37,6 +37,10 @@ aw_preview_weights <- function(.data, tid, source, sid, type){
   paramList <- as.list(match.call())
 
   # check for missing parameters
+  if (missing(.data)) {
+    stop("A sf object containing target data must be specified for the '.data' argument.")
+  }
+
   if (missing(tid)) {
     stop("A variable name must be specified for the 'tid' argument.")
   }
