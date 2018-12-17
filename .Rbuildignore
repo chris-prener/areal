@@ -1,6 +1,7 @@
 ^cran-comments\.md$
 ^codecov\.yml$
 ^README\.Rmd$
+^LICENSE$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
