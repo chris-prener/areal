@@ -56,13 +56,9 @@ aw_verify <- function(source, sourceValue, result, resultValue){
   resultValueQN <- rlang::quo_name(rlang::enquo(resultValue))
 
   # check variables
-  if (length(sourceValueQN) > 1){
-    stop("The 'sourceVar' parameter should have only one variable name given.")
-  }
-
   if(!!sourceValueQN %in% colnames(source) == FALSE) {
-    stop(glue::glue("Variable '{var}', given for the source value, cannot be found in the given source object.",
-                    var = sourceValueQ))
+    stop(glue::glue("Variable '{var}', given for the source value, cannot be found in the given source object. Make sure only one existing variable is given.",
+                    var = sourceValueQN))
   }
 
   if (length(resultValueQN) > 1){
@@ -71,7 +67,7 @@ aw_verify <- function(source, sourceValue, result, resultValue){
 
   if(!!resultValueQN %in% colnames(result) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the result value, cannot be found in the given result object.",
-                    var = resultValueQ))
+                    var = resultValueQN))
   }
 
   # store sum of original and interpolated values
