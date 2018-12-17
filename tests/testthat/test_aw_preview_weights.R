@@ -62,4 +62,45 @@ test_that("correctly specified functions execute without error", {
   expect_error(aw_preview_weights(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID, type = "mixed"), NA)
 })
 
+# test validation failures ------------------------------------------------
 
+wardsdf <- aw_stl_wards
+sf::st_geometry(wardsdf) <- NULL
+
+racedf <- aw_stl_race
+sf::st_geometry(racedf) <- NULL
+
+wards83 <- sf::st_transform(aw_stl_wards, crs = 4269)
+race83 <- sf::st_transform(aw_stl_race, crs = 4269)
+
+test_that("validation result is false", {
+  expect_error(aw_preview_weights(wardsdf, tid = WARD, source = aw_stl_race, sid = GEOID, type = "extensive"),
+               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+  expect_error(aw_preview_weights(aw_stl_wards, tid = WARD, source = racedf, sid = GEOID, type = "extensive"),
+               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+  expect_error(aw_preview_weights(wards83, tid = WARD, source = aw_stl_race, sid = GEOID, type = "extensive"),
+               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+  expect_error(aw_preview_weights(aw_stl_wards, tid = WARD, source = race83, sid = GEOID, type = "extensive"),
+               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+})
+
+# test output ------------------------------------------------
+
+extensive <- aw_preview_weights(aw_stl_wards, tid = WARD, source = aw_stl_race, sid = GEOID, type = "extensive")
+intensive <- aw_preview_weights(aw_stl_wards, tid = WARD, source = aw_stl_asthma, sid = GEOID, type = "intensive")
+mixed <- aw_preview_weights(aw_stl_wards, tid = WARD, source = combinedData, sid = GEOID, type = "mixed")
+
+test_that("objects created as expected", {
+  expect_equal(class(extensive)[1], "tbl_df")
+  expect_equal(class(intensive)[1], "tbl_df")
+  expect_equal(class(mixed)[1], "list")
+  expect_equal(class(mixed$extensive)[1], "tbl_df")
+  expect_equal(class(mixed$intensive)[1], "tbl_df")
+})
+
+test_that("weights calculated as expected", {
+  expect_equal(names(extensive), c("GEOID", "extensiveSum", "extensiveTotal"))
+  expect_equal(names(mixed$extensive), c("GEOID", "extensiveSum", "extensiveTotal"))
+  expect_equal(names(intensive), c("WARD", "intensive"))
+  expect_equal(names(mixed$intensive), c("WARD", "intensive"))
+})
