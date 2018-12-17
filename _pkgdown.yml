@@ -1,0 +1,37 @@
+url: https://slu-openGIS.github.io/areal/
+
+authors:
+  Christopher Prener:
+    href: https://chris-prener.github.io
+
+articles:
+  - title: Articles
+    contents:
+    - data-preparation
+    - areal-weighted-interpolation
+
+reference:
+  - title: "Areal Weighted Interpolation, Core"
+    desc: "Core functions for performing areal weighted interpolation."
+    contents:
+    - aw_interpolate
+    - aw_validate
+    - aw_preview_weights
+    - aw_verify
+
+  - title: "Areal Weighted Interpolation, Workflow"
+    desc: "Functions for manually reproducing areal weighted interpolation workflow."
+    contents:
+    - aw_intersect
+    - aw_total
+    - aw_weight
+    - aw_calculate
+    - aw_aggregate
+
+  - title: "Data"
+    desc: "Data sets included in package."
+    contents:
+    - aw_stl_asthma
+    - aw_stl_race
+    - aw_stl_wards
+    - aw_stl_wardsClipped
