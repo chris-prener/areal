@@ -7,7 +7,7 @@
 #'
 #' @docType data
 #'
-#' @usage data(aw_stl_wards)
+#' @usage data(ar_stl_wards)
 #'
 #' @format A data frame with 28 rows and 4 variables:
 #' \describe{
@@ -20,8 +20,8 @@
 #' @source City of St. Louis
 #'
 #' @examples
-#' str(aw_stl_wards)
-#' head(aw_stl_wards)
-#' summary(aw_stl_wards$AREA)
+#' str(ar_stl_wards)
+#' head(ar_stl_wards)
+#' summary(ar_stl_wards$AREA)
 #'
-"aw_stl_wards"
+"ar_stl_wards"

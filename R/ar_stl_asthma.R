@@ -5,7 +5,7 @@
 #'
 #' @docType data
 #'
-#' @usage data(aw_stl_asthma)
+#' @usage data(ar_stl_asthma)
 #'
 #' @format A data frame with 106 rows and 24 variables:
 #' \describe{
@@ -23,8 +23,8 @@
 #' @source Centers for Disease Control's 500 Cities Data
 #'
 #' @examples
-#' str(aw_stl_asthma)
-#' head(aw_stl_asthma)
-#' summary(aw_stl_asthma$ASTHMA)
+#' str(ar_stl_asthma)
+#' head(ar_stl_asthma)
+#' summary(ar_stl_asthma$ASTHMA)
 #'
-"aw_stl_asthma"
+"ar_stl_asthma"

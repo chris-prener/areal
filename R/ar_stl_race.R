@@ -5,7 +5,7 @@
 #'
 #' @docType data
 #'
-#' @usage data(aw_stl_race)
+#' @usage data(ar_stl_race)
 #'
 #' @format A data frame with 106 rows and 24 variables:
 #' \describe{
@@ -38,8 +38,8 @@
 #' @source \code{tidycensus} package
 #'
 #' @examples
-#' str(aw_stl_race)
-#' head(aw_stl_race)
-#' summary(aw_stl_race$ALAND)
+#' str(ar_stl_race)
+#' head(ar_stl_race)
+#' summary(ar_stl_race$ALAND)
 #'
-"aw_stl_race"
+"ar_stl_race"
