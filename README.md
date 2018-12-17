@@ -18,10 +18,10 @@ set of target polygons. One challenge with areal interpolation is that,
 while the processes themselves are well documented, implementing them
 often involves “reinventing the wheel.” Within `R`, the `sf` package
 does offer a basic interface for areal weighted interpolation
-(`st_interpolate_aw`). The `areal` package is designed to provide a
-suite of interpolation functions that provide a more full-featured
-workflow that fits into both modern data management (e.g. `tidyverse`)
-and spatial data (e.g. `sf`) frameworks.
+(`st_interpolate_aw`). The `areal` package contains a suite tools for
+validation and estimation, providing a full-featured workflow that fits
+into both modern data management (e.g. `tidyverse`) and spatial data
+(e.g. `sf`) frameworks.
 
 ## Installation
 
