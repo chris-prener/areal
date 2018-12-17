@@ -69,7 +69,7 @@ invalidV1 <- aw_validate(source = racedf, target = wardsdf, varList = "TOTAL_E",
 invalidV2 <- aw_validate(source = aw_stl_race, target = wardsdf, varList = "TOTAL_E", verbose = TRUE)
 invalidV3 <- aw_validate(source = racedf, target = aw_stl_wards, varList = "TOTAL_E", verbose = TRUE)
 
-invalidSF <- c(FALSE, NA, NA, NA, NA, NA, FALSE)
+invalidSF <- c(FALSE, NA, NA, NA, NA, FALSE)
 
 test_that("invalid sf objects return appropriate verbose output", {
   expect_equal(invalidV1$result, invalidSF)
@@ -80,7 +80,7 @@ test_that("invalid sf objects return appropriate verbose output", {
 invalidV4 <- aw_validate(source = aw_stl_race, target = wards83, varList = "TOTAL_E", verbose = TRUE)
 invalidV5 <- aw_validate(source = race83, target = aw_stl_wards, varList = "TOTAL_E", verbose = TRUE)
 
-invalidCRS <- c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE)
+invalidCRS <- c(TRUE, FALSE, FALSE, TRUE, TRUE, FALSE)
 
 test_that("invalid crs returns appropriate verbose output", {
   expect_equal(invalidV4$result, invalidCRS)
@@ -88,13 +88,13 @@ test_that("invalid crs returns appropriate verbose output", {
 })
 
 invalidV6 <- aw_validate(source = aw_stl_race, target = aw_stl_wards, varList = "HAM", verbose = TRUE)
-invalidSourceVars <- c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)
+invalidSourceVars <- c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)
 
 invalidV7 <- aw_validate(source = aw_stl_race, target = aw_stl_wards, varList = "WARD", verbose = TRUE)
-invalidTargetVars <- c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE)
+invalidTargetVars <- c(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE)
 
 invalidV8 <- aw_validate(source = aw_stl_race, target = aw_stl_wards_conflict, varList = "WHITE_E", verbose = TRUE)
-invalidVarsConflict <- c(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+invalidVarsConflict <- c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
 
 test_that("invalid crs returns appropriate verbose output", {
   expect_equal(invalidV6$result, invalidSourceVars)

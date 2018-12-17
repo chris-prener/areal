@@ -1,7 +1,8 @@
 #' Valdating Data for Interpolation
 #'
 #' @description \code{aw_validate} executes a series of logic tests for \code{sf} object status,
-#'     shared unit types, and shared coordinates between source and target data.
+#'     shared coordinates between source and target data, appropriate project, and absence of
+#'     variable name conflicts.
 #'
 #' @usage aw_validate(source, target, varList, verbose = FALSE)
 #'
@@ -42,7 +43,6 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
   # execute additional tests if both are sf, otherwise set results to NA
   if (sf_result == FALSE){
 
-    unit_result <- NA
     crs_result <- NA
     longlat_result <- NA
     vars_exist_result <- NA
@@ -53,9 +53,6 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
 
     # do both source and target have same CRS?
     crs_result <- aw_validate_crs(source, target)
-
-    # do both source and target have same measurement units?
-    unit_result <- aw_validate_units(source, target)
 
     # are both source and target CRS values in planar?
     longlat_result1 <- aw_validate_longlat(source)
@@ -70,9 +67,8 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
   }
 
   # determine if overall test is passed
-  if(sf_result == "TRUE" & unit_result == "TRUE" & crs_result == "TRUE" &
-     longlat_result == "TRUE" & vars_exist_result == "TRUE" &
-     vars_conflict_result == "TRUE") {
+  if(sf_result == "TRUE" & crs_result == "TRUE" & longlat_result == "TRUE" &
+     vars_exist_result == "TRUE" & vars_conflict_result == "TRUE") {
 
     result <- TRUE
 
@@ -93,10 +89,9 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
   else if (verbose == TRUE){
 
     table <- data.frame(
-      test = c("sf Objects", "CRS Match", "CRS Units Match", "CRS Is Planar",
-               "Variables Exist in Source", "No Variable Conflicts in Target",
-               "Overall Evaluation"),
-      result = c(sf_result, crs_result, unit_result, longlat_result, vars_exist_result,
+      test = c("sf Objects", "CRS Match", "CRS is Planar", "Variables Exist in Source",
+               "No Variable Conflicts in Target", "Overall Evaluation"),
+      result = c(sf_result, crs_result, longlat_result, vars_exist_result,
                  vars_conflict_result, result),
       stringsAsFactors = FALSE)
 
@@ -131,7 +126,6 @@ aw_validate_preview <- function(source, target){
   # execute additional tests if both are sf, otherwise set results to NA
   if (sf_result == FALSE){
 
-    unit_result <- NA
     crs_result <- NA
     longlat_result <- NA
 
@@ -139,9 +133,6 @@ aw_validate_preview <- function(source, target){
 
     # do both source and target have same CRS?
     crs_result <- aw_validate_crs(source, target)
-
-    # do both source and target have same measurement units?
-    unit_result <- aw_validate_units(source, target)
 
     # are both source and target CRS values in planar?
     longlat_result1 <- aw_validate_longlat(source)
@@ -152,8 +143,7 @@ aw_validate_preview <- function(source, target){
   }
 
   # determine if overall test is passed
-  if(sf_result == "TRUE" & unit_result == "TRUE" & crs_result == "TRUE" &
-     longlat_result == "TRUE") {
+  if(sf_result == "TRUE" & crs_result == "TRUE" & longlat_result == "TRUE") {
 
     out <- TRUE
 
@@ -224,43 +214,6 @@ aw_validate_crs <- function(source, target){
 
     # if objects have different crs
     out <- FALSE
-  }
-
-  # return result output
-  return(out)
-
-}
-
-#' Testing for shared unit type status for source and target data
-#'
-#' @description \code{aw_validate_units} conducts a logic test for shared
-#'     measurement units, which are a requirement for interpolation. This
-#'     should not be an issue if \link{aw_validate_crs} is passed, and
-#'     may not be included in the release version.
-#'
-#' @param source A \code{sf} object with data to be interpolated
-#' @param target A \code{sf} object that data should be interpolated to
-#'
-#' @return A logical scalar; if \code{TRUE}, the test is passed.
-#'
-#' @importFrom sf st_area
-#'
-aw_validate_units <- function(source, target){
-
-  # extract unit types of source and target data
-  source_unit_type <- as.character(units(sf::st_area(source)))
-  target_unit_type <- as.character(units(sf::st_area(target)))
-
-  if(source_unit_type == target_unit_type){
-
-    # if both objects share same unit type
-    out <- TRUE
-
-  } else if(source_unit_type != target_unit_type) {
-
-    # if there are not shared units
-    out <- FALSE
-
   }
 
   # return result output
