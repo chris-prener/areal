@@ -29,7 +29,76 @@ data(ar_stl_wards, package = "areal")
 wards <- ar_stl_wards
 ```
 
-Depending on the state of your spatial data, they may require some cleaning and modification before interpolation. `areal` has
+Depending on the state of your spatial data, they may require some cleaning and modification before interpolation. The types of issues to address pre-interpolation fall into a few distinct categories:
+
+1. Data are not in the right format
+2. Data are not in the right coordinate system
+3. Data have variable name conflicts
+4. Data have too many variables
+
+Each of these conditions will be discussed below. The following examples assume:
+
+```r
+> library(areal)
+>
+> race <- aw_stl_race
+> asthma <- aw_stl_asthma
+> wards <- aw_stl_wards
+```
+
+## Validating Data
+`areal` has a built-in tool for data validation, `ar_validate()`, that provides an excellent starting place for ensuring your data are ready to interpolate. The validation process covers the first three issues listed in the introduction. It can be run in a simple format:
+
+```{r validate-simple}
+ar_validate(source = asthma, target = wards, varList = c("ASTHMA"))
+```
+
+If `aw_validate()` returns a `FALSE` value, it can also be run in a verbose manner that returns a detailed tibble:
+
+```{r validate-verbose}
+ar_validate(source = asthma, target = wards, varList = c("ASTHMA"), verbose = TRUE)
+```
+
+Use the `verbose = TRUE` output as a checklist to address issues before interpolating your data.
+
+## Format Issues
+Data need to be loaded as `sf` objects in `R`. If `aw_validate()` returns `FALSE` for the first condition, data are not stored as `sf` objects:
+
+```{r create-non-sf-data, include = FALSE}
+st_geometry(asthma) <- NULL
+```
+
+```{r validate-non-sf}
+ar_validate(source = asthma, target = wards, varList = c("ASTHMA"), verbose = TRUE)
+```
+
+### External Spatial Data
+If you have external data, using `st_read()` is the best way to load them:
+
+```r
+df <- sf::st_read("data.shp", stringsAsFactors = FALSE)
+```
+
+The `st_read()` function supports a variety of the most common data sources.
+
+### sp Data
+If you are working with data that is an `sp` object in `R`, the `sf` package has a function `st_as_sf()` can be used to convert the object to `sf`:
+
+```r
+sf_object <- sf::st_as_sf(sp_object)
+```
+
+### Data From tidycensus and tigris
+If you are using either the [`tidycensus`](https://walkerke.github.io/tidycensus/) or [`tigris`](https://github.com/walkerke/tigris) packages to access spatial data, there are options for downloading data as `sf` objects as well. In `tidycensus`, the `geometry = TRUE` option should be used. In `tigris`, the `class = "sf"` option should be used.
+
+```r
+stl_race <- tidycensus::get_acs(geography = "tract", state = 29, county = 510, year = 2017, 
+                                table = "B02001", output = "wide", geometry = TRUE)
+stl_tracts <- tigris::tracts(state = 29, county = 510, class = "sf")
+```
+
+### Tabular Data
+
 
 ## Coordinate Systems
 
