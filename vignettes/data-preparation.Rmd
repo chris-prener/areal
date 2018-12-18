@@ -29,7 +29,7 @@ data(ar_stl_wards, package = "areal")
 wards <- ar_stl_wards
 ```
 
-Depending on the state of your spatial data, they may require some cleaning and modification before interpolation. 
+Depending on the state of your spatial data, they may require some cleaning and modification before interpolation. `areal` has
 
 ## Coordinate Systems
 
