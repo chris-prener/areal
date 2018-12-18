@@ -106,12 +106,48 @@
 <div id="extensive-and-intensive-interpolations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#extensive-and-intensive-interpolations" class="anchor"></a>Extensive and Intensive Interpolations</h2>
+<div id="extensive-interpolations" class="section level3">
+<h3 class="hasAnchor">
+<a href="#extensive-interpolations" class="anchor"></a>Extensive Interpolations</h3>
 </div>
-<div id="total-and-sum-weights" class="section level2">
+<div id="intensive-interpolations" class="section level3">
+<h3 class="hasAnchor">
+<a href="#intensive-interpolations" class="anchor"></a>Intensive Interpolations</h3>
+</div>
+</div>
+<div id="total-and-sum-weights-for-extensive-interpolations" class="section level2">
 <h2 class="hasAnchor">
-<a href="#total-and-sum-weights" class="anchor"></a>Total and Sum Weights</h2>
+<a href="#total-and-sum-weights-for-extensive-interpolations" class="anchor"></a>Total and Sum Weights for Extensive Interpolations</h2>
 <p>The <code>aw_interpolate</code> function also passes the argument <code>weight</code> to <code>aw_total</code>. There are two options, <code>"sum"</code> and <code>"total"</code>. Each makes a different assumption about the nature of the data and the relationship between the <code>source</code> and <code>target</code> features. For <em>perfectly</em> overlapping data, the distinction between these two options should not matter. In practice, however, there are often deviations in our data even between features that should be perfectly congruous.</p>
 <p>In both examples in this section, we’ll be interpolating data from <code>aw_stl_race</code>, measured at the census tract level, into City of St. Louis wards. The <code>aw_stl_wards</code> data is a product of the City of the St. Louis and is quite close to fully overlapping with the U.S. Census Bureau’s TIGER boundaries for the city. However, there are a number of very small deviations at the edges where the ward boundaries are <em>smaller</em> than the tracts (but only just so). The <code>aw_stl_wardsClipped</code> data was created to illustrate a more extreme example. It has been clipped to the Mississippi River shoreline along the city’s eastern boundary.</p>
+</div>
+<div id="output-options" class="section level2">
+<h2 class="hasAnchor">
+<a href="#output-options" class="anchor"></a>Output Options</h2>
+</div>
+<div id="manual-workflow" class="section level2">
+<h2 class="hasAnchor">
+<a href="#manual-workflow" class="anchor"></a>Manual Workflow</h2>
+<div id="intersect-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#intersect-data" class="anchor"></a>Intersect Data</h3>
+</div>
+<div id="calculate-total-area" class="section level3">
+<h3 class="hasAnchor">
+<a href="#calculate-total-area" class="anchor"></a>Calculate Total Area</h3>
+</div>
+<div id="calculate-areal-weight" class="section level3">
+<h3 class="hasAnchor">
+<a href="#calculate-areal-weight" class="anchor"></a>Calculate Areal Weight</h3>
+</div>
+<div id="calculate-estimated-population" class="section level3">
+<h3 class="hasAnchor">
+<a href="#calculate-estimated-population" class="anchor"></a>Calculate Estimated Population</h3>
+</div>
+<div id="aggregate-estimated-population-by-target-id" class="section level3">
+<h3 class="hasAnchor">
+<a href="#aggregate-estimated-population-by-target-id" class="anchor"></a>Aggregate Estimated Population by Target ID</h3>
+</div>
 </div>
   </div>
 
@@ -122,7 +158,9 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction-to-areal-weighted-interpolation">Introduction to Areal Weighted Interpolation</a></li>
       <li><a href="#extensive-and-intensive-interpolations">Extensive and Intensive Interpolations</a></li>
-      <li><a href="#total-and-sum-weights">Total and Sum Weights</a></li>
+      <li><a href="#total-and-sum-weights-for-extensive-interpolations">Total and Sum Weights for Extensive Interpolations</a></li>
+      <li><a href="#output-options">Output Options</a></li>
+      <li><a href="#manual-workflow">Manual Workflow</a></li>
       </ul>
 </div>
       </div>

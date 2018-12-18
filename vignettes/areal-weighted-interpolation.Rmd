@@ -37,8 +37,24 @@ Areal weighted interpolation is a technique for estimating the values for overla
 ## Introduction to Areal Weighted Interpolation
 
 ## Extensive and Intensive Interpolations
+### Extensive Interpolations
 
-## Total and Sum Weights
+### Intensive Interpolations
+
+## Total and Sum Weights for Extensive Interpolations
 The `aw_interpolate` function also passes the argument `weight` to `aw_total`. There are two options, `"sum"` and `"total"`. Each makes a different assumption about the nature of the data and the relationship between the `source` and `target` features. For *perfectly* overlapping data, the distinction between these two options should not matter. In practice, however, there are often deviations in our data even between features that should be perfectly congruous.
 
 In both examples in this section, we'll be interpolating data from `aw_stl_race`, measured at the census tract level, into City of St. Louis wards. The `aw_stl_wards` data is a product of the City of the St. Louis and is quite close to fully overlapping with the U.S. Census Bureau's TIGER boundaries for the city. However, there are a number of very small deviations at the edges where the ward boundaries are *smaller* than the tracts (but only just so). The `aw_stl_wardsClipped` data was created to illustrate a more extreme example. It has been clipped to the Mississippi River shoreline along the city's eastern boundary.
+
+## Output Options
+
+## Manual Workflow
+### Intersect Data
+
+### Calculate Total Area
+
+### Calculate Areal Weight
+
+### Calculate Estimated Population
+
+### Aggregate Estimated Population by Target ID
