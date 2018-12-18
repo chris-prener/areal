@@ -2,7 +2,7 @@
 % Please edit documentation in R/aw_total.R
 \name{aw_total}
 \alias{aw_total}
-\title{Create new total area field in intersection}
+\title{Calculate Total Area}
 \usage{
 aw_total(.data, source, id, areaVar, totalVar, type, weight)
 }

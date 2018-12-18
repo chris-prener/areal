@@ -1,4 +1,4 @@
-#' Make field new variable
+#' Caclulate Estimated Population
 #'
 #' @description \code{aw_calculate} multiplies the given \code{value} by the area weight. This
 #'     is the fourth step in the interpolation process after \link{aw_weight}.

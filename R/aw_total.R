@@ -1,4 +1,4 @@
-#' Create new total area field in intersection
+#' Calculate Total Area
 #'
 #' @description \code{aw_total} produces a new total area field that contains
 #'     the total area by \code{source} id. This is the second step in the

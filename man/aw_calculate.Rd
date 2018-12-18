@@ -2,7 +2,7 @@
 % Please edit documentation in R/aw_calculate.R
 \name{aw_calculate}
 \alias{aw_calculate}
-\title{Make field new variable}
+\title{Caclulate Estimated Population}
 \usage{
 aw_calculate(.data, value, areaWeight, newVar)
 }

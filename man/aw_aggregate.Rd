@@ -2,7 +2,7 @@
 % Please edit documentation in R/aw_aggregate.R
 \name{aw_aggregate}
 \alias{aw_aggregate}
-\title{Aggregate new field of interest by target IDs}
+\title{Aggregate Estimates Based on Target ID}
 \usage{
 aw_aggregate(.data, target, tid, interVar, newVar)
 }

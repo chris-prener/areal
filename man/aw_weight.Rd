@@ -2,7 +2,7 @@
 % Please edit documentation in R/aw_weight.R
 \name{aw_weight}
 \alias{aw_weight}
-\title{Calculate area weight using source ID areas}
+\title{Calculate Areal Weight}
 \usage{
 aw_weight(.data, areaVar, totalVar, areaWeight)
 }

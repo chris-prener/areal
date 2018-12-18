@@ -1,4 +1,4 @@
-#' Calculate area weight using source ID areas
+#' Calculate Areal Weight
 #'
 #' @description \code{aw_weight} creates an area weight field by dividing the area
 #'     field by the total area field. This is the third step in the interpolation

@@ -1,4 +1,4 @@
-#' Aggregate new field of interest by target IDs
+#' Aggregate Estimates Based on Target ID
 #'
 #' @description \code{aw_aggregate} sums the new estimates produced by \link{aw_calculate}
 #'     based on the target id. These are then joined with the target data. This is
