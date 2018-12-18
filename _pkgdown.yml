@@ -11,11 +11,14 @@ articles:
     - areal-weighted-interpolation
 
 reference:
+  - title: "General"
+    desc: "Basic functions for areal interpolation"
+    - ar_validate
+
   - title: "Areal Weighted Interpolation, Core"
     desc: "Core functions for performing areal weighted interpolation."
     contents:
     - aw_interpolate
-    - aw_validate
     - aw_preview_weights
     - aw_verify
 

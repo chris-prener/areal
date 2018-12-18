@@ -1,14 +1,17 @@
 #' Valdating Data for Interpolation
 #'
-#' @description \code{aw_validate} executes a series of logic tests for \code{sf} object status,
+#' @description \code{ar_validate} executes a series of logic tests for \code{sf} object status,
 #'     shared coordinates between source and target data, appropriate project, and absence of
 #'     variable name conflicts.
 #'
-#' @usage aw_validate(source, target, varList, verbose = FALSE)
+#' @usage ar_validate(source, target, varList, method = "aw", verbose = FALSE)
 #'
 #' @param source A \code{sf} object with data to be interpolated
 #' @param target A \code{sf} object that data should be interpolated to
 #' @param varList A vector of variable names to be added to the \code{target} object
+#' @param method The areal interpolation method validation is being performed for. This
+#'     should be set to \code{"aw"}. Additional functionality will be added as the package
+#'     adds new interpolation techniques.
 #' @param verbose A logical scalar; if \code{TRUE}, a tibble with test results is returned
 #'
 #' @return If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TRUE}
@@ -18,7 +21,7 @@
 #' @importFrom glue glue
 #'
 #' @export
-aw_validate <- function(source, target, varList, verbose = FALSE){
+ar_validate <- function(source, target, varList, method = "aw", verbose = FALSE){
 
   # check for missing parameters
   if (missing(source)) {
@@ -37,8 +40,12 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
     stop("The 'verbose' argument must be either 'TRUE' or 'FALSE'.")
   }
 
+  if (method != "aw"){
+    stop("The 'method' argument must be 'aw'.")
+  }
+
   # store results from primary validate subfunctions
-  sf_result <- aw_validate_sf(source, target)
+  sf_result <- ar_validate_sf(source, target)
 
   # execute additional tests if both are sf, otherwise set results to NA
   if (sf_result == FALSE){
@@ -52,17 +59,17 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
   } else if (sf_result == TRUE){
 
     # do both source and target have same CRS?
-    crs_result <- aw_validate_crs(source, target)
+    crs_result <- ar_validate_crs(source, target)
 
     # are both source and target CRS values in planar?
-    longlat_result1 <- aw_validate_longlat(source)
-    longlat_result2 <- aw_validate_longlat(target)
+    longlat_result1 <- ar_validate_longlat(source)
+    longlat_result2 <- ar_validate_longlat(target)
 
     longlat_result <- all(longlat_result1, longlat_result2)
 
     # are there no conflicts with target variable names?
-    vars_conflict_result <- aw_validate_vars_conflict(target, varList = varList)
-    vars_exist_result <- aw_validate_vars_exist(source, varList = varList)
+    vars_conflict_result <- ar_validate_vars_conflict(target, varList = varList)
+    vars_exist_result <- ar_validate_vars_exist(source, varList = varList)
 
   }
 
@@ -107,7 +114,7 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
 #'
 #' @description \code{aw_validate_preview} is designed to be called by
 #'     \code{aw_preview_weights} before the weights are calculated. It
-#'     lacks the variable validation functionality of \code{aw_validate}.
+#'     lacks the variable validation functionality of \code{ar_validate}.
 #'
 #' @param source A \code{sf} object with data to be interpolated
 #' @param target A \code{sf} object that data should be interpolated to
@@ -121,7 +128,7 @@ aw_validate <- function(source, target, varList, verbose = FALSE){
 aw_validate_preview <- function(source, target){
 
   # store results from primary validate subfunctions
-  sf_result <- aw_validate_sf(source, target)
+  sf_result <- ar_validate_sf(source, target)
 
   # execute additional tests if both are sf, otherwise set results to NA
   if (sf_result == FALSE){
@@ -132,11 +139,11 @@ aw_validate_preview <- function(source, target){
   } else if (sf_result == TRUE){
 
     # do both source and target have same CRS?
-    crs_result <- aw_validate_crs(source, target)
+    crs_result <- ar_validate_crs(source, target)
 
     # are both source and target CRS values in planar?
-    longlat_result1 <- aw_validate_longlat(source)
-    longlat_result2 <- aw_validate_longlat(target)
+    longlat_result1 <- ar_validate_longlat(source)
+    longlat_result2 <- ar_validate_longlat(target)
 
     longlat_result <- all(longlat_result1, longlat_result2)
 
@@ -160,7 +167,7 @@ aw_validate_preview <- function(source, target){
 
 #' Testing for sf object status for source and target data
 #'
-#' @description \code{aw_validate_sf} conducts a logic test for shared coordinate
+#' @description \code{ar_validate_sf} conducts a logic test for shared coordinate
 #'     coordinate systems, which are a requirement for interpolation.
 #'
 #' @param source A \code{sf} object with data to be interpolated
@@ -168,7 +175,7 @@ aw_validate_preview <- function(source, target){
 #'
 #' @return A logical scalar; if \code{TRUE}, the test is passed.
 #'
-aw_validate_sf <- function(source, target){
+ar_validate_sf <- function(source, target){
 
   # identify sf object in class
   source_sf <- "sf" %in% class(source)
@@ -193,7 +200,7 @@ aw_validate_sf <- function(source, target){
 
 #' Testing for shared coordinates for source and target data
 #'
-#' @description \code{aw_validate_crs} conducts a logic test for shared coordinate
+#' @description \code{awrvalidate_crs} conducts a logic test for shared coordinate
 #'     coordinate systems, which are a requirement for interpolation.
 #'
 #' @param source A \code{sf} object with data to be interpolated
@@ -203,7 +210,7 @@ aw_validate_sf <- function(source, target){
 #'
 #' @importFrom sf st_crs
 #'
-aw_validate_crs <- function(source, target){
+ar_validate_crs <- function(source, target){
 
   if(sf::st_crs(source) == sf::st_crs(target)) {
 
@@ -223,7 +230,7 @@ aw_validate_crs <- function(source, target){
 
 #' Testing for type of coordinates
 #'
-#' @description \code{aw_validate_longlat} conducts a logic test for
+#' @description \code{ar_validate_longlat} conducts a logic test for
 #'     whether or not the data are in planar format.
 #'
 #' @param .data A sf object
@@ -232,7 +239,7 @@ aw_validate_crs <- function(source, target){
 #'
 #' @importFrom sf st_is_longlat
 #'
-aw_validate_longlat <- function(.data){
+ar_validate_longlat <- function(.data){
 
   result <- sf::st_is_longlat(.data)
 
@@ -255,7 +262,7 @@ aw_validate_longlat <- function(.data){
 
 #' Testing for Variable Conflicts in Target
 #'
-#' @description \code{aw_validate_vars_conflict} conducts a logic test for
+#' @description \code{ar_validate_vars_conflict} conducts a logic test for
 #'     whether or not any of the variables to be created in the target
 #'     data already exist as named columns.
 #'
@@ -264,7 +271,7 @@ aw_validate_longlat <- function(.data){
 #'
 #' @return A logical scalar; if \code{TRUE}, the test is passed
 #'
-aw_validate_vars_conflict <- function(.data, varList){
+ar_validate_vars_conflict <- function(.data, varList){
 
   # create logical vector
   resultVector <- varList %in% colnames(.data)
@@ -289,7 +296,7 @@ aw_validate_vars_conflict <- function(.data, varList){
 
 #' Testing for Variables Existing in Source
 #'
-#' @description \code{aw_validate_vars_exist} conducts a logic test for
+#' @description \code{ar_validate_vars_exist} conducts a logic test for
 #'     whether or not all variables exist in the source data.
 #'
 #' @param .data A sf object
@@ -297,7 +304,7 @@ aw_validate_vars_conflict <- function(.data, varList){
 #'
 #' @return A logical scalar; if \code{TRUE}, the test is passed
 #'
-aw_validate_vars_exist <- function(.data, varList){
+ar_validate_vars_exist <- function(.data, varList){
 
   # create logical vector
   resultVector <- varList %in% colnames(.data)

@@ -138,7 +138,7 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
   }
 
   # validate source and target data
-  if (aw_validate(source = source, target = .data, varList = vars) == FALSE){
+  if (ar_validate(source = source, target = .data, varList = vars, method = "aw") == FALSE){
     stop("Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
   }
 
