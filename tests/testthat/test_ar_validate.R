@@ -30,6 +30,9 @@ test_that("errors with misspecified parameters", {
   expect_error(ar_validate(source = ar_stl_race, target = ar_stl_wards, varList = "TOTAL_E",
                            method = "aw", verbose = "ham"),
                "The 'verbose' argument must be either 'TRUE' or 'FALSE'.")
+  expect_error(ar_validate(source = ar_stl_race, target = ar_stl_wards, varList = "TOTAL_E",
+                           method = "ham", verbose = FALSE),
+               "The 'method' argument must be 'aw'.")
 })
 
 # test inputs ------------------------------------------------
