@@ -130,7 +130,7 @@ st_crs(wards)
 
 If these data fail that process, `st_crs()` can be used to identify whether the source or the target (or both) are in an inappropriate coordinate system. The `EPSG` value `26915` refers to another type of coordinate system known as as projected coordinate system (or "planar" data). Further, `26915` is a particular type of projected coordinate system known as the [Universal Transverse Mercator](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) coordinate system. This is a good option for using `areal` because it is available around the world. There are a variety of tools for identifying the appropriate UTM zone, including this excellent [interactive map](https://mangomap.com/robertyoung/maps/69585/what-utm-zone-am-i-in-#). Once you have an EPSG zone, the website [epsg.io](https://epsg.io) can be used to search for the appropriate `EPSG` value.
 
-In this case, the `wards` data are in an appropriate system but the `race` data need to be transformed. The `st_transform()` function can be used to modify them to an appropriate coordinate sysmtem:
+In this case, the `wards` data are in an appropriate system but the `race` data need to be transformed. The `st_transform()` function can be used to modify them to an appropriate coordinate system:
 
 ```{r transform-crs}
 raceFixed <- st_transform(race83, crs = 26915)
@@ -188,7 +188,7 @@ One cautionary note when using `areal` is that the validation process will not c
 countyData <- filter(stateData, COUNTY == 510)
 ```
 
-Having too many columns poses an organizational problem more than anything else. We strongly encourage users to limit their interpolated data to only the needed values. For example, the `wards` data contains an `AREA` column whose units we don't know and an `OBJECTID` column that is an artifact from its creation using an ESRI proudct:
+Having too many columns poses an organizational problem more than anything else. We strongly encourage users to limit their interpolated data to only the needed values. For example, the `wards` data contains an `AREA` column whose units we don't know and an `OBJECTID` column that is an artifact from its creation using an ESRI product:
 
 ```{r}
 names(wards)
