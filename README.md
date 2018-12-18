@@ -78,9 +78,9 @@ The following examples assume:
 ``` r
 > library(areal)
 >
-> race <- aw_stl_race
-> asthma <- aw_stl_asthma
-> wards <- aw_stl_wards
+> race <- ar_stl_race
+> asthma <- ar_stl_asthma
+> wards <- ar_stl_wards
 ```
 
 ### Areal Weighted Interpolation

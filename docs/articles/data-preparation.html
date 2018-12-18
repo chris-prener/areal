@@ -98,7 +98,78 @@
 
     
     
-<p>Depending on the state of your spatial data, they may require some cleaning and modification before interpolation.</p>
+<p>Depending on the state of your spatial data, they may require some cleaning and modification before interpolation. The types of issues to address pre-interpolation fall into a few distinct categories:</p>
+<ol style="list-style-type: decimal">
+<li>Data are not in the right format</li>
+<li>Data are not in the right coordinate system</li>
+<li>Data have variable name conflicts</li>
+<li>Data have too many variables</li>
+</ol>
+<p>Each of these conditions will be discussed below. The following examples assume:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(areal)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="er">&gt;</span><span class="st"> </span>race &lt;-<span class="st"> </span>ar_stl_race</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="op">&gt;</span><span class="st"> </span>asthma &lt;-<span class="st"> </span>ar_stl_asthma</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="op">&gt;</span><span class="st"> </span>wards &lt;-<span class="st"> </span>ar_stl_wards</a></code></pre></div>
+<div id="validating-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#validating-data" class="anchor"></a>Validating Data</h2>
+<p><code>areal</code> has a built-in tool for data validation, <code><a href="../reference/ar_validate.html">ar_validate()</a></code>, that provides an excellent starting place for ensuring your data are ready to interpolate. The validation process covers the first three issues listed in the introduction. It can be run in a simple format:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> asthma, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ASTHMA"</span>))</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
+<p>If <code>aw_validate()</code> returns a <code>FALSE</code> value, it can also be run in a verbose manner that returns a detailed tibble:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> asthma, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ASTHMA"</span>), <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;   test                            result</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; 1 sf Objects                      TRUE  </span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; 2 CRS Match                       TRUE  </span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 3 CRS is Planar                   TRUE  </span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; 6 Overall Evaluation              TRUE</span></a></code></pre></div>
+<p>Use the <code>verbose = TRUE</code> output as a checklist to address issues before interpolating your data.</p>
+</div>
+<div id="format-issues" class="section level2">
+<h2 class="hasAnchor">
+<a href="#format-issues" class="anchor"></a>Format Issues</h2>
+<p>Data need to be loaded as <code>sf</code> objects in <code>R</code>. If <code>aw_validate()</code> returns <code>FALSE</code> for the first condition, data are not stored as <code>sf</code> objects:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> asthma, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ASTHMA"</span>), <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;   test                            result</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; 1 sf Objects                      FALSE </span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; 2 CRS Match                       NA    </span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; 3 CRS is Planar                   NA    </span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; 4 Variables Exist in Source       NA    </span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; 5 No Variable Conflicts in Target NA    </span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; 6 Overall Evaluation              FALSE</span></a></code></pre></div>
+<div id="external-spatial-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#external-spatial-data" class="anchor"></a>External Spatial Data</h3>
+<p>If you have external data, using <code>st_read()</code> is the best way to load them:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">df &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="st">"data.shp"</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>The <code>st_read()</code> function supports a variety of the most common data sources.</p>
+</div>
+<div id="sp-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#sp-data" class="anchor"></a>sp Data</h3>
+<p>If you are working with data that is an <code>sp</code> object in <code>R</code>, the <code>sf</code> package has a function <code>st_as_sf()</code> can be used to convert the object to <code>sf</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sf_object &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>(sp_object)</a></code></pre></div>
+</div>
+<div id="data-from-tidycensus-and-tigris" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data-from-tidycensus-and-tigris" class="anchor"></a>Data From tidycensus and tigris</h3>
+<p>If you are using either the <a href="https://walkerke.github.io/tidycensus/"><code>tidycensus</code></a> or <a href="https://github.com/walkerke/tigris"><code>tigris</code></a> packages to access spatial data, there are options for downloading data as <code>sf</code> objects as well. In <code>tidycensus</code>, the <code>geometry = TRUE</code> option should be used. In <code>tigris</code>, the <code>class = "sf"</code> option should be used.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">stl_race &lt;-<span class="st"> </span>tidycensus<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tidycensus/topics/get_acs">get_acs</a></span>(<span class="dt">geography =</span> <span class="st">"tract"</span>, <span class="dt">state =</span> <span class="dv">29</span>, <span class="dt">county =</span> <span class="dv">510</span>, <span class="dt">year =</span> <span class="dv">2017</span>, </a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">                                <span class="dt">table =</span> <span class="st">"B02001"</span>, <span class="dt">output =</span> <span class="st">"wide"</span>, <span class="dt">geometry =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">stl_tracts &lt;-<span class="st"> </span>tigris<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tigris/topics/tracts">tracts</a></span>(<span class="dt">state =</span> <span class="dv">29</span>, <span class="dt">county =</span> <span class="dv">510</span>, <span class="dt">class =</span> <span class="st">"sf"</span>)</a></code></pre></div>
+</div>
+<div id="tabular-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#tabular-data" class="anchor"></a>Tabular Data</h3>
+</div>
+</div>
 <div id="coordinate-systems" class="section level2">
 <h2 class="hasAnchor">
 <a href="#coordinate-systems" class="anchor"></a>Coordinate Systems</h2>
@@ -112,7 +183,9 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#coordinate-systems">Coordinate Systems</a></li>
+<li><a href="#validating-data">Validating Data</a></li>
+      <li><a href="#format-issues">Format Issues</a></li>
+      <li><a href="#coordinate-systems">Coordinate Systems</a></li>
       </ul>
 </div>
       </div>
