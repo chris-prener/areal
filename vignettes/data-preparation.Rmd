@@ -20,13 +20,10 @@ library(dplyr)
 library(sf)
 
 data(ar_stl_asthma, package = "areal")
-asthma <- ar_stl_asthma
 
 data(ar_stl_race, package = "areal")
-race <- ar_stl_race
 
 data(ar_stl_wards, package = "areal")
-wards <- ar_stl_wards
 ```
 
 Depending on the state of your spatial data, they may require some cleaning and modification before interpolation. The types of issues to address pre-interpolation fall into a few distinct categories:
@@ -34,29 +31,39 @@ Depending on the state of your spatial data, they may require some cleaning and 
 1. Data are not in the right format
 2. Data are not in the right coordinate system
 3. Data have variable name conflicts
-4. Data have too many variables
+4. Data have too many variables or observations and therefore must be subset
 
 Each of these conditions will be discussed below. The following examples assume:
 
-```r
-> library(areal)
->
-> race <- ar_stl_race
-> asthma <- ar_stl_asthma
-> wards <- ar_stl_wards
+```{r}
+library(areal)
+library(dplyr)   # data wrangling
+library(sf)      # spatial data operations
+
+# load data into enviornment
+race <- ar_stl_race
+asthma <- ar_stl_asthma
+wards <- ar_stl_wards
+
+# create example data - non-spatial data
+asthmaTbl <- ar_stl_asthma
+st_geometry(asthmaTbl) <- NULL
+
+# create example data - wrong crs
+race83 <- st_transform(race, crs = 4269)
 ```
 
 ## Validating Data
 `areal` has a built-in tool for data validation, `ar_validate()`, that provides an excellent starting place for ensuring your data are ready to interpolate. The validation process covers the first three issues listed in the introduction. It can be run in a simple format:
 
 ```{r validate-simple}
-ar_validate(source = asthma, target = wards, varList = c("ASTHMA"))
+ar_validate(source = asthma, target = wards, varList = "ASTHMA", method = "aw")
 ```
 
-If `aw_validate()` returns a `FALSE` value, it can also be run in a verbose manner that returns a detailed tibble:
+If `ar_validate()` returns a `FALSE` value, it can also be run in a verbose manner that returns a detailed tibble:
 
 ```{r validate-verbose}
-ar_validate(source = asthma, target = wards, varList = c("ASTHMA"), verbose = TRUE)
+ar_validate(source = asthma, target = wards, varList = "ASTHMA", method = "aw", verbose = TRUE)
 ```
 
 Use the `verbose = TRUE` output as a checklist to address issues before interpolating your data.
@@ -64,12 +71,8 @@ Use the `verbose = TRUE` output as a checklist to address issues before interpol
 ## Format Issues
 Data need to be loaded as `sf` objects in `R`. If `aw_validate()` returns `FALSE` for the first condition, data are not stored as `sf` objects:
 
-```{r create-non-sf-data, include = FALSE}
-st_geometry(asthma) <- NULL
-```
-
 ```{r validate-non-sf}
-ar_validate(source = asthma, target = wards, varList = c("ASTHMA"), verbose = TRUE)
+ar_validate(source = asthmaTbl, target = wards, varList = "ASTHMA", method = "aw", verbose = TRUE)
 ```
 
 ### External Spatial Data
@@ -98,10 +101,101 @@ stl_tracts <- tigris::tracts(state = 29, county = 510, class = "sf")
 ```
 
 ### Tabular Data
+If you have tabular data, you will need to merge them with a shapefile or other spatial data set that contains the geometry for the corresponding spatial features. For American users, a potentially common scenario here will be table of census geography (such as tracts) that lacks the geometry for those features. These can be downloaded using [`tigris`](https://github.com/walkerke/tigris) and then combined using [`dplyr`](https://dplyr.tidyverse.org). The following example assumes the tract data contains an identification number column named `GEOID` with the appropriate tract identifiers for St. Louis:
 
+```r
+stl_tracts <- tigris::tracts(state = 29, county = 510, class = "sf")
+
+tract_data <- dplyr::left_join(stl_tracts, asthmaTBL, by = "GEOID")
+```
 
 ## Coordinate Systems
+Two coordinate system rules are enforced by `ar_validate`: both the source and the target data must be in the same [coordinate system](https://geocompr.robinlovelace.net/spatial-class.html#crs-intro) and that coordinate system must be a projected coordinate system. The `sf` package contains a function named `st_crs()` for previewing the current coordinate system of your data:
 
-One good option for users just starting out is to reproject data using the [UTM coordinate system](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system). 
+```{r race-crs}
+st_crs(race83)
+```
 
-There are a variety of tools for identifying the appropriate UTM zone, including this excellent [interactive map](https://mangomap.com/robertyoung/maps/69585/what-utm-zone-am-i-in-#).
+The `EPSG` value `4269` refers to a specific type of coordinate system known as as geographic coordinate system. These data use latitude-longitude values, which vary in length and thus cannot be used to calculate area (a key component of carrying out areal interpolations). These data would fail the `ar_validate()` process:
+
+```{r validate-non-matching-crs}
+ar_validate(source = race83, target = wards, varList = "TOTAL_E", method = "aw", verbose = TRUE)
+```
+
+These data fail both the matching CRS validation and the planar CRS validation because the `race` and `wards` data are in two different coordinate systems. We've already seen the CRS data for `race` above so we'll look at the `CRS data for `wards`:
+
+```{r wards-crs}
+st_crs(wards)
+```
+
+If these data fail that process, `st_crs()` can be used to identify whether the source or the target (or both) are in an inappropriate coordinate system. The `EPSG` value `26915` refers to another type of coordinate system known as as projected coordinate system (or "planar" data). Further, `26915` is a particular type of projected coordinate system known as the [Universal Transverse Mercator](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) coordinate system. This is a good option for using `areal` because it is available around the world. There are a variety of tools for identifying the appropriate UTM zone, including this excellent [interactive map](https://mangomap.com/robertyoung/maps/69585/what-utm-zone-am-i-in-#). Once you have an EPSG zone, the website [epsg.io](https://epsg.io) can be used to search for the appropriate `EPSG` value.
+
+In this case, the `wards` data are in an appropriate system but the `race` data need to be transformed. The `st_transform()` function can be used to modify them to an appropriate coordinate sysmtem:
+
+```{r transform-crs}
+raceFixed <- st_transform(race83, crs = 26915)
+```
+
+Once this is done, these data should pass the `ar_validate()` process:
+
+```{r validate-matching-crs}
+ar_validate(source = raceFixed, target = wards, varList = "TOTAL_E", method = "aw", verbose = TRUE)
+```
+
+## Variable Conflicts
+If a variable does not exist in the source data, the validation process will fail:
+
+```{r}
+ar_validate(source = race, target = wards, varList = "TOTAL", method = "aw", verbose = TRUE)
+```
+
+In this case, the fix is as easy as correcting the typo in our `ar_validate()` call - the variable `TOTAL` should really be `TOTAL_E`:
+
+```{r}
+names(race)
+```
+
+Another common problem is that a variable exists in both our source and target data. For instance, we could add a `TOTAL_E` variable to our target data:
+
+```{r}
+wardsVar <- mutate(wards, TOTAL_E = TRUE)
+
+ar_validate(source = race, target = wardsVar, varList = "TOTAL_E", method = "aw", verbose = TRUE)
+```
+
+Now, we fail the validation process because there is a conflict between the source and target data - `TOTAL_E` exists in both data sets. We can use the `select()` function from `dplyr` to remove the offending variable from the target data before proceeding:
+
+```{r}
+wardsFixed <- select(wardsVar, -TOTAL_E)
+
+ar_validate(source = race, target = wardsFixed, varList = "TOTAL_E", method = "aw", verbose = TRUE)
+```
+
+Another option would be to rename the column using the `rename()` function from `dplyr`:
+
+```{r}
+wardsFixed <- rename(wardsVar, oldTotal = TOTAL_E)
+
+ar_validate(source = race, target = wardsFixed, varList = "TOTAL_E", method = "aw", verbose = TRUE)
+```
+
+Either option will work for `areal`'s purposes.
+
+## Subsetting
+One cautionary note when using `areal` is that the validation process will not check to see if too many variables or observations exist in the data. Cleaning the data ahead of time so that only the relevant observations exist can help improve performance - if you have tract data for an entire state but only need a particular city, everything will go faster if you subset these data using the `filter()` function from `dplyr`:
+
+```r
+countyData <- filter(stateData, COUNTY == 510)
+```
+
+Having too many columns poses an organizational problem more than anything else. We strongly encourage users to limit their interpolated data to only the needed values. For example, the `wards` data contains an `AREA` column whose units we don't know and an `OBJECTID` column that is an artifact from its creation using an ESRI proudct:
+
+```{r}
+names(wards)
+```
+
+We can use the `select()` function from `dplyr` to remove these before interpolation since we don't need them:
+
+```{r}
+wardsSubset <- select(wards, -OBJECTID, -AREA)
+```

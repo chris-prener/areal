@@ -103,22 +103,32 @@
 <li>Data are not in the right format</li>
 <li>Data are not in the right coordinate system</li>
 <li>Data have variable name conflicts</li>
-<li>Data have too many variables</li>
+<li>Data have too many variables or observations and therefore must be subset</li>
 </ol>
 <p>Each of these conditions will be discussed below. The following examples assume:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(areal)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="er">&gt;</span><span class="st"> </span>race &lt;-<span class="st"> </span>ar_stl_race</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="op">&gt;</span><span class="st"> </span>asthma &lt;-<span class="st"> </span>ar_stl_asthma</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="op">&gt;</span><span class="st"> </span>wards &lt;-<span class="st"> </span>ar_stl_wards</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(areal)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)   <span class="co"># data wrangling</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)      <span class="co"># spatial data operations</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># load data into enviornment</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">race &lt;-<span class="st"> </span>ar_stl_race</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">asthma &lt;-<span class="st"> </span>ar_stl_asthma</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">wards &lt;-<span class="st"> </span>ar_stl_wards</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># create example data - non-spatial data</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">asthmaTbl &lt;-<span class="st"> </span>ar_stl_asthma</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_geometry">st_geometry</a></span>(asthmaTbl) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co"># create example data - wrong crs</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">race83 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_transform">st_transform</a></span>(race, <span class="dt">crs =</span> <span class="dv">4269</span>)</a></code></pre></div>
 <div id="validating-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#validating-data" class="anchor"></a>Validating Data</h2>
 <p><code>areal</code> has a built-in tool for data validation, <code><a href="../reference/ar_validate.html">ar_validate()</a></code>, that provides an excellent starting place for ensuring your data are ready to interpolate. The validation process covers the first three issues listed in the introduction. It can be run in a simple format:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> asthma, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ASTHMA"</span>))</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> asthma, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="st">"ASTHMA"</span>, <span class="dt">method =</span> <span class="st">"aw"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
-<p>If <code>aw_validate()</code> returns a <code>FALSE</code> value, it can also be run in a verbose manner that returns a detailed tibble:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> asthma, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ASTHMA"</span>), <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<p>If <code><a href="../reference/ar_validate.html">ar_validate()</a></code> returns a <code>FALSE</code> value, it can also be run in a verbose manner that returns a detailed tibble:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> asthma, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="st">"ASTHMA"</span>, <span class="dt">method =</span> <span class="st">"aw"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;   test                            result</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
@@ -134,7 +144,7 @@
 <h2 class="hasAnchor">
 <a href="#format-issues" class="anchor"></a>Format Issues</h2>
 <p>Data need to be loaded as <code>sf</code> objects in <code>R</code>. If <code>aw_validate()</code> returns <code>FALSE</code> for the first condition, data are not stored as <code>sf</code> objects:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> asthma, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ASTHMA"</span>), <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> asthmaTbl, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="st">"ASTHMA"</span>, <span class="dt">method =</span> <span class="st">"aw"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;   test                            result</span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
@@ -147,14 +157,14 @@
 <div id="external-spatial-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#external-spatial-data" class="anchor"></a>External Spatial Data</h3>
-<p>If you have external data, using <code>st_read()</code> is the best way to load them:</p>
+<p>If you have external data, using <code><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read()</a></code> is the best way to load them:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">df &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read</a></span>(<span class="st">"data.shp"</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p>The <code>st_read()</code> function supports a variety of the most common data sources.</p>
+<p>The <code><a href="https://www.rdocumentation.org/packages/sf/topics/st_read">st_read()</a></code> function supports a variety of the most common data sources.</p>
 </div>
 <div id="sp-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sp-data" class="anchor"></a>sp Data</h3>
-<p>If you are working with data that is an <code>sp</code> object in <code>R</code>, the <code>sf</code> package has a function <code>st_as_sf()</code> can be used to convert the object to <code>sf</code>:</p>
+<p>If you are working with data that is an <code>sp</code> object in <code>R</code>, the <code>sf</code> package has a function <code><a href="https://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf()</a></code> can be used to convert the object to <code>sf</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sf_object &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>(sp_object)</a></code></pre></div>
 </div>
 <div id="data-from-tidycensus-and-tigris" class="section level3">
@@ -168,13 +178,123 @@
 <div id="tabular-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#tabular-data" class="anchor"></a>Tabular Data</h3>
+<p>If you have tabular data, you will need to merge them with a shapefile or other spatial data set that contains the geometry for the corresponding spatial features. For American users, a potentially common scenario here will be table of census geography (such as tracts) that lacks the geometry for those features. These can be downloaded using <a href="https://github.com/walkerke/tigris"><code>tigris</code></a> and then combined using <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a>. The following example assumes the tract data contains an identification number column named <code>GEOID</code> with the appropriate tract identifiers for St. Louis:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">stl_tracts &lt;-<span class="st"> </span>tigris<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tigris/topics/tracts">tracts</a></span>(<span class="dt">state =</span> <span class="dv">29</span>, <span class="dt">county =</span> <span class="dv">510</span>, <span class="dt">class =</span> <span class="st">"sf"</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">tract_data &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(stl_tracts, asthmaTBL, <span class="dt">by =</span> <span class="st">"GEOID"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="coordinate-systems" class="section level2">
 <h2 class="hasAnchor">
 <a href="#coordinate-systems" class="anchor"></a>Coordinate Systems</h2>
-<p>One good option for users just starting out is to reproject data using the <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">UTM coordinate system</a>.</p>
-<p>There are a variety of tools for identifying the appropriate UTM zone, including this excellent <a href="https://mangomap.com/robertyoung/maps/69585/what-utm-zone-am-i-in-#">interactive map</a>.</p>
+<p>Two coordinate system rules are enforced by <code>ar_validate</code>: both the source and the target data must be in the same <a href="https://geocompr.robinlovelace.net/spatial-class.html#crs-intro">coordinate system</a> and that coordinate system must be a projected coordinate system. The <code>sf</code> package contains a function named <code><a href="https://www.rdocumentation.org/packages/sf/topics/st_crs">st_crs()</a></code> for previewing the current coordinate system of your data:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_crs">st_crs</a></span>(race83)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; Coordinate Reference System:</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt;   EPSG: 4269 </span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt;   proj4string: "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs"</span></a></code></pre></div>
+<p>The <code>EPSG</code> value <code>4269</code> refers to a specific type of coordinate system known as as geographic coordinate system. These data use latitude-longitude values, which vary in length and thus cannot be used to calculate area (a key component of carrying out areal interpolations). These data would fail the <code><a href="../reference/ar_validate.html">ar_validate()</a></code> process:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> race83, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="st">"TOTAL_E"</span>, <span class="dt">method =</span> <span class="st">"aw"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;   test                            result</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; 1 sf Objects                      TRUE  </span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; 2 CRS Match                       FALSE </span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; 3 CRS is Planar                   FALSE </span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt; 6 Overall Evaluation              FALSE</span></a></code></pre></div>
+<p>These data fail both the matching CRS validation and the planar CRS validation because the <code>race</code> and <code>wards</code> data are in two different coordinate systems. We’ve already seen the CRS data for <code>race</code> above so we’ll look at the <code>CRS data for</code>wards`:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_crs">st_crs</a></span>(wards)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt; Coordinate Reference System:</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt;   EPSG: 26915 </span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt;   proj4string: "+proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"</span></a></code></pre></div>
+<p>If these data fail that process, <code><a href="https://www.rdocumentation.org/packages/sf/topics/st_crs">st_crs()</a></code> can be used to identify whether the source or the target (or both) are in an inappropriate coordinate system. The <code>EPSG</code> value <code>26915</code> refers to another type of coordinate system known as as projected coordinate system (or “planar” data). Further, <code>26915</code> is a particular type of projected coordinate system known as the <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">Universal Transverse Mercator</a> coordinate system. This is a good option for using <code>areal</code> because it is available around the world. There are a variety of tools for identifying the appropriate UTM zone, including this excellent <a href="https://mangomap.com/robertyoung/maps/69585/what-utm-zone-am-i-in-#">interactive map</a>. Once you have an EPSG zone, the website <a href="https://epsg.io">epsg.io</a> can be used to search for the appropriate <code>EPSG</code> value.</p>
+<p>In this case, the <code>wards</code> data are in an appropriate system but the <code>race</code> data need to be transformed. The <code><a href="https://www.rdocumentation.org/packages/sf/topics/st_transform">st_transform()</a></code> function can be used to modify them to an appropriate coordinate sysmtem:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">raceFixed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_transform">st_transform</a></span>(race83, <span class="dt">crs =</span> <span class="dv">26915</span>)</a></code></pre></div>
+<p>Once this is done, these data should pass the <code><a href="../reference/ar_validate.html">ar_validate()</a></code> process:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> raceFixed, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="st">"TOTAL_E"</span>, <span class="dt">method =</span> <span class="st">"aw"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co">#&gt;   test                            result</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">#&gt; 1 sf Objects                      TRUE  </span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt; 2 CRS Match                       TRUE  </span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">#&gt; 3 CRS is Planar                   TRUE  </span></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt; 6 Overall Evaluation              TRUE</span></a></code></pre></div>
+</div>
+<div id="variable-conflicts" class="section level2">
+<h2 class="hasAnchor">
+<a href="#variable-conflicts" class="anchor"></a>Variable Conflicts</h2>
+<p>If a variable does not exist in the source data, the validation process will fail:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> race, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="st">"TOTAL"</span>, <span class="dt">method =</span> <span class="st">"aw"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt;   test                            result</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt; 1 sf Objects                      TRUE  </span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; 2 CRS Match                       TRUE  </span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; 3 CRS is Planar                   TRUE  </span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; 4 Variables Exist in Source       FALSE </span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; 6 Overall Evaluation              FALSE</span></a></code></pre></div>
+<p>In this case, the fix is as easy as correcting the typo in our <code><a href="../reference/ar_validate.html">ar_validate()</a></code> call - the variable <code>TOTAL</code> should really be <code>TOTAL_E</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(race)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt;  [1] "GEOID"     "STATEFP"   "COUNTYFP"  "TRACTCE"   "NAMELSAD" </span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt;  [6] "ALAND"     "AWATER"    "TOTAL_E"   "TOTAL_M"   "WHITE_E"  </span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; [11] "WHITE_M"   "BLACK_E"   "BLACK_M"   "AIAN_E"    "AIAN_M"   </span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; [16] "ASIAN_E"   "ASIAN_M"   "NHPI_E"    "NHPI_M"    "OTHER_E"  </span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; [21] "OTHER_M"   "TWOPLUS_E" "TWOPLUS_M" "geometry"</span></a></code></pre></div>
+<p>Another common problem is that a variable exists in both our source and target data. For instance, we could add a <code>TOTAL_E</code> variable to our target data:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">wardsVar &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(wards, <span class="dt">TOTAL_E =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> race, <span class="dt">target =</span> wardsVar, <span class="dt">varList =</span> <span class="st">"TOTAL_E"</span>, <span class="dt">method =</span> <span class="st">"aw"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">#&gt;   test                            result</span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">#&gt; 1 sf Objects                      TRUE  </span></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt; 2 CRS Match                       TRUE  </span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">#&gt; 3 CRS is Planar                   TRUE  </span></a>
+<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span></a>
+<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">#&gt; 5 No Variable Conflicts in Target FALSE </span></a>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">#&gt; 6 Overall Evaluation              FALSE</span></a></code></pre></div>
+<p>Now, we fail the validation process because there is a conflict between the source and target data - <code>TOTAL_E</code> exists in both data sets. We can use the <code><a href="http://dplyr.tidyverse.org/reference/select.html">select()</a></code> function from <code>dplyr</code> to remove the offending variable from the target data before proceeding:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">wardsFixed &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(wardsVar, <span class="op">-</span>TOTAL_E)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> race, <span class="dt">target =</span> wardsFixed, <span class="dt">varList =</span> <span class="st">"TOTAL_E"</span>, <span class="dt">method =</span> <span class="st">"aw"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co">#&gt;   test                            result</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt; 1 sf Objects                      TRUE  </span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt; 2 CRS Match                       TRUE  </span></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt; 3 CRS is Planar                   TRUE  </span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co">#&gt; 6 Overall Evaluation              TRUE</span></a></code></pre></div>
+<p>Another option would be to rename the column using the <code><a href="http://dplyr.tidyverse.org/reference/select.html">rename()</a></code> function from <code>dplyr</code>:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">wardsFixed &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">rename</a></span>(wardsVar, <span class="dt">oldTotal =</span> TOTAL_E)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> race, <span class="dt">target =</span> wardsFixed, <span class="dt">varList =</span> <span class="st">"TOTAL_E"</span>, <span class="dt">method =</span> <span class="st">"aw"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co">#&gt;   test                            result</span></a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co">#&gt; 1 sf Objects                      TRUE  </span></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co">#&gt; 2 CRS Match                       TRUE  </span></a>
+<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co">#&gt; 3 CRS is Planar                   TRUE  </span></a>
+<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span></a>
+<a class="sourceLine" id="cb18-11" data-line-number="11"><span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span></a>
+<a class="sourceLine" id="cb18-12" data-line-number="12"><span class="co">#&gt; 6 Overall Evaluation              TRUE</span></a></code></pre></div>
+<p>Either option will work for <code>areal</code>’s purposes.</p>
+</div>
+<div id="subsetting" class="section level2">
+<h2 class="hasAnchor">
+<a href="#subsetting" class="anchor"></a>Subsetting</h2>
+<p>One cautionary note when using <code>areal</code> is that the validation process will not check to see if too many variables or observations exist in the data. Cleaning the data ahead of time so that only the relevant observations exist can help improve performance - if you have tract data for an entire state but only need a particular city, everything will go faster if you subset these data using the <code><a href="http://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function from <code>dplyr</code>:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">countyData &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(stateData, COUNTY <span class="op">==</span><span class="st"> </span><span class="dv">510</span>)</a></code></pre></div>
+<p>Having too many columns poses an organizational problem more than anything else. We strongly encourage users to limit their interpolated data to only the needed values. For example, the <code>wards</code> data contains an <code>AREA</code> column whose units we don’t know and an <code>OBJECTID</code> column that is an artifact from its creation using an ESRI proudct:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(wards)</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#&gt; [1] "OBJECTID" "WARD"     "AREA"     "geometry"</span></a></code></pre></div>
+<p>We can use the <code><a href="http://dplyr.tidyverse.org/reference/select.html">select()</a></code> function from <code>dplyr</code> to remove these before interpolation since we don’t need them:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">wardsSubset &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(wards, <span class="op">-</span>OBJECTID, <span class="op">-</span>AREA)</a></code></pre></div>
 </div>
   </div>
 
@@ -186,6 +306,8 @@
 <li><a href="#validating-data">Validating Data</a></li>
       <li><a href="#format-issues">Format Issues</a></li>
       <li><a href="#coordinate-systems">Coordinate Systems</a></li>
+      <li><a href="#variable-conflicts">Variable Conflicts</a></li>
+      <li><a href="#subsetting">Subsetting</a></li>
       </ul>
 </div>
       </div>
