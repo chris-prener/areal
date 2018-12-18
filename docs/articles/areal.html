@@ -90,7 +90,7 @@
 </h1>
                         <h4 class="author">Christopher Prener, Ph.D.</h4>
             
-            <h4 class="date">2018-12-17</h4>
+            <h4 class="date">2018-12-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/slu-openGIS/areal/blob/master/vignettes/areal.Rmd"><code>vignettes/areal.Rmd</code></a></small>
       <div class="hidden name"><code>areal.Rmd</code></div>
@@ -106,6 +106,8 @@
 <p>As helpful as this may be, areal interpolation is not widely used. Many neighborhood researchers use census tracts, census block groups, or even zip codes as proxies for neighborhoods instead of interpolating values from these underlying sources into the actual neighborhoods. A key reason many researchers do not take this second step is that desktop GIS applications have not historically offered built-in tools for completing these calculations. Thus researchers wishing to use areal interpolation must “reinvent the wheel” (Qiu et al. 2012) when it comes to developing processes for carrying out areal interpolation.</p>
 <p>In <code>R</code>, the <code>sf</code> package does offer a basic interface for areal weighted interpolation (<code>st_interpolate_aw</code>). While this functionality is welcome and useful, its implementation requires extensive data cleaning to carry out multiple interpolations (or the use of a tool like <code>purrr</code>). The process is also a “black box” - the interpolations are produced without a means to disaggregate the process into its constituent elements.</p>
 <p><code>areal</code> is designed as an alternative to this approach. For its initial release, the package offers a specific approach to interpolation known as areal weighted interpolation with several distinct features. Iteration is built-in and does not require using the apply family of functions from <code>base</code> or tools from <code>purrr</code>. Users have multiple choices available both in terms of how interpolations are calculated and how output is structured. The key function, <code><a href="../reference/aw_interpolate.html">aw_interpolate()</a></code> is pipe-able, meaning it fits into existing <code>tidyverse</code> workflows. Helper functions are provided to validate data and make decisions about which areal weight to implement. And finally, the areal weighted interpolation process can be disaggregated by applying the necessary functions in sequence.</p>
+<p>What results from areal interpolation is mapped below. We begin with a common unit of spatial data aggregation - the census tract. Total population per tract is mapped on the left in panel A. Using <code><a href="../reference/aw_interpolate.html">aw_interpolate()</a></code>, we estimate population counts for Wards in St. Louis from those census tract values. These estimated values are mapped on the right in panel B.</p>
+<p><img src="../man/figures/exampleMap.png" width="100%"></p>
 </div>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
@@ -113,7 +115,7 @@
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
-<p>We recommend that users install <code>sf</code> before proceeding with the installation of <code>areal</code>. Windows users should be able to install <code>sf</code> without significant issues, but macOS and linux users will need to install several open source spatial libraries to get <code>sf</code> itself up and running. The easiest approach for macOS users is to install the GDAL 2.0 Complete framework from <a href="https://www.kyngchaos.com/software/frameworks/">Kyng Chaos</a>.</p>
+<p>We recommend that users install <code>sf</code> before proceeding with the installation of <code>areal</code>. Windows users should be able to install <code>sf</code> without significant issues, but macOS and Linux users will need to install several open source spatial libraries to get <code>sf</code> itself up and running. The easiest approach for macOS users is to install the GDAL 2.0 Complete framework from <a href="https://www.kyngchaos.com/software/frameworks/">Kyng Chaos</a>.</p>
 <p>For Linux users, steps will vary based on the falvor being used. Our <a href="https://github.com/slu-openGIS/areal/blob/master/.travis.yml">configuration file</a> for Travis CI and its associated <a href="https://github.com/slu-openGIS/areal/blob/master/.travis/install.sh">bash script</a> should be useful in determining the necessary components to install. Linux users will need to make sure the dependency <a href="https://github.com/r-spatial/lwgeom"><code>lwgeom</code></a> is also installed correctly.</p>
 <p>Once <code>sf</code> is installed, the development version of <code>areal</code> can be accessed from Github with <code>remotes</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>

@@ -24,14 +24,14 @@ knitr::opts_chunk$set(
 Areal interpolation is the process making estimates from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented, implementing them often involves "reinventing the wheel." Within `R`, the `sf` package does offer a basic interface for areal weighted interpolation (`st_interpolate_aw`). The `areal` package contains a suite tools for validation and estimation, providing a full-featured workflow that fits into both modern data management (e.g. `tidyverse`) and spatial data (e.g. `sf`) frameworks.
 
 ## Resources
-* The [Get started](/areal/) article has:
+* The [Get started](articles/areal.html) article has:
     * a quick overview of getting up and running with `areal` including **installation tips**,
     * some notes on **preparing data** for interpolation,
     * a brief introduction to the **`aw_interpolate()` function**,
     * tips for **getting help**, **submitting feedback**, 
     * and the `areal` package's development roadmap!
-* Additional details about preparing data are available in a [dedicated article](/data-preparation/).
-* The areal weighted interpolation process is described in-depth in a [dedicated article](/areal-weighted-interpolation/).
+* Additional details about preparing data are available in a [dedicated article](articles/data-preparation.html).
+* The areal weighted interpolation process is described in-depth in a [dedicated article](articles/areal-weighted-interpolation.html).
 
 ## Contributor Code of Conduct
 Please note that this project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.

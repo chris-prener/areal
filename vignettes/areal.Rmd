@@ -36,9 +36,15 @@ In `R`, the `sf` package does offer a basic interface for areal weighted interpo
 
 `areal` is designed as an alternative to this approach. For its initial release, the package offers a specific approach to interpolation known as areal weighted interpolation with several distinct features. Iteration is built-in and does not require using the apply family of functions from `base` or tools from `purrr`. Users have multiple choices available both in terms of how interpolations are calculated and how output is structured. The key function, `aw_interpolate()` is pipe-able, meaning it fits into existing `tidyverse` workflows. Helper functions are provided to validate data and make decisions about which areal weight to implement. And finally, the areal weighted interpolation process can be disaggregated by applying the necessary functions in sequence. 
 
+What results from areal interpolation is mapped below. We begin with a common unit of spatial data aggregation - the census tract. Total population per tract is mapped on the left in panel A. Using `aw_interpolate()`, we estimate population counts for Wards in St. Louis from those census tract values. These estimated values are mapped on the right in panel B.
+
+```{r exampleMap, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("../man/figures/exampleMap.png")
+```
+
 ## Getting Started
 ### Installation
-We recommend that users install `sf` before proceeding with the installation of `areal`. Windows users should be able to install `sf` without significant issues, but macOS and linux users will need to install several open source spatial libraries to get `sf` itself up and running. The easiest approach for macOS users is to install the GDAL 2.0 Complete framework from [Kyng Chaos](https://www.kyngchaos.com/software/frameworks/). 
+We recommend that users install `sf` before proceeding with the installation of `areal`. Windows users should be able to install `sf` without significant issues, but macOS and Linux users will need to install several open source spatial libraries to get `sf` itself up and running. The easiest approach for macOS users is to install the GDAL 2.0 Complete framework from [Kyng Chaos](https://www.kyngchaos.com/software/frameworks/). 
 
 For Linux users, steps will vary based on the falvor being used. Our [configuration file](https://github.com/slu-openGIS/areal/blob/master/.travis.yml) for Travis CI and its associated [bash script](https://github.com/slu-openGIS/areal/blob/master/.travis/install.sh) should be useful in determining the necessary components to install. Linux users will need to make sure the dependency [`lwgeom`](https://github.com/r-spatial/lwgeom) is also installed correctly.
 

@@ -116,6 +116,14 @@ options for calculating weights. All of these arguments are documented
 both within the package (use `?aw_interpolate`) and on the [package’s
 website](https://slu-opengis.github.io/areal/).
 
+What results from `aw_interpolate()` is mapped below. Total population
+per census tract in St. Louis is mapped on the left in panel A. Using
+`aw_interpolate()` as we did in the previous example, we estimate
+population counts for Wards in St. Louis from those census tract values.
+These estimated values are mapped on the right in panel B.
+
+<img src="man/figures/exampleMap.png" width="100%" />
+
 Both extensive and intensive data can be interpolated simultaneously by
 using both the `extensive` and `intensive` arguments. In this second
 example, the asthma and race data are combined, and estimates for both
