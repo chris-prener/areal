@@ -36,7 +36,7 @@ In `R`, the `sf` package does offer a basic interface for areal weighted interpo
 
 `areal` is designed as an alternative to this approach. For its initial release, the package offers a specific approach to interpolation known as areal weighted interpolation with several distinct features. Iteration is built-in and does not require using the apply family of functions from `base` or tools from `purrr`. Users have multiple choices available both in terms of how interpolations are calculated and how output is structured. The key function, `aw_interpolate()` is pipe-able, meaning it fits into existing `tidyverse` workflows. Helper functions are provided to validate data and make decisions about which areal weight to implement. And finally, the areal weighted interpolation process can be disaggregated by applying the necessary functions in sequence. 
 
-What results from areal interpolation is mapped below. We begin with a common unit of spatial data aggregation - the census tract. Total population per tract is mapped on the left in panel A. Using `aw_interpolate()`, we estimate population counts for Wards in St. Louis from those census tract values. These estimated values are mapped on the right in panel B.
+What results from areal interpolation is mapped below. We begin with a common unit of spatial data aggregation - the census tract. Total population per tract is mapped on the left in panel A. Using the `areal` package, we estimate population counts for wards in St. Louis from those census tract values. These estimated values are mapped on the right in panel B.
 
 ```{r exampleMap, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("../man/figures/exampleMap.png")
@@ -93,4 +93,4 @@ We are planning to experiment with at least three additional techniques for area
 
 We do not have a timeline for these experiments, though we are planning to begin experimenting with the pycnophylactic method in the coming months. We will be keeping the issues (linked to above) updated with progress. If you are interested in bringing these techniques to `R`, please feel free to contribute to the development of `areal`. The best place to start is bt checking in on our GitHub issues for each technique to see what help is needed!
 
-If you have other features or suggestions you want to see, please open an issue on [GitHub](https://github.com/slu-openGIS/areal/issues/new/choose) (and ideally created a [`reprex`](http://reprex.tidyverse.org/) to go with it!).
+If you have other features or suggestions you want to see, please open an issue on [GitHub](https://github.com/slu-openGIS/areal/issues/new/choose) (and ideally created a [`reprex`](http://reprex.tidyverse.org/) to go with it!). Please note that this project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.

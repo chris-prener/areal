@@ -1,0 +1,55 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# areal <img src="man/figures/arealLogo.png" align="right" />
+
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Travis-CI Build
+Status](https://travis-ci.org/slu-openGIS/areal.svg?branch=master)](https://travis-ci.org/slu-openGIS/areal)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/slu-openGIS/areal?branch=master&svg=true)](https://ci.appveyor.com/project/chris-prener/areal)
+[![Coverage
+status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=master)
+[![CRAN\_status\_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
+
+Areal interpolation is the process making estimates from a source set of
+polygons to an overlapping but incongruent set of target polygons. One
+challenge with areal interpolation is that, while the processes
+themselves are well documented in the academic literature, implementing
+them often involves “reinventing the wheel.” While the `R` package `sf`
+does offer a basic interface for areal weighted interpolation
+(`st_interpolate_aw`), it lacks some features that we use in our work.
+The `areal` package contains a suite tools for validation and
+estimation, providing a full-featured workflow that fits into both
+modern data management (e.g. `tidyverse`) and spatial data (e.g. `sf`)
+frameworks.
+
+## Quick Start
+
+If the `sf` package is already installed, the development version of
+`areal` can be accessed from Github with `remotes`:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("slu-openGIS/areal")
+```
+
+Additional details, including some instructions for working with `sf`,
+can be found in the [Get started
+article](articles/areal.html#getting-started).
+
+## Resources
+
+In addition to instructions for installation, the main [Get
+started](articles/areal.html) article has:
+
+  - a quick overview of areal interpolation,
+  - some notes on **preparing data** for interpolation,
+  - a brief introduction to the **`aw_interpolate()` function**,
+  - tips for **getting help**, **submitting feedback**,
+  - and the `areal` package’s development roadmap\!
+
+This site also offers dedicated articles on [data
+preparation](articles/data-preparation.html) and [using `areal` for
+areal weighted
+interpolation](articles/areal-weighted-interpolation.html).
