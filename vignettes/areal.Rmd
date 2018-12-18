@@ -55,6 +55,20 @@ Once `sf` is installed, the development version of `areal` can be accessed from 
 remotes::install_github("slu-openGIS/areal")
 ```
 
+### Functions
+Two function prefixes are used in `areal` to allow users to take advantage of RStudio's auto complete functionality:
+
+* `ar_` - data and functions that are used for multiple interpolation methods
+* `aw_` - functions that are used specifically for areal weighted interpolation
+
+### Data
+The package contains four overlapping data sets that can be used for practice: 
+
+* `ar_stl_race` (2017 ACS demographic counts at the census tract level; *n* = 106) 
+* `ar_stl_asthma` (2017 asthma rates at the census tract level; *n* = 106)
+* `ar_stl_wards` (the 2010 political subdivisions in St. Louis; *n* = 28). 
+* `ar_stl_wardsClipped` (the 2010 political subdivisions in St. Louis clipped to the Mississippi River shoreline; *n* = 28). 
+
 ### Preparing Data
 `areal` assumes that all data are available as `sf` objects. The `st_read()` function is useful for importing data stored in a variety of formats into `sf` objects. Creating these objects is a pre-requistite to passing the validation steps before interpolations are completed.
 
@@ -72,7 +86,7 @@ Areal weighted interpolation makes a single, albiet significant, assumption abou
 The primary means for conducting interpolations, and possibly the only function you may need from `areal`, is the `aw_interpolate()` function:
 
 ```{r iteration}
-aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID", 
+aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = "GEOID", 
                weight = "sum", output = "sf", extensive = "TOTAL_E")
 ```
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • areal</title>
+<title>Testing for type of coordinates — ar_validate_longlat • areal</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Testing for type of coordinates — ar_validate_longlat" />
+
+<meta property="og:description" content="ar_validate_longlat conducts a logic test for
+    whether or not the data are in planar format." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +51,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -115,141 +119,45 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Testing for type of coordinates</h1>
+    <small class="dont-index">Source: <a href='https://github.com/slu-openGIS/areal/blob/master/R/ar_validate.R'><code>R/ar_validate.R</code></a></small>
+    <div class="hidden name"><code>ar_validate_longlat.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p><code>ar_validate_longlat</code> conducts a logic test for
+    whether or not the data are in planar format.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-general" class="hasAnchor"><a href="#section-general" class="anchor"></a>General</h2>
-          <p class="section-desc"><p>Basic functions for areal interpolation</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="ar_validate.html">ar_validate()</a></code> </p>
-        </td>
-        <td><p>Valdating Data for Interpolation</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-areal-weighted-interpolation-core" class="hasAnchor"><a href="#section-areal-weighted-interpolation-core" class="anchor"></a>Areal Weighted Interpolation, Core</h2>
-          <p class="section-desc"><p>Core functions for performing areal weighted interpolation.</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="aw_interpolate.html">aw_interpolate()</a></code> </p>
-        </td>
-        <td><p>Interpolate Values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="aw_preview_weights.html">aw_preview_weights()</a></code> </p>
-        </td>
-        <td><p>Preview Areal Weights</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="aw_verify.html">aw_verify()</a></code> </p>
-        </td>
-        <td><p>Verify Correct Extensive-Sum Interpolation</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-areal-weighted-interpolation-workflow" class="hasAnchor"><a href="#section-areal-weighted-interpolation-workflow" class="anchor"></a>Areal Weighted Interpolation, Workflow</h2>
-          <p class="section-desc"><p>Functions for manually reproducing areal weighted interpolation workflow.</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="aw_intersect.html">aw_intersect()</a></code> </p>
-        </td>
-        <td><p>Intersect Source and Target Data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="aw_total.html">aw_total()</a></code> </p>
-        </td>
-        <td><p>Create new total area field in intersection</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="aw_weight.html">aw_weight()</a></code> </p>
-        </td>
-        <td><p>Calculate area weight using source ID areas</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="aw_calculate.html">aw_calculate()</a></code> </p>
-        </td>
-        <td><p>Make field new variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="aw_aggregate.html">aw_aggregate()</a></code> </p>
-        </td>
-        <td><p>Aggregate new field of interest by target IDs</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
-          <p class="section-desc"><p>Data sets included in package.</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="ar_stl_asthma.html">ar_stl_asthma</a></code> </p>
-        </td>
-        <td><p>Asthma in St. Louis by Census Tract, 2017</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ar_stl_race.html">ar_stl_race</a></code> </p>
-        </td>
-        <td><p>Race in St. Louis by Census Tract, 2017</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ar_stl_wards.html">ar_stl_wards</a></code> </p>
-        </td>
-        <td><p>Ward Boundaries in St. Louis, 2010</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ar_stl_wardsClipped.html">ar_stl_wardsClipped</a></code> </p>
-        </td>
-        <td><p>Clipped Ward Boundaries in St. Louis, 2010</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>ar_validate_longlat</span>(<span class='no'>.data</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>A sf object</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>A logical scalar; if <code>TRUE</code>, the test is passed</p>
+    
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-general">General</a></li>
-      <li><a href="#section-areal-weighted-interpolation-core">Areal Weighted Interpolation, Core</a></li>
-      <li><a href="#section-areal-weighted-interpolation-workflow">Areal Weighted Interpolation, Workflow</a></li>
-      <li><a href="#section-data">Data</a></li>
-    </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
+
   </div>
 </div>
 

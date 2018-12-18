@@ -51,6 +51,14 @@ remotes::install_github("slu-openGIS/areal")
 
 ## Usage
 
+Two function prefixes are used in `areal` to allow users to take
+advantage of RStudio’s auto complete functionality:
+
+  - `ar_` - data and functions that are used for multiple interpolation
+    methods
+  - `aw_` - functions that are used specifically for areal weighted
+    interpolation
+
 ### Data
 
 The package contains four overlapping data sets:

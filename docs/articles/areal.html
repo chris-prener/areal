@@ -121,6 +121,32 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"slu-openGIS/areal"</span>)</a></code></pre></div>
 </div>
+<div id="functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#functions" class="anchor"></a>Functions</h3>
+<p>Two function prefixes are used in <code>areal</code> to allow users to take advantage of RStudio’s auto complete functionality:</p>
+<ul>
+<li>
+<code>ar_</code> - data and functions that are used for multiple interpolation methods</li>
+<li>
+<code>aw_</code> - functions that are used specifically for areal weighted interpolation</li>
+</ul>
+</div>
+<div id="data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data" class="anchor"></a>Data</h3>
+<p>The package contains four overlapping data sets that can be used for practice:</p>
+<ul>
+<li>
+<code>ar_stl_race</code> (2017 ACS demographic counts at the census tract level; <em>n</em> = 106)</li>
+<li>
+<code>ar_stl_asthma</code> (2017 asthma rates at the census tract level; <em>n</em> = 106)</li>
+<li>
+<code>ar_stl_wards</code> (the 2010 political subdivisions in St. Louis; <em>n</em> = 28).</li>
+<li>
+<code>ar_stl_wardsClipped</code> (the 2010 political subdivisions in St. Louis clipped to the Mississippi River shoreline; <em>n</em> = 28).</li>
+</ul>
+</div>
 <div id="preparing-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#preparing-data" class="anchor"></a>Preparing Data</h3>
@@ -135,7 +161,7 @@
 <a href="#areal-weighted-interpolation" class="anchor"></a>Areal Weighted Interpolation</h3>
 <p>Areal weighted interpolation makes a single, albiet significant, assumption about your data - that populations are evenly distributed within the source data. Imagine you have a census tract with 3,000 residents. Areal weighted interpolation will assume that these 3,000 residents are evenly spread out within that tract. This may not matter in some tracts, but in tracts with large parks or dense housing developments alongside commercial buildings, this assumption is not likely to hold.</p>
 <p>The primary means for conducting interpolations, and possibly the only function you may need from <code>areal</code>, is the <code><a href="../reference/aw_interpolate.html">aw_interpolate()</a></code> function:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span>(wards, <span class="dt">tid =</span> WARD, <span class="dt">source =</span> race, <span class="dt">sid =</span> <span class="st">"GEOID"</span>, </a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span>(ar_stl_wards, <span class="dt">tid =</span> WARD, <span class="dt">source =</span> ar_stl_race, <span class="dt">sid =</span> <span class="st">"GEOID"</span>, </a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">               <span class="dt">weight =</span> <span class="st">"sum"</span>, <span class="dt">output =</span> <span class="st">"sf"</span>, <span class="dt">extensive =</span> <span class="st">"TOTAL_E"</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; Simple feature collection with 28 features and 4 fields</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; geometry type:  POLYGON</span></a>
