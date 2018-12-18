@@ -14,7 +14,22 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+library(areal)
+library(dplyr)
+library(sf)
+
+data(ar_stl_asthma, package = "areal")
+asthma <- ar_stl_asthma
+
+data(ar_stl_race, package = "areal")
+race <- ar_stl_race
+
+data(ar_stl_wards, package = "areal")
+wards <- ar_stl_wards
 ```
+
+Depending on the state of your spatial data, they may require some cleaning and modification before interpolation. 
 
 ## Coordinate Systems
 

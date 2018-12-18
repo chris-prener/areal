@@ -15,9 +15,10 @@ status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](
 Areal interpolation is the process making estimates from a source set of
 polygons to an overlapping but incongruent set of target polygons. One
 challenge with areal interpolation is that, while the processes
-themselves are well documented, implementing them often involves
-“reinventing the wheel.” Within `R`, the `sf` package does offer a
-basic interface for areal weighted interpolation (`st_interpolate_aw`).
+themselves are well documented in the academic literature, implementing
+them often involves “reinventing the wheel.” While the `R` package `sf`
+does offer a basic interface for areal weighted interpolation
+(`st_interpolate_aw`), it lacks some features that we use in our work.
 The `areal` package contains a suite tools for validation and
 estimation, providing a full-featured workflow that fits into both
 modern data management (e.g. `tidyverse`) and spatial data (e.g. `sf`)
