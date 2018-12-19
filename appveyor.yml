@@ -8,13 +8,13 @@ init:
         Import-Module '..\appveyor-tool.ps1'
 
 install:
+  ps: Bootstrap
+
   - cd bin
   - cmd: cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
   - sh: cmake ..
 
   - cmake --build .
-
-  ps: Bootstrap
 
 cache:
   - C:\RLibrary
