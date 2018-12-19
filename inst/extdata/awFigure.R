@@ -45,3 +45,17 @@ p3 <- ggplot() +
 
 ggplot2::ggsave(filename = here("man", "figures", "intersectMap.png"), p3,
                 width = cp_points(500, units = "in"), height = cp_points(450, units = "in"), dpi = 72)
+
+p4 <- ggplot() +
+  geom_sf(data = ar_stl_race, fill = "#ff0000", color = "#000000") +
+  geom_sf(data = ar_stl_wardsClipped, fill = "#ffffff", color = "#000000") +
+  labs(
+    title = "Wards Clipped / Tracts Overlap",
+    subtitle = "St. Louis, MO"
+  ) +
+  cp_sequoiaTheme(base_size = 14, background = "white", map = TRUE) +
+  theme(legend.position="none")
+
+ggplot2::ggsave(filename = here("man", "figures", "overlapMap.png"), p4,
+                width = cp_points(500, units = "in"), height = cp_points(450, units = "in"), dpi = 72)
+

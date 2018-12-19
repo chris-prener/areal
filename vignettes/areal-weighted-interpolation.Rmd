@@ -28,7 +28,7 @@ data(ar_stl_wardsClipped, package = "areal")
 Areal weighted interpolation is a technique for estimating the values for overlapping but incongruent polygon features. This article describes the `areal` package's approach to areal weighted interpolation. After providing a quick introduction to the technique, the options for `aw_interpolate()` are discussed and an example of interpolating data using the manual workflow is provided.
 
 ## Introduction to Areal Weighted Interpolation
-Areal weighted interpolation is the simplest approach to estimating population values for overlapping polygons. It makes a significant and important assumption - that individuals are spread out *evenly* within the source features. This assumption quickly breaks down in the real world - areas that have commercial developments mixed in with residental housing, for example, or neighborhoods with a large city park. We do not always have access to this type of contextual data, however, and so areal weighted interpolation remains a popular choice. 
+Areal weighted interpolation is the simplest approach to estimating population values for overlapping polygons. It makes a significant and important assumption - that individuals are spread out *evenly* within the source features. This assumption quickly breaks down in the real world - areas that have commercial developments mixed in with residential housing, for example, or neighborhoods with a large city park. We do not always have access to this type of contextual data, however, and so areal weighted interpolation remains a popular choice. 
 
 Areal weighted interpolation is a multi-step process. The `areal` package contains a number of example data sets that can be used to illustrate this process:
 
@@ -36,9 +36,10 @@ Areal weighted interpolation is a multi-step process. The `areal` package contai
 library(areal)
 
 # load data into enviornment
-race <- ar_stl_race          # census tract population estimates
-asthma <- ar_stl_asthma      # census tract asthma rate estimates
-wards <- ar_stl_wards        # political boundaries
+race <- ar_stl_race                 # census tract population estimates
+asthma <- ar_stl_asthma             # census tract asthma rate estimates
+wards <- ar_stl_wards               # political boundaries
+wardsClipped <- ar_stl_wardsClipped # political boundaries clipped to river
 ```
 
 The boundaries for the `race` and `asthma` the data are the same - census tracts. When mapped, this is what the census tract and ward features look like:
@@ -47,9 +48,9 @@ The boundaries for the `race` and `asthma` the data are the same - census tracts
 knitr::include_graphics("../man/figures/featureMap.png")
 ```
 
-The first step with areal weighted interpolation is to intersect the data. Imagine one shapefile (we'll call this the "target") acting as a cookie cutter - subdividing the features of the other (which we'll call the "source") based on areas of overlap such that only those overlapping areas remain (this is important - if these shapefiles do not cover identical areas, those areas only covered by one shapefile will be lost). The number of new features created is entirely dependent on the shapes of the features in the source and target datasets:
+The first step with areal weighted interpolation is to intersect the data. Imagine one shapefile (we'll call this the "target") acting as a cookie cutter - subdividing the features of the other (which we'll call the "source") based on areas of overlap such that only those overlapping areas remain (this is important - if these shapefiles do not cover identical areas, those areas only covered by one shapefile will be lost). The number of new features created is entirely dependent on the shapes of the features in the source and target data sets:
 
-```{r}
+```{r feature-count}
 # print number of features in source
 nrow(race)
 
@@ -66,25 +67,307 @@ By intersecting these two data sets, we get a new data set with *n* = 287 featur
 knitr::include_graphics("../man/figures/intersectMap.png")
 ```
 
+One by-product of the intersection process is that each intersected feature takes on the attributes of both the source and target data. The population value of interest from each source feature (for example, total population per tract or `TOTAL_E`), therefore exists as an attribute for each intersected feature. The identification numbers from both the source (`GEOID`) and the target data (`WARD`) are also applied:
+
+```{r data-by-hand, echo=FALSE}
+as_tibble(
+  data.frame(
+    GEOID = c(29510101100, 29510101100, 29510101200, 29510101200),
+    TOTAL_E = c(2510, 2510, 3545, 3545),
+    WARD = c(11, 12, 12, 13)
+  )
+) %>% 
+  knitr::kable(caption = "First Four Rows of Intersected Data")
+```
+
+We then calculate an area weight for each intersected feature. Let:
+
+* ${W}_{i} = \textrm{area weight for intersected feature i}$
+* ${A}_{i} = \textrm{area of intersected feature i}$
+* ${A}_{j} = \textrm{total area of source feature j}$
+
+$$ {W}_{i} = \frac { {A}_{i} }{ {A}_{j} } $$
+
+Since ${A}_{j}$ is calculated using the source identification number, the first two observations from table above with the first four rows of intersected data would have the same value for ${A}_{j}$, and the second two observations would also share the same ${A}_{j}$. The resulting values for ${W}_{i}$ would therefore be:
+
+```{r weight-by-hand, echo=FALSE}
+as_tibble(
+  data.frame(
+    GEOID = c(29510101100, 29510101100, 29510101200, 29510101200),
+    TOTAL_E = c(2510, 2510, 3545, 3545),
+    WARD = c(11, 12, 12, 13),
+    Ai = c(355702.9, 901331.1, 875554.7, 208612.1),
+    Aj = c(1257034.0, 1257034.0, 1084166.8, 1084166.8),
+    Wi = c(0.28297, 0.71703, 0.807583, 0.192417)
+  )
+) %>% 
+  knitr::kable(caption = "First Four Rows of Intersected Data")
+```
+
+Next, we need to estimate the share of the population value that occupies the intersected feature. Let:
+
+* ${E}_{i} = \textrm{estimated value for intersected feature } i$
+* ${W}_{i} = \textrm{area weight for intersected feature } i$
+* ${V}_{j} = \textrm{population value for source feature } j$
+
+$$ {E}_{i} = {V}_{j}*{W}_{i} $$
+
+Using our sample data, we therefore multiply the value (`TOTAL_E`) by the weight (`Wi`) to produce our `EST` estimate column:
+
+```{r calculate-by-hand, echo=FALSE}
+as_tibble(
+  data.frame(
+    GEOID = c(29510101100, 29510101100, 29510101200, 29510101200),
+    TOTAL_E = c(2510, 2510, 3545, 3545),
+    WARD = c(11, 12, 12, 13),
+    Ai = c(355702.9, 901331.1, 875554.7, 208612.1),
+    Aj = c(1257034.0, 1257034.0, 1084166.8, 1084166.8),
+    Wi = c(0.28297, 0.71703, 0.807583, 0.192417),
+    EST = c(710.2547, 1799.745, 2862.882, 682.1182)
+  )
+) %>% 
+  knitr::kable(caption = "First Four Rows of Intersected Data")
+```
+
+Finally, we summarize the data based on the target identification number. Let:
+
+* ${G}_{k} = \textrm{sum of all estimated values for target feature } k$
+* ${E}_{ik} = \textrm{estimated values from intersected features in } i \textrm{ within target feature } k$
+
+$$ {G}_{k} = \sum{{E}_{ik}} $$
+
+With our hypothetical data, the resulting table would therefore look like:
+
+```{r aggregate-by-hand, echo=FALSE}
+as_tibble(
+  data.frame(
+    WARD = c(11, 12, 13),
+    EST = c(710.2547, 4662.627, 682.1182)
+  )
+) %>% 
+  knitr::kable(caption = "Resulting Target Data")
+```
+
+This process is repeated for each of the *n* = 287 observations in the intersected data - area weights are calculated, and the product of the area weight the source value is summed based on the target identification number.
+
 ## Extensive and Intensive Interpolations
 ### Extensive Interpolations
+The example above is a spatially *extensive* interpolation because it involves count data. In `areal`, these estimates are obtained using the `aw_interpolate()` function:
+
+```{r extensive}
+aw_interpolate(wards, tid = WARD, source = race, sid = GEOID, 
+               weight = "sum", output = "tibble", extensive = "TOTAL_E")
+```
+
+For spatially extensive interpolations, a list of variable names should be supplied for the argument `extensive`. This can be a single variable name, such as in the example above, or a vector of variable names:
+
+```{r extensive-vector}
+aw_interpolate(wards, tid = WARD, source = race, sid = GEOID, 
+               weight = "sum", output = "tibble", 
+               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
+```
+
+This ability is a key feature of `areal` - iteration is built into the package by default, eliminating the need for repeated table joins after interpolations are calculated.
+
+### Calculating Weights for Extensive Interpolations
+The `aw_interpolate` function also uses an argument `weight`. There are two options, `"sum"` and `"total"`. Each makes a different assumption about the nature of the data and the relationship between the `source` and `target` features. For *perfectly* overlapping data, the distinction between these two options should not matter. In practice, however, there are often deviations in our data even between features that should be perfectly congruous.
+
+The `"sum"` approach to calculating weights assumes that 100% of the source data should be divided among the target features. When ${A}_{j}$ is calculated (see previous section), it is done by taking the sum of the areas for all intersected features ($i$) within a given source feature ($j$). Let:
+
+* ${A}_{j} = \textrm{total area of source feature j}$
+* ${A}_{ij} = \textrm{areas for intersected features in } i \textrm{ within source feature } j$
+
+$$ {A}_{j} = \sum{{A}_{ij}} $$
+
+On the other hand, the `"total"` approach to calculating weights assumes that, if a source feature is only covered by 99.88% of the target features, only 99.88% of the source target's data should be allocated to target features in the interpolation. When ${A}_{j}$ is created, the actual area of source feature $j$ is used.
+
+In the example above, `race` and `wards` are products of two different agencies. The `aw_stl_wards` data is a product of the City of the St. Louis and is quite close to fully overlapping with the U.S. Census Bureau's TIGER boundaries for the city. However, there are a number of very small deviations at the edges where the ward boundaries are *smaller* than the tracts (but only just so). These deviations result in small portions of census tracts not fitting into any ward. 
+
+We can see this in the weights that are used by `aw_interpolate()`. The `aw_preview_weights()` function can be used to return a preview of these areal weights. 
+
+```{r extensive-weights}
+aw_preview_weights(wards, tid = WARD, source = race, sid = GEOID, 
+                   type = "extensive")
+```
+
+The first tract listed above has a total estimated population of 2510. The practical impact of the weights is that only `r 2510*.9988335` individuals will be allocated to wards if the `"total"` approach to calculating areal weights is used. If `"sum"` is used, on the other hand, all 2510 individuals would be allocated to wards. In this scenario, the `"sum"` approach makes more sense because, while the race and ward data do not overlap in practice, they *should* overlap since no tracts extend out of the city's boundaries. We therefore want to ensure that all individuals within each tract are allocated out to wards.
+
+With spatially extensive interpolations that utilize the `"sum"` approach, the sum of the interpolated column should equal the sum of the original source data's column that was interpolated. This can be verified with `aw_verify()`:
+
+```{r verify-true}
+result <- aw_interpolate(wards, tid = WARD, source = race, sid = GEOID, 
+               weight = "sum", output = "tibble", extensive = "TOTAL_E")
+
+aw_verify(source = race, sourceValue = TOTAL_E, 
+          result = result, resultValue = TOTAL_E)
+```
+
+This check does *not* work with the `"total"` approach to area weights:
+
+```{r verify-fail}
+result <- aw_interpolate(wards, tid = WARD, source = race, sid = GEOID, 
+               weight = "total", output = "tibble", extensive = "TOTAL_E")
+
+aw_verify(source = race, sourceValue = TOTAL_E, 
+          result = result, resultValue = TOTAL_E)
+```
+
+We can use the `aw_stl_wardsClipped` data to illustrate a more extreme disparity between source and target data. The `aw_stl_wardsClipped` data have been modified so that the ward boundaries do not extend past the Mississippi River shoreline, which runs along the entire eastern boundary of the city. When we overlay them on the city's census tracts, all of the census tracts on the eastern side of the city extend outwards. 
+
+```{r overlapMap, echo=FALSE, fig.align='center'}
+knitr::include_graphics("../man/figures/overlapMap.png")
+```
+
+The difference in weights in this example is more extreme:
+
+```{r extensive-weights-overlap}
+aw_preview_weights(wardsClipped, tid = WARD, source = race, sid = GEOID, 
+                   type = "extensive")
+```
+
+Only 72.31% of tract `29510101800`, for example, falls within a ward. In many American cities that lie within larger counties, tract boundaries do not stop at the municipal boundaries in a way that is similar to the difference between tracts and the clipped wards here. In this scenario, we do not want to allocate every individual into our city of interest and the `"total"` approach to weights is appropriate. Not using `"total"` would result in an over-count of individuals in our city.
+
+If, on the other hand, we believe that all of the individuals *should* be allocated into wards, using `"total"` in this case would result in a severe under-count of individuals. 
 
 ### Intensive Interpolations
+Spatially *intensive* operations are used when the data to be interpolated are a ratio. An example of these data can be found in `ar_stl_asthma`, which contains asthma rates for each census tract in the city. The interpolation process is very similar to the spatially extensive workflow, except with how the area weight is calculated. Instead of using the source data's area for reference, the *target* data is used in the denominator. Let:
 
-## Total and Sum Weights for Extensive Interpolations
-The `aw_interpolate` function also passes the argument `weight` to `aw_total`. There are two options, `"sum"` and `"total"`. Each makes a different assumption about the nature of the data and the relationship between the `source` and `target` features. For *perfectly* overlapping data, the distinction between these two options should not matter. In practice, however, there are often deviations in our data even between features that should be perfectly congruous.
+* ${W}_{i} = \textrm{area weight for intersected feature i}$
+* ${A}_{i} = \textrm{area of intersected feature i}$
+* ${A}_{ik} = \textrm{areas for intersected features in } i \textrm{ within target feature } k$
 
-In both examples in this section, we'll be interpolating data from `aw_stl_race`, measured at the census tract level, into City of St. Louis wards. The `aw_stl_wards` data is a product of the City of the St. Louis and is quite close to fully overlapping with the U.S. Census Bureau's TIGER boundaries for the city. However, there are a number of very small deviations at the edges where the ward boundaries are *smaller* than the tracts (but only just so). The `aw_stl_wardsClipped` data was created to illustrate a more extreme example. It has been clipped to the Mississippi River shoreline along the city's eastern boundary.
+$$ {W}_{i} = \frac { {A}_{i} }{ \sum{{A}_{ik}} } $$
+
+Like spatially extensive interpolations that use the `"sum"` approach, the weights for intensive interpolations should always be equal to 1 as well. 
+
+```{r invenstive-weights}
+aw_preview_weights(wards, tid = WARD, source = asthma, sid = GEOID, 
+                   type = "intensive")
+```
+
+We can calculate the intensive interpolation by specifying a variable name for the `intensive` argument in `aw_interpolate()` and omitting the `extensive` argument:
+
+```{r intensive}
+aw_interpolate(wards, tid = WARD, source = asthma, sid = GEOID, 
+               weight = "sum", output = "tibble", intensive = "ASTHMA")
+```
+
+This gives us an estimate of the asthma rates at the ward level.
+
+### Mixed Interpolations
+`areal` also provides support for "mixed" interpolations where both spatially extensive and intensive interpolations need to be calculated. We specify a variable name or a vector of variable names for *both* the `intensive` and `extensive` arguments:
+
+```{r mixed}
+# remove sf geometry
+st_geometry(race) <- NULL
+
+# create combined data
+race %>%
+  select(GEOID, TOTAL_E, WHITE_E, BLACK_E) %>%
+  left_join(asthma, ., by = "GEOID") -> combinedData
+
+# interpolate
+aw_interpolate(wards, tid = WARD, source = combinedData, sid = GEOID, 
+               weight = "sum", output = "tibble", intensive = "ASTHMA",
+               extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
+```
 
 ## Output Options
+All of the above examples have created a tibble for output, but `areal` also supports the creation of `sf` objects as well:
+
+```{r ouput}
+aw_interpolate(wards, tid = WARD, source = asthma, sid = GEOID, 
+               weight = "sum", output = "sf", intensive = "ASTHMA")
+```
+
+## Other Features of aw_interpolate
+The `sf` option will include *all* of the variables that were included in the original target data. The `aw_interpolate()` function is pipe-able, allowing for existing tidyverse workflows to be integrated into the interpolation process. For example, if we wanted to remove the `OBJECTID` and `AREA` columns because they are not needed, this can be accomplished easily with `areal` and `dplyr`:
+
+```{r piped-input}
+wards %>%
+  select(-OBJECTID, -AREA) %>%
+  aw_interpolate(tid = WARD, source = asthma, sid = GEOID, 
+                 weight = "sum", output = "tibble", intensive = "ASTHMA")
+```
+
+All of the `areal` functions that are exported support non-standard evaluation, meaning that inputs can be either unquoted as they are above or quoted:
+
+```{r quoted-input}
+wards %>%
+  select(-OBJECTID, -AREA) %>%
+  aw_interpolate(tid = "WARD", source = asthma, sid = "GEOID", 
+                 weight = "sum", output = "tibble", intensive = "ASTHMA")
+```
+
+This functionality is not available for the `intensive` and `extensive` arguments at this time.
 
 ## Manual Workflow
+`areal` purposely exports the sub-functions that are called by `aw_interpolate()` so that the interpolation process is not a "black box" but rather can be recreated manually. This is envisioned as a diagnostic toolkit, with the final interpolations estimated using the simpler `aw_interpolate()` function once any issues have been identified and ameliorated
+
+First, we'll prepare the data but retaining only the columns we are interested in from the source data using the `select()` function from `dplyr`:
+
+```{r manual-subset}
+race <- select(ar_stl_race, GEOID, TOTAL_E)
+wards <- select(wards, -OBJECTID, -AREA)
+```
+
+We want to be careful to retain both a column with a value to be interpolated (total population in this case, `TOTAL_E`) and a column with a unique identification number (`GEOID` in this case).
+
 ### Intersect Data
+As we noted above, the interpolation process begins with calculating the intersection between the source and target data. We use the function `aw_intersect()` to accomplish this:
+
+```{r aw-intersect}
+wards %>%
+  aw_intersect(source = race, areaVar = "area") -> intersect
+
+intersect
+```
+
+Note that `aw_intersect()` automatically calculates the area of the intersected feature.
 
 ### Calculate Total Area
+Next, we want to apply the total area of our source features to our data using `aw_total()`. This will implement the correct areal weighting approach based on the `type` and `weight` arguments. We'll use the `"sum"` approach to areal weights here:
+
+```{r aw-total}
+intersect %>%
+  aw_total(source = race, id = GEOID, areaVar = "area", totalVar = "totalArea",
+             type = "extensive", weight = "sum") -> intersect
+
+intersect
+```
+
+Changing `type` to `"intensive"` would be necessary for spatially intensive interpolations. Likewise, changing `weight` to `"total"` is necessary if areas that lack overlap should not be allocated into the target features.
 
 ### Calculate Areal Weight
+With the total weight in hand, we are ready to calculate the areal weight itself using `aw_weight()`.
+
+```{r aw-weight}
+intersect %>%
+  aw_weight(areaVar = "area", totalVar = "totalArea", 
+            areaWeight = "areaWeight") -> intersect
+
+intersect
+```
 
 ### Calculate Estimated Population
+We can then multiply the value (`TOTAL_E`) by the weight (`areaWeight`) to get a population estimate for each intersected feature using `aw_calculate()`:
+
+```{r aw-calculate}
+intersect %>%
+  aw_calculate(value = TOTAL_E, areaWeight = "areaWeight") -> intersect
+
+intersect
+```
+
+There is an optional `newVar` argument that can be used to store the estimates in a new column rather than in the existing `value` column.
 
 ### Aggregate Estimated Population by Target ID
+Finally, we aggregate the estimated values by target features using `aw_aggregate()`:
+
+```{r aw-aggregate}
+intersect %>%
+  aw_aggregate(target = wards, tid = WARD, interVar = TOTAL_E) -> result
+
+result
+```
+
