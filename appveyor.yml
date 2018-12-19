@@ -53,6 +53,13 @@ on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
+install:
+  - cd bin
+  - cmd: cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
+  - sh: cmake ..
+
+  - cmake --build .
+
 artifacts:
   - path: '*.Rcheck\**\*.log'
     name: Logs
