@@ -126,7 +126,7 @@
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/warning">suppressWarnings</a></span>(sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/geos_binary_ops">st_intersection</a></span>(race, wards)))</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; [1] 287</span></a></code></pre></div>
 <p>By intersecting these two data sets, we get a new data set with <em>n</em> = 287 features. The resulting <code>sf</code> object looks like so:</p>
-<p><img src="../man/figures/intersectMap.png" width="250" height="33%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/intersectMap.png" width="100%"></p>
 <p>One by-product of the intersection process is that each intersected feature takes on the attributes of both the source and target data. The population value of interest from each source feature (for example, total population per tract or <code>TOTAL_E</code>), therefore exists as an attribute for each intersected feature. The identification numbers from both the source (<code>GEOID</code>) and the target data (<code>WARD</code>) are also applied:</p>
 <table class="table">
 <caption>First Four Rows of Intersected Data</caption>
@@ -387,7 +387,7 @@
 <a class="sourceLine" id="cb7-5" data-line-number="5">          <span class="dt">result =</span> result, <span class="dt">resultValue =</span> TOTAL_E)</a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; [1] FALSE</span></a></code></pre></div>
 <p>We can use the <code>aw_stl_wardsClipped</code> data to illustrate a more extreme disparity between source and target data. The <code>aw_stl_wardsClipped</code> data have been modified so that the ward boundaries do not extend past the Mississippi River shoreline, which runs along the entire eastern boundary of the city. When we overlay them on the city’s census tracts, all of the census tracts on the eastern side of the city extend outwards.</p>
-<p><img src="../man/figures/overlapMap.png" width="250" height="33%" style="display: block; margin: auto;"></p>
+<p><img src="../man/figures/overlapMap.png" width="100%"></p>
 <p>The difference in weights in this example is more extreme:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/aw_preview_weights.html">aw_preview_weights</a></span>(wardsClipped, <span class="dt">tid =</span> WARD, <span class="dt">source =</span> race, <span class="dt">sid =</span> GEOID, </a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">                   <span class="dt">type =</span> <span class="st">"extensive"</span>)</a>

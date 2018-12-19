@@ -63,7 +63,7 @@ nrow(suppressWarnings(sf::st_intersection(race, wards)))
 
 By intersecting these two data sets, we get a new data set with *n* = 287 features. The resulting `sf` object looks like so:
 
-```{r intersectMap, echo=FALSE, fig.align='center', out.height='33%'}
+```{r intersectMap, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("../man/figures/intersectMap.png")
 ```
 
@@ -214,7 +214,7 @@ aw_verify(source = race, sourceValue = TOTAL_E,
 
 We can use the `aw_stl_wardsClipped` data to illustrate a more extreme disparity between source and target data. The `aw_stl_wardsClipped` data have been modified so that the ward boundaries do not extend past the Mississippi River shoreline, which runs along the entire eastern boundary of the city. When we overlay them on the city's census tracts, all of the census tracts on the eastern side of the city extend outwards. 
 
-```{r overlapMap, echo=FALSE, fig.align='center', out.height='33%'}
+```{r overlapMap, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("../man/figures/overlapMap.png")
 ```
 

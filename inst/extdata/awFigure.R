@@ -43,19 +43,22 @@ p3 <- ggplot() +
   cp_sequoiaTheme(base_size = 14, background = "white", map = TRUE) +
   theme(legend.position="none")
 
-ggplot2::ggsave(filename = here("man", "figures", "intersectMap.png"), p3,
-                width = cp_points(500, units = "in"), height = cp_points(450, units = "in"), dpi = 72)
+intersectMap <- plot_grid(p3, NULL, labels = c("(C)"))
+
+ggplot2::ggsave(filename = here("man", "figures", "intersectMap.png"), intersectMap,
+                width = cp_points(800, units = "in"), height = cp_points(450, units = "in"), dpi = 72)
 
 p4 <- ggplot() +
   geom_sf(data = ar_stl_race, fill = "#ff0000", color = "#000000") +
   geom_sf(data = ar_stl_wardsClipped, fill = "#ffffff", color = "#000000") +
   labs(
-    title = "Wards Clipped / Tracts Overlap",
+    title = "Clipped Wards Overlaid on Tracts",
     subtitle = "St. Louis, MO"
   ) +
   cp_sequoiaTheme(base_size = 14, background = "white", map = TRUE) +
   theme(legend.position="none")
 
-ggplot2::ggsave(filename = here("man", "figures", "overlapMap.png"), p4,
-                width = cp_points(500, units = "in"), height = cp_points(450, units = "in"), dpi = 72)
+overlapMap <- plot_grid(p4, NULL, labels = c("(D)"))
 
+ggplot2::ggsave(filename = here("man", "figures", "overlapMap.png"), overlapMap,
+                width = cp_points(800, units = "in"), height = cp_points(450, units = "in"), dpi = 72)
