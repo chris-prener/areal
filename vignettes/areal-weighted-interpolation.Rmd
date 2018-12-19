@@ -48,6 +48,8 @@ The boundaries for the `race` and `asthma` the data are the same - census tracts
 knitr::include_graphics("../man/figures/featureMap.png")
 ```
 
+### Step 1: Intersection
+
 The first step with areal weighted interpolation is to intersect the data. Imagine one shapefile (we'll call this the "target") acting as a cookie cutter - subdividing the features of the other (which we'll call the "source") based on areas of overlap such that only those overlapping areas remain (this is important - if these shapefiles do not cover identical areas, those areas only covered by one shapefile will be lost). The number of new features created is entirely dependent on the shapes of the features in the source and target data sets:
 
 ```{r feature-count}
@@ -80,9 +82,11 @@ as_tibble(
   knitr::kable(caption = "First Four Rows of Intersected Data")
 ```
 
-We then calculate an area weight for each intersected feature. Let:
+### Step 2: Areal Weights
 
-* ${W}_{i} = \textrm{area weight for intersected feature i}$
+We then calculate an areal weight for each intersected feature. Let:
+
+* ${W}_{i} = \textrm{areal weight for intersected feature i}$
 * ${A}_{i} = \textrm{area of intersected feature i}$
 * ${A}_{j} = \textrm{total area of source feature j}$
 
@@ -104,10 +108,12 @@ as_tibble(
   knitr::kable(caption = "First Four Rows of Intersected Data")
 ```
 
+### Step 3: Estimate Population
+
 Next, we need to estimate the share of the population value that occupies the intersected feature. Let:
 
 * ${E}_{i} = \textrm{estimated value for intersected feature } i$
-* ${W}_{i} = \textrm{area weight for intersected feature } i$
+* ${W}_{i} = \textrm{areal weight for intersected feature } i$
 * ${V}_{j} = \textrm{population value for source feature } j$
 
 $$ {E}_{i} = {V}_{j}*{W}_{i} $$
@@ -129,6 +135,8 @@ as_tibble(
   knitr::kable(caption = "First Four Rows of Intersected Data")
 ```
 
+### Step 4: Summarize Data
+
 Finally, we summarize the data based on the target identification number. Let:
 
 * ${G}_{k} = \textrm{sum of all estimated values for target feature } k$
@@ -148,7 +156,7 @@ as_tibble(
   knitr::kable(caption = "Resulting Target Data")
 ```
 
-This process is repeated for each of the *n* = 287 observations in the intersected data - area weights are calculated, and the product of the area weight the source value is summed based on the target identification number.
+This process is repeated for each of the *n* = 287 observations in the intersected data - areal weights are calculated, and the product of the areal weight the source value is summed based on the target identification number.
 
 ## Extensive and Intensive Interpolations
 ### Extensive Interpolations
@@ -181,6 +189,7 @@ $$ {A}_{j} = \sum{{A}_{ij}} $$
 
 On the other hand, the `"total"` approach to calculating weights assumes that, if a source feature is only covered by 99.88% of the target features, only 99.88% of the source target's data should be allocated to target features in the interpolation. When ${A}_{j}$ is created, the actual area of source feature $j$ is used.
 
+#### Weights Example 1: Non-Overlap Due to Data Quality
 In the example above, `race` and `wards` are products of two different agencies. The `aw_stl_wards` data is a product of the City of the St. Louis and is quite close to fully overlapping with the U.S. Census Bureau's TIGER boundaries for the city. However, there are a number of very small deviations at the edges where the ward boundaries are *smaller* than the tracts (but only just so). These deviations result in small portions of census tracts not fitting into any ward. 
 
 We can see this in the weights that are used by `aw_interpolate()`. The `aw_preview_weights()` function can be used to return a preview of these areal weights. 
@@ -202,7 +211,7 @@ aw_verify(source = race, sourceValue = TOTAL_E,
           result = result, resultValue = TOTAL_E)
 ```
 
-This check does *not* work with the `"total"` approach to area weights:
+This check does *not* work with the `"total"` approach to areal weights:
 
 ```{r verify-fail}
 result <- aw_interpolate(wards, tid = WARD, source = race, sid = GEOID, 
@@ -212,6 +221,7 @@ aw_verify(source = race, sourceValue = TOTAL_E,
           result = result, resultValue = TOTAL_E)
 ```
 
+#### Weights Example 2: Non-Overlap Due to Differing Boundaries
 We can use the `aw_stl_wardsClipped` data to illustrate a more extreme disparity between source and target data. The `aw_stl_wardsClipped` data have been modified so that the ward boundaries do not extend past the Mississippi River shoreline, which runs along the entire eastern boundary of the city. When we overlay them on the city's census tracts, all of the census tracts on the eastern side of the city extend outwards. 
 
 ```{r overlapMap, echo=FALSE, out.width = '100%'}
@@ -230,9 +240,9 @@ Only 72.31% of tract `29510101800`, for example, falls within a ward. In many Am
 If, on the other hand, we believe that all of the individuals *should* be allocated into wards, using `"total"` in this case would result in a severe under-count of individuals. 
 
 ### Intensive Interpolations
-Spatially *intensive* operations are used when the data to be interpolated are a ratio. An example of these data can be found in `ar_stl_asthma`, which contains asthma rates for each census tract in the city. The interpolation process is very similar to the spatially extensive workflow, except with how the area weight is calculated. Instead of using the source data's area for reference, the *target* data is used in the denominator. Let:
+Spatially *intensive* operations are used when the data to be interpolated are a ratio. An example of these data can be found in `ar_stl_asthma`, which contains asthma rates for each census tract in the city. The interpolation process is very similar to the spatially extensive workflow, except with how the areal weight is calculated. Instead of using the source data's area for reference, the *target* data is used in the denominator. Let:
 
-* ${W}_{i} = \textrm{area weight for intersected feature i}$
+* ${W}_{i} = \textrm{areal weight for intersected feature i}$
 * ${A}_{i} = \textrm{area of intersected feature i}$
 * ${A}_{ik} = \textrm{areas for intersected features in } i \textrm{ within target feature } k$
 

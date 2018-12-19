@@ -113,6 +113,9 @@
 <a class="sourceLine" id="cb1-7" data-line-number="7">wardsClipped &lt;-<span class="st"> </span>ar_stl_wardsClipped <span class="co"># political boundaries clipped to river</span></a></code></pre></div>
 <p>The boundaries for the <code>race</code> and <code>asthma</code> the data are the same - census tracts. When mapped, this is what the census tract and ward features look like:</p>
 <p><img src="../man/figures/featureMap.png" width="100%"></p>
+<div id="step-1-intersection" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-1-intersection" class="anchor"></a>Step 1: Intersection</h3>
 <p>The first step with areal weighted interpolation is to intersect the data. Imagine one shapefile (we’ll call this the “target”) acting as a cookie cutter - subdividing the features of the other (which we’ll call the “source”) based on areas of overlap such that only those overlapping areas remain (this is important - if these shapefiles do not cover identical areas, those areas only covered by one shapefile will be lost). The number of new features created is entirely dependent on the shapes of the features in the source and target data sets:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># print number of features in source</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(race)</a>
@@ -158,9 +161,13 @@
 </tr>
 </tbody>
 </table>
-<p>We then calculate an area weight for each intersected feature. Let:</p>
+</div>
+<div id="step-2-areal-weights" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-2-areal-weights" class="anchor"></a>Step 2: Areal Weights</h3>
+<p>We then calculate an areal weight for each intersected feature. Let:</p>
 <ul>
-<li><span class="math inline">\({W}_{i} = \textrm{area weight for intersected feature i}\)</span></li>
+<li><span class="math inline">\({W}_{i} = \textrm{areal weight for intersected feature i}\)</span></li>
 <li><span class="math inline">\({A}_{i} = \textrm{area of intersected feature i}\)</span></li>
 <li><span class="math inline">\({A}_{j} = \textrm{total area of source feature j}\)</span></li>
 </ul>
@@ -211,10 +218,14 @@
 </tr>
 </tbody>
 </table>
+</div>
+<div id="step-3-estimate-population" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-3-estimate-population" class="anchor"></a>Step 3: Estimate Population</h3>
 <p>Next, we need to estimate the share of the population value that occupies the intersected feature. Let:</p>
 <ul>
 <li><span class="math inline">\({E}_{i} = \textrm{estimated value for intersected feature } i\)</span></li>
-<li><span class="math inline">\({W}_{i} = \textrm{area weight for intersected feature } i\)</span></li>
+<li><span class="math inline">\({W}_{i} = \textrm{areal weight for intersected feature } i\)</span></li>
 <li><span class="math inline">\({V}_{j} = \textrm{population value for source feature } j\)</span></li>
 </ul>
 <p><span class="math display">\[ {E}_{i} = {V}_{j}*{W}_{i} \]</span></p>
@@ -269,6 +280,10 @@
 </tr>
 </tbody>
 </table>
+</div>
+<div id="step-4-summarize-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-4-summarize-data" class="anchor"></a>Step 4: Summarize Data</h3>
 <p>Finally, we summarize the data based on the target identification number. Let:</p>
 <ul>
 <li><span class="math inline">\({G}_{k} = \textrm{sum of all estimated values for target feature } k\)</span></li>
@@ -297,7 +312,8 @@
 </tr>
 </tbody>
 </table>
-<p>This process is repeated for each of the <em>n</em> = 287 observations in the intersected data - area weights are calculated, and the product of the area weight the source value is summed based on the target identification number.</p>
+<p>This process is repeated for each of the <em>n</em> = 287 observations in the intersected data - areal weights are calculated, and the product of the areal weight the source value is summed based on the target identification number.</p>
+</div>
 </div>
 <div id="extensive-and-intensive-interpolations" class="section level2">
 <h2 class="hasAnchor">
@@ -353,6 +369,9 @@
 </ul>
 <p><span class="math display">\[ {A}_{j} = \sum{{A}_{ij}} \]</span></p>
 <p>On the other hand, the <code>"total"</code> approach to calculating weights assumes that, if a source feature is only covered by 99.88% of the target features, only 99.88% of the source target’s data should be allocated to target features in the interpolation. When <span class="math inline">\({A}_{j}\)</span> is created, the actual area of source feature <span class="math inline">\(j\)</span> is used.</p>
+<div id="weights-example-1-non-overlap-due-to-data-quality" class="section level4">
+<h4 class="hasAnchor">
+<a href="#weights-example-1-non-overlap-due-to-data-quality" class="anchor"></a>Weights Example 1: Non-Overlap Due to Data Quality</h4>
 <p>In the example above, <code>race</code> and <code>wards</code> are products of two different agencies. The <code>aw_stl_wards</code> data is a product of the City of the St. Louis and is quite close to fully overlapping with the U.S. Census Bureau’s TIGER boundaries for the city. However, there are a number of very small deviations at the edges where the ward boundaries are <em>smaller</em> than the tracts (but only just so). These deviations result in small portions of census tracts not fitting into any ward.</p>
 <p>We can see this in the weights that are used by <code><a href="../reference/aw_interpolate.html">aw_interpolate()</a></code>. The <code><a href="../reference/aw_preview_weights.html">aw_preview_weights()</a></code> function can be used to return a preview of these areal weights.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/aw_preview_weights.html">aw_preview_weights</a></span>(wards, <span class="dt">tid =</span> WARD, <span class="dt">source =</span> race, <span class="dt">sid =</span> GEOID, </a>
@@ -379,13 +398,17 @@
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw"><a href="../reference/aw_verify.html">aw_verify</a></span>(<span class="dt">source =</span> race, <span class="dt">sourceValue =</span> TOTAL_E, </a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">          <span class="dt">result =</span> result, <span class="dt">resultValue =</span> TOTAL_E)</a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
-<p>This check does <em>not</em> work with the <code>"total"</code> approach to area weights:</p>
+<p>This check does <em>not</em> work with the <code>"total"</code> approach to areal weights:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span>(wards, <span class="dt">tid =</span> WARD, <span class="dt">source =</span> race, <span class="dt">sid =</span> GEOID, </a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">               <span class="dt">weight =</span> <span class="st">"total"</span>, <span class="dt">output =</span> <span class="st">"tibble"</span>, <span class="dt">extensive =</span> <span class="st">"TOTAL_E"</span>)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="../reference/aw_verify.html">aw_verify</a></span>(<span class="dt">source =</span> race, <span class="dt">sourceValue =</span> TOTAL_E, </a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">          <span class="dt">result =</span> result, <span class="dt">resultValue =</span> TOTAL_E)</a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; [1] FALSE</span></a></code></pre></div>
+</div>
+<div id="weights-example-2-non-overlap-due-to-differing-boundaries" class="section level4">
+<h4 class="hasAnchor">
+<a href="#weights-example-2-non-overlap-due-to-differing-boundaries" class="anchor"></a>Weights Example 2: Non-Overlap Due to Differing Boundaries</h4>
 <p>We can use the <code>aw_stl_wardsClipped</code> data to illustrate a more extreme disparity between source and target data. The <code>aw_stl_wardsClipped</code> data have been modified so that the ward boundaries do not extend past the Mississippi River shoreline, which runs along the entire eastern boundary of the city. When we overlay them on the city’s census tracts, all of the census tracts on the eastern side of the city extend outwards.</p>
 <p><img src="../man/figures/overlapMap.png" width="100%"></p>
 <p>The difference in weights in this example is more extreme:</p>
@@ -408,12 +431,13 @@
 <p>Only 72.31% of tract <code>29510101800</code>, for example, falls within a ward. In many American cities that lie within larger counties, tract boundaries do not stop at the municipal boundaries in a way that is similar to the difference between tracts and the clipped wards here. In this scenario, we do not want to allocate every individual into our city of interest and the <code>"total"</code> approach to weights is appropriate. Not using <code>"total"</code> would result in an over-count of individuals in our city.</p>
 <p>If, on the other hand, we believe that all of the individuals <em>should</em> be allocated into wards, using <code>"total"</code> in this case would result in a severe under-count of individuals.</p>
 </div>
+</div>
 <div id="intensive-interpolations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#intensive-interpolations" class="anchor"></a>Intensive Interpolations</h3>
-<p>Spatially <em>intensive</em> operations are used when the data to be interpolated are a ratio. An example of these data can be found in <code>ar_stl_asthma</code>, which contains asthma rates for each census tract in the city. The interpolation process is very similar to the spatially extensive workflow, except with how the area weight is calculated. Instead of using the source data’s area for reference, the <em>target</em> data is used in the denominator. Let:</p>
+<p>Spatially <em>intensive</em> operations are used when the data to be interpolated are a ratio. An example of these data can be found in <code>ar_stl_asthma</code>, which contains asthma rates for each census tract in the city. The interpolation process is very similar to the spatially extensive workflow, except with how the areal weight is calculated. Instead of using the source data’s area for reference, the <em>target</em> data is used in the denominator. Let:</p>
 <ul>
-<li><span class="math inline">\({W}_{i} = \textrm{area weight for intersected feature i}\)</span></li>
+<li><span class="math inline">\({W}_{i} = \textrm{areal weight for intersected feature i}\)</span></li>
 <li><span class="math inline">\({A}_{i} = \textrm{area of intersected feature i}\)</span></li>
 <li><span class="math inline">\({A}_{ik} = \textrm{areas for intersected features in } i \textrm{ within target feature } k\)</span></li>
 </ul>
