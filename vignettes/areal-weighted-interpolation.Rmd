@@ -20,22 +20,51 @@ library(dplyr)
 library(sf)
 
 data(ar_stl_asthma, package = "areal")
-asthma <- ar_stl_asthma
-
 data(ar_stl_race, package = "areal")
-race <- ar_stl_race
-
 data(ar_stl_wards, package = "areal")
-wards <- ar_stl_wards
-
 data(ar_stl_wardsClipped, package = "areal")
-wardsClipped <- ar_stl_wardsClipped
 ```
 
 Areal weighted interpolation is a technique for estimating the values for overlapping but incongruent polygon features. This article describes the `areal` package's approach to areal weighted interpolation. After providing a quick introduction to the technique, the options for `aw_interpolate()` are discussed and an example of interpolating data using the manual workflow is provided.
 
 ## Introduction to Areal Weighted Interpolation
 Areal weighted interpolation is the simplest approach to estimating population values for overlapping polygons. It makes a significant and important assumption - that individuals are spread out *evenly* within the source features. This assumption quickly breaks down in the real world - areas that have commercial developments mixed in with residental housing, for example, or neighborhoods with a large city park. We do not always have access to this type of contextual data, however, and so areal weighted interpolation remains a popular choice. 
+
+Areal weighted interpolation is a multi-step process. The `areal` package contains a number of example data sets that can be used to illustrate this process:
+
+```{r load-data}
+library(areal)
+
+# load data into enviornment
+race <- ar_stl_race          # census tract population estimates
+asthma <- ar_stl_asthma      # census tract asthma rate estimates
+wards <- ar_stl_wards        # political boundaries
+```
+
+The boundaries for the `race` and `asthma` the data are the same - census tracts. When mapped, this is what the census tract and ward features look like:
+
+```{r featureMap, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("../man/figures/featureMap.png")
+```
+
+The first step with areal weighted interpolation is to intersect the data. Imagine one shapefile (we'll call this the "target") acting as a cookie cutter - subdividing the features of the other (which we'll call the "source") based on areas of overlap such that only those overlapping areas remain (this is important - if these shapefiles do not cover identical areas, those areas only covered by one shapefile will be lost). The number of new features created is entirely dependent on the shapes of the features in the source and target datasets:
+
+```{r}
+# print number of features in source
+nrow(race)
+
+# print number of features in target
+nrow(wards)
+
+# create intersect for example purposes
+nrow(suppressWarnings(sf::st_intersection(race, wards)))
+```
+
+By intersecting these two data sets, we get a new data set with *n* = 287 features. The resulting `sf` object looks like so:
+
+```{r intersectMap, echo=FALSE, fig.align='center'}
+knitr::include_graphics("../man/figures/intersectMap.png")
+```
 
 ## Extensive and Intensive Interpolations
 ### Extensive Interpolations

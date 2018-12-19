@@ -17,7 +17,7 @@ p1 <- ggplot() +
     title = "Total Population per Tract",
     subtitle = "St. Louis, MO (2017)"
   ) +
-  cp_sequoiaTheme(base_size = 18, background = "white", map = TRUE) +
+  cp_sequoiaTheme(base_size = 14, background = "white", map = TRUE) +
   theme(legend.key.size = unit(1, units="cm"))
 
 p2 <- ggplot() +
@@ -27,12 +27,12 @@ p2 <- ggplot() +
     title = "Total Population per Ward",
     subtitle = "St. Louis, MO (2017)"
   ) +
-  cp_sequoiaTheme(base_size = 18, background = "white", map = TRUE) +
+  cp_sequoiaTheme(base_size = 14, background = "white", map = TRUE) +
   theme(legend.key.size = unit(1, units="cm"))
 
-theme_set(theme_cowplot(font_family = "sans"))
+theme_set(theme_cowplot(font_family = "sans", font_size = 14))
 
 exampleMap <- plot_grid(p1, p2, labels = c("(A)", "(B)"))
 
-ggsave(filename = here("man", "figures", "exampleMap.png"), exampleMap,
+ggplot2::ggsave(filename = here("man", "figures", "exampleMap.png"), exampleMap,
        width = cp_points(800, units = "in"), height = cp_points(450, units = "in"), dpi = 72)
