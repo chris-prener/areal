@@ -35,7 +35,7 @@ wardsClipped <- ar_stl_wardsClipped
 Areal weighted interpolation is a technique for estimating the values for overlapping but incongruent polygon features. This article describes the `areal` package's approach to areal weighted interpolation. After providing a quick introduction to the technique, the options for `aw_interpolate()` are discussed and an example of interpolating data using the manual workflow is provided.
 
 ## Introduction to Areal Weighted Interpolation
-Areal weighted interpolation is the simplest approach to estimating population values for overlapping polygons. It makes a significant and important assumption - that individuals are spread out *evenly* within the source features. This assumption quickly breaks down in the real world - areas that have commercial developments mixed in with residental housing, for example, or neighborhoods with a large city park. 
+Areal weighted interpolation is the simplest approach to estimating population values for overlapping polygons. It makes a significant and important assumption - that individuals are spread out *evenly* within the source features. This assumption quickly breaks down in the real world - areas that have commercial developments mixed in with residental housing, for example, or neighborhoods with a large city park. We do not always have access to this type of contextual data, however, and so areal weighted interpolation remains a popular choice. 
 
 ## Extensive and Intensive Interpolations
 ### Extensive Interpolations

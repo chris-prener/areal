@@ -98,10 +98,11 @@
 
     
     
-<p>Areal weighted interpolation is a technique for estimating the values for overlapping but incongruent polygon features. This article describes the <code>areal</code> package’s approach to areal weighted interpolation.</p>
+<p>Areal weighted interpolation is a technique for estimating the values for overlapping but incongruent polygon features. This article describes the <code>areal</code> package’s approach to areal weighted interpolation. After providing a quick introduction to the technique, the options for <code><a href="../reference/aw_interpolate.html">aw_interpolate()</a></code> are discussed and an example of interpolating data using the manual workflow is provided.</p>
 <div id="introduction-to-areal-weighted-interpolation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction-to-areal-weighted-interpolation" class="anchor"></a>Introduction to Areal Weighted Interpolation</h2>
+<p>Areal weighted interpolation is the simplest approach to estimating population values for overlapping polygons. It makes a significant and important assumption - that individuals are spread out <em>evenly</em> within the source features. This assumption quickly breaks down in the real world - areas that have commercial developments mixed in with residental housing, for example, or neighborhoods with a large city park. We do not always have access to this type of contextual data, however, and so areal weighted interpolation remains a popular choice.</p>
 </div>
 <div id="extensive-and-intensive-interpolations" class="section level2">
 <h2 class="hasAnchor">
