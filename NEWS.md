@@ -3,6 +3,7 @@
 * Added vignette titles to replace placeholders
 * Added examples to all exported functions
 * Spell check with `devtools::spell_check()` and RStudio's spell check functionality for `.Rmd` files
+* Checks against winbuilder
 
 # areal 0.1.0
 
