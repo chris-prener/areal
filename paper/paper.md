@@ -22,4 +22,4 @@ bibliography: paper.bib
 # Examples
 
 # Availability
-`areal` is open source software made available under the GNU GPL-3 license. It can be installed through CRAN [@areal_cran] using `install.packages("areal")`.
+`areal` is open source software made available under the GNU GPL-3 license. It can be installed through CRAN [@areal_cran] using: `install.packages("areal")`. `areal` can also be installed from its GitHub repository using the `remotes` package: `remotes::install_github("slu-openGIS/areal")`.
