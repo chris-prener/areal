@@ -176,6 +176,38 @@ the relevant variable names should be specified in the dots.</p></td>
     <code>"extensive"</code> and one for <code>"intensive"</code>) are returned as a list.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>aw_preview_weights</span>(<span class='no'>ar_stl_wards</span>, <span class='kw'>tid</span> <span class='kw'>=</span> <span class='no'>WARD</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>ar_stl_race</span>, <span class='kw'>sid</span> <span class='kw'>=</span> <span class='no'>GEOID</span>,
+                   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"extensive"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 106 x 3</span><span>
+#&gt;    GEOID       extensiveSum extensiveTotal
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> 29510101100            1          0.999
+#&gt; </span><span style='color: #555555;'> 2</span><span> 29510101200            1          1.000
+#&gt; </span><span style='color: #555555;'> 3</span><span> 29510101300            1          1.000
+#&gt; </span><span style='color: #555555;'> 4</span><span> 29510101400            1          1.000
+#&gt; </span><span style='color: #555555;'> 5</span><span> 29510101500            1          0.998
+#&gt; </span><span style='color: #555555;'> 6</span><span> 29510101800            1          0.978
+#&gt; </span><span style='color: #555555;'> 7</span><span> 29510102100            1          0.991
+#&gt; </span><span style='color: #555555;'> 8</span><span> 29510102200            1          0.999
+#&gt; </span><span style='color: #555555;'> 9</span><span> 29510102300            1          0.999
+#&gt; </span><span style='color: #555555;'>10</span><span> 29510102400            1          1.000
+#&gt; </span><span style='color: #555555;'># ... with 96 more rows</span><span></div><div class='input'>
+<span class='fu'>aw_preview_weights</span>(<span class='no'>ar_stl_wards</span>, <span class='kw'>tid</span> <span class='kw'>=</span> <span class='no'>WARD</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>ar_stl_asthma</span>, <span class='kw'>sid</span> <span class='kw'>=</span> <span class='no'>GEOID</span>,
+                   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"intensive"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 28 x 2</span><span>
+#&gt;     WARD intensive
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>     1     1.000
+#&gt; </span><span style='color: #555555;'> 2</span><span>     2     1    
+#&gt; </span><span style='color: #555555;'> 3</span><span>     3     1    
+#&gt; </span><span style='color: #555555;'> 4</span><span>     4     1    
+#&gt; </span><span style='color: #555555;'> 5</span><span>     5     1    
+#&gt; </span><span style='color: #555555;'> 6</span><span>     6     1    
+#&gt; </span><span style='color: #555555;'> 7</span><span>     7     1.000
+#&gt; </span><span style='color: #555555;'> 8</span><span>     8     1    
+#&gt; </span><span style='color: #555555;'> 9</span><span>     9     1    
+#&gt; </span><span style='color: #555555;'>10</span><span>    10     1    
+#&gt; </span><span style='color: #555555;'># ... with 18 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -183,7 +215,9 @@ the relevant variable names should be specified in the dots.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

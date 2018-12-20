@@ -176,6 +176,46 @@ created as part of <a href='aw_intersect.html'>aw_intersect</a></p></td>
     <p>A <code>sf</code> object with the intersected data and new total area field.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+
+<span class='no'>race</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>ar_stl_race</span>, <span class='no'>GEOID</span>, <span class='no'>TOTAL_E</span>)
+<span class='no'>wards</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>ar_stl_wards</span>, <span class='no'>WARD</span>)
+
+<span class='no'>wards</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='aw_intersect.html'>aw_intersect</a></span>(<span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>race</span>, <span class='kw'>areaVar</span> <span class='kw'>=</span> <span class='st'>"area"</span>) <span class='kw'>-&gt;</span> <span class='no'>intersect</span>
+
+<span class='fu'>aw_total</span>(<span class='no'>intersect</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>race</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>GEOID</span>, <span class='kw'>areaVar</span> <span class='kw'>=</span> <span class='st'>"area"</span>,
+         <span class='kw'>totalVar</span> <span class='kw'>=</span> <span class='st'>"totalArea"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"sum"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"extensive"</span>)</div><div class='output co'>#&gt; Simple feature collection with 287 features and 5 fields
+#&gt; geometry type:  MULTIPOLYGON
+#&gt; dimension:      XY
+#&gt; bbox:           xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504
+#&gt; epsg (SRID):    26915
+#&gt; proj4string:    +proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+#&gt; First 10 features:
+#&gt;          GEOID TOTAL_E WARD         area  totalArea
+#&gt; 1  29510106500    2863    1 4.271176e+05  1064776.2
+#&gt; 2  29510106700    3168    1 5.946820e+05  1239241.5
+#&gt; 3  29510107500    1991    1 6.146361e+05   912325.0
+#&gt; 4  29510107600    1958    1 1.071347e+06  1146634.4
+#&gt; 5  29510110100    2820    1 5.563665e+01   994606.5
+#&gt; 6  29510109600    3050    1 3.586828e+03  3157835.4
+#&gt; 7  29510126900    4462    1 8.903340e+05  4334701.5
+#&gt; 8  29510127000    1826    1 1.015451e+03 14726832.5
+#&gt; 9  29510106400    1986    1 6.866924e+05  1107191.4
+#&gt; 10 29510108100    3309    1 1.198667e+02  3216478.2
+#&gt;                          geometry
+#&gt; 1  MULTIPOLYGON (((738110.9 42...
+#&gt; 2  MULTIPOLYGON (((738335.2 42...
+#&gt; 3  MULTIPOLYGON (((740111.6 42...
+#&gt; 4  MULTIPOLYGON (((739386.1 42...
+#&gt; 5  MULTIPOLYGON (((739542.5 42...
+#&gt; 6  MULTIPOLYGON (((740899.6 42...
+#&gt; 7  MULTIPOLYGON (((739115.9 42...
+#&gt; 8  MULTIPOLYGON (((740936.1 42...
+#&gt; 9  MULTIPOLYGON (((738500.9 42...
+#&gt; 10 MULTIPOLYGON (((740163.9 42...</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -183,7 +223,9 @@ created as part of <a href='aw_intersect.html'>aw_intersect</a></p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

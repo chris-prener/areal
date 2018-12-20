@@ -166,6 +166,12 @@
     approach to calculating areal weights.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aw_interpolate.html'>aw_interpolate</a></span>(<span class='no'>ar_stl_wards</span>, <span class='kw'>tid</span> <span class='kw'>=</span> <span class='no'>WARD</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>ar_stl_race</span>, <span class='kw'>sid</span> <span class='kw'>=</span> <span class='no'>GEOID</span>,
+                         <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"sum"</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='st'>"tibble"</span>, <span class='kw'>extensive</span> <span class='kw'>=</span> <span class='st'>"TOTAL_E"</span>)
+
+<span class='fu'>aw_verify</span>(<span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>ar_stl_race</span>, <span class='kw'>sourceValue</span> <span class='kw'>=</span> <span class='no'>TOTAL_E</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='no'>result</span>, <span class='kw'>resultValue</span> <span class='kw'>=</span> <span class='no'>TOTAL_E</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -175,7 +181,9 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

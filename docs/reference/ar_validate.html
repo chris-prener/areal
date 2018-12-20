@@ -170,7 +170,23 @@ adds new interpolation techniques.</p></td>
     is all tests are passed and <code>FALSE</code> if one or more tests is failed. If <code>verbose</code>
     is <code>TRUE</code>, a tibble with detailed test results is returned.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></p></div>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>ar_validate</span>(<span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>ar_stl_asthma</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='no'>ar_stl_wards</span>, <span class='kw'>varList</span> <span class='kw'>=</span> <span class='st'>"ASTHMA"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'>ar_validate</span>(<span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>ar_stl_asthma</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='no'>ar_stl_wards</span>, <span class='kw'>varList</span> <span class='kw'>=</span> <span class='st'>"ASTHMA"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 2</span><span>
+#&gt;   test                            result
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                           </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> 
+#&gt; </span><span style='color: #555555;'>1</span><span> sf Objects                      TRUE  
+#&gt; </span><span style='color: #555555;'>2</span><span> CRS Match                       TRUE  
+#&gt; </span><span style='color: #555555;'>3</span><span> CRS is Planar                   TRUE  
+#&gt; </span><span style='color: #555555;'>4</span><span> Variables Exist in Source       TRUE  
+#&gt; </span><span style='color: #555555;'>5</span><span> No Variable Conflicts in Target TRUE  
+#&gt; </span><span style='color: #555555;'>6</span><span> Overall Evaluation              TRUE  </div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -178,7 +194,11 @@ adds new interpolation techniques.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
