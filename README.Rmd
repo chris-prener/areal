@@ -46,7 +46,7 @@ You should check the [`sf` package website](https://r-spatial.github.io/sf/) and
 The one exception here is the dependency `lwgeom`, which Linux users will need to follow some [special instructions](https://github.com/r-spatial/lwgeom) to install correctly.
 
 ### Installing areal
-The development version of `areal` can be accessed from Github with `remotes`:
+The development version of `areal` can be accessed from GitHub with `remotes`:
 
 ```r
 # install.packages("remotes")

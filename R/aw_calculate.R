@@ -1,4 +1,4 @@
-#' Caclulate Estimated Population
+#' Calculate Estimated Population
 #'
 #' @description \code{aw_calculate} multiplies the given \code{value} by the area weight. This
 #'     is the fourth step in the interpolation process after \link{aw_weight}.
@@ -7,7 +7,7 @@
 #'
 #' @param .data A given intersected dataset
 #' @param value A column within \code{source} to be interpolated
-#' @param areaWeight The name of the variable containg area weight per feature
+#' @param areaWeight The name of the variable containing area weight per feature
 #' @param newVar Optional; a new field name to store the interpolated value in. If not specified,
 #'     the \code{value} argument will be used as the new field name.
 #'

@@ -1,4 +1,4 @@
-#' Valdating Data for Interpolation
+#' Validating Data for Interpolation
 #'
 #' @description \code{ar_validate} executes a series of logic tests for \code{sf} object status,
 #'     shared coordinates between source and target data, appropriate project, and absence of

@@ -45,7 +45,7 @@ instructions](https://github.com/r-spatial/lwgeom) to install correctly.
 
 ### Installing areal
 
-The development version of `areal` can be accessed from Github with
+The development version of `areal` can be accessed from GitHub with
 `remotes`:
 
 ``` r

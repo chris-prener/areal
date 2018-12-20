@@ -11,7 +11,7 @@ aw_weight(.data, areaVar, totalVar, areaWeight)
 
 \item{areaVar}{The name of the variable measuring a feature's area}
 
-\item{totalVar}{The name of the variable containg total area field by \code{source} id}
+\item{totalVar}{The name of the variable containing total area field by \code{source} id}
 
 \item{areaWeight}{The name of a new area weight field to be calculated}
 }

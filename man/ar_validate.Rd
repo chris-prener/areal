@@ -2,7 +2,7 @@
 % Please edit documentation in R/ar_validate.R
 \name{ar_validate}
 \alias{ar_validate}
-\title{Valdating Data for Interpolation}
+\title{Validating Data for Interpolation}
 \usage{
 ar_validate(source, target, varList, method = "aw", verbose = FALSE)
 }

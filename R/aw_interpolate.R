@@ -1,8 +1,8 @@
 #' Interpolate Values
 #'
-#' @description This is the core function within the package. It evalues both the input
-#'     data sources and validates them before interpolating one or more listed values
-#'     from the source data into the target data.
+#' @description This is the core function within the package for areal weighted
+#'     interpolation. It validates both data sources before interpolating one or more
+#'     listed values from the source data into the target data.
 #'
 #' @usage aw_interpolate(.data, tid, source, sid, weight = "sum", output = "sf", extensive,
 #'     intensive)
@@ -22,9 +22,9 @@
 #'     \code{"sum"}. For \code{"intensive"} interpolations, should be \code{"sum"}. For mixed
 #'     interpolations, this will only impact the calculation of the extensive variables.
 #' @param output One of either \code{"sf"} or \code{"tibble"}
-#' @param extensive A vector of quoted variable names to be treated as spatiall extensive
+#' @param extensive A vector of quoted variable names to be treated as spatially extensive
 #'     (e.g. population counts); optional if \code{intensive} is specified
-#' @param intensive A vector of quoted variable names to be treated as spatiall intensive
+#' @param intensive A vector of quoted variable names to be treated as spatially intensive
 #'     (e.g. population density); optional if \code{extensive} is specified
 #'
 #' @return A \code{sf} object or a \code{tibble} with the value or values interpolated into
@@ -235,7 +235,7 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 #' @param value A column within \code{source} to be interpolated
 #' @param target A \code{sf} object that data should be interpolated to
 #' @param tid A unique identification number within \code{target}
-#' @param type One of either \code{"extensive"} (if the data are spatitally extensive e.g.
+#' @param type One of either \code{"extensive"} (if the data are spatially extensive e.g.
 #'     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
 #'     population density), or \code{"mixed"} (if the data include both extensive and
 #'     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
@@ -288,7 +288,7 @@ aw_interpolate_single <- function(source, sid, value, target, tid, type, weight)
 #' @param values A vector of columns within \code{source} to be interpolated
 #' @param target A \code{sf} object that data should be interpolated to
 #' @param tid A unique identification number within \code{target}
-#' @param type One of either \code{"extensive"} (if the data are spatitally extensive e.g.
+#' @param type One of either \code{"extensive"} (if the data are spatially extensive e.g.
 #'     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
 #'     population density), or \code{"mixed"} (if the data include both extensive and
 #'     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
@@ -399,7 +399,7 @@ aw_strip_df <- function(.data, id, value){
 #' @param value A column within \code{source} to be interpolated
 #' @param target A \code{sf} object that data should be interpolated to
 #' @param tid A unique identification number within \code{target}
-#' @param type One of either \code{"extensive"} (if the data are spatitally extensive e.g.
+#' @param type One of either \code{"extensive"} (if the data are spatially extensive e.g.
 #'     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
 #'     population density), or \code{"mixed"} (if the data include both extensive and
 #'     intensive values). If \code{"extensive"}, the sum is returned for the interpolated

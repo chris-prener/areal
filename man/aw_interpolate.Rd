@@ -23,10 +23,10 @@ interpolations, this will only impact the calculation of the extensive variables
 
 \item{output}{One of either \code{"sf"} or \code{"tibble"}}
 
-\item{extensive}{A vector of quoted variable names to be treated as spatiall extensive
+\item{extensive}{A vector of quoted variable names to be treated as spatially extensive
 (e.g. population counts); optional if \code{intensive} is specified}
 
-\item{intensive}{A vector of quoted variable names to be treated as spatiall intensive
+\item{intensive}{A vector of quoted variable names to be treated as spatially intensive
 (e.g. population density); optional if \code{extensive} is specified}
 }
 \value{
@@ -34,9 +34,9 @@ A \code{sf} object or a \code{tibble} with the value or values interpolated into
     the \code{target} data.
 }
 \description{
-This is the core function within the package. It evalues both the input
-    data sources and validates them before interpolating one or more listed values
-    from the source data into the target data.
+This is the core function within the package for areal weighted
+    interpolation. It validates both data sources before interpolating one or more
+    listed values from the source data into the target data.
 }
 \details{
 Areal weighted interpolation can be used for generating demographic

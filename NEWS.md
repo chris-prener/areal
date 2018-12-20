@@ -1,7 +1,8 @@
 # areal 0.1.1
 
-* Added vignette titles to replace placeholds
+* Added vignette titles to replace placeholders
 * Added examples to all exported functions
+* Spell check with `devtools::spell_check()` and RStudio's spell check functionality for `.Rmd` files
 
 # areal 0.1.0
 

@@ -17,7 +17,7 @@ aw_interpolate_multiple(source, sid, values, target, tid, type, weight)
 
 \item{tid}{A unique identification number within \code{target}}
 
-\item{type}{One of either \code{"extensive"} (if the data are spatitally extensive e.g.
+\item{type}{One of either \code{"extensive"} (if the data are spatially extensive e.g.
 population counts), \code{"intensive"} (if the data are spatially intensive e.g.
 population density), or \code{"mixed"} (if the data include both extensive and
 intensive values). If \code{"extensive"}, the sum is returned for the interpolated

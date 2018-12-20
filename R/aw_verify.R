@@ -1,7 +1,7 @@
 #' Verify Correct Extensive-Sum Interpolation
 #'
 #' @details \code{aw_verify} ensures that the sum of the resulting interpolated
-#'     value is equal to the sum of the origina source value. This functionality
+#'     value is equal to the sum of the original source value. This functionality
 #'     only works for interpolations that are extensive and use the \code{sum}
 #'     approach to calculating areal weights.
 #'

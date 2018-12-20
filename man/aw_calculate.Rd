@@ -2,7 +2,7 @@
 % Please edit documentation in R/aw_calculate.R
 \name{aw_calculate}
 \alias{aw_calculate}
-\title{Caclulate Estimated Population}
+\title{Calculate Estimated Population}
 \usage{
 aw_calculate(.data, value, areaWeight, newVar)
 }
@@ -11,7 +11,7 @@ aw_calculate(.data, value, areaWeight, newVar)
 
 \item{value}{A column within \code{source} to be interpolated}
 
-\item{areaWeight}{The name of the variable containg area weight per feature}
+\item{areaWeight}{The name of the variable containing area weight per feature}
 
 \item{newVar}{Optional; a new field name to store the interpolated value in. If not specified,
 the \code{value} argument will be used as the new field name.}

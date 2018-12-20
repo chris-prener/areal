@@ -8,7 +8,7 @@
 #'
 #' @param .data A \code{sf} object that has been intersected using \link{aw_intersect}
 #' @param areaVar The name of the variable measuring a feature's area
-#' @param totalVar The name of the variable containg total area field by \code{source} id
+#' @param totalVar The name of the variable containing total area field by \code{source} id
 #' @param areaWeight The name of a new area weight field to be calculated
 #'
 #' @return A \code{sf} object with the intersected data and new area weight field.
