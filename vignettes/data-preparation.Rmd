@@ -69,7 +69,7 @@ ar_validate(source = asthma, target = wards, varList = "ASTHMA", method = "aw", 
 Use the `verbose = TRUE` output as a checklist to address issues before interpolating your data.
 
 ## Format Issues
-Data need to be loaded as `sf` objects in `R`. If `aw_validate()` returns `FALSE` for the first condition, data are not stored as `sf` objects:
+Data need to be loaded as `sf` objects in `R`. If `ar_validate()` returns `FALSE` for the first condition, data are not stored as `sf` objects:
 
 ```{r validate-non-sf}
 ar_validate(source = asthmaTbl, target = wards, varList = "ASTHMA", method = "aw", verbose = TRUE)
