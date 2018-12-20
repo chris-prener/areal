@@ -1,3 +1,7 @@
+# areal 0.1.2
+
+* Add CRAN installation instructions to readme and `pkgdown` site
+
 # areal 0.1.1
 
 * Added vignette titles to replace placeholders
