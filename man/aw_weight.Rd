@@ -23,3 +23,17 @@ A \code{sf} object with the intersected data and new area weight field.
     field by the total area field. This is the third step in the interpolation
     process after \link{aw_weight}.
 }
+\examples{
+library(dplyr)
+
+race <- select(ar_stl_race, GEOID, TOTAL_E)
+wards <- select(ar_stl_wards, WARD)
+
+wards \%>\%
+    aw_intersect(source = race, areaVar = "area") \%>\%
+    aw_total(source = race, id = GEOID, areaVar = "area", totalVar = "totalArea",
+             weight = "sum", type = "extensive") -> intersect
+
+aw_weight(intersect, areaVar = "area", totalVar = "totalArea", areaWeight = "areaWeight")
+
+}

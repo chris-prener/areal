@@ -18,6 +18,13 @@
 #'     is all tests are passed and \code{FALSE} if one or more tests is failed. If \code{verbose}
 #'     is \code{TRUE}, a tibble with detailed test results is returned.
 #'
+#' @seealso \link{c}
+#'
+#' @examples
+#' ar_validate(source = ar_stl_asthma, target = ar_stl_wards, varList = "ASTHMA")
+#'
+#' ar_validate(source = ar_stl_asthma, target = ar_stl_wards, varList = "ASTHMA", verbose = TRUE)
+#'
 #' @importFrom glue glue
 #'
 #' @export

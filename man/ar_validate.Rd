@@ -29,3 +29,12 @@ If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TR
     shared coordinates between source and target data, appropriate project, and absence of
     variable name conflicts.
 }
+\examples{
+ar_validate(source = ar_stl_asthma, target = ar_stl_wards, varList = "ASTHMA")
+
+ar_validate(source = ar_stl_asthma, target = ar_stl_wards, varList = "ASTHMA", verbose = TRUE)
+
+}
+\seealso{
+\link{c}
+}

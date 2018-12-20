@@ -13,6 +13,14 @@
 #'
 #' @return A \code{sf} object with the intersected data and new area field.
 #'
+#' @examples
+#' library(dplyr)
+#'
+#' race <- select(ar_stl_race, GEOID, TOTAL_E)
+#' wards <- select(ar_stl_wards, WARD)
+#'
+#' aw_intersect(wards, source = race, areaVar = "area")
+#'
 #' @importFrom dplyr %>%
 #' @importFrom glue glue
 #' @importFrom rlang enquo

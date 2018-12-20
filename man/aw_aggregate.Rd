@@ -26,3 +26,19 @@ A \code{sf} object with the interpolated value added to it.
     based on the target id. These are then joined with the target data. This is
     the fourth step in the interpolation process after \link{aw_weight}.
 }
+\examples{
+library(dplyr)
+
+race <- select(ar_stl_race, GEOID, TOTAL_E)
+wards <- select(ar_stl_wards, WARD)
+
+wards \%>\%
+    aw_intersect(source = race, areaVar = "area") \%>\%
+    aw_total(source = race, id = GEOID, areaVar = "area", totalVar = "totalArea",
+             weight = "sum", type = "extensive") \%>\%
+    aw_weight(areaVar = "area", totalVar = "totalArea", areaWeight = "areaWeight") \%>\%
+    aw_calculate(value = "TOTAL_E", areaWeight = "areaWeight") -> intersect
+
+aw_aggregate(intersect, target = wards, tid = WARD, interVar = TOTAL_E)
+
+}

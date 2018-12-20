@@ -23,6 +23,13 @@
 #'     is either \code{"extensive"} or \code{"intensive"}. If it is mixed, two tibbles (one for
 #'     \code{"extensive"} and one for \code{"intensive"}) are returned as a list.
 #'
+#' @examples
+#' aw_preview_weights(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID,
+#'                    type = "extensive")
+#'
+#' aw_preview_weights(ar_stl_wards, tid = WARD, source = ar_stl_asthma, sid = GEOID,
+#'                    type = "intensive")
+#'
 #' @importFrom dplyr left_join
 #' @importFrom glue glue
 #' @importFrom rlang enquo

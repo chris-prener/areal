@@ -15,6 +15,21 @@
 #'
 #' @return A \code{sf} object with the interpolated value added to it.
 #'
+#' @examples
+#' library(dplyr)
+#'
+#' race <- select(ar_stl_race, GEOID, TOTAL_E)
+#' wards <- select(ar_stl_wards, WARD)
+#'
+#' wards %>%
+#'     aw_intersect(source = race, areaVar = "area") %>%
+#'     aw_total(source = race, id = GEOID, areaVar = "area", totalVar = "totalArea",
+#'              weight = "sum", type = "extensive") %>%
+#'     aw_weight(areaVar = "area", totalVar = "totalArea", areaWeight = "areaWeight") %>%
+#'     aw_calculate(value = "TOTAL_E", areaWeight = "areaWeight") -> intersect
+#'
+#' aw_aggregate(intersect, target = wards, tid = WARD, interVar = TOTAL_E)
+#'
 #' @importFrom dplyr group_by
 #' @importFrom dplyr left_join
 #' @importFrom dplyr summarize

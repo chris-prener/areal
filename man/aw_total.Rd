@@ -30,3 +30,16 @@ A \code{sf} object with the intersected data and new total area field.
     the total area by \code{source} id. This is the second step in the
     interpolation process after \link{aw_intersect}.
 }
+\examples{
+library(dplyr)
+
+race <- select(ar_stl_race, GEOID, TOTAL_E)
+wards <- select(ar_stl_wards, WARD)
+
+wards \%>\%
+    aw_intersect(source = race, areaVar = "area") -> intersect
+
+aw_total(intersect, source = race, id = GEOID, areaVar = "area",
+         totalVar = "totalArea", weight = "sum", type = "extensive")
+
+}

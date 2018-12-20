@@ -45,6 +45,14 @@ Areal weighted interpolation can be used for generating demographic
     (an assumption not likely to hold in the real world). It also functions best
     when data are in a projected coordinate system, like the UTM coordinate system.
 }
+\examples{
+aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID, weight = "sum",
+    output = "sf", extensive = "TOTAL_E")
+
+aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_asthma, sid = GEOID, weight = "sum",
+    output = "tibble", intensive = "ASTHMA")
+
+}
 \seealso{
 \link{c}
 }

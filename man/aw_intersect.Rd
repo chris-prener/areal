@@ -22,3 +22,12 @@ A \code{sf} object with the intersected data and new area field.
     with whatever project the data are currently in. This is the first step in the
     interpolation process after data validation and subsetting.
 }
+\examples{
+library(dplyr)
+
+race <- select(ar_stl_race, GEOID, TOTAL_E)
+wards <- select(ar_stl_wards, WARD)
+
+aw_intersect(wards, source = race, areaVar = "area")
+
+}

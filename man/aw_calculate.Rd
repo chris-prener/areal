@@ -23,3 +23,18 @@ An intersected file of class sf with a new field of interest recalculated with a
 \code{aw_calculate} multiplies the given \code{value} by the area weight. This
     is the fourth step in the interpolation process after \link{aw_weight}.
 }
+\examples{
+library(dplyr)
+
+race <- select(ar_stl_race, GEOID, TOTAL_E)
+wards <- select(ar_stl_wards, WARD)
+
+wards \%>\%
+    aw_intersect(source = race, areaVar = "area") \%>\%
+    aw_total(source = race, id = GEOID, areaVar = "area", totalVar = "totalArea",
+             weight = "sum", type = "extensive") \%>\%
+    aw_weight(areaVar = "area", totalVar = "totalArea", areaWeight = "areaWeight") -> intersect
+
+aw_calculate(intersect, value = "TOTAL_E", areaWeight = "areaWeight")
+
+}

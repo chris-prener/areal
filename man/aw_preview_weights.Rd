@@ -34,3 +34,11 @@ Provides a preview of the weight options for areal weighted interpolation.
     This can be useful for selecting the final specification for \code{aw_interpolate}
     without having to construct a pipeline of all of the subfunctions manually.
 }
+\examples{
+aw_preview_weights(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID,
+                   type = "extensive")
+
+aw_preview_weights(ar_stl_wards, tid = WARD, source = ar_stl_asthma, sid = GEOID,
+                   type = "intensive")
+
+}

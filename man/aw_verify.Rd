@@ -27,3 +27,10 @@ Verify Correct Extensive-Sum Interpolation
     only works for interpolations that are extensive and use the \code{sum}
     approach to calculating areal weights.
 }
+\examples{
+result <- aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID,
+                         weight = "sum", output = "tibble", extensive = "TOTAL_E")
+
+aw_verify(source = ar_stl_race, sourceValue = TOTAL_E, result = result, resultValue = TOTAL_E)
+
+}

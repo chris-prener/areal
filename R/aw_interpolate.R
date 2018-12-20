@@ -32,6 +32,13 @@
 #'
 #' @seealso \link{c}
 #'
+#' @examples
+#' aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID, weight = "sum",
+#'     output = "sf", extensive = "TOTAL_E")
+#'
+#' aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_asthma, sid = GEOID, weight = "sum",
+#'     output = "tibble", intensive = "ASTHMA")
+#'
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr left_join
 #' @importFrom glue glue
