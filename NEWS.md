@@ -1,3 +1,8 @@
+# areal 0.1.1
+
+* Added vignette titles to replace placeholds
+* Added examples to all exported functions
+
 # areal 0.1.0
 
 * Added a `NEWS.md` file to track changes to the package.
