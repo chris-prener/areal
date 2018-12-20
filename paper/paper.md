@@ -18,6 +18,9 @@ bibliography: paper.bib
 ---
 
 # Summary
+Population data are often available at various levels of aggregation, such as census tracts or block groups in the United States or output areas in the United Kingdom. These units are often drawn for convenience and not because they represent some sort of commonly accepted area in residents' lived expereinces. Despite this, they are routinely used as "proxies" in neighborhood research since they are readily available and the techniques for estimating population values for overlapping but incongruent areas, such as a shapefile of neighborhood boundaries for a city, are less accessible. Thus researchers often resort to developing their own, often manual, implementations of the areal weighted interpolation workflow []
+
+Areal weighted interpolation is a technique for producing estimates from geospatial data stored as polygon features. 
 
 # Examples
 
