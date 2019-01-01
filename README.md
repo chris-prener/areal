@@ -32,7 +32,7 @@ into both modern data management (e.g. `tidyverse`) and spatial data
 The initial CRAN release contains two known bugs (see Issues
 [6](https://github.com/slu-openGIS/areal/issues/6) and
 [7](https://github.com/slu-openGIS/areal/issues/7)), both of which are
-fixed in the current GitHub release:
+fixed on the current GitHub master branch:
 
 1.  If the `tid` and `sid` column names are identical, the interpolated
     column created by `aw_interpolate()` will consist of all `NA`
