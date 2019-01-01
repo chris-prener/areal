@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">areal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3.9000</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@
       <h1>Preparing Data for Interpolation</h1>
                         <h4 class="author">Christopher Prener, Ph.D.</h4>
             
-            <h4 class="date">2018-12-26</h4>
+            <h4 class="date">2019-01-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/slu-openGIS/areal/blob/master/vignettes/data-preparation.Rmd"><code>vignettes/data-preparation.Rmd</code></a></small>
       <div class="hidden name"><code>data-preparation.Rmd</code></div>
@@ -143,7 +143,7 @@
 <div id="format-issues" class="section level2">
 <h2 class="hasAnchor">
 <a href="#format-issues" class="anchor"></a>Format Issues</h2>
-<p>Data need to be loaded as <code>sf</code> objects in <code>R</code>. If <code>aw_validate()</code> returns <code>FALSE</code> for the first condition, data are not stored as <code>sf</code> objects:</p>
+<p>Data need to be loaded as <code>sf</code> objects in <code>R</code>. If <code><a href="../reference/ar_validate.html">ar_validate()</a></code> returns <code>FALSE</code> for the first condition, data are not stored as <code>sf</code> objects:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="dt">source =</span> asthmaTbl, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="st">"ASTHMA"</span>, <span class="dt">method =</span> <span class="st">"aw"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;   test                            result</span></a>

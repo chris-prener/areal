@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">areal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3.9000</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@
 <div id="bug-fixes-in-v0-1-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-in-v0-1-3" class="anchor"></a>Bug Fixes in v0.1.3</h2>
-<p>The initial CRAN release contains two known bugs (see Issues <a href="https://github.com/slu-openGIS/areal/issues/6">6</a> and <a href="https://github.com/slu-openGIS/areal/issues/7">7</a>), both of which are fixed in the current GitHub release:</p>
+<p>The initial CRAN release contains two known bugs (see Issues <a href="https://github.com/slu-openGIS/areal/issues/6">6</a> and <a href="https://github.com/slu-openGIS/areal/issues/7">7</a>), both of which are fixed on the current GitHub master branch:</p>
 <ol style="list-style-type: decimal">
 <li>If the <code>tid</code> and <code>sid</code> column names are identical, the interpolated column created by <code><a href="reference/aw_interpolate.html">aw_interpolate()</a></code> will consist of all <code>NA</code> values. The simplest workaround is to rename either <code>tid</code> or <code>sid</code> before executing <code><a href="reference/aw_interpolate.html">aw_interpolate()</a></code>. Alternatively, you can install the development version of <code>areal</code> from GitHub.</li>
 <li>Some intersections of <code>sf</code> geometries will result in geometry collections being created. This appears to be an infrequent issue, but it will result in an error when <code><a href="reference/aw_interpolate.html">aw_interpolate()</a></code> is executed. The error will begin with <code>Warning in st_cast.GEOMETRYCOLLECTION(X[[i]], ...)</code>. The simplest workaround is to install the development version of <code>areal</code> from GitHub.</li>
@@ -140,6 +140,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=areal">https://​cloud.r-project.org/​package=areal</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/slu-openGIS/areal">https://​github.com/​slu-openGIS/​areal</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/slu-openGIS/areal/issues">https://​github.com/​slu-openGIS/​areal/​issues</a>
