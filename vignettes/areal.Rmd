@@ -48,7 +48,13 @@ We recommend that users install `sf` before proceeding with the installation of 
 
 For Linux users, steps will vary based on the flavor being used. Our [configuration file](https://github.com/slu-openGIS/areal/blob/master/.travis.yml) for Travis CI and its associated [bash script](https://github.com/slu-openGIS/areal/blob/master/.travis/install.sh) should be useful in determining the necessary components to install. Linux users will need to make sure the dependency [`lwgeom`](https://github.com/r-spatial/lwgeom) is also installed correctly.
 
-Once `sf` is installed, the development version of `areal` can be accessed from GitHub with `remotes`:
+Once `sf` is installed, the easiest way to get `areal` is to install it from CRAN:
+
+``` r
+install.packages("areal")
+```
+
+Alternatively, the development version of `areal` can be accessed from GitHub with `remotes`:
 
 ```r
 # install.packages("remotes")

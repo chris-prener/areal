@@ -45,6 +45,12 @@ instructions](https://github.com/r-spatial/lwgeom) to install correctly.
 
 ### Installing areal
 
+The easiest way to get `areal` is to install it from CRAN:
+
+``` r
+install.packages("areal")
+```
+
 The development version of `areal` can be accessed from GitHub with
 `remotes`:
 
