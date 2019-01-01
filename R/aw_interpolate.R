@@ -41,6 +41,7 @@
 #'
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr left_join
+#' @importFrom dplyr rename
 #' @importFrom glue glue
 #' @importFrom rlang enquo
 #' @importFrom rlang quo
@@ -135,6 +136,27 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
                     var = tidQN))
   }
 
+  # check for matching tid and sid variable names
+  if (tidQN == sidQN){
+
+    # store conflict indicator
+    nameConflict <- TRUE
+
+    # store original tid name for later
+    tidOrig <- tidQN
+
+    # rename tid to ...tid
+    .data <- dplyr::rename(.data, ...tid = !!tidQN)
+    tidQN <- "...tid"
+    tidQ <- rlang::quo(!! rlang::sym(tidQN))
+
+  } else {
+
+    # store conflict indicator
+    nameConflict <- FALSE
+
+  }
+
   # create variable lists
   if (type == "extensive"){
     vars <- extensive
@@ -217,6 +239,13 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
   } else if (output == "tibble"){
 
     out <- dplyr::as_tibble(data)
+
+  }
+
+  # rename tid
+  if (nameConflict == TRUE){
+
+    out <- dplyr::rename(out, !!tidOrig := !!tidQN)
 
   }
 

@@ -27,6 +27,7 @@
 #' @importFrom rlang quo
 #' @importFrom rlang quo_name
 #' @importFrom rlang sym
+#' @importFrom sf st_collection_extract
 #' @importFrom sf st_intersection
 #'
 #' @export
@@ -62,9 +63,10 @@ aw_intersect <- function(.data, source, areaVar) {
 
   # calculate area
   intersection %>%
-    aw_area(areaVar = !!areaVarQ) -> out
+    aw_area(areaVar = !!areaVarQ) -> intersection
 
-  out <- sf::st_cast(out, "MULTIPOLYGON")
+  intersection <- sf::st_collection_extract(intersection)
+  out <- sf::st_cast(intersection, "MULTIPOLYGON")
 
   # return output
   return(out)

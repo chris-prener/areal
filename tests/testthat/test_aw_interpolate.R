@@ -139,3 +139,14 @@ test_that("correctly specified functions execute without error", {
                               weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
                               intensive = c("ASTHMA", "ASTHMA2")), NA)
 })
+
+# test for matching sid and tid ------------------------------------------------
+
+wardsGEOID <- dplyr::rename(ar_stl_wards, GEOID = WARD)
+
+wardsGEOID_result <- aw_interpolate(wardsGEOID, tid = GEOID, source = ar_stl_asthma,
+                                    sid = GEOID, weight = "sum", output = "tibble", intensive = "ASTHMA")
+
+test_that("interpolated values are equal", {
+  expect_equal(wardsGEOID_result$ASTHMA, asthmaResult$ASTHMA)
+})

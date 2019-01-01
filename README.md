@@ -27,6 +27,28 @@ validation and estimation, providing a full-featured workflow that fits
 into both modern data management (e.g. `tidyverse`) and spatial data
 (e.g. `sf`) frameworks.
 
+## Bug Fixes in v0.1.3
+
+The initial CRAN release contains two known bugs (see Issues
+[6](https://github.com/slu-openGIS/areal/issues/6) and
+[7](https://github.com/slu-openGIS/areal/issues/7)), both of which are
+fixed in the current GitHub release:
+
+1.  If the `tid` and `sid` column names are identical, the interpolated
+    column created by `aw_interpolate()` will consist of all `NA`
+    values. The simplest workaround is to rename either `tid` or `sid`
+    before executing `aw_interpolate()`. Alternatively, you can install
+    the development version of `areal` from GitHub.
+2.  Some intersections of `sf` geometries will result in geometry
+    collections being created. This appears to be an infrequent issue,
+    but it will result in an error when `aw_interpolate()` is executed.
+    The error will begin with `Warning in
+    st_cast.GEOMETRYCOLLECTION(X[[i]], ...)`. The simplest workaround is
+    to install the development version of `areal` from GitHub.
+
+Big thanks to early adopter [Matt Herman](https://github.com/mfherman)
+for catching both of these\!
+
 ## Installation
 
 ### Installing Dependencies
