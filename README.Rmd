@@ -49,7 +49,7 @@ Big thanks to early adopter [Matt Herman](https://github.com/mfherman) for catch
 
 ## Installation
 ### Installing Dependencies
-You should check the [`sf` package website](https://r-spatial.github.io/sf/) and the [`areal` package website](https://slu-openGIS.github.io/area/) for the latest details on installing dependencies for that package. Instructions vary significantly by operating system. For best results, have `sf` installed before you install `areal`. Other dependencies, like `dplyr`, will be installed automatically with `areal` if they are not already present.
+You should check the [`sf` package website](https://r-spatial.github.io/sf/) and the [`areal` package website](https://slu-openGIS.github.io/areal/) for the latest details on installing dependencies for that package. Instructions vary significantly by operating system. For best results, have `sf` installed before you install `areal`. Other dependencies, like `dplyr`, will be installed automatically with `areal` if they are not already present.
 
 The one exception here is the dependency `lwgeom`, which Linux users will need to follow some [special instructions](https://github.com/r-spatial/lwgeom) to install correctly.
 
