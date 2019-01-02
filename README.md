@@ -55,7 +55,7 @@ for catching both of these\!
 
 You should check the [`sf` package
 website](https://r-spatial.github.io/sf/) and the [`areal` package
-website](https://slu-openGIS.github.io/area/) for the latest details on
+website](https://slu-openGIS.github.io/areal/) for the latest details on
 installing dependencies for that package. Instructions vary
 significantly by operating system. For best results, have `sf` installed
 before you install `areal`. Other dependencies, like `dplyr`, will be
