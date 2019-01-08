@@ -75,13 +75,13 @@ race83 <- sf::st_transform(ar_stl_race, crs = 4269)
 
 test_that("validation result is false", {
   expect_error(aw_preview_weights(wardsdf, tid = WARD, source = ar_stl_race, sid = GEOID, type = "extensive"),
-               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+               "Data validation failed. Use ar_validate with verbose = TRUE to identify concerns.")
   expect_error(aw_preview_weights(ar_stl_wards, tid = WARD, source = racedf, sid = GEOID, type = "extensive"),
-               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+               "Data validation failed. Use ar_validate with verbose = TRUE to identify concerns.")
   expect_error(aw_preview_weights(wards83, tid = WARD, source = ar_stl_race, sid = GEOID, type = "extensive"),
-               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+               "Data validation failed. Use ar_validate with verbose = TRUE to identify concerns.")
   expect_error(aw_preview_weights(ar_stl_wards, tid = WARD, source = race83, sid = GEOID, type = "extensive"),
-               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+               "Data validation failed. Use ar_validate with verbose = TRUE to identify concerns.")
 })
 
 # test output ------------------------------------------------
