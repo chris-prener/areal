@@ -29,9 +29,11 @@ into both modern data management (e.g. `tidyverse`) and spatial data
 
 ## Bug Fixes in v0.1.3
 
-The initial CRAN release contains two known bugs (see Issues
-[6](https://github.com/slu-openGIS/areal/issues/6) and
-[7](https://github.com/slu-openGIS/areal/issues/7)), both of which are
+The initial CRAN release contains four known bugs (see Issues
+[6](https://github.com/slu-openGIS/areal/issues/6),
+[7](https://github.com/slu-openGIS/areal/issues/7),
+[14](https://github.com/slu-openGIS/areal/issues/14), and
+[16](https://github.com/slu-openGIS/areal/issues/16)), all of which are
 fixed on the current GitHub master branch:
 
 1.  If the `tid` and `sid` column names are identical, the interpolated
@@ -45,9 +47,19 @@ fixed on the current GitHub master branch:
     The error will begin with `Warning in
     st_cast.GEOMETRYCOLLECTION(X[[i]], ...)`. The simplest workaround is
     to install the development version of `areal` from GitHub.
+3.  Interpolation fails if the `sf` geometry column is not named
+    `geometry`. The simplest workaround is to either rename the column
+    to `geometry` before executing `aw_interpolate()`. Alternatively,
+    you can install the development version of `areal` from GitHub.
+4.  Interpolation with `output = "tibble"` only returns the
+    identification number and the estimated value. If you want other
+    variables from the target data, the simplest workaround is to join
+    the output to the original target data. Alternatively, you can
+    install the development version of `areal` from GitHub.
 
 Big thanks to early adopter [Matt Herman](https://github.com/mfherman)
-for catching both of these\!
+for catching the first two and [David
+Blodgett](https://github.com/dblodgett-usgs) for catching the third\!
 
 ## Installation
 
@@ -200,7 +212,7 @@ wards %>%
 #>  8     8  12188.   7604.   3796.   9.82
 #>  9     9  14095.   6786.   6351.  11.8 
 #> 10    10  11239.   8703.   1667.   9.44
-#> # ... with 18 more rows
+#> # … with 18 more rows
 ```
 
 Another advantage of `areal` is that the interpolation process is not a

@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">areal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -121,13 +121,15 @@
       <small>Source: <a href='https://github.com/slu-openGIS/areal/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="areal-0-1-3-9000" class="section level1">
+    <div id="areal-0-1-3" class="section level1">
 <h1 class="page-header">
-<a href="#areal-0-1-3-9000" class="anchor"></a>areal 0.1.3.9000<small> Unreleased </small>
+<a href="#areal-0-1-3" class="anchor"></a>areal 0.1.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>Fix <a href="https://github.com/slu-openGIS/areal/issues/6">Issue 6</a> - edge case where <code>st_intersection</code> creates a geometry collection</li>
-<li><p>Fix <a href="https://github.com/slu-openGIS/areal/issues/7">Issue 7</a> - interpolation returns <code>NA</code> values when <code>tid</code> and <code>sid</code> are the same variable name (e.g. both are <code>GEOID</code>)</p></li>
+<li>Fix <a href="https://github.com/slu-openGIS/areal/issues/7">Issue 7</a> - interpolation returns <code>NA</code> values when <code>tid</code> and <code>sid</code> are the same variable name (e.g. both are <code>GEOID</code>)</li>
+<li>Fix <a href="https://github.com/slu-openGIS/areal/issues/14">Issue 14</a> - interpolation fails when the <code>sf</code> geometry column is not named <code>geometry</code> - now renamed on the fly if this is not the case</li>
+<li><p>Fix <a href="https://github.com/slu-openGIS/areal/issues/16">Issue 16</a> - tibble output missing other output variables</p></li>
 <li><p>Full draft of JOSS paper manuscript added in <code>paper/</code></p></li>
 </ul>
 </div>
@@ -172,7 +174,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#areal-0-1-3-9000">0.1.3.9000</a></li>
+        <li><a href="#areal-0-1-3">0.1.3</a></li>
         <li><a href="#areal-0-1-2">0.1.2</a></li>
         <li><a href="#areal-0-1-1">0.1.1</a></li>
         <li><a href="#areal-0-1-0">0.1.0</a></li>

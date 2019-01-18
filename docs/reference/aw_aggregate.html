@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">areal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -177,8 +177,8 @@ the <code>interVar</code> argument will be used as the new field name.</p></td>
 #&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
-<span class='no'>race</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>ar_stl_race</span>, <span class='no'>GEOID</span>, <span class='no'>TOTAL_E</span>)
-<span class='no'>wards</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>ar_stl_wards</span>, <span class='no'>WARD</span>)
+<span class='no'>race</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>ar_stl_race</span>, <span class='no'>GEOID</span>, <span class='no'>TOTAL_E</span>)
+<span class='no'>wards</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>ar_stl_wards</span>, <span class='no'>WARD</span>)
 
 <span class='no'>wards</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='aw_intersect.html'>aw_intersect</a></span>(<span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>race</span>, <span class='kw'>areaVar</span> <span class='kw'>=</span> <span class='st'>"area"</span>) <span class='kw'>%&gt;%</span>
