@@ -238,6 +238,13 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 
   } else if (output == "tibble"){
 
+    # left join with target data
+    data <- dplyr::left_join(.data, data, by = tidQN)
+
+    # remove geometry
+    sf::st_geometry(data) <- NULL
+
+    # convert to tibble
     out <- dplyr::as_tibble(data)
 
   }
