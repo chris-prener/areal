@@ -94,7 +94,7 @@ test_that("errors with weight and output", {
 test_that("force data validation failure", {
   expect_error(aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID,
                               weight = "sum", output = "sf", extensive = "HAM"),
-               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+               "Data validation failed. Use ar_validate with verbose = TRUE to identify concerns.")
 })
 
 # test results ------------------------------------------------
