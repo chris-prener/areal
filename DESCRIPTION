@@ -23,8 +23,7 @@ Imports:
   glue,
   purrr,
   rlang,
-  sf,
-  tibble
+  sf
 RoxygenNote: 6.1.1
 Suggests:
   knitr,
