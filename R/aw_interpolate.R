@@ -168,7 +168,7 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 
   # validate source and target data
   if (ar_validate(source = source, target = .data, varList = vars, method = "aw") == FALSE){
-    stop("Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+    stop("Data validation failed. Use ar_validate with verbose = TRUE to identify concerns.")
   }
 
   # call aw_interpolater
@@ -238,6 +238,13 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 
   } else if (output == "tibble"){
 
+    # left join with target data
+    data <- dplyr::left_join(.data, data, by = tidQN)
+
+    # remove geometry
+    sf::st_geometry(data) <- NULL
+
+    # convert to tibble
     out <- dplyr::as_tibble(data)
 
   }

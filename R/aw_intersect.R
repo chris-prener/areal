@@ -85,6 +85,7 @@ aw_intersect <- function(.data, source, areaVar) {
 #'
 #' @return A \code{sf} object with the new area field.
 #'
+#' @importFrom dplyr rename
 #' @importFrom dplyr mutate
 #' @importFrom rlang :=
 #' @importFrom rlang quo_name
@@ -100,6 +101,14 @@ aw_area <- function(.data, areaVar){
 
   # nse
   areaVarQN <- rlang::quo_name(rlang::enquo(areaVar))
+
+  # rename geometry column if necessary
+  if (attr(.data, "sf_column") != "geometry"){
+    colName <- attr(.data, "sf_column")
+
+    attr(.data, "sf_column") <- "geometry"
+    .data <- dplyr::rename(.data, "geometry" = colName)
+  }
 
   # calculate area
   out <- dplyr::mutate(.data, !!areaVarQN := unclass(sf::st_area(geometry)))

@@ -94,7 +94,7 @@ test_that("errors with weight and output", {
 test_that("force data validation failure", {
   expect_error(aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID,
                               weight = "sum", output = "sf", extensive = "HAM"),
-               "Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+               "Data validation failed. Use ar_validate with verbose = TRUE to identify concerns.")
 })
 
 # test results ------------------------------------------------
@@ -138,6 +138,18 @@ test_that("correctly specified functions execute without error", {
   expect_error(aw_interpolate(ar_stl_wards, tid = WARD, source = combinedData, sid = GEOID,
                               weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
                               intensive = c("ASTHMA", "ASTHMA2")), NA)
+})
+
+# rename geometry column
+ar_stl_race %>%
+  dplyr::rename("geom" = "geometry") -> ar_stl_race2
+
+# return geometry attributes
+attr(ar_stl_race2, "sf_column") <- "geom"
+
+test_that("geom column is correctly renamed during interpolation", {
+  expect_error(aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race2, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = c("TOTAL_E")), NA)
 })
 
 # test for matching sid and tid ------------------------------------------------

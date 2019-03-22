@@ -101,7 +101,7 @@ aw_preview_weights <- function(.data, tid, source, sid, type){
   # validate source and target data
   if (aw_validate_preview(source = source, target = .data) == FALSE){
 
-    stop("Data validation failed. Use aw_validate with verbose = TRUE to identify concerns.")
+    stop("Data validation failed. Use ar_validate with verbose = TRUE to identify concerns.")
 
   }
 
