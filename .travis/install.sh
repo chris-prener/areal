@@ -23,7 +23,7 @@ if [[ $TRAVIS_OS_NAME == 'linux' ]]; then
   sudo apt-get --yes install libjson-c-dev postgresql-server-dev-9.6
 
   # activate liblwgeom by:
-  sudo ldconfig
+  # sudo ldconfig
 
   # install postgis from source:
   wget http://download.osgeo.org/postgis/source/postgis-2.3.2.tar.gz
