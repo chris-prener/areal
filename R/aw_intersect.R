@@ -65,7 +65,7 @@ aw_intersect <- function(.data, source, areaVar) {
   intersection %>%
     aw_area(areaVar = !!areaVarQ) -> intersection
 
-  if(any(grepl("GEOMETRY", intersection))) {
+  if(any(grepl("GEOMETRY", sf::st_geometry_type(intersection)))) {
     intersection <- sf::st_collection_extract(intersection) %>%
       sf::st_cast("MULTIPOLYGON")
   }
