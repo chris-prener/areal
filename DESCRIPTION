@@ -21,7 +21,6 @@ LazyData: true
 Imports:
   dplyr,
   glue,
-  lwgeom,
   purrr,
   rlang,
   sf,
