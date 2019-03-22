@@ -33,8 +33,11 @@ test_that("correctly specified functions execute without error", {
   expect_error(aw_intersect(ar_stl_wards, source = ar_stl_race, areaVar = area), NA)
 })
 
-test_that("GEOMETRY check casts to MULTIPOLYGON when ", {
-  load("data/areal_intersect_test.rda")
+# test bugs ------------------------------------------------
+
+load(system.file("testdata", "geometryCollection.rda", package = "areal", mustWork = TRUE))
+
+test_that("GEOMETRY check casts to MULTIPOLYGON when necessary", {
   intersection <- aw_intersect(si_zcta, si_tract, "area")
   expect(all(sf::st_geometry_type(intersection) == "MULTIPOLYGON"))
 })
