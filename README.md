@@ -27,6 +27,19 @@ validation and estimation, providing a full-featured workflow that fits
 into both modern data management (e.g. `tidyverse`) and spatial data
 (e.g. `sf`) frameworks.
 
+## Bug Fixes in v0.1.4
+
+There are two additional bug fixes in v0.1.4:
+
+1.  Data that do not require being converted back from a geometry
+    collection (see \#2 in the next section) were still being processed
+    through this code, making runtimes longer than necessary. This has
+    been fixed.
+2.  Mixed interpolations with multiple extensive and intensive variables
+    would get incorrect output containing two copies of the extensive
+    results. This has been fixed, and the simplest workaround is to
+    install the development version of `areal` from GitHub.
+
 ## Bug Fixes in v0.1.3
 
 The initial CRAN release contains four known bugs (see Issues
