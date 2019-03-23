@@ -240,7 +240,7 @@ Only 72.31% of tract `29510101800`, for example, falls within a ward. In many Am
 If, on the other hand, we believe that all of the individuals *should* be allocated into wards, using `"total"` in this case would result in a severe under-count of individuals. 
 
 ### Intensive Interpolations
-Spatially *intensive* operations are used when the data to be interpolated are a ratio. An example of these data can be found in `ar_stl_asthma`, which contains asthma rates for each census tract in the city. The interpolation process is very similar to the spatially extensive workflow, except with how the areal weight is calculated. Instead of using the source data's area for reference, the *target* data is used in the denominator. Let:
+Spatially *intensive* operations are used when the data to be interpolated are, for example, a percentage or density value. An example of these data can be found in `ar_stl_asthma`, which contains asthma rates for each census tract in the city. The interpolation process is very similar to the spatially extensive workflow, except with how the areal weight is calculated. Instead of using the source data's area for reference, the *target* data is used in the denominator. Let:
 
 * ${W}_{i} = \textrm{areal weight for intersected feature i}$
 * ${A}_{i} = \textrm{area of intersected feature i}$
@@ -281,6 +281,41 @@ aw_interpolate(wards, tid = WARD, source = combinedData, sid = GEOID,
                weight = "sum", output = "tibble", intensive = "ASTHMA",
                extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 ```
+
+Users should take care to consider the implications of interpolating multiple values, such as total population and the number of African American residents (both extensive), and then calculating a spatially intensive variable from them such as percent African American. Doing so in multiple steps, and thereby treating extensive and intensive values as independent, may result in estimates that differ from a single step process where the percent of African American residents is interpoltated directly. 
+
+```{r contraints}
+# create combined data
+ar_stl_race %>%
+  select(GEOID, WHITE_E, BLACK_E) %>%
+  mutate(
+    TOTAL = WHITE_E+BLACK_E,
+    WHITE_PCT = WHITE_E/TOTAL,
+    BLACK_PCT = BLACK_E/TOTAL,
+    TOTAL_PCT = WHITE_PCT+BLACK_PCT
+  ) -> constrainedData
+
+# interpolate
+result <- aw_interpolate(ar_stl_wards, tid = WARD, 
+               source = constrainedData, sid = GEOID, 
+               weight = "sum", output = "tibble", 
+               intensive = c("WHITE_PCT", "BLACK_PCT", "TOTAL_PCT"),
+               extensive = c("TOTAL", "WHITE_E", "BLACK_E"))
+
+# calculate new percentages
+result %>%
+  mutate(
+    WHITE_PCT_2 = WHITE_E/TOTAL,
+    BLACK_PCT_2 = BLACK_E/TOTAL,
+    TOTAL_PCT_2 = WHITE_PCT_2+BLACK_PCT_2
+  ) -> result
+
+# display
+result %>%
+  select(WHITE_PCT, WHITE_PCT_2, BLACK_PCT, BLACK_PCT_2, TOTAL_PCT, TOTAL_PCT_2)
+```
+
+Note that there are a number of points of departure between the data interpolated as intensive values (`WHITE_PCT`, `BLACK_PCT`) and those that were interpolated as count data (i.e. extensive values) and then converted to intensive variables (`WHITE_PCT_2` and `BLACK_PCT_2`). 
 
 ## Output Options
 All of the above examples have created a tibble for output, but `areal` also supports the creation of `sf` objects as well:

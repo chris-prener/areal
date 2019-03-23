@@ -13,7 +13,7 @@ authors:
 affiliations:
   - name: Department of Sociology and Anthropology, Saint Louis University
     index: 1
-date: 18 January 2019
+date: 22 March 2019
 bibliography: paper.bib
 ---
 
@@ -24,14 +24,14 @@ Unlike interpolation techniques, like inverse distance weighted interpolation, t
 
 In estimating values for the target features, areal weighted interpolation makes a significant assumption that individuals are evenly spread throughout the source features [@qiu2012development]. This assumption often breaks down in practice - a census tract with a large park in it, for example, or a neighborhood that has a significant commercial area alongside residential housing. While more complex methods do exist to compensate for violating this assumption, there are few tools to implement them, and the strategies have mainly remained the focus of academics instead of GIS practitioners [@langford2007rapid; @qiu2012development].
 
-# The `areal` R package
+# The areal R package
 The `areal` package aims to reduce the barriers to the implementation of areal interpolation in spatial researchers' work. By implementing the process in `R`, we aim to improve the reproducibility of the interpolation process, which is often done manually using point-and-click desktop GIS software. We also aim to provide additional functionality in comparison to the one existing approach found in the `sf` package [@pebesma2018simple], the `st_interpolate_aw()` function, while providing support for modern data management (e.g. `tidyverse`) and spatial data (e.g. `sf`) frameworks. 
 
 Therefore, we provide functions that:
 
 1. validate data suitability for areal interpolation,
 2. allow for friction-less, iterative interpolation of both spatially extensive (e.g., count) and intensive (e.g., ratio) data, and
-3. provide a manual workflow for implementing the interpolation process.
+3. provide a manual workflow for implementing the interpolation process as well as a single omnibus function.
 
 The validation process checks for five conditions that must be met prior to interpolation:
 
@@ -43,7 +43,7 @@ The validation process checks for five conditions that must be met prior to inte
 
 This validation process can be run independently by end users via the `ar_validate()` function and is also run initially when `aw_interpolate()` is called. The validation process is aimed at helping users new to both `R` and areal interpolation ensure they have arranged their data correctly.
 
-Unlike existing approaches, the `areal` package offers the ability to interpolate multiple variables in a single function call and provides a wider set of options for making these estimates. For spatially extensive interpolations, we offer a formula that matches the existing functionality in `sf`, which is based on the total area of the original source feature. Alternatively, we offer a second formula that is more suitable for data where there should be complete overlap between the source and target data, but there is not. Such incongruity could be due to data quality issues or variation in how different sources represent particular geographies. This uses a sum of the source feature areas remaining after the data are intersected as part of the spatial weight calculation process.
+Unlike existing approaches, the `areal` package offers the ability to interpolate multiple variables in a single function call and provides a wider set of options for making these estimates. For spatially extensive interpolations, we offer a formula that matches the existing functionality in `sf`, which is based on the total area of the original source feature (specified with `weight = "total"`). Alternatively, we offer a second formula that is more suitable for data where there should be complete overlap between the source and target data, but there is not. Such incongruity could be due to data quality issues or variation in how different sources represent particular geographies. This uses a sum of the source feature areas remaining after the data are intersected as part of the spatial weight calculation process (specified with `weight = "sum"`).
 
 Our package also provides a manual approach for calculating estimates alongside the primary function `aw_interpolate()`. This is important for users who need to unpack the interpolation workflow and diagnose data issues that occur during interpolation as well as programmers who want to use a portion of the workflow in their software. Finally, `areal` provides both spatial (`sf` object) and a-spatial (`tibble` object) options for output.
 
@@ -80,55 +80,34 @@ The source data from the above data along with one of the variables, total popul
 
 Additional examples and vignette illustrations of `areal`'s functionality are available on the package's [website](https://slu-openGIS.github.io/areal/).
 
-# A Quick Comparison with `sf`
-Since `sf` offers similar functionality, three comparisons are made and presented here. Code for these comparisons is available in an appendix within the `areal` [GitHub repository](https:://github.com/slu-openGIS/areal/paper/appendix.md). The first compares spatially extensive interpolations calculated in both `areal` and `sf`. 
+# A Quick Comparison with sf
+Since `sf` offers similar functionality, three comparisons are made and presented here. Code for these comparisons is available in an appendix within the `areal` [GitHub repository](https:://github.com/slu-openGIS/areal/paper/appendix.md). The first compares spatially extensive interpolations calculated in both `areal` and `sf`. The first ten features are shown here for comparison:
 
-```r
-> extensive_comparison
-# A tibble: 28 x 5
-    Ward  sf_ex areal_exT areal_exS       delta
-   <dbl>  <dbl>     <dbl>     <dbl>       <dbl>
- 1     1  7991.     7991.     7992.   -0.993   
- 2     2 12042.    12042.    12145. -103.      
- 3     3  7334.     7334.     7344.  -10.5     
- 4     4  8458.     8458.     8458.    0.00434 
- 5     5  8689.     8689.     8783.  -94.7     
- 6     6 14022.    14022.    14050.  -27.9     
- 7     7 15645.    15645.    15840. -195.      
- 8     8 12188.    12188.    12188.   -0.00218 
- 9     9 14095.    14095.    14217. -122.      
-10    10 11239.    11239.    11239.    0.000130
-# … with 18 more rows
-```
+![](extensiveTable.png)
 
-Both the `sf` approach with `st_interpolate_aw()` and `aw_interpolate` with the `weight = "total"` produce identical results. This comparison also shows the difference between using `"total"` and `"sum"` for the `weight` argument. If we expect that our source and target data should overlap completely (but perhaps do not because of data quality issues), the `"sum"` approach will allocate all individuals into target features whereas `"total"` will not. The `"total"` approach yields generally smaller results that the `"sum"` approach, with an average difference of -30.781. The largest difference between the `"total"` and `"sum"` approaches was -194.750 individuals. 
+Both `st_interpolate_aw()` and `aw_interpolate()` with the `weight = "total"` produce identical results, which is expected. 
 
-For spatially intensive interpolations, both `st_interpolate_aw()` and `aw_interpolate()` should yield identical results:
+The above comparison also shows the difference between using `"total"` and `"sum"` for the `weight` argument in `aw_interpolate()`. If we expect that our source and target data should overlap completely (but perhaps do not because of data quality issues), the `"sum"` approach will allocate all individuals into target features whereas `"total"` will not because it uses the total area of each source feature. In the example data provided in the `areal` package, this is the case - the Census tracts do not perfectly map onto the extent of the wards, and so the `"total"` approach is inappropriate. 
 
-```r
-> intensive
-# A tibble: 28 x 3
-    Ward sf_in areal_in
-   <dbl> <dbl>    <dbl>
- 1     1 13.4     13.4 
- 2     2 13.2     13.2 
- 3     3 14.1     14.1 
- 4     4 13.6     13.6 
- 5     5 13.8     13.8 
- 6     6 11.7     11.7 
- 7     7  9.72     9.72
- 8     8  9.82     9.82
- 9     9 11.8     11.8 
-10    10  9.44     9.44
-# … with 18 more rows
-```
+The differences are highlighted in the `delta` column in the above figure. With these data, the `"total"` approach yields generally smaller results that the `"sum"` approach, with an average difference of -30.781. The largest difference between the `"total"` and `"sum"` approaches was -194.750 individuals. The added functionality within `areal` therefore provides a potentially more accurate set of estimations in similar cases where data should overlap, but do not.
 
-Finally, a comparison was made of the speed at which both packages calculated these values. For the extensive interpolations, `aw_interpolate()` performed 21 milliseconds slower with these data. Similarly, the intensive interpolations were 22 milliseconds slower. While 
+The second comparison is with spatially intensive interpolations. For this approach, both `st_interpolate_aw()` and `aw_interpolate()` should yield identical results. As before, the first ten features are shown here for comparison:
+
+![](intensiveTable.png)
+
+As with the extensive interpolations where `weight = "total"`, both `st_interpolate_aw()` and `aw_interpolate()` produce the expected identical results. 
+
+## Notes on Performance
+Finally, a comparison of the speed at which both the `sf` and `areal` packages calculated these values is included in [appendix](https:://github.com/slu-openGIS/areal/paper/appendix.md) as well. For the extensive interpolations, `aw_interpolate()` performed 21 milliseconds slower with these data, with a mean execution time of 276.505 milliseconds. Similarly, the intensive interpolations were 22 milliseconds slower when using `areal`, which had a mean execution time of 273.552 milliseconds. Both comparisons were made using the `R` package `microbenchmark`.
+
+One particular performance concern to note are intersections (a step in the interpolation process) that return geometry collections. These will cause `st_interpolate_aw()` function from `sf` to error. The `aw_interpolate()` function will not error, but instead will correctly address these geometry collections before proceeding with the interpolation. However, the correction process can take significantly longer than a similar data set that does not require this additional step.
+
+The [appendix](https:://github.com/slu-openGIS/areal/paper/appendix.md) contains an example of interpolation population from Missouri's 115 counties into its 4,506 Census block groups. When evaluated with `microbenchmark`, the average length of time to complete this process was 19.791 seconds.
 
 # Availability
 `areal` is open source software made available under the GNU GPL-3 license. It can be installed through CRAN [@prener2019areal] using: `install.packages("areal")`. `areal` can also be installed from its GitHub repository using the `remotes` package: `remotes::install_github("slu-openGIS/areal")`.
 
 # Acknowledgements
-The authors wish to thank their colleagues, J.S. Onésimo Sandoval, Ph.D. and Taylor Harris Braswell, M.A., for reviewing a draft of this manuscript. 
+The authors wish to thank their colleagues, J.S. Onésimo Sandoval, Ph.D. and Taylor Harris Braswell, M.A., for reviewing an initial draft of this manuscript. 
 
 # References
