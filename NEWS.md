@@ -1,3 +1,10 @@
+# areal 0.1.4
+
+* Fix issue where mixed interpolations with multiple extensive and intensive variables would get incorrect output containing two copies of the extensive results.
+* Patch fix to [Issue 6](https://github.com/slu-openGIS/areal/issues/6) so that data not requiring the geometry collection fix do not get processed through that code, improving performance for those interpolations.
+
+* Updated draft of JOSS paper manuscript along with appendix code and response to reviewers added in `paper/`.
+
 # areal 0.1.3
 
 * Fix [Issue 6](https://github.com/slu-openGIS/areal/issues/6) - edge case where `st_intersection` creates a geometry collection
