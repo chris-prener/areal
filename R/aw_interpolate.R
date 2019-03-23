@@ -220,7 +220,7 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
     } else if (length(intensive) > 1){
 
       # interpolate
-      inresults <- aw_interpolate_multiple(source = source, sid = !!sidQ, values = extensive, target = .data,
+      inresults <- aw_interpolate_multiple(source = source, sid = !!sidQ, values = intensive, target = .data,
                                            tid = !!tidQ, type = "intensive", weight = "sum")
 
     }
