@@ -284,9 +284,12 @@ aw_interpolate(wards, tid = WARD, source = combinedData, sid = GEOID,
 
 Users should take care to consider the implications of interpolating multiple values, such as total population and the number of African American residents (both extensive), and then calculating a spatially intensive variable from them such as percent African American. Doing so in multiple steps, and thereby treating extensive and intensive values as independent, may result in estimates that differ from a single step process where the percent of African American residents is interpoltated directly. 
 
-```{r contraints}
+```{r constraints}
+# re-load data
+race <- ar_stl_race
+
 # create combined data
-ar_stl_race %>%
+race %>%
   select(GEOID, WHITE_E, BLACK_E) %>%
   mutate(
     TOTAL = WHITE_E+BLACK_E,
@@ -295,24 +298,6 @@ ar_stl_race %>%
     TOTAL_PCT = WHITE_PCT+BLACK_PCT
   ) -> constrainedData
 
-# interpolate
-result <- aw_interpolate(ar_stl_wards, tid = WARD, 
-               source = constrainedData, sid = GEOID, 
-               weight = "sum", output = "tibble", 
-               intensive = c("WHITE_PCT", "BLACK_PCT", "TOTAL_PCT"),
-               extensive = c("TOTAL", "WHITE_E", "BLACK_E"))
-
-# calculate new percentages
-result %>%
-  mutate(
-    WHITE_PCT_2 = WHITE_E/TOTAL,
-    BLACK_PCT_2 = BLACK_E/TOTAL,
-    TOTAL_PCT_2 = WHITE_PCT_2+BLACK_PCT_2
-  ) -> result
-
-# display
-result %>%
-  select(WHITE_PCT, WHITE_PCT_2, BLACK_PCT, BLACK_PCT_2, TOTAL_PCT, TOTAL_PCT_2)
 ```
 
 Note that there are a number of points of departure between the data interpolated as intensive values (`WHITE_PCT`, `BLACK_PCT`) and those that were interpolated as count data (i.e. extensive values) and then converted to intensive variables (`WHITE_PCT_2` and `BLACK_PCT_2`). 
