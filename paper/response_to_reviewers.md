@@ -1,4 +1,4 @@
-We would like to thank both @edzer and @sjsrey as well as @lheagy for the feedback and the opportunity to revise both the software and the manuscript. We believe that the manuscript has been greatly strengthened as a result of your collective feedback and are excited to resubmit it for your review.
+We would like to thank both @edzer and @sjsrey as well as @lheagy for the feedback and the opportunity to revise both the software and the manuscript. We believe that the manuscript has been greatly strengthened as a result of your collective feedback and are excited to resubmit it for your review. @lheagy, if there is a better way to embed tables and to handle the appendix file we've created (available [here](https://github.com/slu-openGIS/areal/blob/master/paper/appendix.md)), please let us know - we're happy to adapt both to any style that *JOSS* prefers.
 
 ## Reviewer 1 - @edzer
 * The pdf of the paper shows R code on page 2, but this code is hidden where it runs off the page at the side.
