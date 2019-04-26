@@ -299,22 +299,22 @@ race %>%
   ) -> constrainedData
 
 # interpolate
-result <- aw_interpolate(ar_stl_wards, tid = WARD, 
+result2 <- aw_interpolate(ar_stl_wards, tid = WARD, 
                source = constrainedData, sid = GEOID, 
                weight = "sum", output = "tibble", 
                intensive = c("WHITE_PCT", "BLACK_PCT", "TOTAL_PCT"),
                extensive = c("TOTAL", "WHITE_E", "BLACK_E"))
 
 # calculate new percentages
-result %>%
+result2 %>%
   mutate(
     WHITE_PCT_2 = WHITE_E/TOTAL,
     BLACK_PCT_2 = BLACK_E/TOTAL,
     TOTAL_PCT_2 = WHITE_PCT_2+BLACK_PCT_2
-  ) -> result
+  ) -> result2
 
 # display
-result %>%
+result2 %>%
   select(WHITE_PCT, WHITE_PCT_2, BLACK_PCT, BLACK_PCT_2, TOTAL_PCT, TOTAL_PCT_2)
 ```
 

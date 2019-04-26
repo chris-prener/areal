@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">areal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4.1</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@
       <h1>Areal Weighted Interpolation</h1>
                         <h4 class="author">Christopher Prener, Ph.D.</h4>
             
-            <h4 class="date">2019-03-22</h4>
+            <h4 class="date">2019-04-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/slu-openGIS/areal/blob/master/vignettes/areal-weighted-interpolation.Rmd"><code>vignettes/areal-weighted-interpolation.Rmd</code></a></small>
       <div class="hidden name"><code>areal-weighted-interpolation.Rmd</code></div>
@@ -523,22 +523,22 @@
 <a class="sourceLine" id="cb12-12" data-line-number="12">  ) -&gt;<span class="st"> </span>constrainedData</a>
 <a class="sourceLine" id="cb12-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co"># interpolate</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span>(ar_stl_wards, <span class="dt">tid =</span> WARD, </a>
+<a class="sourceLine" id="cb12-15" data-line-number="15">result2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span>(ar_stl_wards, <span class="dt">tid =</span> WARD, </a>
 <a class="sourceLine" id="cb12-16" data-line-number="16">               <span class="dt">source =</span> constrainedData, <span class="dt">sid =</span> GEOID, </a>
 <a class="sourceLine" id="cb12-17" data-line-number="17">               <span class="dt">weight =</span> <span class="st">"sum"</span>, <span class="dt">output =</span> <span class="st">"tibble"</span>, </a>
 <a class="sourceLine" id="cb12-18" data-line-number="18">               <span class="dt">intensive =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"WHITE_PCT"</span>, <span class="st">"BLACK_PCT"</span>, <span class="st">"TOTAL_PCT"</span>),</a>
 <a class="sourceLine" id="cb12-19" data-line-number="19">               <span class="dt">extensive =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"TOTAL"</span>, <span class="st">"WHITE_E"</span>, <span class="st">"BLACK_E"</span>))</a>
 <a class="sourceLine" id="cb12-20" data-line-number="20"></a>
 <a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co"># calculate new percentages</span></a>
-<a class="sourceLine" id="cb12-22" data-line-number="22">result <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-22" data-line-number="22">result2 <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-23" data-line-number="23"><span class="st">  </span><span class="kw">mutate</span>(</a>
 <a class="sourceLine" id="cb12-24" data-line-number="24">    <span class="dt">WHITE_PCT_2 =</span> WHITE_E<span class="op">/</span>TOTAL,</a>
 <a class="sourceLine" id="cb12-25" data-line-number="25">    <span class="dt">BLACK_PCT_2 =</span> BLACK_E<span class="op">/</span>TOTAL,</a>
 <a class="sourceLine" id="cb12-26" data-line-number="26">    <span class="dt">TOTAL_PCT_2 =</span> WHITE_PCT_<span class="dv">2</span><span class="op">+</span>BLACK_PCT_<span class="dv">2</span></a>
-<a class="sourceLine" id="cb12-27" data-line-number="27">  ) -&gt;<span class="st"> </span>result</a>
+<a class="sourceLine" id="cb12-27" data-line-number="27">  ) -&gt;<span class="st"> </span>result2</a>
 <a class="sourceLine" id="cb12-28" data-line-number="28"></a>
 <a class="sourceLine" id="cb12-29" data-line-number="29"><span class="co"># display</span></a>
-<a class="sourceLine" id="cb12-30" data-line-number="30">result <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-30" data-line-number="30">result2 <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-31" data-line-number="31"><span class="st">  </span><span class="kw">select</span>(WHITE_PCT, WHITE_PCT_<span class="dv">2</span>, BLACK_PCT, BLACK_PCT_<span class="dv">2</span>, TOTAL_PCT, TOTAL_PCT_<span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb12-32" data-line-number="32"><span class="co">#&gt; # A tibble: 28 x 6</span></a>
 <a class="sourceLine" id="cb12-33" data-line-number="33"><span class="co">#&gt;    WHITE_PCT WHITE_PCT_2 BLACK_PCT BLACK_PCT_2 TOTAL_PCT TOTAL_PCT_2</span></a>
