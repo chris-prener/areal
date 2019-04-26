@@ -1,0 +1,24 @@
+{
+    "title": "areal: An R package for areal weighted interpolation",
+    "description": "A pipeable, transparent implementation of areal weighted interpolation with support for interpolating multiple variables in a single function call. These tools provide a full-featured workflow for validation and estimation that fits into both modern data management (e.g. tidyverse) and spatial data (e.g. sf) frameworks.",
+    "creators": [
+        {
+            "affiliation": "Department of Sociology and Anthropology, Saint Louis University",
+            "name": "Prener, Christopher",
+            "orcid": "0000-0002-4310-9888"
+        },
+        {
+            "affiliation": "Department of Sociology and Anthropology, Saint Louis University",
+            "name": "Revord, Charlie"
+        }
+    ],
+    "access_right": "open",
+    "upload_type": "software",
+    "license": "GPL-3.0",
+    "keywords": [
+      "R",
+      "geospatial science",
+      "spatial statistics"
+    ]
+
+}
