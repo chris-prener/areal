@@ -1,3 +1,8 @@
+# areal 0.1.4.1
+
+* Finalize *Journal of Open Source Software* manuscript
+* **No changes to the software functionality**
+
 # areal 0.1.4
 
 * Fix issue where mixed interpolations with multiple extensive and intensive variables would get incorrect output containing two copies of the extensive results.

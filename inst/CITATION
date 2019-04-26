@@ -1,0 +1,13 @@
+citHeader("To cite package areal in publications, please use:")
+
+citEntry(entry="Article",
+  author = "Prener, Christopher and Revord, Charles",
+  title = "{areal: An R package for areal weighted interpolation}",
+  year = 2019,
+  journal = "{Journal of Open Source Software}",
+  doi = "10.21105/joss.01221",
+  url = "https://doi.org/10.21105/joss.01221",
+  volume = 4,
+  number = 36,
+  textVersion = "Prener, C. and C. Revord, 2019. areal: An R package for areal weighted interpolation. Journal of Open Source Software 4(36), https://doi.org/10.21105/joss.0122".
+)
