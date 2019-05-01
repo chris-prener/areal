@@ -50,6 +50,8 @@ Our package also provides a manual approach for calculating estimates alongside 
 # A Short Example
 Once data have been prepared for interpolation, meaning they share the same projected coordinate system and there are no conflicts between variable names, interpolations can be calculated with a single function `aw_interpolate()`. This functionality is illustrated here using source and target data built into the `areal` package:
 
+\newpage
+
 ```r
 > aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, 
 +   sid = GEOID, weight = "sum", output = "tibble",
