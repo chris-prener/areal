@@ -26,6 +26,7 @@
 #' ar_validate(source = ar_stl_asthma, target = ar_stl_wards, varList = "ASTHMA", verbose = TRUE)
 #'
 #' @importFrom glue glue
+#' @importFrom sf st_crs st_is_longlat
 #'
 #' @export
 ar_validate <- function(source, target, varList, method = "aw", verbose = FALSE){
@@ -117,21 +118,19 @@ ar_validate <- function(source, target, varList, method = "aw", verbose = FALSE)
 
 }
 
-#' Lite Version of Validation for aw_preview_weights
-#'
-#' @description \code{aw_validate_preview} is designed to be called by
-#'     \code{aw_preview_weights} before the weights are calculated. It
-#'     lacks the variable validation functionality of \code{ar_validate}.
-#'
-#' @param source A \code{sf} object with data to be interpolated
-#' @param target A \code{sf} object that data should be interpolated to
-#'
-#' @return If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TRUE}
-#'     is all tests are passed and \code{FALSE} if one or more tests is failed. If \code{verbose}
-#'     is \code{TRUE}, a tibble with detailed test results is returned.
-#'
-#' @importFrom glue glue
-#'
+# Lite Version of Validation for aw_preview_weights
+#
+# @description \code{aw_validate_preview} is designed to be called by
+#     \code{aw_preview_weights} before the weights are calculated. It
+#     lacks the variable validation functionality of \code{ar_validate}.
+#
+# @param source A \code{sf} object with data to be interpolated
+# @param target A \code{sf} object that data should be interpolated to
+#
+# @return If \code{verbose} is \code{FALSE}, a logical scalar is returned that is \code{TRUE}
+#     is all tests are passed and \code{FALSE} if one or more tests is failed. If \code{verbose}
+#     is \code{TRUE}, a tibble with detailed test results is returned.
+#
 aw_validate_preview <- function(source, target){
 
   # store results from primary validate subfunctions
@@ -172,16 +171,16 @@ aw_validate_preview <- function(source, target){
 
 }
 
-#' Testing for sf object status for source and target data
-#'
-#' @description \code{ar_validate_sf} conducts a logic test for shared coordinate
-#'     coordinate systems, which are a requirement for interpolation.
-#'
-#' @param source A \code{sf} object with data to be interpolated
-#' @param target A \code{sf} object that data should be interpolated to
-#'
-#' @return A logical scalar; if \code{TRUE}, the test is passed.
-#'
+# Testing for sf object status for source and target data
+#
+# @description \code{ar_validate_sf} conducts a logic test for shared coordinate
+#     coordinate systems, which are a requirement for interpolation.
+#
+# @param source A \code{sf} object with data to be interpolated
+# @param target A \code{sf} object that data should be interpolated to
+#
+# @return A logical scalar; if \code{TRUE}, the test is passed.
+#
 ar_validate_sf <- function(source, target){
 
   # identify sf object in class
@@ -205,18 +204,16 @@ ar_validate_sf <- function(source, target){
 
 }
 
-#' Testing for shared coordinates for source and target data
-#'
-#' @description \code{awrvalidate_crs} conducts a logic test for shared coordinate
-#'     coordinate systems, which are a requirement for interpolation.
-#'
-#' @param source A \code{sf} object with data to be interpolated
-#' @param target A \code{sf} object that data should be interpolated to
-#'
-#' @return A logical scalar; if \code{TRUE}, the test is passed.
-#'
-#' @importFrom sf st_crs
-#'
+# Testing for shared coordinates for source and target data
+#
+# @description \code{awrvalidate_crs} conducts a logic test for shared coordinate
+#     coordinate systems, which are a requirement for interpolation.
+#
+# @param source A \code{sf} object with data to be interpolated
+# @param target A \code{sf} object that data should be interpolated to
+#
+# @return A logical scalar; if \code{TRUE}, the test is passed.
+#
 ar_validate_crs <- function(source, target){
 
   if(sf::st_crs(source) == sf::st_crs(target)) {
@@ -235,17 +232,15 @@ ar_validate_crs <- function(source, target){
 
 }
 
-#' Testing for type of coordinates
-#'
-#' @description \code{ar_validate_longlat} conducts a logic test for
-#'     whether or not the data are in planar format.
-#'
-#' @param .data A sf object
-#'
-#' @return A logical scalar; if \code{TRUE}, the test is passed
-#'
-#' @importFrom sf st_is_longlat
-#'
+# Testing for type of coordinates
+#
+# @description \code{ar_validate_longlat} conducts a logic test for
+#     whether or not the data are in planar format.
+#
+# @param .data A sf object
+#
+# @return A logical scalar; if \code{TRUE}, the test is passed
+#
 ar_validate_longlat <- function(.data){
 
   result <- sf::st_is_longlat(.data)
@@ -267,17 +262,17 @@ ar_validate_longlat <- function(.data){
 
 }
 
-#' Testing for Variable Conflicts in Target
-#'
-#' @description \code{ar_validate_vars_conflict} conducts a logic test for
-#'     whether or not any of the variables to be created in the target
-#'     data already exist as named columns.
-#'
-#' @param .data A sf object
-#' @param varList A vector of variables to be created
-#'
-#' @return A logical scalar; if \code{TRUE}, the test is passed
-#'
+# Testing for Variable Conflicts in Target
+#
+# @description \code{ar_validate_vars_conflict} conducts a logic test for
+#     whether or not any of the variables to be created in the target
+#     data already exist as named columns.
+#
+# @param .data A sf object
+# @param varList A vector of variables to be created
+#
+# @return A logical scalar; if \code{TRUE}, the test is passed
+#
 ar_validate_vars_conflict <- function(.data, varList){
 
   # create logical vector
@@ -301,16 +296,16 @@ ar_validate_vars_conflict <- function(.data, varList){
 
 }
 
-#' Testing for Variables Existing in Source
-#'
-#' @description \code{ar_validate_vars_exist} conducts a logic test for
-#'     whether or not all variables exist in the source data.
-#'
-#' @param .data A sf object
-#' @param varList A vector of variables assumed to exist.
-#'
-#' @return A logical scalar; if \code{TRUE}, the test is passed
-#'
+# Testing for Variables Existing in Source
+#
+# @description \code{ar_validate_vars_exist} conducts a logic test for
+#     whether or not all variables exist in the source data.
+#
+# @param .data A sf object
+# @param varList A vector of variables assumed to exist.
+#
+# @return A logical scalar; if \code{TRUE}, the test is passed
+#
 ar_validate_vars_exist <- function(.data, varList){
 
   # create logical vector
