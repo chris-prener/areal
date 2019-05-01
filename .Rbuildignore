@@ -13,3 +13,4 @@
 ^index\.Rmd$
 ^LICENSE$
 ^paper$
+^\.zenodo\.json$
