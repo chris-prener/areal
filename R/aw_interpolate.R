@@ -42,6 +42,7 @@
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr left_join
 #' @importFrom dplyr rename
+#' @importFrom dplyr select
 #' @importFrom glue glue
 #' @importFrom rlang enquo
 #' @importFrom rlang quo
@@ -261,31 +262,28 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 
 }
 
-#' Intermediate Function - Single Value
-#'
-#' @description Intermediate function called when there is only one variable to be interpolated.
-#'     This is used to simplify the code for \code{aw_interpolate}.
-#'
-#' @param source A \code{sf} object with data to be interpolated
-#' @param sid A unique identification number within \code{source}
-#' @param value A column within \code{source} to be interpolated
-#' @param target A \code{sf} object that data should be interpolated to
-#' @param tid A unique identification number within \code{target}
-#' @param type One of either \code{"extensive"} (if the data are spatially extensive e.g.
-#'     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
-#'     population density), or \code{"mixed"} (if the data include both extensive and
-#'     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
-#'     value. If \code{"intensive"}, the mean is returned for the interpolated value.
-#'     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
-#'     the relevant variable names should be specified in the dots.
-#' @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
-#'     \code{"sum"}.
-#'
-#' @return A tibble with interpolated data, ready for final merge with \code{target}.
-#'
-#' @importFrom rlang enquo
-#' @importFrom rlang quo_name
-#'
+# Intermediate Function - Single Value
+#
+# @description Intermediate function called when there is only one variable to be interpolated.
+#     This is used to simplify the code for \code{aw_interpolate}.
+#
+# @param source A \code{sf} object with data to be interpolated
+# @param sid A unique identification number within \code{source}
+# @param value A column within \code{source} to be interpolated
+# @param target A \code{sf} object that data should be interpolated to
+# @param tid A unique identification number within \code{target}
+# @param type One of either \code{"extensive"} (if the data are spatially extensive e.g.
+#     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
+#     population density), or \code{"mixed"} (if the data include both extensive and
+#     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
+#     value. If \code{"intensive"}, the mean is returned for the interpolated value.
+#     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
+#     the relevant variable names should be specified in the dots.
+# @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
+#     \code{"sum"}.
+#
+# @return A tibble with interpolated data, ready for final merge with \code{target}.
+#
 aw_interpolate_single <- function(source, sid, value, target, tid, type, weight){
 
   # save parameters to list
@@ -314,38 +312,38 @@ aw_interpolate_single <- function(source, sid, value, target, tid, type, weight)
 
 }
 
-#' Intermediate Function - Multiple Values (iteration)
-#'
-#' @description Intermediate function called when are more than one variables to be interpolated.
-#'     This is used to simplify the code for \code{aw_interpolate}.
-#'
-#' @param source A \code{sf} object with data to be interpolated
-#' @param sid A unique identification number within \code{source}
-#' @param values A vector of columns within \code{source} to be interpolated
-#' @param target A \code{sf} object that data should be interpolated to
-#' @param tid A unique identification number within \code{target}
-#' @param type One of either \code{"extensive"} (if the data are spatially extensive e.g.
-#'     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
-#'     population density), or \code{"mixed"} (if the data include both extensive and
-#'     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
-#'     value. If \code{"intensive"}, the mean is returned for the interpolated value.
-#'     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
-#'     the relevant variable names should be specified in the dots.
-#' @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
-#'     \code{"sum"}.
-#'
-#' @importFrom dplyr %>%
-#' @importFrom dplyr bind_cols
-#' @importFrom dplyr one_of
-#' @importFrom dplyr select
-#' @importFrom purrr imap
-#' @importFrom purrr map
-#' @importFrom purrr reduce
-#' @importFrom rlang enquo
-#' @importFrom rlang quo_name
-#'
-#' @return A tibble with interpolated data, ready for final merge with \code{target}.
-#'
+# Intermediate Function - Multiple Values (iteration)
+#
+# @description Intermediate function called when are more than one variables to be interpolated.
+#     This is used to simplify the code for \code{aw_interpolate}.
+#
+# @param source A \code{sf} object with data to be interpolated
+# @param sid A unique identification number within \code{source}
+# @param values A vector of columns within \code{source} to be interpolated
+# @param target A \code{sf} object that data should be interpolated to
+# @param tid A unique identification number within \code{target}
+# @param type One of either \code{"extensive"} (if the data are spatially extensive e.g.
+#     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
+#     population density), or \code{"mixed"} (if the data include both extensive and
+#     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
+#     value. If \code{"intensive"}, the mean is returned for the interpolated value.
+#     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
+#     the relevant variable names should be specified in the dots.
+# @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
+#     \code{"sum"}.
+#
+# @importFrom dplyr %>%
+# @importFrom dplyr bind_cols
+# @importFrom dplyr one_of
+# @importFrom dplyr select
+# @importFrom purrr imap
+# @importFrom purrr map
+# @importFrom purrr reduce
+# @importFrom rlang enquo
+# @importFrom rlang quo_name
+#
+# @return A tibble with interpolated data, ready for final merge with \code{target}.
+#
 aw_interpolate_multiple <- function(source, sid, values, target, tid, type, weight){
 
   # save parameters to list
@@ -378,22 +376,19 @@ aw_interpolate_multiple <- function(source, sid, values, target, tid, type, weig
 
 }
 
-#' Strip dataframe of all non-essential variables
-#'
-#' @description \code{aw_strip_df} is called by \code{aw_interpolate}. It
-#'     strips \code{sf} objects of nonessential variables but keeps
-#'     variables listed in parameters.
-#'
-#' @param .data A \code{sf} object
-#' @param id A given source id field
-#' @param value Optional; the variable that estimations will be based on
-#'
-#' @return A \code{sf} object with only the \code{id} and, if provided, the
-#'     \code{value} column as well.
-#'
-#' @importFrom dplyr select
-#' @importFrom rlang enquo
-#'
+# Strip dataframe of all non-essential variables
+#
+# @description \code{aw_strip_df} is called by \code{aw_interpolate}. It
+#     strips \code{sf} objects of nonessential variables but keeps
+#     variables listed in parameters.
+#
+# @param .data A \code{sf} object
+# @param id A given source id field
+# @param value Optional; the variable that estimations will be based on
+#
+# @return A \code{sf} object with only the \code{id} and, if provided, the
+#     \code{value} column as well.
+#
 aw_strip_df <- function(.data, id, value){
 
   # save parameters to list
@@ -423,36 +418,31 @@ aw_strip_df <- function(.data, id, value){
 
 }
 
-#' Carry Out Interpolation
-#'
-#' @description \code{aw_interpolater} performs pipeline of interpolation specific
-#'     calculations with \code{aw_intersect}, \code{aw_total}, \code{aw_weight},
-#'     \code{aw_calculate}, and \code{aw_aggregate}. The interpolated total is then
-#'     verified against the total calculated from the source data using \code{aw_verify}.
-#'
-#' @param source A \code{sf} object with data to be interpolated
-#' @param sid A unique identification number within \code{source}
-#' @param value A column within \code{source} to be interpolated
-#' @param target A \code{sf} object that data should be interpolated to
-#' @param tid A unique identification number within \code{target}
-#' @param type One of either \code{"extensive"} (if the data are spatially extensive e.g.
-#'     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
-#'     population density), or \code{"mixed"} (if the data include both extensive and
-#'     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
-#'     value. If \code{"intensive"}, the mean is returned for the interpolated value.
-#'     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
-#'     the relevant variable names should be specified in the dots.
-#' @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
-#'     \code{"sum"}.
-#'
-#' @return A \code{sf} object or tibble with \code{value} interpolated into
-#'    the \code{target} data.
-#'
-#' @importFrom dplyr select
-#' @importFrom rlang enquo
-#' @importFrom rlang quo_name
-#' @importFrom sf st_geometry
-#'
+# Carry Out Interpolation
+#
+# @description \code{aw_interpolater} performs pipeline of interpolation specific
+#     calculations with \code{aw_intersect}, \code{aw_total}, \code{aw_weight},
+#     \code{aw_calculate}, and \code{aw_aggregate}. The interpolated total is then
+#     verified against the total calculated from the source data using \code{aw_verify}.
+#
+# @param source A \code{sf} object with data to be interpolated
+# @param sid A unique identification number within \code{source}
+# @param value A column within \code{source} to be interpolated
+# @param target A \code{sf} object that data should be interpolated to
+# @param tid A unique identification number within \code{target}
+# @param type One of either \code{"extensive"} (if the data are spatially extensive e.g.
+#     population counts), \code{"intensive"} (if the data are spatially intensive e.g.
+#     population density), or \code{"mixed"} (if the data include both extensive and
+#     intensive values). If \code{"extensive"}, the sum is returned for the interpolated
+#     value. If \code{"intensive"}, the mean is returned for the interpolated value.
+#     If \code{"mixed"}, vectors named \code{"extensive"} and \code{"intensive"} containing
+#     the relevant variable names should be specified in the dots.
+# @param weight For \code{"extensive"} interpolations; should be either \code{"total"} or
+#     \code{"sum"}.
+#
+# @return A \code{sf} object or tibble with \code{value} interpolated into
+#    the \code{target} data.
+#
 aw_interpolater <- function(source, sid, value, target, tid, type, weight) {
 
   # save parameters to list
