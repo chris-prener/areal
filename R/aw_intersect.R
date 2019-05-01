@@ -21,14 +21,16 @@
 #'
 #' aw_intersect(wards, source = race, areaVar = "area")
 #'
-#' @importFrom dplyr %>%
+#' @importFrom dplyr %>% mutate rename
 #' @importFrom glue glue
+#' @importFrom rlang :=
 #' @importFrom rlang enquo
 #' @importFrom rlang quo
 #' @importFrom rlang quo_name
 #' @importFrom rlang sym
-#' @importFrom sf st_collection_extract
-#' @importFrom sf st_intersection
+#' @importFrom sf st_area st_collection_extract st_intersection
+#' @importFrom dplyr rename
+#' @importFrom dplyr mutate
 #'
 #' @export
 aw_intersect <- function(.data, source, areaVar) {
@@ -75,22 +77,16 @@ aw_intersect <- function(.data, source, areaVar) {
 
 }
 
-#' Calculate area
-#'
-#' @description Calculate the area of a feature in the units of the current
-#'     coordinate system. This is called by \code{aw_intersect}.
-#'
-#' @param .data A \code{sf} object that data should be interpolated to
-#' @param areaVar The name of the new area variable to be calculated.
-#'
-#' @return A \code{sf} object with the new area field.
-#'
-#' @importFrom dplyr rename
-#' @importFrom dplyr mutate
-#' @importFrom rlang :=
-#' @importFrom rlang quo_name
-#' @importFrom sf st_area
-#'
+# Calculate area
+#
+# @description Calculate the area of a feature in the units of the current
+#     coordinate system. This is called by \code{aw_intersect}.
+#
+# @param .data A \code{sf} object that data should be interpolated to
+# @param areaVar The name of the new area variable to be calculated.
+#
+# @return A \code{sf} object with the new area field.
+#
 aw_area <- function(.data, areaVar){
 
   # undefined global variables note
