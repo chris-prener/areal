@@ -1,3 +1,8 @@
+# areal 0.1.4.2
+
+* Fix formatting issue with *JOSS* manuscript
+* **No changes to the software functionality**
+
 # areal 0.1.4.1
 
 * Finalize *Journal of Open Source Software* manuscript
