@@ -30,12 +30,13 @@
 #' aw_preview_weights(ar_stl_wards, tid = WARD, source = ar_stl_asthma, sid = GEOID,
 #'                    type = "intensive")
 #'
-#' @importFrom dplyr left_join
+#' @importFrom dplyr arrange group_by left_join summarize
 #' @importFrom glue glue
 #' @importFrom rlang enquo
 #' @importFrom rlang quo
 #' @importFrom rlang quo_name
 #' @importFrom rlang sym
+#' @importFrom sf st_geometry
 #'
 #' @export
 aw_preview_weights <- function(.data, tid, source, sid, type){
@@ -145,21 +146,16 @@ aw_preview_weights <- function(.data, tid, source, sid, type){
 }
 
 
-#' Caclulate Weights
-#'
-#' @description Subfunction of aw_preview_weight for calculating individual weights
-#'
-#' @param .data A \code{sf} object that data should be interpolated to (this is referred
-#'     to as the \code{target} elsewhere in the package).
-#' @param source A \code{sf} object with data to be interpolated
-#' @param id A unique identification number in either the source or target data
-#' @param item One of \code{"extensive_sum"}, \code{"extensive_total"}, or \code{"intensive"}
-#'
-#' @importFrom dplyr arrange
-#' @importFrom dplyr group_by
-#' @importFrom dplyr summarize
-#' @importFrom sf st_geometry
-#'
+# Caclulate Weights
+#
+# @description Subfunction of aw_preview_weight for calculating individual weights
+#
+# @param .data A \code{sf} object that data should be interpolated to (this is referred
+#     to as the \code{target} elsewhere in the package).
+# @param source A \code{sf} object with data to be interpolated
+# @param id A unique identification number in either the source or target data
+# @param item One of \code{"extensive_sum"}, \code{"extensive_total"}, or \code{"intensive"}
+#
 aw_calculate_weight <- function(.data, source, id, item){
 
   # save parameters to list
