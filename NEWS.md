@@ -1,3 +1,9 @@
+# areal 0.1.4.4
+
+* Finalize *JOSS* manuscript
+* Rebuild pkgdown site
+* **No changes to the software functionality**
+
 # areal 0.1.4.3
 
 * Remove documentation for non-exported functions

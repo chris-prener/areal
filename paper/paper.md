@@ -11,14 +11,14 @@ authors:
   - name: Charles K. Revord
     affiliation: 1
 affiliations:
-  - name: Department of Sociology and Anthropology, Saint Louis University
+  - name: Department of Sociology and Anthropology, Saint Louis University, St. Louis, MO, USA
     index: 1
 date: 22 March 2019
 bibliography: paper.bib
 ---
 
 # Introduction
-Population data are often available at various levels of aggregation, such as census tracts or block groups in the United States or output areas in the United Kingdom. These units are often drawn for convenience and not because they represent some commonly accepted area in residents' lived experiences. Despite this, researchers often use them as proxies for neighborhoods since they come with readily available demographic data. Researchers who do wish to move past these proxies and produce population estimates for other geographies typically resort to developing their own, often manual, implementations of the areal weighted interpolation workflow [@qiu2012development]. The lack of reliable and easy to use software that implements this technique has therefore served as an additional barrier to using them in research,
+Population data are often available at various levels of aggregation, such as census tracts or block groups in the United States or output areas in the United Kingdom. These units are often drawn for convenience and not because they represent some commonly accepted area in residents' lived experiences. Despite this, researchers often use them as proxies for neighborhoods since they come with readily available demographic data. Researchers who do wish to move past these proxies and produce population estimates for other geographies typically resort to developing their own, often manual, implementations of the areal weighted interpolation workflow [@qiu2012development]. The lack of reliable and easy to use software that implements this technique has therefore served as an additional barrier to using local neighborhood boundaries in research.
 
 Areal weighted interpolation is the most accessible technique for estimating population values for overlapping but incongruent areas, such as imputing neighborhood populations from census tracts. Unlike interpolation techniques, such as inverse distance weighted interpolation, that are appropriate for point data, areal weighted interpolation is designed specifically for working with data already aggregated to some set of polygon spatial features [@lam1983spatial]. Estimating population values from these data to an overlapping but incongruent set of polygon features is known as the *polygon overlay problem* [@goodchild1978statistical], with the original data known as the "source" data and the overlapping set of features known as the "target" data [@markoff1973linkage]. The estimation process varies based on whether data are spatially *extensive* (i.e. count data) or spatially *intensive* [i.e. ratios, percentages, means, or medians; @goodchild1980areal].
 
