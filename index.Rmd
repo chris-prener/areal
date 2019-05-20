@@ -26,10 +26,10 @@ knitr::opts_chunk$set(
 Areal interpolation is the process making estimates from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented in the academic literature, implementing them often involves "reinventing the wheel." While the `R` package `sf` does offer a basic interface for areal weighted interpolation (`st_interpolate_aw`), it lacks some features that we use in our work. The `areal` package contains a suite tools for validation and estimation, providing a full-featured workflow that fits into both modern data management (e.g. `tidyverse`) and spatial data (e.g. `sf`) frameworks.
 
 ### *Joural of Open Souce Software* Article
-An [article](http://joss.theoj.org/papers/10.21105/joss.01221) describing `areal`'s approach to areal weighted interpolation has been published in the [*The Journal of Open Source Software*](http://joss.theoj.org/). The article includes benchmarking of `areal` performance on several data sets. Please [cite the paper](/docs/authors.html) if you use `areal` in your work!
+An [article](http://joss.theoj.org/papers/10.21105/joss.01221) describing `areal`'s approach to areal weighted interpolation has been published in the [*The Journal of Open Source Software*](http://joss.theoj.org/). The article includes benchmarking of `areal` performance on several data sets. Please [cite the paper](authors.html) if you use `areal` in your work!
 
 ### What is New in v0.1.4.5?
-This version of `areal` contains all of the bug fixes that were identified by early adaopters after the initial CRAN submission. Special thanks to [Matt Herman](https://github.com/mfherman) and [David Blodgett](https://github.com/dblodgett-usgs) for their issues and pull requests! Check out the [Changelog](/docs/news/index.html) for details on all of the bugs that were identified.
+This version of `areal` contains all of the bug fixes that were identified by early adaopters after the initial CRAN submission. Special thanks to [Matt Herman](https://github.com/mfherman) and [David Blodgett](https://github.com/dblodgett-usgs) for their issues and pull requests! Check out the [Changelog](news/index.html) for details on all of the bugs that were identified.
 
 ## Quick Start
 If the `sf` package is already installed, the easiest way to get `areal` is to install it from CRAN:
