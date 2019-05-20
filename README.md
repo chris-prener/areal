@@ -37,7 +37,7 @@ Software*](http://joss.theoj.org/). The article includes benchmarking of
 `areal` performance on several data sets. Please [cite the
 paper](/inst/CITATION) if you use `areal` in your work\!
 
-### What is New in v0.1.4.5?
+### What is New in v0.1.5?
 
 This version of `areal` contains all of the bug fixes that were
 identified by early adaopters after the initial CRAN submission. Special

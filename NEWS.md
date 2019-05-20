@@ -1,8 +1,10 @@
-# areal 0.1.4.5
+# areal 0.1.5
 
 * Add *JOSS* badges to the `README` and `pkgdown` sites
 * Add paper description to the `README` and `pkgdown` sites
 * Update `CITATION` file to match *JOSS* publication information
+* Update package hex logo
+* **No changes to the software functionality**
 
 # areal 0.1.4.4
 
