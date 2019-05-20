@@ -4,6 +4,7 @@
 * Add paper description to the `README` and `pkgdown` sites
 * Update `CITATION` file to match *JOSS* publication information
 * Update package hex logo
+* Remove unit testing that was cuasing problems on the noLD CRAN check of the current accepted version of the package
 * **No changes to the software functionality**
 
 # areal 0.1.4.4

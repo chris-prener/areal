@@ -1,5 +1,5 @@
 ## Release summary
-This is an update to the previous CRAN release. It contains bug fixes and updated documentation, and decreases the number of dependencies required for installation.
+This is an update to the previous CRAN release. It contains bug fixes and updated documentation. It also addresses two issues identified on CRAN's checks of the current version of the package by decreases the number of dependencies required for installation (two were included in the `NAMESPACE` but not called) and eliminating a single unit test that was casuing problems on the noLD check.
 
 ## Test environments
 * local OS X install, R 3.5.1
