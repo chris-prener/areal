@@ -19,25 +19,17 @@ knitr::opts_chunk$set(
 [![Travis-CI Build Status](https://travis-ci.org/slu-openGIS/areal.svg?branch=master)](https://travis-ci.org/slu-openGIS/areal)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/slu-openGIS/areal?branch=master&svg=true)](https://ci.appveyor.com/project/chris-prener/areal)
 [![Coverage status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=master)
+[![DOI](https://zenodo.org/badge/152279647.svg)](https://zenodo.org/badge/latestdoi/152279647) 
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.01221/status.svg)](https://doi.org/10.21105/joss.01221)
 [![CRAN_status_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 
 Areal interpolation is the process making estimates from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented in the academic literature, implementing them often involves "reinventing the wheel." While the `R` package `sf` does offer a basic interface for areal weighted interpolation (`st_interpolate_aw`), it lacks some features that we use in our work. The `areal` package contains a suite tools for validation and estimation, providing a full-featured workflow that fits into both modern data management (e.g. `tidyverse`) and spatial data (e.g. `sf`) frameworks.
 
-## Bug Fixes in v0.1.4
-There are two additional bug fixes in v0.1.4:
+### *Joural of Open Souce Software* Article
+An [article](http://joss.theoj.org/papers/10.21105/joss.01221) describing `areal`'s approach to areal weighted interpolation has been published in the [*The Journal of Open Source Software*](http://joss.theoj.org/). The article includes benchmarking of `areal` performance on several data sets. Please [cite the paper](/docs/authors.html) if you use `areal` in your work!
 
-1. Data that do not require being converted back from a geometry collection (see #2 in the next section) were still being processed through this code, making runtimes longer than necessary. This has been fixed.
-2. Mixed interpolations with multiple extensive and intensive variables would get incorrect output containing two copies of the extensive results. This has been fixed, and the simplest workaround is to install the development version of `areal` from GitHub.
-
-## Bug Fixes in v0.1.3
-The initial CRAN release contains four known bugs (see Issues [6](https://github.com/slu-openGIS/areal/issues/6), [7](https://github.com/slu-openGIS/areal/issues/7), [14](https://github.com/slu-openGIS/areal/issues/14), and [16](https://github.com/slu-openGIS/areal/issues/16)), all of which are fixed on the current GitHub master branch:
-
-1. If the `tid` and `sid` column names are identical, the interpolated column created by `aw_interpolate()` will consist of all `NA` values. The simplest workaround is to rename either `tid` or `sid` before executing `aw_interpolate()`. Alternatively, you can install the development version of `areal` from GitHub.
-2. Some intersections of `sf` geometries will result in geometry collections being created. This appears to be an infrequent issue, but it will result in an error when `aw_interpolate()` is executed. The error will begin with `Warning in st_cast.GEOMETRYCOLLECTION(X[[i]], ...)`. The simplest workaround is to install the development version of `areal` from GitHub.
-3. Interpolation fails if the `sf` geometry column is not named `geometry`. The simplest workaround is to either rename the column to `geometry` before executing `aw_interpolate()`. Alternatively, you can install the development version of `areal` from GitHub.
-4. Interpolation with `output = "tibble"` only returns the identification number and the estimated value. If you want other variables from the target data, the simplest workaround is to join the output to the original target data. Alternatively, you can install the development version of `areal` from GitHub.
-
-Big thanks to early adopter [Matt Herman](https://github.com/mfherman) for catching the first two and [David Blodgett](https://github.com/dblodgett-usgs) for catching the third!
+### What is New in v0.1.4.5?
+This version of `areal` contains all of the bug fixes that were identified by early adaopters after the initial CRAN submission. Special thanks to [Matt Herman](https://github.com/mfherman) and [David Blodgett](https://github.com/dblodgett-usgs) for their issues and pull requests! Check out the [Changelog](/docs/news/index.html) for details on all of the bugs that were identified.
 
 ## Quick Start
 If the `sf` package is already installed, the easiest way to get `areal` is to install it from CRAN:

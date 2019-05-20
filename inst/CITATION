@@ -8,6 +8,6 @@ citEntry(entry="Article",
   doi = "10.21105/joss.01221",
   url = "https://doi.org/10.21105/joss.01221",
   volume = 4,
-  number = 36,
-  textVersion = "Prener, C. and C. Revord, 2019. areal: An R package for areal weighted interpolation. Journal of Open Source Software 4(36), https://doi.org/10.21105/joss.0122"
+  number = 37,
+  textVersion = "Prener, C. and C. Revord, 2019. areal: An R package for areal weighted interpolation. Journal of Open Source Software 4(37), 1221. https://doi.org/10.21105/joss.0122"
 )

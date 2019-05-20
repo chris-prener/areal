@@ -1,3 +1,9 @@
+# areal 0.1.4.5
+
+* Add *JOSS* badges to the `README` and `pkgdown` sites
+* Add paper description to the `README` and `pkgdown` sites
+* Update `CITATION` file to match *JOSS* publication information
+
 # areal 0.1.4.4
 
 * Finalize *JOSS* manuscript
