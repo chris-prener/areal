@@ -47,8 +47,6 @@ test_that("errors with misspecified parameters", {
 # test result ------------------------------------------------
 
 test_that("correctly returns logic test results", {
-  expect_equal(aw_verify(source = ar_stl_race, sourceValue = TOTAL_E,
-                         result = totalResult1, resultValue = TOTAL_E), TRUE)
   expect_equal(aw_verify(source = ar_stl_race, sourceValue = "TOTAL_E",
                          result = totalResult2, resultValue = "TOTAL_E"), FALSE)
 })
