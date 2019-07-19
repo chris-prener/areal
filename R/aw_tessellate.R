@@ -1,6 +1,6 @@
 #' Create Tessellations From SF Object
 #'
-#' @usage aw_tessellate(.data, shape = "square", size = 1)
+#' @usage ar_tessellate(.data, shape = "square", size = 1)
 #'
 #' @param .data An object of class \code{sf} to tessellate from
 #' @param shape One of 'square' or 'hexagon', the shape to make tessellations from
@@ -9,15 +9,15 @@
 #' @return A \code{sf} object
 #'
 #' @examples
-#' aw_tessellate(ar_stl_wards)
+#' ar_tessellate(ar_stl_wards)
 #'
-#' aw_tessellate(ar_stl_wards, shape = "hexagon", size = .75)
+#' ar_tessellate(ar_stl_wards, shape = "hexagon", size = .75)
 #'
 #' @importFrom sf st_crs st_make_grid st_intersection st_union st_sf
 #' @importFrom dplyr %>%
 #'
 #' @export
-aw_tessellate <- function(.data, shape = "square", size = 1){
+ar_tessellate <- function(.data, shape = "square", size = 1){
 
   # error for wrong or missing data
   if(missing(.data) || !"sf" %in% class(.data)){
@@ -38,7 +38,7 @@ aw_tessellate <- function(.data, shape = "square", size = 1){
   }
 
   # error if unrecognized units
-  if(!units %in% c("Foot_US", "Meter", "meter", "Metre", "metre")){
+  if(!units %in% c("Foot_US","feet", "Feet", "Meter", "meter", "Metre", "metre")){
     stop("Unit '", units ,"' of projection is unrecognized or not yet implemented")
   }
 
