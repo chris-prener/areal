@@ -37,8 +37,9 @@ test_that("errors with missing parameters", {
 })
 
 test_that("errors with objects and id variables that do not exist", {
-  expect_error(aw_aggregate(intersect, target = ar_stl_wards, tid = ham, interVar = "TOTAL_E"),
-               "Variable 'ham', given for the target ID \\('tid'\\), cannot be found in the given target object.")
+  expect_error(aw_aggregate(intersect, target = ar_stl_wards, tid = "ham", interVar = "TOTAL_E"),
+               "Variable 'ham', given for the target ID ('tid'), cannot be found in the given target object.",
+               fixed = TRUE)
 })
 
 # test inputs ------------------------------------------------

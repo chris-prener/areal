@@ -100,7 +100,7 @@ aw_aggregate <- function(.data, target, tid, interVar, newVar){
   # check variables
   if(!!tidQN %in% colnames(target) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the target ID ('tid'), cannot be found in the given target object.",
-                    var = tidQ))
+                    var = tidQN))
   }
 
   # remove geometry
