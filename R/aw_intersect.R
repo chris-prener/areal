@@ -64,7 +64,7 @@ aw_intersect <- function(.data, source, areaVar) {
   intersection <- suppressWarnings(sf::st_intersection(source, .data))
 
   # if a geometry collection is returned, extract it
-  if(any(grepl("GEOMETRY", sf::st_geometry_type(intersection)))) {
+  if(any(grepl("GEOMETRY", suppressWarnings(sf::st_geometry_type(intersection))))) {
     intersection <- sf::st_collection_extract(intersection)
   }
 
