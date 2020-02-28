@@ -63,14 +63,13 @@ aw_intersect <- function(.data, source, areaVar) {
   # preform intersection
   intersection <- suppressWarnings(sf::st_intersection(source, .data))
 
-  # calculate area
-  intersection %>%
-    aw_area(areaVar = !!areaVarQ) -> intersection
-
   # if a geometry collection is returned, extract it
   if(any(grepl("GEOMETRY", sf::st_geometry_type(intersection)))) {
     intersection <- sf::st_collection_extract(intersection)
   }
+
+  # calculate area
+  intersection <- aw_area(intersection, areaVar = !!areaVarQ)
 
   # return output
   return(intersection)
