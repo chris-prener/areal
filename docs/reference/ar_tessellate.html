@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Asthma in St. Louis by Census Tract, 2017 — ar_stl_asthma • areal</title>
+<title>Create Tessellations From SF Object — ar_tessellate • areal</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,8 @@
 
 
 
-<meta property="og:title" content="Asthma in St. Louis by Census Tract, 2017 — ar_stl_asthma" />
-<meta property="og:description" content="A simple features data set containing the geometry and asthma estimates
-    from the Centers for Disease Control for St. Louis." />
+<meta property="og:title" content="Create Tessellations From SF Object — ar_tessellate" />
+<meta property="og:description" content="Create Tessellations From SF Object" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,80 +126,82 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Asthma in St. Louis by Census Tract, 2017</h1>
-    <small class="dont-index">Source: <a href='https://github.com/slu-openGIS/areal/blob/master/R/ar_stl_asthma.R'><code>R/ar_stl_asthma.R</code></a></small>
-    <div class="hidden name"><code>ar_stl_asthma.Rd</code></div>
+    <h1>Create Tessellations From SF Object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/slu-openGIS/areal/blob/master/R/ar_tessellate.R'><code>R/ar_tessellate.R</code></a></small>
+    <div class="hidden name"><code>ar_tessellate.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A simple features data set containing the geometry and asthma estimates
-    from the Centers for Disease Control for St. Louis.</p>
+    <p>Create Tessellations From SF Object</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ar_stl_asthma</span>)</pre>
+    <pre class="usage"><span class='fu'>ar_tessellate</span>(<span class='no'>.data</span>, <span class='kw'>shape</span> <span class='kw'>=</span> <span class='st'>"square"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>An object of class <code>sf</code> to tessellate from</p></td>
+    </tr>
+    <tr>
+      <th>shape</th>
+      <td><p>One of 'square' or 'hexagon', the shape to make tessellations from</p></td>
+    </tr>
+    <tr>
+      <th>size</th>
+      <td><p>Numeric multiplier for size of tessellations, default is one kilometer</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with 106 rows and 24 variables:</p><dl class='dl-horizontal'>
-  <dt>GEOID</dt><dd><p>full GEOID string</p></dd>
-  <dt>STATEFP</dt><dd><p>state FIPS code</p></dd>
-  <dt>COUNTYFP</dt><dd><p>county FIPS code</p></dd>
-  <dt>TRACTCE</dt><dd><p>tract FIPS code</p></dd>
-  <dt>NAMELSAD</dt><dd><p>tract name</p></dd>
-  <dt>ALAND</dt><dd><p>area of tract land, square meters</p></dd>
-  <dt>AWATER</dt><dd><p>area of tract water, square meters</p></dd>
-  <dt>ASTHMA</dt><dd><p>percent of residents with current asthma diagnosis, estimated</p></dd>
-  <dt>geometry</dt><dd><p>simple features geometry</p></dd>
-  
-</dl>
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>Centers for Disease Control's 500 Cities Data</p>
+    <p>A <code>sf</code> object</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>ar_stl_asthma</span>)</div><div class='output co'>#&gt; Classes ‘sf’ and 'data.frame':	106 obs. of  9 variables:
-#&gt;  $ GEOID   : chr  "29510112100" "29510116500" "29510110300" "29510103700" ...
-#&gt;  $ STATEFP : chr  "29" "29" "29" "29" ...
-#&gt;  $ COUNTYFP: chr  "510" "510" "510" "510" ...
-#&gt;  $ TRACTCE : chr  "112100" "116500" "110300" "103700" ...
-#&gt;  $ NAMELSAD: chr  "Census Tract 1121" "Census Tract 1165" "Census Tract 1103" "Census Tract 1037" ...
-#&gt;  $ ALAND   : num  6936664 904024 938287 910953 1640334 ...
-#&gt;  $ AWATER  : num  0 0 0 0 35369 ...
-#&gt;  $ ASTHMA  : num  8.8 10.8 13 8.6 9.1 8.8 14.6 12.3 10.1 13.1 ...
-#&gt;  $ geometry:sfc_POLYGON of length 106; first list element: List of 1
-#&gt;   ..$ : num [1:284, 1:2] 734633 734636 734644 734662 734671 ...
-#&gt;   ..- attr(*, "class")= chr  "XY" "POLYGON" "sfg"
-#&gt;  - attr(*, "sf_column")= chr "geometry"
-#&gt;  - attr(*, "agr")= Factor w/ 3 levels "constant","aggregate",..: NA NA NA NA NA NA NA NA
-#&gt;   ..- attr(*, "names")= chr  "GEOID" "STATEFP" "COUNTYFP" "TRACTCE" ...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>ar_stl_asthma</span>)</div><div class='output co'>#&gt; Simple feature collection with 6 features and 8 fields
-#&gt; geometry type:  POLYGON
+    <pre class="examples"><div class='input'><span class='fu'>ar_tessellate</span>(<span class='no'>ar_stl_wards</span>)</div><div class='output co'>#&gt; Simple feature collection with 215 features and 0 fields
+#&gt; geometry type:  GEOMETRY
 #&gt; dimension:      XY
-#&gt; bbox:           xmin: 733360 ymin: 4274925 xmax: 741440.9 ymax: 4283867
+#&gt; bbox:           xmin: 733361.8 ymin: 4268336 xmax: 746157.7 ymax: 4295504
 #&gt; epsg (SRID):    26915
 #&gt; proj4string:    +proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
-#&gt;         GEOID STATEFP COUNTYFP TRACTCE          NAMELSAD   ALAND AWATER ASTHMA
-#&gt; 1 29510112100      29      510  112100 Census Tract 1121 6936664      0    8.8
-#&gt; 2 29510116500      29      510  116500 Census Tract 1165  904024      0   10.8
-#&gt; 3 29510110300      29      510  110300 Census Tract 1103  938287      0   13.0
-#&gt; 4 29510103700      29      510  103700 Census Tract 1037  910953      0    8.6
-#&gt; 5 29510103800      29      510  103800 Census Tract 1038 1640334  35369    9.1
-#&gt; 6 29510104500      29      510  104500 Census Tract 1045 1939712      0    8.8
-#&gt;                         geometry
-#&gt; 1 POLYGON ((734633.3 4279479,...
-#&gt; 2 POLYGON ((740098.5 4275728,...
-#&gt; 3 POLYGON ((740110.8 4283146,...
-#&gt; 4 POLYGON ((735225.3 4276168,...
-#&gt; 5 POLYGON ((733360 4275146, 7...
-#&gt; 6 POLYGON ((735553.7 4278190,...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>ar_stl_asthma</span>$<span class='no'>ASTHMA</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;    8.50    9.50   12.05   11.61   13.47   16.50 </div><div class='input'>
+#&gt; First 10 features:
+#&gt;                          geometry
+#&gt; 1  POLYGON ((737846.1 4269336,...
+#&gt; 2  POLYGON ((738361.8 4268583,...
+#&gt; 3  POLYGON ((739361.8 4269159,...
+#&gt; 4  POLYGON ((737423.9 4270336,...
+#&gt; 5  POLYGON ((738361.8 4269336,...
+#&gt; 6  POLYGON ((739449.9 4269336,...
+#&gt; 7  POLYGON ((735900 4271336, 7...
+#&gt; 8  POLYGON ((736361.8 4270962,...
+#&gt; 9  POLYGON ((737361.8 4270359,...
+#&gt; 10 POLYGON ((738361.8 4270336,...</div><div class='input'>
+<span class='fu'>ar_tessellate</span>(<span class='no'>ar_stl_wards</span>, <span class='kw'>shape</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>.75</span>)</div><div class='output co'>#&gt; Simple feature collection with 410 features and 0 fields
+#&gt; geometry type:  GEOMETRY
+#&gt; dimension:      XY
+#&gt; bbox:           xmin: 733361.8 ymin: 4268336 xmax: 746157.7 ymax: 4295504
+#&gt; epsg (SRID):    26915
+#&gt; proj4string:    +proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+#&gt; First 10 features:
+#&gt;                          geometry
+#&gt; 1  POLYGON ((733389.3 4275248,...
+#&gt; 2  POLYGON ((733703.9 4276366,...
+#&gt; 3  POLYGON ((733599 4274535, 7...
+#&gt; 4  POLYGON ((733736.8 4275048,...
+#&gt; 5  POLYGON ((733736.8 4276347,...
+#&gt; 6  POLYGON ((734111.8 4277903,...
+#&gt; 7  POLYGON ((733871.9 4273827,...
+#&gt; 8  POLYGON ((734111.8 4274398,...
+#&gt; 9  POLYGON ((734111.8 4275697,...
+#&gt; 10 POLYGON ((734111.8 4276996,...</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#format">Format</a></li>
-      <li><a href="#source">Source</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

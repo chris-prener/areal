@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Areal Weighted Interpolation • areal</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Areal Weighted Interpolation">
 <meta property="og:description" content="A pipeable, transparent implementation of areal weighted interpolation
     with support for interpolating multiple variables in a single function call.
@@ -22,7 +23,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -34,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">areal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.9000</span>
       </span>
     </div>
 
@@ -42,7 +43,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -74,7 +75,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/slu-openGIS/areal">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -87,51 +88,155 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="areal" class="section level1">
+      </header><div class="row">
+  <div class="contents col-md-9">
+<div id="areal-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#areal" class="anchor"></a>areal <img src="reference/figures/arealLogo.png" align="right">
+<a href="#areal-" class="anchor"></a>areal <img src="reference/figures/arealLogo.png" align="right">
 </h1></div>
 
-<p>Areal interpolation is the process making estimates from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented in the academic literature, implementing them often involves “reinventing the wheel.” While the <code>R</code> package <code>sf</code> does offer a basic interface for areal weighted interpolation (<code>st_interpolate_aw</code>), it lacks some features that we use in our work. The <code>areal</code> package contains a suite tools for validation and estimation, providing a full-featured workflow that fits into both modern data management (e.g. <code>tidyverse</code>) and spatial data (e.g. <code>sf</code>) frameworks.</p>
+<p>Areal interpolation is the process making estimates from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented in the academic literature, implementing them often involves “reinventing the wheel” by re-creating the process in the analyst’s tool choice.</p>
+<p>While the <code>R</code> package <code>sf</code> does offer a basic interface for areal weighted interpolation (<code>st_interpolate_aw</code>), it lacks some features that we use in our work. The <code>areal</code> package contains a suite tools for validation and estimation, providing a full-featured workflow that fits into both modern data management (e.g. <code>tidyverse</code>) and spatial data (e.g. <code>sf</code>) frameworks.</p>
 <div id="joural-of-open-souce-software-article" class="section level3">
 <h3 class="hasAnchor">
 <a href="#joural-of-open-souce-software-article" class="anchor"></a><em>Joural of Open Souce Software</em> Article</h3>
-<p>An <a href="http://joss.theoj.org/papers/10.21105/joss.01221">article</a> describing <code>areal</code>’s approach to areal weighted interpolation has been published in the <a href="http://joss.theoj.org/"><em>The Journal of Open Source Software</em></a>. The article includes benchmarking of <code>areal</code> performance on several data sets. Please <a href="authors.html">cite the paper</a> if you use <code>areal</code> in your work!</p>
+<p>An <a href="http://joss.theoj.org/papers/10.21105/joss.01221">article</a> describing <code>areal</code>’s approach to areal weighted interpolation has been published in the <a href="http://joss.theoj.org/"><em>The Journal of Open Source Software</em></a>. The article includes benchmarking of <code>areal</code> performance on several data sets. Please <a href="/inst/CITATION">cite the paper</a> if you use <code>areal</code> in your work!</p>
 </div>
-<div id="what-is-new-in-v0-1-5" class="section level3">
+<div id="what-is-new-in-v015" class="section level3">
 <h3 class="hasAnchor">
-<a href="#what-is-new-in-v0-1-5" class="anchor"></a>What is New in v0.1.5?</h3>
-<p>This version of <code>areal</code> contains all of the bug fixes that were identified by early adaopters after the initial CRAN submission. Special thanks to <a href="https://github.com/mfherman">Matt Herman</a> and <a href="https://github.com/dblodgett-usgs">David Blodgett</a> for their issues and pull requests! Check out the <a href="news/index.html">Changelog</a> for details on all of the bugs that were identified.</p>
+<a href="#what-is-new-in-v015" class="anchor"></a>What is New in v0.1.5?</h3>
+<p>This version of <code>areal</code> contains all of the bug fixes that were identified by early adaopters after the initial CRAN submission. Special thanks to <a href="https://github.com/mfherman">Matt Herman</a> and <a href="https://github.com/dblodgett-usgs">David Blodgett</a> for their issues and pull requests! Check out the <a href="/NEWS.html">NEWS file</a> for details on all of the bugs that were identified.</p>
 </div>
-<div id="quick-start" class="section level2">
+<div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#quick-start" class="anchor"></a>Quick Start</h2>
-<p>If the <code>sf</code> package is already installed, the easiest way to get <code>areal</code> is to install it from CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"areal"</span>)</a></code></pre></div>
-<p>Alternatively, the development version of <code>areal</code> can be accessed from GitHub with <code>remotes</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"slu-openGIS/areal"</span>)</a></code></pre></div>
-<p>Additional details, including some tips for installing <code>sf</code>, can be found in the <a href="articles/areal.html#getting-started">Get started article</a>.</p>
+<a href="#installation" class="anchor"></a>Installation</h2>
+<div id="installing-dependencies" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installing-dependencies" class="anchor"></a>Installing Dependencies</h3>
+<p>You should check the <a href="https://r-spatial.github.io/sf/"><code>sf</code> package website</a> and the <a href="https://slu-openGIS.github.io/areal/"><code>areal</code> package website</a> for the latest details on installing dependencies for that package. Instructions vary significantly by operating system. For best results, have <code>sf</code> installed before you install <code>areal</code>. Other dependencies, like <code>dplyr</code>, will be installed automatically with <code>areal</code> if they are not already present.</p>
+<p>The one exception here is the dependency <code>lwgeom</code>, which Linux users will need to follow some <a href="https://github.com/r-spatial/lwgeom">special instructions</a> to install correctly.</p>
 </div>
-<div id="resources" class="section level2">
+<div id="installing-areal" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installing-areal" class="anchor"></a>Installing areal</h3>
+<p>The easiest way to get <code>areal</code> is to install it from CRAN:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"areal"</span>)</span></code></pre></div>
+<p>The development version of <code>areal</code> can be accessed from GitHub with <code>remotes</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># install.packages("remotes")</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"slu-openGIS/areal"</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="usage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#resources" class="anchor"></a>Resources</h2>
-<p>In addition to instructions for installation, the main <a href="articles/areal.html">Get started</a> article has:</p>
+<a href="#usage" class="anchor"></a>Usage</h2>
+<p>Two function prefixes are used in <code>areal</code> to allow users to take advantage of RStudio’s auto complete functionality:</p>
 <ul>
-<li>a quick overview of areal interpolation,</li>
-<li>some notes on preparing data for interpolation,</li>
-<li>a brief introduction to the <code><a href="reference/aw_interpolate.html">aw_interpolate()</a></code> function,</li>
-<li>tips for getting help and submitting feedback,</li>
-<li>and the <code>areal</code> package’s development roadmap!</li>
+<li>
+<code>ar_</code> - data and functions that are used for multiple interpolation methods</li>
+<li>
+<code>aw_</code> - functions that are used specifically for areal weighted interpolation</li>
 </ul>
-<p>This site also offers dedicated articles on <a href="articles/data-preparation.html">data preparation</a> and <a href="articles/areal-weighted-interpolation.html">using <code>areal</code> for areal weighted interpolation</a>.</p>
+<div id="data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data" class="anchor"></a>Data</h3>
+<p>The package contains four overlapping data sets:</p>
+<ul>
+<li>
+<code>ar_stl_race</code> (2017 ACS demographic counts at the census tract level; <em>n</em> = 106)</li>
+<li>
+<code>ar_stl_asthma</code> (2017 asthma rates at the census tract level; <em>n</em> = 106)</li>
+<li>
+<code>ar_stl_wards</code> (the 2010 political subdivisions in St. Louis; <em>n</em> = 28).</li>
+<li>
+<code>ar_stl_wardsClipped</code> (the 2010 political subdivisions in St. Louis clipped to the Mississippi River shoreline; <em>n</em> = 28).</li>
+</ul>
+<p>These can be used to illustrate the core functionality of the package. The following examples assume:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(areal)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="op">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="er">&gt;</span><span class="st"> </span>race &lt;-<span class="st"> </span>ar_stl_race</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="op">&gt;</span><span class="st"> </span>asthma &lt;-<span class="st"> </span>ar_stl_asthma</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="op">&gt;</span><span class="st"> </span>wards &lt;-<span class="st"> </span>ar_stl_wards</span></code></pre></div>
+</div>
+<div id="areal-weighted-interpolation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#areal-weighted-interpolation" class="anchor"></a>Areal Weighted Interpolation</h3>
+<p><code>areal</code> currently implements an approach to interpolation known as areal weighted interpolation. It is arguably the simplest and most common approach to areal interpolation, though it does have some drawbacks (see the <a href="https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html">areal weighted interpolation vignette</a> for details). The basic usage of <code>areal</code> is through the <code><a href="reference/aw_interpolate.html">aw_interpolate()</a></code> function. This is a pipe-able function that allows for the simultaneous interpolation of multiple values.</p>
+<p>In this first example, the total estimated population (<code>TOTAL_E</code>) of each ward is calculated from its overlapping census tracts:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="reference/aw_interpolate.html">aw_interpolate</a></span>(wards, <span class="dt">tid =</span> WARD, <span class="dt">source =</span> race, <span class="dt">sid =</span> <span class="st">"GEOID"</span>, </span>
+<span id="cb4-2"><a href="#cb4-2"></a>               <span class="dt">weight =</span> <span class="st">"sum"</span>, <span class="dt">output =</span> <span class="st">"sf"</span>, <span class="dt">extensive =</span> <span class="st">"TOTAL_E"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; Simple feature collection with 28 features and 4 fields</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt; geometry type:  POLYGON</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; dimension:      XY</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; bbox:           xmin: 733361.8 ymin: 4268336 xmax: 746157.7 ymax: 4295504</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; epsg (SRID):    26915</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; proj4string:    +proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; First 10 features:</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;    OBJECTID WARD      AREA   TOTAL_E                       geometry</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt; 1         1    1  46138761  7991.565 POLYGON ((740184.2 4286431,...</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt; 2         2    2 267817711 12145.021 POLYGON ((742392.1 4289178,...</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt; 3         3    3  66291644  7344.287 POLYGON ((742956.1 4284113,...</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; 4         4    4  53210707  8457.672 POLYGON ((739557.6 4284080,...</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt; 5         5    5  60462396  8783.377 POLYGON ((744883.8 4281632,...</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; 6         6    6  64337271 14050.399 POLYGON ((742501.6 4279976,...</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt; 7         7    7 101268146 15840.086 POLYGON ((745618.6 4279867,...</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt; 8         8    8  45966410 12188.131 POLYGON ((739842.8 4277724,...</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; 9         9    9  73993891 14217.149 POLYGON ((742619.4 4276734,...</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; 10       10   10  62915358 11239.213 POLYGON ((737257.7 4277050,...</span></span></code></pre></div>
+<p>This example outputs a simple features (<code>sf</code>) object and uses one of two options for calculating weights. All of these arguments are documented both within the package (use <code><a href="reference/aw_interpolate.html">?aw_interpolate</a></code>) and on the <a href="https://slu-opengis.github.io/areal/">package’s website</a>.</p>
+<p>What results from <code><a href="reference/aw_interpolate.html">aw_interpolate()</a></code> is mapped below. Total population per census tract in St. Louis is mapped on the left in panel A. Using <code><a href="reference/aw_interpolate.html">aw_interpolate()</a></code> as we did in the previous example, we estimate population counts for Wards in St. Louis from those census tract values. These estimated values are mapped on the right in panel B.</p>
+<p><img src="reference/figures/exampleMap.png" width="100%"></p>
+<p>Both extensive and intensive data can be interpolated simultaneously by using both the <code>extensive</code> and <code>intensive</code> arguments. In this second example, the asthma and race data are combined, and estimates for both the population values and asthma rates are calculated for each ward from its overlapping census tracts:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># remove sf geometry</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">st_geometry</span>(race) &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># create combined data</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>race <span class="op">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="st">  </span><span class="kw">select</span>(GEOID, TOTAL_E, WHITE_E, BLACK_E) <span class="op">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="st">  </span><span class="kw">left_join</span>(asthma, ., <span class="dt">by =</span> <span class="st">"GEOID"</span>) -&gt;<span class="st"> </span>combinedData</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co"># interpolate</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>wards <span class="op">%&gt;%</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>OBJECTID, <span class="op">-</span>AREA) <span class="op">%&gt;%</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="st">  </span><span class="kw"><a href="reference/aw_interpolate.html">aw_interpolate</a></span>(<span class="dt">tid =</span> WARD, <span class="dt">source =</span> combinedData, <span class="dt">sid =</span> <span class="st">"GEOID"</span>, </span>
+<span id="cb5-13"><a href="#cb5-13"></a>               <span class="dt">weight =</span> <span class="st">"total"</span>, <span class="dt">output =</span> <span class="st">"tibble"</span>, </span>
+<span id="cb5-14"><a href="#cb5-14"></a>               <span class="dt">extensive =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"TOTAL_E"</span>, <span class="st">"WHITE_E"</span>, <span class="st">"BLACK_E"</span>),</span>
+<span id="cb5-15"><a href="#cb5-15"></a>               <span class="dt">intensive =</span> <span class="st">"ASTHMA"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; # A tibble: 28 x 5</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;     WARD TOTAL_E WHITE_E BLACK_E ASTHMA</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt;    &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt;  1     1   7991.    153.   7778.  13.4 </span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt;  2     2  12042.   1308.  10552.  13.2 </span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt;  3     3   7334.    589.   6627.  14.1 </span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt;  4     4   8458.    160.   8203.  13.6 </span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt;  5     5   8689.   1518.   6971.  13.8 </span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#&gt;  6     6  14022.   5833.   7418.  11.7 </span></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="co">#&gt;  7     7  15645.   8123.   6544.   9.72</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co">#&gt;  8     8  12188.   7604.   3796.   9.82</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="co">#&gt;  9     9  14095.   6786.   6351.  11.8 </span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co">#&gt; 10    10  11239.   8703.   1667.   9.44</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co">#&gt; # … with 18 more rows</span></span></code></pre></div>
+<p>Another advantage of <code>areal</code> is that the interpolation process is not a “black box”, but rather can be manually completed if necessary. Functions for validating data, previewing the areal weights, and walking step-by-step through the interpolation process are provided. See the <a href="https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html">areal weighted interpolation vignette</a> for additional details about this workflow.</p>
+</div>
+</div>
+<div id="road-map" class="section level2">
+<h2 class="hasAnchor">
+<a href="#road-map" class="anchor"></a>Road-map</h2>
+<p>We are planning to experiment with at least three additional techniques for areal interpolation for possible inclusion into the package. These include:</p>
+<ul>
+<li>
+<a href="https://github.com/slu-openGIS/areal/issues/1">Pycnophylactic method</a> (raster based, eliminates the sharp transitions in value between target features)</li>
+<li>
+<a href="https://github.com/slu-openGIS/areal/issues/2">Binary dasymetric method</a> (incorporates ancillary data so that population is not assumed to be evenly distributed within units)</li>
+<li>
+<a href="https://github.com/slu-openGIS/areal/issues/3">3-class regression dasymetric method</a> (allows for a more complex estimation based on multiple forms of ancillary data)</li>
+</ul>
+<p>We do not have a timeline for these experiments, though we are planning to begin experimenting with the pycnophylactic method in the coming months. We will be keeping the issues (linked to above) updated with progress. If you are interested in bringing these techniques to <code>R</code>, please feel free to contribute to the development of <code>areal</code>. The best place to start is bt checking in on our GitHub issues for each technique to see what help is needed!</p>
+</div>
+<div id="contributor-code-of-conduct" class="section level2">
+<h2 class="hasAnchor">
+<a href="#contributor-code-of-conduct" class="anchor"></a>Contributor Code of Conduct</h2>
+<p>Please note that this project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 </div>
   </div>
@@ -154,6 +259,13 @@
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
 </ul>
 </div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+</ul>
+</div>
 <div class="citation">
 <h2>Citation</h2>
 <ul class="list-unstyled">
@@ -164,12 +276,12 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://chris-prener.github.io">Christopher Prener</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-4310-9888" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<a href="https://chris-prener.github.io">Christopher Prener</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-4310-9888" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 <li>Charlie Revord <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
@@ -182,7 +294,6 @@
 </ul>
 </div>
 </div>
-
 </div>
 
 
@@ -191,12 +302,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

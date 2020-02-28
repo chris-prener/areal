@@ -1,3 +1,7 @@
+# areal 0.1.6.9000
+
+* Address bug where geometry colletions caused inaccurate areas to be calculated
+
 # areal 0.1.5
 
 * Add *JOSS* badges to the `README` and `pkgdown` sites
