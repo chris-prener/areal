@@ -28,8 +28,8 @@ Areal interpolation is the process making estimates from a source set of polygon
 ### *Joural of Open Souce Software* Article
 An [article](http://joss.theoj.org/papers/10.21105/joss.01221) describing `areal`'s approach to areal weighted interpolation has been published in the [*The Journal of Open Source Software*](http://joss.theoj.org/). The article includes benchmarking of `areal` performance on several data sets. Please [cite the paper](authors.html) if you use `areal` in your work!
 
-### What is New in v0.1.5?
-This version of `areal` contains all of the bug fixes that were identified by early adaopters after the initial CRAN submission. Special thanks to [Matt Herman](https://github.com/mfherman) and [David Blodgett](https://github.com/dblodgett-usgs) for their issues and pull requests! Check out the [Changelog](news/index.html) for details on all of the bugs that were identified.
+### What is New in v0.1.6?
+This version contains updates under the hood to make it compatible with `dplyr`'s v1.0 release!
 
 ## Quick Start
 If the `sf` package is already installed, the easiest way to get `areal` is to install it from CRAN:
