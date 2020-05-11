@@ -58,7 +58,7 @@ ar_tessellate <- function(.data, shape = "square", size = 1){
 
   # make tessellation, clip to original boundary and convert to sf/df
   tess <- sf::st_make_grid(.data, cellsize, square = shape) %>%
-    sf::st_intersection(sf::st_union(.data)) %>% sf::st_sf()
+    suppressWarnings(sf::st_intersection(sf::st_union(.data))) %>% sf::st_sf()
 
   return(tess)
 }

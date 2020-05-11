@@ -252,9 +252,7 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
 
   # rename tid
   if (nameConflict == TRUE){
-
     out <- dplyr::rename(out, !!tidOrig := !!tidQN)
-
   }
 
   # return output
@@ -367,9 +365,15 @@ aw_interpolate_multiple <- function(source, sid, values, target, tid, type, weig
     split(values) %>%
     purrr::map(~ aw_strip_df(source, id = !!sidQ, value = .x)) %>%
     purrr::imap(~ aw_interpolater(source = .x, sid = !!sidQ, value = (!! rlang::quo(!! rlang::sym(.y))),
-                                  target = targetS, tid = !!tidQ, type = type, weight = weight)) %>%
-    purrr::reduce(.f = dplyr::bind_cols) %>%
-    dplyr::select(dplyr::one_of(colNames)) -> out
+                                  target = targetS, tid = !!tidQ, type = type, weight = weight,
+                                  multiple = TRUE)) %>%
+    purrr::reduce(.f = dplyr::bind_cols) -> out
+
+  # remove geometry
+  sf::st_geometry(targetS) <- NULL
+
+  # combine
+  out <- dplyr::bind_cols(targetS, out)
 
   # return output
   return(out)
@@ -443,7 +447,7 @@ aw_strip_df <- function(.data, id, value){
 # @return A \code{sf} object or tibble with \code{value} interpolated into
 #    the \code{target} data.
 #
-aw_interpolater <- function(source, sid, value, target, tid, type, weight) {
+aw_interpolater <- function(source, sid, value, target, tid, type, weight, multiple = FALSE) {
 
   # save parameters to list
   paramList <- as.list(match.call())
@@ -483,6 +487,11 @@ aw_interpolater <- function(source, sid, value, target, tid, type, weight) {
 
   # remove sf from output
   sf::st_geometry(out) <- NULL
+
+  # fix multiples
+  if (multiple == TRUE){
+    out <- dplyr::select(out, !!valueQ)
+  }
 
   # return target output
   return(out)

@@ -91,12 +91,12 @@ aw_preview_weights <- function(.data, tid, source, sid, type){
   # check variables
   if(!!sidQN %in% colnames(source) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the source ID ('sid'), cannot be found in the given source object.",
-                    var = sidQ))
+                    var = sidQN))
   }
 
   if(!!tidQN %in% colnames(.data) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the target ID ('tid'), cannot be found in the given target object.",
-                    var = tidQ))
+                    var = tidQN))
   }
 
   # validate source and target data

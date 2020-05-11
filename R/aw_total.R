@@ -113,14 +113,14 @@ aw_total <- function(.data, source, id, areaVar, totalVar, type, weight){
   # check variables
   if(!!idQN %in% colnames(.data) == FALSE) {
     stop(glue::glue("Variable '{var}', given for the ID ('id'), cannot be found in the given intersected object.",
-                    var = idQ))
+                    var = idQN))
   }
 
   if (!!areaVarQN != "...area"){
 
     if(!!areaVarQN %in% colnames(.data) == FALSE) {
       stop(glue::glue("Variable '{var}', given for the area, cannot be found in the given intersected object.",
-                      var = areaVarQ))
+                      var = areaVarQN))
     }
 
   }

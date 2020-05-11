@@ -87,7 +87,7 @@ aw_weight <- function(.data, areaVar, totalVar, areaWeight){
 
     if(!!areaVarQN %in% colnames(.data) == FALSE) {
       stop(glue::glue("Variable '{var}', given for the area, cannot be found in the given intersected object.",
-                      var = areaVarQ))
+                      var = areaVarQN))
     }
 
   }
@@ -96,7 +96,7 @@ aw_weight <- function(.data, areaVar, totalVar, areaWeight){
 
     if(!!totalVarQN %in% colnames(.data) == FALSE) {
       stop(glue::glue("Variable '{var}', given for the total area, cannot be found in the given intersected object.",
-                      var = totalVarQ))
+                      var = totalVarQN))
     }
 
   }

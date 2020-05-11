@@ -39,5 +39,5 @@ load(system.file("testdata", "geometryCollection.rda", package = "areal", mustWo
 
 test_that("GEOMETRY check casts to MULTIPOLYGON when necessary", {
   intersection <- aw_intersect(si_zcta, si_tract, "area")
-  expect(all(sf::st_geometry_type(intersection) == "MULTIPOLYGON"))
+  expect_equal(all(sf::st_geometry_type(intersection) == "MULTIPOLYGON"), TRUE)
 })

@@ -122,10 +122,10 @@ test_that("interpolated values are equal", {
 })
 
 test_that("classes are created appropriately", {
-  expect_equal("sf", class(totalResult1)[1])
-  expect_equal("tbl_df", class(totalResult2)[1])
-  expect_equal("sf", class(asthmaResult)[1])
-  expect_equal("tbl_df", class(mixedResult)[1])
+  expect_equal("sf" %in% class(totalResult1), TRUE)
+  expect_equal("tbl_df" %in% class(totalResult2), TRUE)
+  expect_equal("sf" %in% class(asthmaResult), TRUE)
+  expect_equal("tbl_df" %in% class(mixedResult), TRUE)
 })
 
 # test inputs not otherwise tested above ------------------------------------------------
