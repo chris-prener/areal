@@ -1,17 +1,3 @@
----
-output: github_document
----
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/index-",
-  out.width = "100%"
-)
-```
 
 # areal <img src="man/figures/arealLogo.png" align="right" />
 
@@ -19,9 +5,11 @@ knitr::opts_chunk$set(
 [![Travis-CI Build Status](https://travis-ci.org/slu-openGIS/areal.svg?branch=master)](https://travis-ci.org/slu-openGIS/areal)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/slu-openGIS/areal?branch=master&svg=true)](https://ci.appveyor.com/project/chris-prener/areal)
 [![Coverage status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=master)
+[![CRAN_status_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
+[![cran checks](https://cranchecks.info/badges/worst/areal)](https://cran.r-project.org/web/checks/check_results_areal.html)
+[![Downloads](http://cranlogs.r-pkg.org/badges/areal?color=brightgreen)](http://www.r-pkg.org/pkg/areal)
 [![DOI](https://zenodo.org/badge/152279647.svg)](https://zenodo.org/badge/latestdoi/152279647) 
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.01221/status.svg)](https://doi.org/10.21105/joss.01221)
-[![CRAN_status_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 
 Areal interpolation is the process making estimates from a source set of polygons to an overlapping but incongruent set of target polygons. One challenge with areal interpolation is that, while the processes themselves are well documented in the academic literature, implementing them often involves "reinventing the wheel." While the `R` package `sf` does offer a basic interface for areal weighted interpolation (`st_interpolate_aw`), it lacks some features that we use in our work. The `areal` package contains a suite tools for validation and estimation, providing a full-featured workflow that fits into both modern data management (e.g. `tidyverse`) and spatial data (e.g. `sf`) frameworks.
 

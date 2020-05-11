@@ -8,21 +8,29 @@
 
 <title>Calculate Areal Weight — aw_weight • areal</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,12 +38,12 @@
 
 
 
-<meta property="og:title" content="Calculate Areal Weight — aw_weight" />
 
+<meta property="og:title" content="Calculate Areal Weight — aw_weight" />
 <meta property="og:description" content="aw_weight creates an area weight field by dividing the area
     field by the total area field. This is the third step in the interpolation
     process after aw_weight." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -49,9 +57,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -65,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">areal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
       </span>
     </div>
 
@@ -73,7 +82,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -83,30 +92,17 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/areal-weighted-interpolation.html">Areal Weighted Interpolation</a>
-    </li>
-    <li>
-      <a href="../articles/data-preparation.html">Preparing Data for Interpolation</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/slu-openGIS/areal">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/slu-openGIS/areal/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -117,6 +113,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -128,15 +125,13 @@
     </div>
 
     <div class="ref-description">
-    
     <p><code>aw_weight</code> creates an area weight field by dividing the area
     field by the total area field. This is the third step in the interpolation
     process after aw_weight.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>aw_weight</span>(<span class='no'>.data</span>, <span class='no'>areaVar</span>, <span class='no'>totalVar</span>, <span class='no'>areaWeight</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -157,14 +152,13 @@
       <td><p>The name of a new area weight field to be calculated</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>sf</code> object with the intersected data and new area weight field.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='no'>race</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>ar_stl_race</span>, <span class='no'>GEOID</span>, <span class='no'>TOTAL_E</span>)
 <span class='no'>wards</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>ar_stl_wards</span>, <span class='no'>WARD</span>)
@@ -178,59 +172,56 @@
 #&gt; geometry type:  GEOMETRY
 #&gt; dimension:      XY
 #&gt; bbox:           xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504
-#&gt; epsg (SRID):    26915
-#&gt; proj4string:    +proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+#&gt; CRS:            EPSG:26915
 #&gt; First 10 features:
-#&gt;          GEOID TOTAL_E WARD         area  totalArea   areaWeight
-#&gt; 1  29510106500    2863    1 4.271176e+05  1064776.2 4.011337e-01
-#&gt; 2  29510106700    3168    1 5.946820e+05  1239241.5 4.798758e-01
-#&gt; 3  29510107500    1991    1 6.146361e+05   912325.0 6.737030e-01
-#&gt; 4  29510107600    1958    1 1.071347e+06  1146634.4 9.343406e-01
-#&gt; 5  29510110100    2820    1 5.563665e+01   994606.5 5.593835e-05
-#&gt; 6  29510109600    3050    1 3.586828e+03  3157835.4 1.135850e-03
-#&gt; 7  29510126900    4462    1 8.903340e+05  4334701.5 2.053968e-01
-#&gt; 8  29510127000    1826    1 1.015451e+03 14726832.5 6.895245e-05
-#&gt; 9  29510106400    1986    1 6.866924e+05  1107191.4 6.202111e-01
-#&gt; 10 29510108100    3309    1 1.198667e+02  3216478.2 3.726645e-05
-#&gt;                          geometry
-#&gt; 1  POLYGON ((738110.9 4283989,...
-#&gt; 2  POLYGON ((738335.2 4283055,...
-#&gt; 3  POLYGON ((740111.6 4286547,...
-#&gt; 4  POLYGON ((739386.1 4285082,...
-#&gt; 5  POLYGON ((739542.5 4283728,...
-#&gt; 6  POLYGON ((740899.6 4285240,...
-#&gt; 7  POLYGON ((739115.9 4285807,...
-#&gt; 8  MULTIPOLYGON (((740936.1 42...
-#&gt; 9  POLYGON ((738500.9 4284750,...
-#&gt; 10 POLYGON ((740163.9 4286467,...</div><div class='input'>
+#&gt;          GEOID TOTAL_E WARD         area  totalArea
+#&gt; 1  29510106500    2863    1 4.271176e+05  1064776.2
+#&gt; 2  29510106700    3168    1 5.946820e+05  1239241.5
+#&gt; 3  29510107500    1991    1 6.146361e+05   912325.0
+#&gt; 4  29510107600    1958    1 1.071347e+06  1146634.4
+#&gt; 5  29510110100    2820    1 5.563665e+01   994606.5
+#&gt; 6  29510109600    3050    1 3.586828e+03  3157835.4
+#&gt; 7  29510126900    4462    1 8.903340e+05  4334701.5
+#&gt; 8  29510127000    1826    1 1.015451e+03 14726832.5
+#&gt; 9  29510106400    1986    1 6.866924e+05  1107191.4
+#&gt; 10 29510108100    3309    1 1.198667e+02  3216478.2
+#&gt;                          geometry   areaWeight
+#&gt; 1  POLYGON ((738110.9 4283989,... 4.011337e-01
+#&gt; 2  POLYGON ((738335.2 4283055,... 4.798758e-01
+#&gt; 3  POLYGON ((740111.6 4286547,... 6.737030e-01
+#&gt; 4  POLYGON ((739386.1 4285082,... 9.343406e-01
+#&gt; 5  POLYGON ((739542.5 4283728,... 5.593835e-05
+#&gt; 6  POLYGON ((740899.6 4285240,... 1.135850e-03
+#&gt; 7  POLYGON ((739115.9 4285807,... 2.053968e-01
+#&gt; 8  MULTIPOLYGON (((740936.1 42... 6.895245e-05
+#&gt; 9  POLYGON ((738500.9 4284750,... 6.202111e-01
+#&gt; 10 POLYGON ((740163.9 4286467,... 3.726645e-05</div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://chris-prener.github.io'>Christopher Prener</a>, Charlie Revord.</p>
+  <p>Developed by <a href='https://chris-prener.github.io'>Christopher Prener</a>, Charlie Revord, Branson Fox.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

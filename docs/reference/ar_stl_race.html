@@ -8,21 +8,29 @@
 
 <title>Race in St. Louis by Census Tract, 2017 — ar_stl_race • areal</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,11 +38,11 @@
 
 
 
-<meta property="og:title" content="Race in St. Louis by Census Tract, 2017 — ar_stl_race" />
 
+<meta property="og:title" content="Race in St. Louis by Census Tract, 2017 — ar_stl_race" />
 <meta property="og:description" content="A simple features data set containing the geometry and associated attributes
     for the 2013-2017 American Community Survey estimates for race in St. Louis." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -48,9 +56,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -64,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">areal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
       </span>
     </div>
 
@@ -72,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -82,30 +91,17 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/areal-weighted-interpolation.html">Areal Weighted Interpolation</a>
-    </li>
-    <li>
-      <a href="../articles/data-preparation.html">Preparing Data for Interpolation</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/slu-openGIS/areal">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/slu-openGIS/areal/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -116,6 +112,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -127,17 +124,16 @@
     </div>
 
     <div class="ref-description">
-    
     <p>A simple features data set containing the geometry and associated attributes
     for the 2013-2017 American Community Survey estimates for race in St. Louis.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>ar_stl_race</span>)</pre>
-        
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ar_stl_race</span>)</pre>
+
+
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 106 rows and 24 variables:</p><dl class='dl-horizontal'>
+    <p>A data frame with 106 rows and 24 variables:</p><dl'>
   <dt>GEOID</dt><dd><p>full GEOID string</p></dd>
   <dt>STATEFP</dt><dd><p>state FIPS code</p></dd>
   <dt>COUNTYFP</dt><dd><p>county FIPS code</p></dd>
@@ -162,15 +158,14 @@
   <dt>TWOPLUS_E</dt><dd><p>two or more races populaton count, estimated</p></dd>
   <dt>TWOPLUS_M</dt><dd><p>two or more races populaton count, margin of error</p></dd>
   <dt>geometry</dt><dd><p>simple features geometry</p></dd>
-  </dl>
-    
+  
+</dl>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p><code>tidycensus</code> package</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>ar_stl_race</span>)</div><div class='output co'>#&gt; Classes ‘sf’ and 'data.frame':	106 obs. of  24 variables:
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>ar_stl_race</span>)</div><div class='output co'>#&gt; Classes ‘sf’ and 'data.frame':	106 obs. of  24 variables:
 #&gt;  $ GEOID    : chr  "29510112100" "29510116500" "29510110300" "29510103700" ...
 #&gt;  $ STATEFP  : chr  "29" "29" "29" "29" ...
 #&gt;  $ COUNTYFP : chr  "510" "510" "510" "510" ...
@@ -196,15 +191,14 @@
 #&gt;  $ TWOPLUS_M: num  68 126 11 49 38 39 11 33 97 96 ...
 #&gt;  $ geometry :sfc_POLYGON of length 106; first list element: List of 1
 #&gt;   ..$ : num [1:284, 1:2] 734633 734636 734644 734662 734671 ...
-#&gt;   ..- attr(*, "class")= chr  "XY" "POLYGON" "sfg"
+#&gt;   ..- attr(*, "class")= chr [1:3] "XY" "POLYGON" "sfg"
 #&gt;  - attr(*, "sf_column")= chr "geometry"
 #&gt;  - attr(*, "agr")= Factor w/ 3 levels "constant","aggregate",..: NA NA NA NA NA NA NA NA NA NA ...
-#&gt;   ..- attr(*, "names")= chr  "GEOID" "STATEFP" "COUNTYFP" "TRACTCE" ...</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>ar_stl_race</span>)</div><div class='output co'>#&gt; Simple feature collection with 6 features and 23 fields
+#&gt;   ..- attr(*, "names")= chr [1:23] "GEOID" "STATEFP" "COUNTYFP" "TRACTCE" ...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>ar_stl_race</span>)</div><div class='output co'>#&gt; Simple feature collection with 6 features and 23 fields
 #&gt; geometry type:  POLYGON
 #&gt; dimension:      XY
 #&gt; bbox:           xmin: 733360 ymin: 4274925 xmax: 741440.9 ymax: 4283867
-#&gt; epsg (SRID):    26915
-#&gt; proj4string:    +proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+#&gt; CRS:            EPSG:26915
 #&gt;         GEOID STATEFP COUNTYFP TRACTCE          NAMELSAD   ALAND AWATER TOTAL_E
 #&gt; 1 29510112100      29      510  112100 Census Tract 1121 6936664      0    4253
 #&gt; 2 29510116500      29      510  116500 Census Tract 1165  904024      0    4590
@@ -225,37 +219,34 @@
 #&gt; 3     11       0      11         0        11 POLYGON ((740110.8 4283146,...
 #&gt; 4     11       0      11        52        49 POLYGON ((735225.3 4276168,...
 #&gt; 5     11      77     120        34        38 POLYGON ((733360 4275146, 7...
-#&gt; 6     11       0      11        60        39 POLYGON ((735553.7 4278190,...</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>ar_stl_race</span>$<span class='no'>ALAND</span>)</div><div class='output co'>#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#&gt; 6     11       0      11        60        39 POLYGON ((735553.7 4278190,...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>ar_stl_race</span>$<span class='no'>ALAND</span>)</div><div class='output co'>#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 #&gt;   506383   913320  1121494  1513755  1651019 10530448 </div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#source">Source</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://chris-prener.github.io'>Christopher Prener</a>, Charlie Revord.</p>
+  <p>Developed by <a href='https://chris-prener.github.io'>Christopher Prener</a>, Charlie Revord, Branson Fox.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

@@ -14,6 +14,7 @@ reference:
   - title: "General"
     desc: "Basic functions for areal interpolation"
     contents:
+    - ar_tessellate
     - ar_validate
 
   - title: "Areal Weighted Interpolation, Core"

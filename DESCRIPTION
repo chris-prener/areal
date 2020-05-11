@@ -5,7 +5,9 @@ Version: 0.1.6
 Authors@R: c(
     person("Christopher", "Prener", , "chris.prener@slu.edu", c("aut", "cre"),
     comment = c(ORCID = "0000-0002-4310-9888")),
-    person("Charlie","Revord", , "charlie.revord@slu.edu", c("aut"))
+    person("Charlie","Revord", , "charlie.revord@slu.edu", c("aut")),
+    person("Branson", "Fox", ,"branson.fox@slu.edu", c("aut"),
+    comment = c(ORCID = "0000-0002-4361-2811"))
     )
 Description: A pipeable, transparent implementation of areal weighted interpolation
     with support for interpolating multiple variables in a single function call.
