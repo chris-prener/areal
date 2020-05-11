@@ -14,7 +14,6 @@
 #' ar_tessellate(ar_stl_wards, shape = "hexagon", size = .75)
 #'
 #' @importFrom sf st_crs st_make_grid st_intersection st_union st_sf
-#' @importFrom dplyr %>%
 #'
 #' @export
 ar_tessellate <- function(.data, shape = "square", size = 1){
@@ -30,7 +29,8 @@ ar_tessellate <- function(.data, shape = "square", size = 1){
   }
 
   # find units of object
-  units <- sf::st_crs(.data, parameters = TRUE)$units_gdal
+  units <- sf::st_crs(.data, parameters = TRUE)
+  units <- units$units_gdal
 
   # error if not projected units
   if(units == "degree"){
@@ -56,9 +56,17 @@ ar_tessellate <- function(.data, shape = "square", size = 1){
   # convert shape argument
   shape <- switch(shape, "square" = TRUE, "hexagon" = FALSE)
 
+  # unionize original boundary
+  boundary <- sf::st_union(.data)
+
   # make tessellation, clip to original boundary and convert to sf/df
-  tess <- sf::st_make_grid(.data, cellsize, square = shape) %>%
-    suppressWarnings(sf::st_intersection(sf::st_union(.data))) %>% sf::st_sf()
+  grid <- sf::st_make_grid(.data, cellsize, square = shape)
+  suppressWarnings({
+    tess <- sf::st_intersection(grid, boundary)
+  })
+
+  # coerce to sf from sfc
+  tess <- sf::st_sf(tess)
 
   return(tess)
 }
