@@ -29,6 +29,9 @@ matrix:
 
 addons:
   postgresql: "9.6"
+  homebrew:
+    packages:
+    - udunits
 
 r_packages:
   - devtools
