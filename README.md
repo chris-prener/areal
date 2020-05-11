@@ -5,14 +5,17 @@
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis-CI Build
-Status](https://travis-ci.org/slu-openGIS/areal.svg?branch=master)](https://travis-ci.org/slu-openGIS/areal)
+Status](https://travis-ci.com/slu-openGIS/areal.svg?branch=master)](https://travis-ci.com/slu-openGIS/areal)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/slu-openGIS/areal?branch=master&svg=true)](https://ci.appveyor.com/project/chris-prener/areal)
 [![Coverage
 status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=master)
+[![CRAN\_status\_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
+[![cran
+checks](https://cranchecks.info/badges/worst/areal)](https://cran.r-project.org/web/checks/check_results_areal.html)
+[![Downloads](http://cranlogs.r-pkg.org/badges/areal?color=brightgreen)](http://www.r-pkg.org/pkg/areal)
 [![DOI](https://zenodo.org/badge/152279647.svg)](https://zenodo.org/badge/latestdoi/152279647)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.01221/status.svg)](https://doi.org/10.21105/joss.01221)
-[![CRAN\_status\_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 
 Areal interpolation is the process making estimates from a source set of
 polygons to an overlapping but incongruent set of target polygons. One
@@ -37,14 +40,10 @@ Software*](http://joss.theoj.org/). The article includes benchmarking of
 `areal` performance on several data sets. Please [cite the
 paper](/inst/CITATION) if you use `areal` in your work\!
 
-### What is New in v0.1.5?
+### What is New in v0.1.6?
 
-This version of `areal` contains all of the bug fixes that were
-identified by early adaopters after the initial CRAN submission. Special
-thanks to [Matt Herman](https://github.com/mfherman) and [David
-Blodgett](https://github.com/dblodgett-usgs) for their issues and pull
-requests\! Check out the [NEWS file](/NEWS.md) for details on all of the
-bugs that were identified.
+This version contains updates under the hood to make it compatible with
+`dplyr`’s v1.0 release\!
 
 ## Installation
 
@@ -133,8 +132,7 @@ aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID",
 #> geometry type:  POLYGON
 #> dimension:      XY
 #> bbox:           xmin: 733361.8 ymin: 4268336 xmax: 746157.7 ymax: 4295504
-#> epsg (SRID):    26915
-#> proj4string:    +proj=utm +zone=15 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+#> CRS:            EPSG:26915
 #> First 10 features:
 #>    OBJECTID WARD      AREA   TOTAL_E                       geometry
 #> 1         1    1  46138761  7991.565 POLYGON ((740184.2 4286431,...
@@ -185,18 +183,18 @@ wards %>%
                extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"),
                intensive = "ASTHMA")
 #> # A tibble: 28 x 5
-#>     WARD TOTAL_E WHITE_E BLACK_E ASTHMA
+#>     WARD BLACK_E TOTAL_E WHITE_E ASTHMA
 #>    <int>   <dbl>   <dbl>   <dbl>  <dbl>
-#>  1     1   7991.    153.   7778.  13.4 
-#>  2     2  12042.   1308.  10552.  13.2 
-#>  3     3   7334.    589.   6627.  14.1 
-#>  4     4   8458.    160.   8203.  13.6 
-#>  5     5   8689.   1518.   6971.  13.8 
-#>  6     6  14022.   5833.   7418.  11.7 
-#>  7     7  15645.   8123.   6544.   9.72
-#>  8     8  12188.   7604.   3796.   9.82
-#>  9     9  14095.   6786.   6351.  11.8 
-#> 10    10  11239.   8703.   1667.   9.44
+#>  1     1   7778.   7991.    153.  13.4 
+#>  2     2  10552.  12042.   1308.  13.2 
+#>  3     3   6627.   7334.    589.  14.1 
+#>  4     4   8203.   8458.    160.  13.6 
+#>  5     5   6971.   8689.   1518.  13.8 
+#>  6     6   7418.  14022.   5833.  11.7 
+#>  7     7   6544.  15645.   8123.   9.72
+#>  8     8   3796.  12188.   7604.   9.82
+#>  9     9   6351.  14095.   6786.  11.8 
+#> 10    10   1667.  11239.   8703.   9.44
 #> # … with 18 more rows
 ```
 
