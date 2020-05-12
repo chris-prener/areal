@@ -28,8 +28,8 @@ While the `R` package `sf` does offer a basic interface for areal
 weighted interpolation (`st_interpolate_aw`), it lacks some features
 that we use in our work. The `areal` package contains a suite tools for
 validation and estimation, providing a full-featured workflow that fits
-into both modern data management (e.g. `tidyverse`) and spatial data
-(e.g. `sf`) frameworks.
+into both modern data management (e.g. `tidyverse`) and spatial data
+(e.g. `sf`) frameworks.
 
 ### *Joural of Open Souce Software* Article
 
@@ -235,5 +235,5 @@ to see what help is needed\!
 ## Contributor Code of Conduct
 
 Please note that this project is released with a [Contributor Code of
-Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project
-you agree to abide by its terms.
+Conduct](https://slu-opengis.github.io/areal/CODE_OF_CONDUCT.html). By
+participating in this project you agree to abide by its terms.

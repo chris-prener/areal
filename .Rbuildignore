@@ -10,7 +10,7 @@
 ^_pkgdown\.yml$
 ^cran-comments\.md$
 ^README\.Rmd$
-^index\.Rmd$
+^index\.md$
 ^LICENSE$
 ^paper$
 ^\.zenodo\.json$
