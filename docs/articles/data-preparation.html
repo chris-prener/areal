@@ -73,13 +73,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="data-preparation_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Preparing Data for Interpolation</h1>
                         <h4 class="author">Christopher Prener, Ph.D.</h4>
             
-            <h4 class="date">2020-05-11</h4>
+            <h4 class="date">2020-05-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/slu-openGIS/areal/blob/master/vignettes/data-preparation.Rmd"><code>vignettes/data-preparation.Rmd</code></a></small>
       <div class="hidden name"><code>data-preparation.Rmd</code></div>
@@ -171,7 +171,7 @@
 <p>If you have tabular data, you will need to merge them with a shapefile or other spatial data set that contains the geometry for the corresponding spatial features. For American users, a potentially common scenario here will be table of census geography (such as tracts) that lacks the geometry for those features. These can be downloaded using <a href="https://github.com/walkerke/tigris"><code>tigris</code></a> and then combined using <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a>. The following example assumes the tract data contains an identification number column named <code>GEOID</code> with the appropriate tract identifiers for St. Louis:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">stl_tracts</span> <span class="kw">&lt;-</span> <span class="kw pkg">tigris</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/tigris/man/tracts.html">tracts</a></span>(<span class="kw">state</span> <span class="kw">=</span> <span class="fl">29</span>, <span class="kw">county</span> <span class="kw">=</span> <span class="fl">510</span>, <span class="kw">class</span> <span class="kw">=</span> <span class="st">"sf"</span>)
 
-<span class="no">tract_data</span> <span class="kw">&lt;-</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span>(<span class="no">stl_tracts</span>, <span class="no">asthmaTBL</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="st">"GEOID"</span>)</pre></body></html></div>
+<span class="no">tract_data</span> <span class="kw">&lt;-</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="no">stl_tracts</span>, <span class="no">asthmaTBL</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="st">"GEOID"</span>)</pre></body></html></div>
 </div>
 </div>
 <div id="coordinate-systems" class="section level2">
@@ -293,8 +293,8 @@
 <span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span>
 <span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span>
 <span class="co">#&gt; 6 Overall Evaluation              TRUE</span></pre></body></html></div>
-<p>Another option would be to rename the column using the <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> function from <code>dplyr</code>:</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">wardsFixed</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span>(<span class="no">wardsVar</span>, <span class="kw">oldTotal</span> <span class="kw">=</span> <span class="no">TOTAL_E</span>)
+<p>Another option would be to rename the column using the <code><a href="https://dplyr.tidyverse.org/reference/select.html">rename()</a></code> function from <code>dplyr</code>:</p>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">wardsFixed</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="no">wardsVar</span>, <span class="kw">oldTotal</span> <span class="kw">=</span> <span class="no">TOTAL_E</span>)
 
 <span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="kw">source</span> <span class="kw">=</span> <span class="no">race</span>, <span class="kw">target</span> <span class="kw">=</span> <span class="no">wardsFixed</span>, <span class="kw">varList</span> <span class="kw">=</span> <span class="st">"TOTAL_E"</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"aw"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; # A tibble: 6 x 2</span>

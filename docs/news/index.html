@@ -120,20 +120,22 @@
       <small>Source: <a href='https://github.com/slu-openGIS/areal/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="areal-0-1-6" class="section level1">
+    <div id="areal-016" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.6">
-<a href="#areal-0-1-6" class="anchor"></a>areal 0.1.6<small> Unreleased </small>
+<a href="#areal-016" class="anchor"></a>areal 0.1.6<small> Unreleased </small>
 </h1>
 <ul>
 <li>Prepare <code>areal</code> for upcoming <code>dplyr</code> release</li>
+<li>Address bug with geometry collections that could cause errors in <code><a href="../reference/aw_intersect.html">aw_intersect()</a></code>
+</li>
 <li>Resolve various warnings during unit tests</li>
 <li>Change minimum version of R to 3.4</li>
 <li>Update travis and appveyor builds</li>
 </ul>
 </div>
-    <div id="areal-0-1-5" class="section level1">
+    <div id="areal-015" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.5">
-<a href="#areal-0-1-5" class="anchor"></a>areal 0.1.5<small> 2019-05-21 </small>
+<a href="#areal-015" class="anchor"></a>areal 0.1.5<small> 2019-05-21 </small>
 </h1>
 <ul>
 <li>Add <em>JOSS</em> badges to the <code>README</code> and <code>pkgdown</code> sites</li>
@@ -144,9 +146,9 @@
 <li><strong>No changes to the software functionality</strong></li>
 </ul>
 </div>
-    <div id="areal-0-1-4-4" class="section level1">
+    <div id="areal-0144" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.4.4">
-<a href="#areal-0-1-4-4" class="anchor"></a>areal 0.1.4.4<small> Unreleased </small>
+<a href="#areal-0144" class="anchor"></a>areal 0.1.4.4<small> Unreleased </small>
 </h1>
 <ul>
 <li>Finalize <em>JOSS</em> manuscript</li>
@@ -154,9 +156,9 @@
 <li><strong>No changes to the software functionality</strong></li>
 </ul>
 </div>
-    <div id="areal-0-1-4-3" class="section level1">
+    <div id="areal-0143" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.4.3">
-<a href="#areal-0-1-4-3" class="anchor"></a>areal 0.1.4.3<small> Unreleased </small>
+<a href="#areal-0143" class="anchor"></a>areal 0.1.4.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>Remove documentation for non-exported functions</li>
@@ -164,57 +166,57 @@
 <li><strong>No changes to the software functionality</strong></li>
 </ul>
 </div>
-    <div id="areal-0-1-4-2" class="section level1">
+    <div id="areal-0142" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.4.2">
-<a href="#areal-0-1-4-2" class="anchor"></a>areal 0.1.4.2<small> Unreleased </small>
+<a href="#areal-0142" class="anchor"></a>areal 0.1.4.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>Fix formatting issue with <em>JOSS</em> manuscript</li>
 <li><strong>No changes to the software functionality</strong></li>
 </ul>
 </div>
-    <div id="areal-0-1-4-1" class="section level1">
+    <div id="areal-0141" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.4.1">
-<a href="#areal-0-1-4-1" class="anchor"></a>areal 0.1.4.1<small> Unreleased </small>
+<a href="#areal-0141" class="anchor"></a>areal 0.1.4.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>Finalize <em>Journal of Open Source Software</em> manuscript</li>
 <li><strong>No changes to the software functionality</strong></li>
 </ul>
 </div>
-    <div id="areal-0-1-4" class="section level1">
+    <div id="areal-014" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.4">
-<a href="#areal-0-1-4" class="anchor"></a>areal 0.1.4<small> Unreleased </small>
+<a href="#areal-014" class="anchor"></a>areal 0.1.4<small> Unreleased </small>
 </h1>
 <ul>
-<li>Fix issue where mixed interpolations with multiple extensive and intensive variables would get incorrect output containing two copies of the extensive results.</li>
+<li><p>Fix issue where mixed interpolations with multiple extensive and intensive variables would get incorrect output containing two copies of the extensive results.</p></li>
 <li><p>Patch fix to <a href="https://github.com/slu-openGIS/areal/issues/6">Issue 6</a> so that data not requiring the geometry collection fix do not get processed through that code, improving performance for those interpolations.</p></li>
 <li><p>Updated draft of JOSS paper manuscript along with appendix code and response to reviewers added in <code>paper/</code>.</p></li>
 </ul>
 </div>
-    <div id="areal-0-1-3" class="section level1">
+    <div id="areal-013" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.3">
-<a href="#areal-0-1-3" class="anchor"></a>areal 0.1.3<small> Unreleased </small>
+<a href="#areal-013" class="anchor"></a>areal 0.1.3<small> Unreleased </small>
 </h1>
 <ul>
-<li>Fix <a href="https://github.com/slu-openGIS/areal/issues/6">Issue 6</a> - edge case where <code>st_intersection</code> creates a geometry collection</li>
-<li>Fix <a href="https://github.com/slu-openGIS/areal/issues/7">Issue 7</a> - interpolation returns <code>NA</code> values when <code>tid</code> and <code>sid</code> are the same variable name (e.g. both are <code>GEOID</code>)</li>
-<li>Fix <a href="https://github.com/slu-openGIS/areal/issues/14">Issue 14</a> - interpolation fails when the <code>sf</code> geometry column is not named <code>geometry</code> - now renamed on the fly if this is not the case</li>
+<li><p>Fix <a href="https://github.com/slu-openGIS/areal/issues/6">Issue 6</a> - edge case where <code>st_intersection</code> creates a geometry collection</p></li>
+<li><p>Fix <a href="https://github.com/slu-openGIS/areal/issues/7">Issue 7</a> - interpolation returns <code>NA</code> values when <code>tid</code> and <code>sid</code> are the same variable name (e.g. both are <code>GEOID</code>)</p></li>
+<li><p>Fix <a href="https://github.com/slu-openGIS/areal/issues/14">Issue 14</a> - interpolation fails when the <code>sf</code> geometry column is not named <code>geometry</code> - now renamed on the fly if this is not the case</p></li>
 <li><p>Fix <a href="https://github.com/slu-openGIS/areal/issues/16">Issue 16</a> - tibble output missing other output variables</p></li>
 <li><p>Full draft of JOSS paper manuscript added in <code>paper/</code></p></li>
 </ul>
 </div>
-    <div id="areal-0-1-2" class="section level1">
+    <div id="areal-012" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.2">
-<a href="#areal-0-1-2" class="anchor"></a>areal 0.1.2<small> 2018-12-31 </small>
+<a href="#areal-012" class="anchor"></a>areal 0.1.2<small> 2018-12-31 </small>
 </h1>
 <ul>
 <li>Add CRAN installation instructions to readme and <code>pkgdown</code> site</li>
 </ul>
 </div>
-    <div id="areal-0-1-1" class="section level1">
+    <div id="areal-011" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.1">
-<a href="#areal-0-1-1" class="anchor"></a>areal 0.1.1<small> Unreleased </small>
+<a href="#areal-011" class="anchor"></a>areal 0.1.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>Added vignette titles to replace placeholders</li>
@@ -223,9 +225,9 @@
 <li>Checks against winbuilder</li>
 </ul>
 </div>
-    <div id="areal-0-1-0" class="section level1">
+    <div id="areal-010" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.0">
-<a href="#areal-0-1-0" class="anchor"></a>areal 0.1.0<small> Unreleased </small>
+<a href="#areal-010" class="anchor"></a>areal 0.1.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
