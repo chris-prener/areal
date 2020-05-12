@@ -4,7 +4,8 @@
 \name{ar_stl_race}
 \alias{ar_stl_race}
 \title{Race in St. Louis by Census Tract, 2017}
-\format{A data frame with 106 rows and 24 variables:
+\format{
+A data frame with 106 rows and 24 variables:
 \describe{
   \item{GEOID}{full GEOID string}
   \item{STATEFP}{state FIPS code}
@@ -30,7 +31,8 @@
   \item{TWOPLUS_E}{two or more races populaton count, estimated}
   \item{TWOPLUS_M}{two or more races populaton count, margin of error}
   \item{geometry}{simple features geometry}
-  }}
+  }
+}
 \source{
 \code{tidycensus} package
 }

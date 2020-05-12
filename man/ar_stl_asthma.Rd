@@ -4,7 +4,8 @@
 \name{ar_stl_asthma}
 \alias{ar_stl_asthma}
 \title{Asthma in St. Louis by Census Tract, 2017}
-\format{A data frame with 106 rows and 24 variables:
+\format{
+A data frame with 106 rows and 24 variables:
 \describe{
   \item{GEOID}{full GEOID string}
   \item{STATEFP}{state FIPS code}
@@ -15,7 +16,8 @@
   \item{AWATER}{area of tract water, square meters}
   \item{ASTHMA}{percent of residents with current asthma diagnosis, estimated}
   \item{geometry}{simple features geometry}
-  }}
+  }
+}
 \source{
 Centers for Disease Control's 500 Cities Data
 }

@@ -4,13 +4,15 @@
 \name{ar_stl_wards}
 \alias{ar_stl_wards}
 \title{Ward Boundaries in St. Louis, 2010}
-\format{A data frame with 28 rows and 4 variables:
+\format{
+A data frame with 28 rows and 4 variables:
 \describe{
   \item{OBJECTID}{Artifact from ESRI data creation}
   \item{WARD}{Ward number}
   \item{AREA}{area of each ward}
   \item{geometry}{simple features geometry}
-  }}
+  }
+}
 \source{
 City of St. Louis
 }

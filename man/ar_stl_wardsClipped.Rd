@@ -4,11 +4,13 @@
 \name{ar_stl_wardsClipped}
 \alias{ar_stl_wardsClipped}
 \title{Clipped Ward Boundaries in St. Louis, 2010}
-\format{A data frame with 28 rows and 2 variables:
+\format{
+A data frame with 28 rows and 2 variables:
 \describe{
   \item{WARD}{Ward number}
   \item{geometry}{simple features geometry}
-  }}
+  }
+}
 \source{
 City of St. Louis
 }
