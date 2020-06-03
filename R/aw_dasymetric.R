@@ -12,7 +12,7 @@
 #' @param extensive Required atomic vector of strings denoting columns in `source` with extensive variables (i.e. count data)
 #' @param drop Required boolean Should non-overlapping target geometries be removed. Defaults to FALSE
 #'
-#' @importFrom sf st_crs st_intersection st_area st_drop_geometry
+#' @importFrom sf st_crs st_intersection st_area st_drop_geometry st_geometry_type
 #' @importFrom dplyr %>% group_by summarise left_join summarise_at sym
 #'
 #' @export
@@ -28,7 +28,7 @@ aw_dasymetric <- function(target, source, intermediate, tid = NULL, intensive = 
     stop('At least one of `extensive` or `intensive` must be supplied')
   }
 
-  # Check Argument Paramters
+  # Check Argument Parameters
   if(!all('sf' %in% class(target), 'sf' %in% class(source), 'sf' %in% class(intermediate))){
     stop('`target`, `source`, `intermediate` all must be sf class objects')
   }
@@ -51,6 +51,9 @@ aw_dasymetric <- function(target, source, intermediate, tid = NULL, intensive = 
   }
   if(any(grepl('AW_', c(extensive, intensive)))){
     stop('The `AW_` prefix is reserved for internal calculations. Please rename your variables.')
+  }
+  if(any(!unlist(sf::st_geometry_type(source), sf::st_geometry_type(intermediate), sf::st_geometry_type(target)) %in% c("POLYGON", "MULTIPOLYGON"))){
+    stop('The specified sf objects must contain only `POLYGON` and `MULTIPOLYGON` geometries. Remove other geometries before passing to aw_dasymetric')
   }
 
   # Add IDs
