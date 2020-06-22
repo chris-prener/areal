@@ -29,6 +29,11 @@ aw_pycno <- function(source, var, celldim, r = 0.25, converge = 5, verbose = TRU
   regions <- source[['id']]
   orig <- source[['var']]
 
+  # Check for Negative Populations
+  if(any(orig < 0)){
+    stop('You cannot supply negative populations. Check the var column in your source object')
+  }
+
   # Generate a Grid
   ras <- raster::raster(source, res = celldim)
   ras <- fasterize::fasterize(source, ras, field = 'var')
@@ -98,6 +103,7 @@ aw_pycno <- function(source, var, celldim, r = 0.25, converge = 5, verbose = TRU
       # Get Matrix Index of Regions
       idx <- which(attr(m, 'id') == region)
       correct <- orig[region] / sum(m[idx]) # Correction for 0s, Create a Multiplier based on this quantity to preserve unit
+      if(is.nan(correct)){ correct <- 0 }
       m[idx] <- m[idx] * correct # Multiply by the Correction Factor
     }
 
