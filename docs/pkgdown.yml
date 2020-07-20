@@ -1,11 +1,11 @@
-pandoc: 2.9.2.1
+pandoc: 2.7.3
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   areal-weighted-interpolation: areal-weighted-interpolation.html
   areal: areal.html
   data-preparation: data-preparation.html
-last_built: 2020-05-12T11:41Z
+last_built: 2020-07-20T17:20Z
 urls:
   reference: https://slu-openGIS.github.io/areal//reference
   article: https://slu-openGIS.github.io/areal//articles

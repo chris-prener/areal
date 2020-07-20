@@ -45,9 +45,6 @@ While the `R` package `sf` does offer a basic interface for areal weighted inter
 ### *Joural of Open Souce Software* Article
 An [article](http://joss.theoj.org/papers/10.21105/joss.01221) describing `areal`'s approach to areal weighted interpolation has been published in the [*The Journal of Open Source Software*](http://joss.theoj.org/). The article includes benchmarking of `areal` performance on several data sets. Please [cite the paper](/inst/CITATION) if you use `areal` in your work!
 
-### What is New in v0.1.6?
-This version contains updates under the hood to make it compatible with `dplyr`'s v1.0 release!
-
 ## Installation
 ### Installing Dependencies
 You should check the [`sf` package website](https://r-spatial.github.io/sf/) and the [`areal` package website](https://slu-openGIS.github.io/areal/) for the latest details on installing dependencies for that package. Instructions vary significantly by operating system. For best results, have `sf` installed before you install `areal`. Other dependencies, like `dplyr`, will be installed automatically with `areal` if they are not already present.

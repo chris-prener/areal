@@ -1,3 +1,8 @@
+# areal 0.1.7
+
+* Address situations where the `geometry` column has a different name. In prior versions, it was renamed. Now, we use an approach that does not require a specific `geometry` column name but should work regardless of what its name is.
+* Address CRAN warning with vignette rendering.
+
 # areal 0.1.6
 
 * Prepare `areal` for upcoming `dplyr` release

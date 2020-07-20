@@ -40,11 +40,6 @@ Software*](http://joss.theoj.org/). The article includes benchmarking of
 `areal` performance on several data sets. Please [cite the
 paper](/inst/CITATION) if you use `areal` in your work\!
 
-### What is New in v0.1.6?
-
-This version contains updates under the hood to make it compatible with
-`dplyr`’s v1.0 release\!
-
 ## Installation
 
 ### Installing Dependencies
@@ -132,7 +127,7 @@ aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID",
 #> geometry type:  POLYGON
 #> dimension:      XY
 #> bbox:           xmin: 733361.8 ymin: 4268336 xmax: 746157.7 ymax: 4295504
-#> CRS:            EPSG:26915
+#> projected CRS:  NAD83 / UTM zone 15N
 #> First 10 features:
 #>    OBJECTID WARD      AREA   TOTAL_E                       geometry
 #> 1         1    1  46138761  7991.565 POLYGON ((740184.2 4286431,...

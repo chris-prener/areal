@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">areal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -73,13 +73,13 @@
 
       
 
-      </header><script src="data-preparation_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><script src="data-preparation_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Preparing Data for Interpolation</h1>
                         <h4 class="author">Christopher Prener, Ph.D.</h4>
             
-            <h4 class="date">2020-05-12</h4>
+            <h4 class="date">2020-07-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/slu-openGIS/areal/blob/master/vignettes/data-preparation.Rmd"><code>vignettes/data-preparation.Rmd</code></a></small>
       <div class="hidden name"><code>data-preparation.Rmd</code></div>
@@ -171,7 +171,7 @@
 <p>If you have tabular data, you will need to merge them with a shapefile or other spatial data set that contains the geometry for the corresponding spatial features. For American users, a potentially common scenario here will be table of census geography (such as tracts) that lacks the geometry for those features. These can be downloaded using <a href="https://github.com/walkerke/tigris"><code>tigris</code></a> and then combined using <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a>. The following example assumes the tract data contains an identification number column named <code>GEOID</code> with the appropriate tract identifiers for St. Louis:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">stl_tracts</span> <span class="kw">&lt;-</span> <span class="kw pkg">tigris</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/tigris/man/tracts.html">tracts</a></span>(<span class="kw">state</span> <span class="kw">=</span> <span class="fl">29</span>, <span class="kw">county</span> <span class="kw">=</span> <span class="fl">510</span>, <span class="kw">class</span> <span class="kw">=</span> <span class="st">"sf"</span>)
 
-<span class="no">tract_data</span> <span class="kw">&lt;-</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="no">stl_tracts</span>, <span class="no">asthmaTBL</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="st">"GEOID"</span>)</pre></body></html></div>
+<span class="no">tract_data</span> <span class="kw">&lt;-</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span>(<span class="no">stl_tracts</span>, <span class="no">asthmaTBL</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="st">"GEOID"</span>)</pre></body></html></div>
 </div>
 </div>
 <div id="coordinate-systems" class="section level2">
@@ -182,17 +182,24 @@
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   User input: EPSG:4269 </span>
 <span class="co">#&gt;   wkt:</span>
-<span class="co">#&gt; GEOGCS["NAD83",</span>
-<span class="co">#&gt;     DATUM["North_American_Datum_1983",</span>
-<span class="co">#&gt;         SPHEROID["GRS 1980",6378137,298.257222101,</span>
-<span class="co">#&gt;             AUTHORITY["EPSG","7019"]],</span>
-<span class="co">#&gt;         TOWGS84[0,0,0,0,0,0,0],</span>
-<span class="co">#&gt;         AUTHORITY["EPSG","6269"]],</span>
+<span class="co">#&gt; GEOGCRS["NAD83",</span>
+<span class="co">#&gt;     DATUM["North American Datum 1983",</span>
+<span class="co">#&gt;         ELLIPSOID["GRS 1980",6378137,298.257222101,</span>
+<span class="co">#&gt;             LENGTHUNIT["metre",1]]],</span>
 <span class="co">#&gt;     PRIMEM["Greenwich",0,</span>
-<span class="co">#&gt;         AUTHORITY["EPSG","8901"]],</span>
-<span class="co">#&gt;     UNIT["degree",0.0174532925199433,</span>
-<span class="co">#&gt;         AUTHORITY["EPSG","9122"]],</span>
-<span class="co">#&gt;     AUTHORITY["EPSG","4269"]]</span></pre></body></html></div>
+<span class="co">#&gt;         ANGLEUNIT["degree",0.0174532925199433]],</span>
+<span class="co">#&gt;     CS[ellipsoidal,2],</span>
+<span class="co">#&gt;         AXIS["geodetic latitude (Lat)",north,</span>
+<span class="co">#&gt;             ORDER[1],</span>
+<span class="co">#&gt;             ANGLEUNIT["degree",0.0174532925199433]],</span>
+<span class="co">#&gt;         AXIS["geodetic longitude (Lon)",east,</span>
+<span class="co">#&gt;             ORDER[2],</span>
+<span class="co">#&gt;             ANGLEUNIT["degree",0.0174532925199433]],</span>
+<span class="co">#&gt;     USAGE[</span>
+<span class="co">#&gt;         SCOPE["unknown"],</span>
+<span class="co">#&gt;         AREA["North America - NAD83"],</span>
+<span class="co">#&gt;         BBOX[14.92,167.65,86.46,-47.74]],</span>
+<span class="co">#&gt;     ID["EPSG",4269]]</span></pre></body></html></div>
 <p>The <code>EPSG</code> value <code>4269</code> refers to a specific type of coordinate system known as as geographic coordinate system. These data use latitude-longitude values, which vary in length and thus cannot be used to calculate area (a key component of carrying out areal interpolations). These data would fail the <code><a href="../reference/ar_validate.html">ar_validate()</a></code> process:</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="kw">source</span> <span class="kw">=</span> <span class="no">race83</span>, <span class="kw">target</span> <span class="kw">=</span> <span class="no">wards</span>, <span class="kw">varList</span> <span class="kw">=</span> <span class="st">"TOTAL_E"</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"aw"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; # A tibble: 6 x 2</span>
@@ -209,29 +216,44 @@
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   User input: EPSG:26915 </span>
 <span class="co">#&gt;   wkt:</span>
-<span class="co">#&gt; PROJCS["NAD83 / UTM zone 15N",</span>
-<span class="co">#&gt;     GEOGCS["NAD83",</span>
-<span class="co">#&gt;         DATUM["North_American_Datum_1983",</span>
-<span class="co">#&gt;             SPHEROID["GRS 1980",6378137,298.257222101,</span>
-<span class="co">#&gt;                 AUTHORITY["EPSG","7019"]],</span>
-<span class="co">#&gt;             TOWGS84[0,0,0,0,0,0,0],</span>
-<span class="co">#&gt;             AUTHORITY["EPSG","6269"]],</span>
+<span class="co">#&gt; PROJCRS["NAD83 / UTM zone 15N",</span>
+<span class="co">#&gt;     BASEGEOGCRS["NAD83",</span>
+<span class="co">#&gt;         DATUM["North American Datum 1983",</span>
+<span class="co">#&gt;             ELLIPSOID["GRS 1980",6378137,298.257222101,</span>
+<span class="co">#&gt;                 LENGTHUNIT["metre",1]]],</span>
 <span class="co">#&gt;         PRIMEM["Greenwich",0,</span>
-<span class="co">#&gt;             AUTHORITY["EPSG","8901"]],</span>
-<span class="co">#&gt;         UNIT["degree",0.0174532925199433,</span>
-<span class="co">#&gt;             AUTHORITY["EPSG","9122"]],</span>
-<span class="co">#&gt;         AUTHORITY["EPSG","4269"]],</span>
-<span class="co">#&gt;     PROJECTION["Transverse_Mercator"],</span>
-<span class="co">#&gt;     PARAMETER["latitude_of_origin",0],</span>
-<span class="co">#&gt;     PARAMETER["central_meridian",-93],</span>
-<span class="co">#&gt;     PARAMETER["scale_factor",0.9996],</span>
-<span class="co">#&gt;     PARAMETER["false_easting",500000],</span>
-<span class="co">#&gt;     PARAMETER["false_northing",0],</span>
-<span class="co">#&gt;     UNIT["metre",1,</span>
-<span class="co">#&gt;         AUTHORITY["EPSG","9001"]],</span>
-<span class="co">#&gt;     AXIS["Easting",EAST],</span>
-<span class="co">#&gt;     AXIS["Northing",NORTH],</span>
-<span class="co">#&gt;     AUTHORITY["EPSG","26915"]]</span></pre></body></html></div>
+<span class="co">#&gt;             ANGLEUNIT["degree",0.0174532925199433]],</span>
+<span class="co">#&gt;         ID["EPSG",4269]],</span>
+<span class="co">#&gt;     CONVERSION["UTM zone 15N",</span>
+<span class="co">#&gt;         METHOD["Transverse Mercator",</span>
+<span class="co">#&gt;             ID["EPSG",9807]],</span>
+<span class="co">#&gt;         PARAMETER["Latitude of natural origin",0,</span>
+<span class="co">#&gt;             ANGLEUNIT["degree",0.0174532925199433],</span>
+<span class="co">#&gt;             ID["EPSG",8801]],</span>
+<span class="co">#&gt;         PARAMETER["Longitude of natural origin",-93,</span>
+<span class="co">#&gt;             ANGLEUNIT["degree",0.0174532925199433],</span>
+<span class="co">#&gt;             ID["EPSG",8802]],</span>
+<span class="co">#&gt;         PARAMETER["Scale factor at natural origin",0.9996,</span>
+<span class="co">#&gt;             SCALEUNIT["unity",1],</span>
+<span class="co">#&gt;             ID["EPSG",8805]],</span>
+<span class="co">#&gt;         PARAMETER["False easting",500000,</span>
+<span class="co">#&gt;             LENGTHUNIT["metre",1],</span>
+<span class="co">#&gt;             ID["EPSG",8806]],</span>
+<span class="co">#&gt;         PARAMETER["False northing",0,</span>
+<span class="co">#&gt;             LENGTHUNIT["metre",1],</span>
+<span class="co">#&gt;             ID["EPSG",8807]]],</span>
+<span class="co">#&gt;     CS[Cartesian,2],</span>
+<span class="co">#&gt;         AXIS["(E)",east,</span>
+<span class="co">#&gt;             ORDER[1],</span>
+<span class="co">#&gt;             LENGTHUNIT["metre",1]],</span>
+<span class="co">#&gt;         AXIS["(N)",north,</span>
+<span class="co">#&gt;             ORDER[2],</span>
+<span class="co">#&gt;             LENGTHUNIT["metre",1]],</span>
+<span class="co">#&gt;     USAGE[</span>
+<span class="co">#&gt;         SCOPE["unknown"],</span>
+<span class="co">#&gt;         AREA["North America - 96°W to 90°W and NAD83 by country"],</span>
+<span class="co">#&gt;         BBOX[25.61,-96,84,-90]],</span>
+<span class="co">#&gt;     ID["EPSG",26915]]</span></pre></body></html></div>
 <p>If these data fail that process, <code><a href="https://rdrr.io/pkg/sf/man/st_crs.html">st_crs()</a></code> can be used to identify whether the source or the target (or both) are in an inappropriate coordinate system. The <code>EPSG</code> value <code>26915</code> refers to another type of coordinate system known as as projected coordinate system (or “planar” data). Further, <code>26915</code> is a particular type of projected coordinate system known as the <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">Universal Transverse Mercator</a> coordinate system. This is a good option for using <code>areal</code> because it is available around the world. There are a variety of tools for identifying the appropriate UTM zone, including this excellent <a href="https://mangomap.com/robertyoung/maps/69585/what-utm-zone-am-i-in-#">interactive map</a>. Once you have an EPSG zone, the website <a href="https://epsg.io">epsg.io</a> can be used to search for the appropriate <code>EPSG</code> value.</p>
 <p>In this case, the <code>wards</code> data are in an appropriate system but the <code>race</code> data need to be transformed. The <code><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform()</a></code> function can be used to modify them to an appropriate coordinate system:</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">raceFixed</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="no">race83</span>, <span class="kw">crs</span> <span class="kw">=</span> <span class="fl">26915</span>)</pre></body></html></div>
@@ -268,7 +290,7 @@
 <span class="co">#&gt; [13] "BLACK_M"   "AIAN_E"    "AIAN_M"    "ASIAN_E"   "ASIAN_M"   "NHPI_E"   </span>
 <span class="co">#&gt; [19] "NHPI_M"    "OTHER_E"   "OTHER_M"   "TWOPLUS_E" "TWOPLUS_M" "geometry"</span></pre></body></html></div>
 <p>Another common problem is that a variable exists in both our source and target data. For instance, we could add a <code>TOTAL_E</code> variable to our target data:</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">wardsVar</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="no">wards</span>, <span class="kw">TOTAL_E</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">wardsVar</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="no">wards</span>, <span class="kw">TOTAL_E</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>:<span class="fl">28</span>))
 
 <span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="kw">source</span> <span class="kw">=</span> <span class="no">race</span>, <span class="kw">target</span> <span class="kw">=</span> <span class="no">wardsVar</span>, <span class="kw">varList</span> <span class="kw">=</span> <span class="st">"TOTAL_E"</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"aw"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; # A tibble: 6 x 2</span>
@@ -293,31 +315,18 @@
 <span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span>
 <span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span>
 <span class="co">#&gt; 6 Overall Evaluation              TRUE</span></pre></body></html></div>
-<p>Another option would be to rename the column using the <code><a href="https://dplyr.tidyverse.org/reference/select.html">rename()</a></code> function from <code>dplyr</code>:</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">wardsFixed</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="no">wardsVar</span>, <span class="kw">oldTotal</span> <span class="kw">=</span> <span class="no">TOTAL_E</span>)
-
-<span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span>(<span class="kw">source</span> <span class="kw">=</span> <span class="no">race</span>, <span class="kw">target</span> <span class="kw">=</span> <span class="no">wardsFixed</span>, <span class="kw">varList</span> <span class="kw">=</span> <span class="st">"TOTAL_E"</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"aw"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="co">#&gt; # A tibble: 6 x 2</span>
-<span class="co">#&gt;   test                            result</span>
-<span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span>
-<span class="co">#&gt; 1 sf Objects                      TRUE  </span>
-<span class="co">#&gt; 2 CRS Match                       TRUE  </span>
-<span class="co">#&gt; 3 CRS is Planar                   TRUE  </span>
-<span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span>
-<span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span>
-<span class="co">#&gt; 6 Overall Evaluation              TRUE</span></pre></body></html></div>
-<p>Either option will work for <code>areal</code>’s purposes.</p>
+<p>Another option would be to rename the column using the <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> function from <code>dplyr</code> or by using another approach for renaming columns. Either option will work for <code>areal</code>’s purposes.</p>
 </div>
 <div id="subsetting" class="section level2">
 <h2 class="hasAnchor">
 <a href="#subsetting" class="anchor"></a>Subsetting</h2>
 <p>One cautionary note when using <code>areal</code> is that the validation process will not check to see if too many variables or observations exist in the data. Cleaning the data ahead of time so that only the relevant observations exist can help improve performance - if you have tract data for an entire state but only need a particular city, everything will go faster if you subset these data using the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function from <code>dplyr</code>:</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">countyData</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">stateData</span>, <span class="no">COUNTY</span> <span class="kw">==</span> <span class="fl">510</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">countyData</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">stateData</span>, <span class="no">COUNTY</span> <span class="kw">==</span> <span class="fl">510</span>)</pre></body></html></div>
 <p>Having too many columns poses an organizational problem more than anything else. We strongly encourage users to limit their interpolated data to only the needed values. For example, the <code>wards</code> data contains an <code>AREA</code> column whose units we don’t know and an <code>OBJECTID</code> column that is an artifact from its creation using an ESRI product:</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">wards</span>)
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">wards</span>)
 <span class="co">#&gt; [1] "OBJECTID" "WARD"     "AREA"     "geometry"</span></pre></body></html></div>
 <p>We can use the <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> function from <code>dplyr</code> to remove these before interpolation since we don’t need them:</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">wardsSubset</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">wards</span>, -<span class="no">OBJECTID</span>, -<span class="no">AREA</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">wardsSubset</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">wards</span>, -<span class="no">OBJECTID</span>, -<span class="no">AREA</span>)</pre></body></html></div>
 </div>
   </div>
 
