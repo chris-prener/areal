@@ -158,7 +158,7 @@ names(race)
 Another common problem is that a variable exists in both our source and target data. For instance, we could add a `TOTAL_E` variable to our target data:
 
 ```{r}
-wardsVar <- mutate(wards, TOTAL_E = TRUE)
+wardsVar <- mutate(wards, TOTAL_E = seq(1:28))
 
 ar_validate(source = race, target = wardsVar, varList = "TOTAL_E", method = "aw", verbose = TRUE)
 ```
@@ -171,15 +171,7 @@ wardsFixed <- select(wardsVar, -TOTAL_E)
 ar_validate(source = race, target = wardsFixed, varList = "TOTAL_E", method = "aw", verbose = TRUE)
 ```
 
-Another option would be to rename the column using the `rename()` function from `dplyr`:
-
-```{r}
-wardsFixed <- rename(wardsVar, oldTotal = TOTAL_E)
-
-ar_validate(source = race, target = wardsFixed, varList = "TOTAL_E", method = "aw", verbose = TRUE)
-```
-
-Either option will work for `areal`'s purposes.
+Another option would be to rename the column using the `rename()` function from `dplyr` or by using another approach for renaming columns. Either option will work for `areal`'s purposes.
 
 ## Subsetting
 One cautionary note when using `areal` is that the validation process will not check to see if too many variables or observations exist in the data. Cleaning the data ahead of time so that only the relevant observations exist can help improve performance - if you have tract data for an entire state but only need a particular city, everything will go faster if you subset these data using the `filter()` function from `dplyr`:
