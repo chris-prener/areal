@@ -140,6 +140,14 @@ test_that("correctly specified functions execute without error", {
                               intensive = c("ASTHMA", "ASTHMA2")), NA)
 })
 
+race_geom <- dplyr::rename(ar_stl_race, geom = geometry)
+
+test_that("correctly specified functions execute without error", {
+  expect_error(aw_interpolate(ar_stl_wards, tid = WARD, source = race_geom, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E")), NA)
+})
+
+
 # test for matching sid and tid ------------------------------------------------
 
 wardsGEOID <- dplyr::rename(ar_stl_wards, GEOID = WARD)
