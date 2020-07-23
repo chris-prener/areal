@@ -1,5 +1,5 @@
 ## Release summary
-This is an update to the previous CRAN release. It contains modifications that make it compatible with the upcoming release of `dplyr` v1.0 as well as several bug fixes.
+This is a minor update that addresses the ERRORs and WARNINGs appearing on CRAN package check results.
 
 ## Test environments
 * local OS X install: R 4.0.0
@@ -12,7 +12,7 @@ This is an update to the previous CRAN release. It contains modifications that m
 * r-hub not used because it lacks dependencies needed to build `sf` on Debian
 
 ## R CMD check results
-There were no ERRORs, WARNINGs, or NOTEs with local or CI checks except for R-3.5.3 on macOS (via Travis), which is having an issue installing the `DT` package. Other checks of R-3.5.3 install `DT` without issue on Linux and Windows.
+There were no ERRORs, WARNINGs, or NOTEs with local or CI checks.
 
 ## Reverse dependencies
 Not applicable.
