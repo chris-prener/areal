@@ -73,14 +73,6 @@ aw_interpolate <- function(.data, tid, source, sid, weight = "sum", output = "sf
     stop("A variable name must be specified for the 'sid' argument.")
   }
 
-  if (missing(weight)) {
-    stop("A weight type (either 'sum' or 'total') must be specified for the 'weight' argument.")
-  }
-
-  if (missing(output)) {
-    stop("An output type (either 'tibble' or 'sf') must be specified for the 'output' argument.")
-  }
-
   # determine extensive and intensive
   if (missing(extensive) & missing(intensive)){
     stop("Either 'extensive' or 'intenstive' must be specified with an accompanying list of variables to interpolate.")

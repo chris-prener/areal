@@ -54,12 +54,6 @@ test_that("errors with missing parameters", {
                               weight = "sum", output = "sf", extensive = "TOTAL_E"),
                "A variable name must be specified for the 'sid' argument.")
   expect_error(aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID,
-                              output = "sf", extensive = "TOTAL_E"),
-               "A weight type \\(either 'sum' or 'total'\\) must be specified for the 'weight' argument.")
-  expect_error(aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID,
-                              weight = "sum", extensive = "TOTAL_E"),
-               "An output type \\(either 'tibble' or 'sf'\\) must be specified for the 'output' argument.")
-  expect_error(aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID,
                               weight = "sum", output = "sf"),
                "Either 'extensive' or 'intenstive' must be specified with an accompanying list of variables to interpolate.")
 })
