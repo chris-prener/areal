@@ -127,15 +127,16 @@
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sf Objects                      TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">2</span> CRS Match                       TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CRS is Planar                   TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Variables Exist in Source       TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> No Variable Conflicts in Target TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Overall Evaluation              TRUE</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Polygon Geometries              TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Variables Exist in Source       TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> No Variable Conflicts in Target TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Overall Evaluation              TRUE</span></code></pre></div>
 <p>Use the <code>verbose = TRUE</code> output as a checklist to address issues before interpolating your data.</p>
 </div>
 <div class="section level2">
@@ -144,15 +145,16 @@
 <p>Data need to be loaded as <code>sf</code> objects in <code>R</code>. If <code><a href="../reference/ar_validate.html">ar_validate()</a></code> returns <code>FALSE</code> for the first condition, data are not stored as <code>sf</code> objects:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">asthmaTbl</span>, target <span class="op">=</span> <span class="va">wards</span>, varList <span class="op">=</span> <span class="st">"ASTHMA"</span>, method <span class="op">=</span> <span class="st">"aw"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sf Objects                      FALSE </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">2</span> CRS Match                       <span style="color: #BB0000;">NA</span>    </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CRS is Planar                   <span style="color: #BB0000;">NA</span>    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Variables Exist in Source       <span style="color: #BB0000;">NA</span>    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> No Variable Conflicts in Target <span style="color: #BB0000;">NA</span>    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Overall Evaluation              FALSE</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Polygon Geometries              <span style="color: #BB0000;">NA</span>    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Variables Exist in Source       <span style="color: #BB0000;">NA</span>    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> No Variable Conflicts in Target <span style="color: #BB0000;">NA</span>    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Overall Evaluation              FALSE</span></code></pre></div>
 <div class="section level3">
 <h3 id="external-spatial-data">External Spatial Data<a class="anchor" aria-label="anchor" href="#external-spatial-data"></a>
 </h3>
@@ -220,15 +222,16 @@
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sf Objects                      TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">2</span> CRS Match                       FALSE </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CRS is Planar                   FALSE </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Variables Exist in Source       TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> No Variable Conflicts in Target TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Overall Evaluation              FALSE</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Polygon Geometries              TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Variables Exist in Source       TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> No Variable Conflicts in Target TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Overall Evaluation              FALSE</span></code></pre></div>
 <p>These data fail both the matching CRS validation and the planar CRS validation because the <code>race</code> and <code>wards</code> data are in two different coordinate systems. We’ve already seen the CRS data for <code>race</code> above so we’ll look at the <code>CRS data for</code>wards`:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">wards</span><span class="op">)</span>
@@ -283,15 +286,16 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">raceFixed</span>, target <span class="op">=</span> <span class="va">wards</span>, varList <span class="op">=</span> <span class="st">"TOTAL_E"</span>, method <span class="op">=</span> <span class="st">"aw"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sf Objects                      TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">2</span> CRS Match                       TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CRS is Planar                   TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Variables Exist in Source       TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> No Variable Conflicts in Target TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Overall Evaluation              TRUE</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Polygon Geometries              TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Variables Exist in Source       TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> No Variable Conflicts in Target TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Overall Evaluation              TRUE</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="variable-conflicts">Variable Conflicts<a class="anchor" aria-label="anchor" href="#variable-conflicts"></a>
@@ -303,15 +307,16 @@
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sf Objects                      TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">2</span> CRS Match                       TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CRS is Planar                   TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Variables Exist in Source       FALSE </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> No Variable Conflicts in Target TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Overall Evaluation              FALSE</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Polygon Geometries              TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Variables Exist in Source       FALSE </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> No Variable Conflicts in Target TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Overall Evaluation              FALSE</span></code></pre></div>
 <p>In this case, the fix is as easy as correcting the typo in our <code><a href="../reference/ar_validate.html">ar_validate()</a></code> call - the variable <code>TOTAL</code> should really be <code>TOTAL_E</code>:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">race</span><span class="op">)</span>
@@ -328,15 +333,16 @@
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sf Objects                      TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">2</span> CRS Match                       TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CRS is Planar                   TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Variables Exist in Source       TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> No Variable Conflicts in Target FALSE </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Overall Evaluation              FALSE</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Polygon Geometries              TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Variables Exist in Source       TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> No Variable Conflicts in Target FALSE </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Overall Evaluation              FALSE</span></code></pre></div>
 <p>Now, we fail the validation process because there is a conflict between the source and target data - <code>TOTAL_E</code> exists in both data sets. We can use the <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> function from <code>dplyr</code> to remove the offending variable from the target data before proceeding:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">wardsFixed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">wardsVar</span>, <span class="op">-</span><span class="va">TOTAL_E</span><span class="op">)</span>
@@ -346,15 +352,16 @@
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sf Objects                      TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">2</span> CRS Match                       TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CRS is Planar                   TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Variables Exist in Source       TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> No Variable Conflicts in Target TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Overall Evaluation              TRUE</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Polygon Geometries              TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Variables Exist in Source       TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> No Variable Conflicts in Target TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Overall Evaluation              TRUE</span></code></pre></div>
 <p>Another option would be to rename the column using the <code><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename()</a></code> function from <code>dplyr</code> or by using another approach for renaming columns. Either option will work for <code>areal</code>’s purposes.</p>
 </div>
 <div class="section level2">
