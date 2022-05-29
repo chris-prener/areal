@@ -92,10 +92,10 @@ aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = "GEOID",
 The function is capable of both spatially extensive and intensive interpolations, and can use two different strategies for calculating areal weights for extensive interpolations. It can also produce output as either `tibble` or `sf` objects. These options are all documented in both the function documentation (use `?aw_interpolate`) as well as in a [dedicated vignette](https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html).
 
 ## Getting Help
-* If you are new to `R` itself, welcome! Hadley Wickham's [*R for Data Science*](http://r4ds.had.co.nz) is an excellent way to get started with data manipulation in the tidyverse, which `areal` is designed to integrate seamlessly with.
+* If you are new to `R` itself, welcome! Hadley Wickham's [*R for Data Science*](https://r4ds.had.co.nz) is an excellent way to get started with data manipulation in the tidyverse, which `areal` is designed to integrate seamlessly with.
 * If you are new to spatial analysis in `R`, we strongly encourage you check out the excellent new [*Geocomputation in R*](https://geocompr.robinlovelace.net) by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow.
-* If you have questions about using `areal`, you are encouraged to use the [RStudio Community forums](https://community.rstudio.com). Please create a [`reprex`](http://reprex.tidyverse.org/) before posting. Feel free to tag Chris (`@chris.prener`) in any posts about `areal`.
-* If you think you've found a bug, please create a [`reprex`](http://reprex.tidyverse.org/) and then open an issue on [GitHub](https://github.com/slu-openGIS/areal/issues/new/choose).
+* If you have questions about using `areal`, you are encouraged to use the [RStudio Community forums](https://community.rstudio.com). Please create a [`reprex`](https://reprex.tidyverse.org/) before posting. Feel free to tag Chris (`@chris.prener`) in any posts about `areal`.
+* If you think you've found a bug, please create a [`reprex`](https://reprex.tidyverse.org/) and then open an issue on [GitHub](https://github.com/slu-openGIS/areal/issues/new/choose).
 
 ## Suggesting Features or Changes
 We are planning to experiment with at least three additional techniques for areal interpolation for possible inclusion into the package. These include:
@@ -106,4 +106,4 @@ We are planning to experiment with at least three additional techniques for area
 
 We do not have a timeline for these experiments, though we are planning to begin experimenting with the pycnophylactic method in the coming months. We will be keeping the issues (linked to above) updated with progress. If you are interested in bringing these techniques to `R`, please feel free to contribute to the development of `areal`. The best place to start is bt checking in on our GitHub issues for each technique to see what help is needed!
 
-If you have other features or suggestions you want to see, please open an issue on [GitHub](https://github.com/slu-openGIS/areal/issues/new/choose) (and ideally created a [`reprex`](http://reprex.tidyverse.org/) to go with it!). Please note that this project is released with a [Contributor Code of Conduct](https://slu-opengis.github.io/areal/CODE_OF_CONDUCT.html). By participating in this project you agree to abide by its terms.
+If you have other features or suggestions you want to see, please open an issue on [GitHub](https://github.com/slu-openGIS/areal/issues/new/choose) (and ideally created a [`reprex`](https://reprex.tidyverse.org/) to go with it!). Please note that this project is released with a [Contributor Code of Conduct](https://slu-opengis.github.io/areal/CODE_OF_CONDUCT.html). By participating in this project you agree to abide by its terms.

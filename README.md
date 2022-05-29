@@ -7,12 +7,12 @@
 status](https://github.com/slu-openGIS/areal/workflows/R-CMD-check/badge.svg)](https://github.com/slu-openGIS/areal/actions)
 [![Coverage
 status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=main)
-[![CRAN_status_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
+[![CRAN_status_badge](https://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 [![cran
 checks](https://cranchecks.info/badges/worst/areal)](https://cran.r-project.org/web/checks/check_results_areal.html)
-[![Downloads](http://cranlogs.r-pkg.org/badges/areal?color=brightgreen)](http://www.r-pkg.org/pkg/areal)
+[![Downloads](https://cranlogs.r-pkg.org/badges/areal?color=brightgreen)](https://www.r-pkg.org/pkg/areal)
 [![DOI](https://zenodo.org/badge/152279647.svg)](https://zenodo.org/badge/latestdoi/152279647)
-[![DOI](http://joss.theoj.org/papers/10.21105/joss.01221/status.svg)](https://doi.org/10.21105/joss.01221)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01221/status.svg)](https://doi.org/10.21105/joss.01221)
 
 Areal interpolation is the process making estimates from a source set of
 polygons to an overlapping but incongruent set of target polygons. One
@@ -30,11 +30,11 @@ into both modern data management (e.g. `tidyverse`) and spatial data
 
 ### *Joural of Open Souce Software* Article
 
-An [article](http://joss.theoj.org/papers/10.21105/joss.01221)
+An [article](https://joss.theoj.org/papers/10.21105/joss.01221)
 describing `areal`’s approach to areal weighted interpolation has been
 published in the [*The Journal of Open Source
-Software*](http://joss.theoj.org/). The article includes benchmarking of
-`areal` performance on several data sets. Please [cite the
+Software*](https://joss.theoj.org/). The article includes benchmarking
+of `areal` performance on several data sets. Please [cite the
 paper](/inst/CITATION) if you use `areal` in your work!
 
 ## Installation
