@@ -14,17 +14,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
-library(areal)
-
-data(ar_stl_asthma, package = "areal")
-asthma <- ar_stl_asthma
-
-data(ar_stl_race, package = "areal")
-race <- ar_stl_race
-
-data(ar_stl_wards, package = "areal")
-wards <- ar_stl_wards
 ```
 
 Areal interpolation is the process making estimates from a source set of polygons to an overlapping but incongruent set of target polygons. This is required if, for example, a researcher wants to derive population estimates for neighborhoods in a U.S. city from the Census Bureau's census tracts. Neighborhoods do not typically align with census tract boundaries, and areal interpolation can be used to produce estimates in this situation. 
@@ -91,7 +80,11 @@ Areal weighted interpolation makes a single, albeit significant, assumption abou
 
 The primary means for conducting interpolations, and possibly the only function you may need from `areal`, is the `aw_interpolate()` function:
 
-```{r iteration}
+```r
+## load dependencies
+library(areal)
+
+## interpolate values
 aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = "GEOID", 
                weight = "sum", output = "sf", extensive = "TOTAL_E")
 ```
