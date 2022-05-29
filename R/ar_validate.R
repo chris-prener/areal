@@ -60,6 +60,7 @@ ar_validate <- function(source, target, varList, method = "aw", verbose = FALSE)
 
     crs_result <- NA
     longlat_result <- NA
+    polygon_result <- NA
     vars_exist_result <- NA
     vars_conflict_result <- NA
 
@@ -75,6 +76,12 @@ ar_validate <- function(source, target, varList, method = "aw", verbose = FALSE)
 
     longlat_result <- all(longlat_result1, longlat_result2)
 
+    # are both data sets polygon data?
+    polygon_result1 <- ar_validate_polygon(source)
+    polygon_result2 <- ar_validate_polygon(target)
+
+    polygon_result <- all(polygon_result1, polygon_result2)
+
     # are there no conflicts with target variable names?
     vars_conflict_result <- ar_validate_vars_conflict(target, varList = varList)
     vars_exist_result <- ar_validate_vars_exist(source, varList = varList)
@@ -83,6 +90,7 @@ ar_validate <- function(source, target, varList, method = "aw", verbose = FALSE)
 
   # determine if overall test is passed
   if(sf_result == "TRUE" & crs_result == "TRUE" & longlat_result == "TRUE" &
+     polygon_result == "TRUE" &
      vars_exist_result == "TRUE" & vars_conflict_result == "TRUE") {
 
     result <- TRUE
@@ -104,10 +112,11 @@ ar_validate <- function(source, target, varList, method = "aw", verbose = FALSE)
   else if (verbose == TRUE){
 
     table <- data.frame(
-      test = c("sf Objects", "CRS Match", "CRS is Planar", "Variables Exist in Source",
-               "No Variable Conflicts in Target", "Overall Evaluation"),
-      result = c(sf_result, crs_result, longlat_result, vars_exist_result,
-                 vars_conflict_result, result),
+      test = c("sf Objects", "CRS Match", "CRS is Planar", "Polygon Geometries",
+               "Variables Exist in Source", "No Variable Conflicts in Target",
+               "Overall Evaluation"),
+      result = c(sf_result, crs_result, longlat_result, polygon_result,
+                 vars_exist_result, vars_conflict_result, result),
       stringsAsFactors = FALSE)
 
     out <- as_tibble(table)
@@ -153,10 +162,17 @@ aw_validate_preview <- function(source, target){
 
     longlat_result <- all(longlat_result1, longlat_result2)
 
+    # are both data sets polygon data?
+    polygon_result1 <- ar_validate_polygon(source)
+    polygon_result2 <- ar_validate_polygon(target)
+
+    polygon_result <- all(polygon_result1, polygon_result2)
+
   }
 
   # determine if overall test is passed
-  if(sf_result == "TRUE" & crs_result == "TRUE" & longlat_result == "TRUE") {
+  if(sf_result == "TRUE" & crs_result == "TRUE" & longlat_result == "TRUE" &
+     polygon_result == "TRUE") {
 
     out <- TRUE
 
@@ -311,6 +327,17 @@ ar_validate_vars_exist <- function(.data, varList){
   # create logical vector
   resultVector <- varList %in% colnames(.data)
   out <- all(resultVector)
+
+  # return result output
+  return(out)
+
+}
+
+# Testing Geometry
+ar_validate_polygon <- function(.data){
+
+  # create logical vector
+  out <- any(sf::st_geometry_type(.data) %in% c("POLYGON", "MULTIPOLYGON"))
 
   # return result output
   return(out)

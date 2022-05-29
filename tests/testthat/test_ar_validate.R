@@ -74,7 +74,7 @@ invalidV1 <- ar_validate(source = racedf, target = wardsdf, varList = "TOTAL_E",
 invalidV2 <- ar_validate(source = ar_stl_race, target = wardsdf, varList = "TOTAL_E", method = "aw", verbose = TRUE)
 invalidV3 <- ar_validate(source = racedf, target = ar_stl_wards, varList = "TOTAL_E", method = "aw", verbose = TRUE)
 
-invalidSF <- c(FALSE, NA, NA, NA, NA, FALSE)
+invalidSF <- c(FALSE, NA, NA, NA, NA, NA, FALSE)
 
 test_that("invalid sf objects return appropriate verbose output", {
   expect_equal(invalidV1$result, invalidSF)
@@ -85,7 +85,7 @@ test_that("invalid sf objects return appropriate verbose output", {
 invalidV4 <- ar_validate(source = ar_stl_race, target = wards83, varList = "TOTAL_E", method = "aw", verbose = TRUE)
 invalidV5 <- ar_validate(source = race83, target = ar_stl_wards, varList = "TOTAL_E", method = "aw", verbose = TRUE)
 
-invalidCRS <- c(TRUE, FALSE, FALSE, TRUE, TRUE, FALSE)
+invalidCRS <- c(TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE)
 
 test_that("invalid crs returns appropriate verbose output", {
   expect_equal(invalidV4$result, invalidCRS)
@@ -93,14 +93,14 @@ test_that("invalid crs returns appropriate verbose output", {
 })
 
 invalidV6 <- ar_validate(source = ar_stl_race, target = ar_stl_wards, varList = "HAM", method = "aw", verbose = TRUE)
-invalidSourceVars <- c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)
+invalidSourceVars <- c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)
 
 invalidV7 <- ar_validate(source = ar_stl_race, target = ar_stl_wards, varList = "WARD", method = "aw", verbose = TRUE)
-invalidTargetVars <- c(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE)
+invalidTargetVars <- c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE)
 
 invalidV8 <- ar_validate(source = ar_stl_race, target = ar_stl_wards_conflict, varList = "WHITE_E", method = "aw",
                          verbose = TRUE)
-invalidVarsConflict <- c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+invalidVarsConflict <- c(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
 
 test_that("invalid crs returns appropriate verbose output", {
   expect_equal(invalidV6$result, invalidSourceVars)
