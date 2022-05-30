@@ -33,11 +33,7 @@ knitr::include_graphics("../man/figures/exampleMap.png")
 
 ## Getting Started
 ### Installation
-We recommend that users install `sf` before proceeding with the installation of `areal`. Windows users should be able to install `sf` without significant issues, but macOS and Linux users will need to install several open source spatial libraries to get `sf` itself up and running. The easiest approach for macOS users is to install the GDAL 2.0 Complete framework from [Kyng Chaos](https://www.kyngchaos.com/software/frameworks/). 
-
-For Linux users, steps will vary based on the flavor being used. Our [configuration file](https://github.com/slu-openGIS/areal/blob/master/.travis.yml) for Travis CI and its associated [bash script](https://github.com/slu-openGIS/areal/blob/master/.travis/install.sh) should be useful in determining the necessary components to install. Linux users will need to make sure the dependency [`lwgeom`](https://github.com/r-spatial/lwgeom) is also installed correctly.
-
-Once `sf` is installed, the easiest way to get `areal` is to install it from CRAN:
+The easiest way to get `areal` is to install it from CRAN:
 
 ``` r
 install.packages("areal")
@@ -47,8 +43,10 @@ Alternatively, the development version of `areal` can be accessed from GitHub wi
 
 ```r
 # install.packages("remotes")
-remotes::install_github("slu-openGIS/areal")
+remotes::install_github("chris-prener/areal")
 ```
+
+Note that installations that require `sf` to be built from *source* will require additional software regardless of operating system. You should check the [`sf` package website](https://r-spatial.github.io/sf/) for the latest details on installing dependencies for that package. Instructions vary significantly by operating system.
 
 ### Functions
 Two function prefixes are used in `areal` to allow users to take advantage of RStudio's auto complete functionality:
@@ -73,7 +71,7 @@ Finally, we strongly suggest that you clean out unnecessary columns from your da
 
 Once data have been converted to `sf` objects, re-projected into the same planar coordinate systems, and cleaned, they are ready for interpolation!
 
-The data preparation process is described in greater detail in a [dedicated vignette](https://slu-opengis.github.io/areal/articles/data-preparation.html).
+The data preparation process is described in greater detail in a [dedicated vignette](https://chris-prener.github.io/areal/articles/data-preparation.html).
 
 ### Areal Weighted Interpolation
 Areal weighted interpolation makes a single, albeit significant, assumption about your data - that populations are evenly distributed within the source data. Imagine you have a census tract with 3,000 residents. Areal weighted interpolation will assume that these 3,000 residents are evenly spread out within that tract. This may not matter in some tracts, but in tracts with large parks or dense housing developments alongside commercial buildings, this assumption is not likely to hold.
@@ -89,21 +87,21 @@ aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = "GEOID",
                weight = "sum", output = "sf", extensive = "TOTAL_E")
 ```
 
-The function is capable of both spatially extensive and intensive interpolations, and can use two different strategies for calculating areal weights for extensive interpolations. It can also produce output as either `tibble` or `sf` objects. These options are all documented in both the function documentation (use `?aw_interpolate`) as well as in a [dedicated vignette](https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html).
+The function is capable of both spatially extensive and intensive interpolations, and can use two different strategies for calculating areal weights for extensive interpolations. It can also produce output as either `tibble` or `sf` objects. These options are all documented in both the function documentation (use `?aw_interpolate`) as well as in a [dedicated vignette](https://chris-prener.github.io/areal/articles/areal-weighted-interpolation.html).
 
 ## Getting Help
 * If you are new to `R` itself, welcome! Hadley Wickham's [*R for Data Science*](https://r4ds.had.co.nz) is an excellent way to get started with data manipulation in the tidyverse, which `areal` is designed to integrate seamlessly with.
 * If you are new to spatial analysis in `R`, we strongly encourage you check out the excellent new [*Geocomputation in R*](https://geocompr.robinlovelace.net) by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow.
 * If you have questions about using `areal`, you are encouraged to use the [RStudio Community forums](https://community.rstudio.com). Please create a [`reprex`](https://reprex.tidyverse.org/) before posting. Feel free to tag Chris (`@chris.prener`) in any posts about `areal`.
-* If you think you've found a bug, please create a [`reprex`](https://reprex.tidyverse.org/) and then open an issue on [GitHub](https://github.com/slu-openGIS/areal/issues/new/choose).
+* If you think you've found a bug, please create a [`reprex`](https://reprex.tidyverse.org/) and then open an issue on [GitHub](https://github.com/chris-prener/areal/issues/new/choose).
 
 ## Suggesting Features or Changes
 We are planning to experiment with at least three additional techniques for areal interpolation for possible inclusion into the package. These include:
 
-- [Pycnophylactic method](https://github.com/slu-openGIS/areal/issues/1) (raster based, eliminates the sharp transitions in value between target features)
-- [Binary dasymetric method](https://github.com/slu-openGIS/areal/issues/2) (incorporates ancillary data so that population is not assumed to be evenly distributed within units)
-- [3-class regression dasymetric method](https://github.com/slu-openGIS/areal/issues/3) (allows for a more complex estimation based on multiple forms of ancillary data)
+- [Pycnophylactic method](https://github.com/chris-prener/areal/issues/1) (raster based, eliminates the sharp transitions in value between target features)
+- [Binary dasymetric method](https://github.com/chris-prener/areal/issues/2) (incorporates ancillary data so that population is not assumed to be evenly distributed within units)
+- [3-class regression dasymetric method](https://github.com/chris-prener/areal/issues/3) (allows for a more complex estimation based on multiple forms of ancillary data)
 
 We do not have a timeline for these experiments, though we are planning to begin experimenting with the pycnophylactic method in the coming months. We will be keeping the issues (linked to above) updated with progress. If you are interested in bringing these techniques to `R`, please feel free to contribute to the development of `areal`. The best place to start is bt checking in on our GitHub issues for each technique to see what help is needed!
 
-If you have other features or suggestions you want to see, please open an issue on [GitHub](https://github.com/slu-openGIS/areal/issues/new/choose) (and ideally created a [`reprex`](https://reprex.tidyverse.org/) to go with it!). Please note that this project is released with a [Contributor Code of Conduct](https://slu-opengis.github.io/areal/CODE_OF_CONDUCT.html). By participating in this project you agree to abide by its terms.
+If you have other features or suggestions you want to see, please open an issue on [GitHub](https://github.com/chris-prener/areal/issues/new/choose) (and ideally created a [`reprex`](https://reprex.tidyverse.org/) to go with it!). Please note that this project is released with a [Contributor Code of Conduct](https://chris-prener.github.io/areal/CODE_OF_CONDUCT.html). By participating in this project you agree to abide by its terms.

@@ -4,9 +4,9 @@
 # areal <img src="man/figures/arealLogo.png" align="right" />
 
 [![R build
-status](https://github.com/slu-openGIS/areal/workflows/R-CMD-check/badge.svg)](https://github.com/slu-openGIS/areal/actions)
+status](https://github.com/chris-prener/areal/workflows/R-CMD-check/badge.svg)](https://github.com/chris-prener/areal/actions)
 [![Coverage
-status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=main)
+status](https://codecov.io/gh/chris-prener/areal/branch/master/graph/badge.svg)](https://codecov.io/github/chris-prener/areal?branch=main)
 [![CRAN_status_badge](https://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 [![cran
 checks](https://cranchecks.info/badges/worst/areal)](https://cran.r-project.org/web/checks/check_results_areal.html)
@@ -39,22 +39,6 @@ paper](/inst/CITATION) if you use `areal` in your work!
 
 ## Installation
 
-### Installing Dependencies
-
-You should check the [`sf` package
-website](https://r-spatial.github.io/sf/) and the [`areal` package
-website](https://slu-openGIS.github.io/areal/) for the latest details on
-installing dependencies for that package. Instructions vary
-significantly by operating system. For best results, have `sf` installed
-before you install `areal`. Other dependencies, like `dplyr`, will be
-installed automatically with `areal` if they are not already present.
-
-The one exception here is the dependency `lwgeom`, which Linux users
-will need to follow some [special
-instructions](https://github.com/r-spatial/lwgeom) to install correctly.
-
-### Installing areal
-
 The easiest way to get `areal` is to install it from CRAN:
 
 ``` r
@@ -66,8 +50,14 @@ The development version of `areal` can be accessed from GitHub with
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("slu-openGIS/areal")
+remotes::install_github("chris-prener/areal")
 ```
+
+Note that installations that require `sf` to be built from *source* will
+require additional software regardless of operating system. You should
+check the [`sf` package website](https://r-spatial.github.io/sf/) for
+the latest details on installing dependencies for that package.
+Instructions vary significantly by operating system.
 
 ## Usage
 
@@ -109,7 +99,7 @@ The following examples assume:
 weighted interpolation. It is arguably the simplest and most common
 approach to areal interpolation, though it does have some drawbacks (see
 the [areal weighted interpolation
-vignette](https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html)
+vignette](https://chris-prener.github.io/areal/articles/areal-weighted-interpolation.html)
 for details). The basic usage of `areal` is through the
 `aw_interpolate()` function. This is a pipe-able function that allows
 for the simultaneous interpolation of multiple values.
@@ -155,7 +145,7 @@ aw_interpolate(wards, tid = WARD, source = race, sid = "GEOID",
 This example outputs a simple features (`sf`) object and uses one of two
 options for calculating weights. All of these arguments are documented
 both within the package (use `?aw_interpolate`) and on the [package’s
-website](https://slu-opengis.github.io/areal/).
+website](https://chris-prener.github.io/areal/).
 
 What results from `aw_interpolate()` is mapped below. Total population
 per census tract in St. Louis is mapped on the left in panel A. Using
@@ -220,7 +210,7 @@ Another advantage of `areal` is that the interpolation process is not a
 Functions for validating data, previewing the areal weights, and walking
 step-by-step through the interpolation process are provided. See the
 [areal weighted interpolation
-vignette](https://slu-opengis.github.io/areal/articles/areal-weighted-interpolation.html)
+vignette](https://chris-prener.github.io/areal/articles/areal-weighted-interpolation.html)
 for additional details about this workflow.
 
 ## Road-map
@@ -230,16 +220,16 @@ for areal interpolation for possible inclusion into the package. These
 include:
 
 -   [Pycnophylactic
-    method](https://github.com/slu-openGIS/areal/issues/1) (raster
+    method](https://github.com/chris-prener/areal/issues/1) (raster
     based, eliminates the sharp transitions in value between target
     features)
 -   [Binary dasymetric
-    method](https://github.com/slu-openGIS/areal/issues/2) (incorporates
-    ancillary data so that population is not assumed to be evenly
-    distributed within units)
+    method](https://github.com/chris-prener/areal/issues/2)
+    (incorporates ancillary data so that population is not assumed to be
+    evenly distributed within units)
 -   [3-class regression dasymetric
-    method](https://github.com/slu-openGIS/areal/issues/3) (allows for a
-    more complex estimation based on multiple forms of ancillary data)
+    method](https://github.com/chris-prener/areal/issues/3) (allows for
+    a more complex estimation based on multiple forms of ancillary data)
 
 We do not have a timeline for these experiments, though we are planning
 to begin experimenting with the pycnophylactic method in the coming
@@ -252,5 +242,5 @@ to see what help is needed!
 ## Contributor Code of Conduct
 
 Please note that this project is released with a [Contributor Code of
-Conduct](https://slu-opengis.github.io/areal/CODE_OF_CONDUCT.html). By
+Conduct](https://chris-prener.github.io/areal/CODE_OF_CONDUCT.html). By
 participating in this project you agree to abide by its terms.

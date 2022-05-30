@@ -16,8 +16,8 @@ Description: A pipeable, transparent implementation of areal weighted interpolat
     data (e.g. sf) frameworks.
 Depends: R (>= 3.4)
 License: GPL-3
-URL: https://github.com/slu-openGIS/areal
-BugReports: https://github.com/slu-openGIS/areal/issues
+URL: https://chris-prener.github.io/areal/
+BugReports: https://github.com/chris-prener/areal/issues
 Encoding: UTF-8
 LazyData: true
 Imports:
