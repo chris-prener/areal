@@ -48,3 +48,8 @@ use_data(ar_stl_wardsClipped, overwrite = TRUE)
 use_data(ar_stl_asthma, overwrite = TRUE)
 
 rm(stlRace, stlTracts, ar_stl_race, ar_stl_wards, ar_stl_asthma, ar_stl_wardsClipped)
+
+totalCompare1 <- aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID,
+                               weight = "sum", output = "sf", extensive = "TOTAL_E")
+
+save(totalCompare1, file = "inst/testdata/totalCompare1.rda")

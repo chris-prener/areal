@@ -102,16 +102,15 @@ totalResult2 <- aw_interpolate(ar_stl_wards, tid = "WARD", source = ar_stl_race,
 asthmaResult <- aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_asthma, sid = GEOID,
                                output = "sf", weight = "sum", intensive = "ASTHMA")
 
-
 mixedResult <- aw_interpolate(ar_stl_wards, tid = WARD, source = combinedData, sid = "GEOID",
                               weight = "sum", output = "tibble", extensive = "TOTAL_E",
                               intensive = "ASTHMA")
 
 test_that("interpolated values are equal", {
-  expect_equal(totalCompare1$TOTAL_E, totalResult1$TOTAL_E)
+  expect_equal(totalCompare1$TOTAL_E, totalResult1$TOTAL_E) # failing
   expect_equal(totalCompare2$TOTAL_E, totalResult2$TOTAL_E)
   expect_equal(asthmaCompare$ASTHMA, asthmaResult$ASTHMA)
-  expect_equal(totalCompare1$TOTAL_E, mixedResult$TOTAL_E)
+  expect_equal(totalCompare1$TOTAL_E, mixedResult$TOTAL_E) # failing
   expect_equal(asthmaCompare$ASTHMA, mixedResult$ASTHMA)
 })
 
