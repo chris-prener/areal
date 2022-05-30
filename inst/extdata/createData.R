@@ -1,8 +1,8 @@
 # Create spatial data for examples and testing
 
 library(dplyr)
+library(readr)
 library(sf)
-library(stldata)
 library(tidycensus)
 library(tigris)
 library(usethis)
@@ -31,10 +31,11 @@ st_read("inst/extdata/STL_POLITICS_Wards10.shp", stringsAsFactors = FALSE) %>%
          WARD = WARD10) %>%
   st_transform(crs = 26915) -> ar_stl_wards
 
-stl_tbl_asthma %>%
-  rename(GEOID = geoID, ASTHMA = pctAsthma) %>%
+read_csv("inst/extdata/STL_HEALTH_Asthma.csv") %>%
+  mutate(GEOID = as.character(geoID)) %>%
+  rename(ASTHMA = pctAsthma) %>%
   select(GEOID, ASTHMA) %>%
-  left_join(aw_stl_race, ., by = "GEOID") %>%
+  left_join(ar_stl_race, ., by = "GEOID") %>%
   select(GEOID, STATEFP, COUNTYFP, TRACTCE, NAMELSAD, ALAND, AWATER, ASTHMA) -> ar_stl_asthma
 
 st_read("inst/extdata/STL_POLITICS_WardsClipped.shp", stringsAsFactors = FALSE) %>%
