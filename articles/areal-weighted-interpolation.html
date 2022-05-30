@@ -115,14 +115,7 @@
 
 <span class="co"># create intersect for example purposes</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_binary_ops.html" class="external-link">st_intersection</a></span><span class="op">(</span><span class="va">race</span>, <span class="va">wards</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; [1] 287</span></code></pre></div>
+<span class="co">#&gt; [1] 286</span></code></pre></div>
 <p>By intersecting these two data sets, we get a new data set with <em>n</em> = 287 features. The resulting <code>sf</code> object looks like so:</p>
 <p><img src="../reference/figures/intersectMap.png" width="100%"></p>
 <p>One by-product of the intersection process is that each intersected feature takes on the attributes of both the source and target data. The population value of interest from each source feature (for example, total population per tract or <code>TOTAL_E</code>), therefore exists as an attribute for each intersected feature. The identification numbers from both the source (<code>GEOID</code>) and the target data (<code>WARD</code>) are also applied:</p>
@@ -320,31 +313,18 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span><span class="op">(</span><span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">race</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                weight <span class="op">=</span> <span class="st">"sum"</span>, output <span class="op">=</span> <span class="st">"tibble"</span>, extensive <span class="op">=</span> <span class="st">"TOTAL_E"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 28 × 4</span></span>
 <span class="co">#&gt;    OBJECTID  WARD       AREA TOTAL_E</span>
 <span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>        1     1  46<span style="text-decoration: underline;">138</span>761.   <span style="text-decoration: underline;">7</span>992.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>        2     2 267<span style="text-decoration: underline;">817</span>711.  <span style="text-decoration: underline;">12</span>145.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>        3     3  66<span style="text-decoration: underline;">291</span>644.   <span style="text-decoration: underline;">7</span>344.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>        1     1  46<span style="text-decoration: underline;">138</span>761.   <span style="text-decoration: underline;">7</span>959.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>        2     2 267<span style="text-decoration: underline;">817</span>711.  <span style="text-decoration: underline;">12</span>111.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>        3     3  66<span style="text-decoration: underline;">291</span>644.   <span style="text-decoration: underline;">7</span>357.</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>        4     4  53<span style="text-decoration: underline;">210</span>707.   <span style="text-decoration: underline;">8</span>458.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>        5     5  60<span style="text-decoration: underline;">462</span>396.   <span style="text-decoration: underline;">8</span>783.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>        6     6  64<span style="text-decoration: underline;">337</span>271.  <span style="text-decoration: underline;">14</span>050.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>        7     7 101<span style="text-decoration: underline;">268</span>146.  <span style="text-decoration: underline;">15</span>840.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>        8     8  45<span style="text-decoration: underline;">966</span>410.  <span style="text-decoration: underline;">12</span>188.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>        9     9  73<span style="text-decoration: underline;">993</span>891.  <span style="text-decoration: underline;">14</span>217.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>        5     5  60<span style="text-decoration: underline;">462</span>396.   <span style="text-decoration: underline;">8</span>808.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>        6     6  64<span style="text-decoration: underline;">337</span>271.  <span style="text-decoration: underline;">14</span>053.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>        7     7 101<span style="text-decoration: underline;">268</span>146.  <span style="text-decoration: underline;">15</span>842.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>        8     8  45<span style="text-decoration: underline;">966</span>410.  <span style="text-decoration: underline;">12</span>189.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>        9     9  73<span style="text-decoration: underline;">993</span>891.  <span style="text-decoration: underline;">14</span>218.</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">10</span>       10    10  62<span style="text-decoration: underline;">915</span>358.  <span style="text-decoration: underline;">11</span>239.</span>
 <span class="co">#&gt; <span style="color: #949494;"># … with 18 more rows</span></span></code></pre></div>
 <p>For spatially extensive interpolations, a list of variable names should be supplied for the argument <code>extensive</code>. This can be a single variable name, such as in the example above, or a vector of variable names:</p>
@@ -352,48 +332,19 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span><span class="op">(</span><span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">race</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                weight <span class="op">=</span> <span class="st">"sum"</span>, output <span class="op">=</span> <span class="st">"tibble"</span>, 
                extensive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TOTAL_E"</span>, <span class="st">"WHITE_E"</span>, <span class="st">"BLACK_E"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 28 × 6</span></span>
 <span class="co">#&gt;    OBJECTID  WARD       AREA BLACK_E TOTAL_E WHITE_E</span>
 <span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>        1     1  46<span style="text-decoration: underline;">138</span>761.   <span style="text-decoration: underline;">7</span>779.   <span style="text-decoration: underline;">7</span>992.    153.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>        2     2 267<span style="text-decoration: underline;">817</span>711.  <span style="text-decoration: underline;">10</span>639.  <span style="text-decoration: underline;">12</span>145.   <span style="text-decoration: underline;">1</span>323.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>        3     3  66<span style="text-decoration: underline;">291</span>644.   <span style="text-decoration: underline;">6</span>635.   <span style="text-decoration: underline;">7</span>344.    591.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>        1     1  46<span style="text-decoration: underline;">138</span>761.   <span style="text-decoration: underline;">7</span>748.   <span style="text-decoration: underline;">7</span>959.    152.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>        2     2 267<span style="text-decoration: underline;">817</span>711.  <span style="text-decoration: underline;">10</span>612.  <span style="text-decoration: underline;">12</span>111.   <span style="text-decoration: underline;">1</span>315.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>        3     3  66<span style="text-decoration: underline;">291</span>644.   <span style="text-decoration: underline;">6</span>644.   <span style="text-decoration: underline;">7</span>357.    594.</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>        4     4  53<span style="text-decoration: underline;">210</span>707.   <span style="text-decoration: underline;">8</span>203.   <span style="text-decoration: underline;">8</span>458.    160.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>        5     5  60<span style="text-decoration: underline;">462</span>396.   <span style="text-decoration: underline;">7</span>056.   <span style="text-decoration: underline;">8</span>783.   <span style="text-decoration: underline;">1</span>526.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>        6     6  64<span style="text-decoration: underline;">337</span>271.   <span style="text-decoration: underline;">7</span>439.  <span style="text-decoration: underline;">14</span>050.   <span style="text-decoration: underline;">5</span>840.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>        7     7 101<span style="text-decoration: underline;">268</span>146.   <span style="text-decoration: underline;">6</span>629.  <span style="text-decoration: underline;">15</span>840.   <span style="text-decoration: underline;">8</span>220.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>        8     8  45<span style="text-decoration: underline;">966</span>410.   <span style="text-decoration: underline;">3</span>796.  <span style="text-decoration: underline;">12</span>188.   <span style="text-decoration: underline;">7</span>604.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>        9     9  73<span style="text-decoration: underline;">993</span>891.   <span style="text-decoration: underline;">6</span>413.  <span style="text-decoration: underline;">14</span>217.   <span style="text-decoration: underline;">6</span>838.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>       10    10  62<span style="text-decoration: underline;">915</span>358.   <span style="text-decoration: underline;">1</span>667.  <span style="text-decoration: underline;">11</span>239.   <span style="text-decoration: underline;">8</span>703.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>        5     5  60<span style="text-decoration: underline;">462</span>396.   <span style="text-decoration: underline;">7</span>075.   <span style="text-decoration: underline;">8</span>808.   <span style="text-decoration: underline;">1</span>532.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>        6     6  64<span style="text-decoration: underline;">337</span>271.   <span style="text-decoration: underline;">7</span>441.  <span style="text-decoration: underline;">14</span>053.   <span style="text-decoration: underline;">5</span>840.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>        7     7 101<span style="text-decoration: underline;">268</span>146.   <span style="text-decoration: underline;">6</span>630.  <span style="text-decoration: underline;">15</span>842.   <span style="text-decoration: underline;">8</span>219.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>        8     8  45<span style="text-decoration: underline;">966</span>410.   <span style="text-decoration: underline;">3</span>797.  <span style="text-decoration: underline;">12</span>189.   <span style="text-decoration: underline;">7</span>605.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>        9     9  73<span style="text-decoration: underline;">993</span>891.   <span style="text-decoration: underline;">6</span>413.  <span style="text-decoration: underline;">14</span>218.   <span style="text-decoration: underline;">6</span>839.</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>       10    10  62<span style="text-decoration: underline;">915</span>358.   <span style="text-decoration: underline;">1</span>666.  <span style="text-decoration: underline;">11</span>239.   <span style="text-decoration: underline;">8</span>703.</span>
 <span class="co">#&gt; <span style="color: #949494;"># … with 18 more rows</span></span></code></pre></div>
 <p>This ability is a key feature of <code>areal</code> - iteration is built into the package by default, eliminating the need for repeated table joins after interpolations are calculated.</p>
 </div>
@@ -416,28 +367,6 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/aw_preview_weights.html">aw_preview_weights</a></span><span class="op">(</span><span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">race</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                    type <span class="op">=</span> <span class="st">"extensive"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 106 × 3</span></span>
 <span class="co">#&gt;    GEOID       extensiveSum extensiveTotal</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -457,19 +386,6 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span><span class="op">(</span><span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">race</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                weight <span class="op">=</span> <span class="st">"sum"</span>, output <span class="op">=</span> <span class="st">"tibble"</span>, extensive <span class="op">=</span> <span class="st">"TOTAL_E"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 
 <span class="fu"><a href="../reference/aw_verify.html">aw_verify</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">race</span>, sourceValue <span class="op">=</span> <span class="va">TOTAL_E</span>, 
           result <span class="op">=</span> <span class="va">result</span>, resultValue <span class="op">=</span> <span class="va">TOTAL_E</span><span class="op">)</span>
@@ -478,23 +394,6 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span><span class="op">(</span><span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">race</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                weight <span class="op">=</span> <span class="st">"total"</span>, output <span class="op">=</span> <span class="st">"tibble"</span>, extensive <span class="op">=</span> <span class="st">"TOTAL_E"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 
 <span class="fu"><a href="../reference/aw_verify.html">aw_verify</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">race</span>, sourceValue <span class="op">=</span> <span class="va">TOTAL_E</span>, 
           result <span class="op">=</span> <span class="va">result</span>, resultValue <span class="op">=</span> <span class="va">TOTAL_E</span><span class="op">)</span>
@@ -509,28 +408,6 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/aw_preview_weights.html">aw_preview_weights</a></span><span class="op">(</span><span class="va">wardsClipped</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">race</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                    type <span class="op">=</span> <span class="st">"extensive"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 106 × 3</span></span>
 <span class="co">#&gt;    GEOID       extensiveSum extensiveTotal</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -563,17 +440,6 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/aw_preview_weights.html">aw_preview_weights</a></span><span class="op">(</span><span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">asthma</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                    type <span class="op">=</span> <span class="st">"intensive"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 28 × 2</span></span>
 <span class="co">#&gt;     WARD intensive</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -592,19 +458,6 @@
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span><span class="op">(</span><span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">asthma</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                weight <span class="op">=</span> <span class="st">"sum"</span>, output <span class="op">=</span> <span class="st">"tibble"</span>, intensive <span class="op">=</span> <span class="st">"ASTHMA"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 28 × 4</span></span>
 <span class="co">#&gt;    OBJECTID  WARD       AREA ASTHMA</span>
 <span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -633,36 +486,24 @@
 <span class="va">race</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">GEOID</span>, <span class="va">TOTAL_E</span>, <span class="va">WHITE_E</span>, <span class="va">BLACK_E</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">asthma</span>, <span class="va">.</span>, by <span class="op">=</span> <span class="st">"GEOID"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">combinedData</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 
 <span class="co"># interpolate</span>
 <span class="fu"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span><span class="op">(</span><span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">combinedData</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                weight <span class="op">=</span> <span class="st">"sum"</span>, output <span class="op">=</span> <span class="st">"tibble"</span>, intensive <span class="op">=</span> <span class="st">"ASTHMA"</span>,
                extensive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TOTAL_E"</span>, <span class="st">"WHITE_E"</span>, <span class="st">"BLACK_E"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 28 × 7</span></span>
 <span class="co">#&gt;    OBJECTID  WARD       AREA BLACK_E TOTAL_E WHITE_E ASTHMA</span>
 <span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>        1     1  46<span style="text-decoration: underline;">138</span>761.   <span style="text-decoration: underline;">7</span>779.   <span style="text-decoration: underline;">7</span>992.    153.  13.4 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>        2     2 267<span style="text-decoration: underline;">817</span>711.  <span style="text-decoration: underline;">10</span>639.  <span style="text-decoration: underline;">12</span>145.   <span style="text-decoration: underline;">1</span>323.  13.2 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>        3     3  66<span style="text-decoration: underline;">291</span>644.   <span style="text-decoration: underline;">6</span>635.   <span style="text-decoration: underline;">7</span>344.    591.  14.1 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>        1     1  46<span style="text-decoration: underline;">138</span>761.   <span style="text-decoration: underline;">7</span>748.   <span style="text-decoration: underline;">7</span>959.    152.  13.4 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>        2     2 267<span style="text-decoration: underline;">817</span>711.  <span style="text-decoration: underline;">10</span>612.  <span style="text-decoration: underline;">12</span>111.   <span style="text-decoration: underline;">1</span>315.  13.2 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>        3     3  66<span style="text-decoration: underline;">291</span>644.   <span style="text-decoration: underline;">6</span>644.   <span style="text-decoration: underline;">7</span>357.    594.  14.1 </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>        4     4  53<span style="text-decoration: underline;">210</span>707.   <span style="text-decoration: underline;">8</span>203.   <span style="text-decoration: underline;">8</span>458.    160.  13.6 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>        5     5  60<span style="text-decoration: underline;">462</span>396.   <span style="text-decoration: underline;">7</span>056.   <span style="text-decoration: underline;">8</span>783.   <span style="text-decoration: underline;">1</span>526.  13.8 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>        6     6  64<span style="text-decoration: underline;">337</span>271.   <span style="text-decoration: underline;">7</span>439.  <span style="text-decoration: underline;">14</span>050.   <span style="text-decoration: underline;">5</span>840.  11.7 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>        7     7 101<span style="text-decoration: underline;">268</span>146.   <span style="text-decoration: underline;">6</span>629.  <span style="text-decoration: underline;">15</span>840.   <span style="text-decoration: underline;">8</span>220.   9.72</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>        8     8  45<span style="text-decoration: underline;">966</span>410.   <span style="text-decoration: underline;">3</span>796.  <span style="text-decoration: underline;">12</span>188.   <span style="text-decoration: underline;">7</span>604.   9.82</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>        9     9  73<span style="text-decoration: underline;">993</span>891.   <span style="text-decoration: underline;">6</span>413.  <span style="text-decoration: underline;">14</span>217.   <span style="text-decoration: underline;">6</span>838.  11.8 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>       10    10  62<span style="text-decoration: underline;">915</span>358.   <span style="text-decoration: underline;">1</span>667.  <span style="text-decoration: underline;">11</span>239.   <span style="text-decoration: underline;">8</span>703.   9.44</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>        5     5  60<span style="text-decoration: underline;">462</span>396.   <span style="text-decoration: underline;">7</span>075.   <span style="text-decoration: underline;">8</span>808.   <span style="text-decoration: underline;">1</span>532.  13.8 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>        6     6  64<span style="text-decoration: underline;">337</span>271.   <span style="text-decoration: underline;">7</span>441.  <span style="text-decoration: underline;">14</span>053.   <span style="text-decoration: underline;">5</span>840.  11.7 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>        7     7 101<span style="text-decoration: underline;">268</span>146.   <span style="text-decoration: underline;">6</span>630.  <span style="text-decoration: underline;">15</span>842.   <span style="text-decoration: underline;">8</span>219.   9.72</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>        8     8  45<span style="text-decoration: underline;">966</span>410.   <span style="text-decoration: underline;">3</span>797.  <span style="text-decoration: underline;">12</span>189.   <span style="text-decoration: underline;">7</span>605.   9.82</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>        9     9  73<span style="text-decoration: underline;">993</span>891.   <span style="text-decoration: underline;">6</span>413.  <span style="text-decoration: underline;">14</span>218.   <span style="text-decoration: underline;">6</span>839.  11.8 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>       10    10  62<span style="text-decoration: underline;">915</span>358.   <span style="text-decoration: underline;">1</span>666.  <span style="text-decoration: underline;">11</span>239.   <span style="text-decoration: underline;">8</span>703.   9.44</span>
 <span class="co">#&gt; <span style="color: #949494;"># … with 18 more rows</span></span></code></pre></div>
 <p>Users should take care to consider the implications of interpolating multiple values, such as total population and the number of African American residents (both extensive), and then calculating a spatially intensive variable from them such as percent African American. Doing so in multiple steps, and thereby treating extensive and intensive values as independent, may result in estimates that differ from a single step process where the percent of African American residents is interpoltated directly.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -685,59 +526,6 @@
                weight <span class="op">=</span> <span class="st">"sum"</span>, output <span class="op">=</span> <span class="st">"tibble"</span>, 
                intensive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"WHITE_PCT"</span>, <span class="st">"BLACK_PCT"</span>, <span class="st">"TOTAL_PCT"</span><span class="op">)</span>,
                extensive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TOTAL"</span>, <span class="st">"WHITE_E"</span>, <span class="st">"BLACK_E"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 
 <span class="co"># calculate new percentages</span>
 <span class="va">result2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -753,9 +541,9 @@
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 28 × 6</span></span>
 <span class="co">#&gt;    WHITE_PCT WHITE_PCT_2 BLACK_PCT BLACK_PCT_2 TOTAL_PCT TOTAL_PCT_2</span>
 <span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>    0.019<span style="text-decoration: underline;">5</span>      0.019<span style="text-decoration: underline;">3</span>     0.980       0.981         1           1</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    0.177       0.111      0.823       0.889         1           1</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    0.104       0.081<span style="text-decoration: underline;">8</span>     0.896       0.918         1           1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>    0.019<span style="text-decoration: underline;">6</span>      0.019<span style="text-decoration: underline;">2</span>     0.980       0.981         1           1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    0.178       0.110      0.822       0.890         1           1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    0.104       0.082<span style="text-decoration: underline;">0</span>     0.896       0.918         1           1</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    0.025<span style="text-decoration: underline;">2</span>      0.019<span style="text-decoration: underline;">1</span>     0.975       0.981         1           1</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    0.174       0.178      0.826       0.822         1           1</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    0.409       0.440      0.591       0.560         1           1</span>
@@ -774,19 +562,6 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span><span class="op">(</span><span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">asthma</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                weight <span class="op">=</span> <span class="st">"sum"</span>, output <span class="op">=</span> <span class="st">"sf"</span>, intensive <span class="op">=</span> <span class="st">"ASTHMA"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; Simple feature collection with 28 features and 4 fields</span>
 <span class="co">#&gt; Geometry type: POLYGON</span>
 <span class="co">#&gt; Dimension:     XY</span>
@@ -794,16 +569,16 @@
 <span class="co">#&gt; Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="co">#&gt; First 10 features:</span>
 <span class="co">#&gt;    OBJECTID WARD      AREA    ASTHMA                       geometry</span>
-<span class="co">#&gt; 1         1    1  46138761 13.379577 POLYGON ((740184.2 4286431,...</span>
-<span class="co">#&gt; 2         2    2 267817711 13.164879 POLYGON ((742392.1 4289178,...</span>
-<span class="co">#&gt; 3         3    3  66291644 14.108107 POLYGON ((742956.1 4284113,...</span>
-<span class="co">#&gt; 4         4    4  53210707 13.613989 POLYGON ((739557.6 4284080,...</span>
-<span class="co">#&gt; 5         5    5  60462396 13.789757 POLYGON ((744883.8 4281632,...</span>
+<span class="co">#&gt; 1         1    1  46138761 13.380331 POLYGON ((740184.2 4286431,...</span>
+<span class="co">#&gt; 2         2    2 267817711 13.160107 POLYGON ((742392.1 4289178,...</span>
+<span class="co">#&gt; 3         3    3  66291644 14.108102 POLYGON ((742956.1 4284113,...</span>
+<span class="co">#&gt; 4         4    4  53210707 13.613983 POLYGON ((739557.6 4284080,...</span>
+<span class="co">#&gt; 5         5    5  60462396 13.785289 POLYGON ((744883.8 4281632,...</span>
 <span class="co">#&gt; 6         6    6  64337271 11.747642 POLYGON ((742501.6 4279976,...</span>
-<span class="co">#&gt; 7         7    7 101268146  9.722839 POLYGON ((745618.6 4279867,...</span>
-<span class="co">#&gt; 8         8    8  45966410  9.823627 POLYGON ((739842.8 4277724,...</span>
-<span class="co">#&gt; 9         9    9  73993891 11.820622 POLYGON ((742619.4 4276734,...</span>
-<span class="co">#&gt; 10       10   10  62915358  9.439929 POLYGON ((737257.7 4277050,...</span></code></pre></div>
+<span class="co">#&gt; 7         7    7 101268146  9.722828 POLYGON ((745618.6 4279867,...</span>
+<span class="co">#&gt; 8         8    8  45966410  9.823628 POLYGON ((739842.8 4277724,...</span>
+<span class="co">#&gt; 9         9    9  73993891 11.820615 POLYGON ((742619.4 4276734,...</span>
+<span class="co">#&gt; 10       10   10  62915358  9.439927 POLYGON ((737257.7 4277050,...</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="other-features-of-aw_interpolate">Other Features of aw_interpolate<a class="anchor" aria-label="anchor" href="#other-features-of-aw_interpolate"></a>
@@ -814,19 +589,6 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">OBJECTID</span>, <span class="op">-</span><span class="va">AREA</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span><span class="op">(</span>tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">asthma</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, 
                  weight <span class="op">=</span> <span class="st">"sum"</span>, output <span class="op">=</span> <span class="st">"tibble"</span>, intensive <span class="op">=</span> <span class="st">"ASTHMA"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 28 × 2</span></span>
 <span class="co">#&gt;     WARD ASTHMA</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -847,19 +609,6 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">OBJECTID</span>, <span class="op">-</span><span class="va">AREA</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/aw_interpolate.html">aw_interpolate</a></span><span class="op">(</span>tid <span class="op">=</span> <span class="st">"WARD"</span>, source <span class="op">=</span> <span class="va">asthma</span>, sid <span class="op">=</span> <span class="st">"GEOID"</span>, 
                  weight <span class="op">=</span> <span class="st">"sum"</span>, output <span class="op">=</span> <span class="st">"tibble"</span>, intensive <span class="op">=</span> <span class="st">"ASTHMA"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 28 × 2</span></span>
 <span class="co">#&gt;     WARD ASTHMA</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -892,32 +641,25 @@
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">wards</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/aw_intersect.html">aw_intersect</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">race</span>, areaVar <span class="op">=</span> <span class="st">"area"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">intersect</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 
 <span class="va">intersect</span>
-<span class="co">#&gt; Simple feature collection with 287 features and 4 fields</span>
+<span class="co">#&gt; Simple feature collection with 286 features and 4 fields</span>
 <span class="co">#&gt; Geometry type: GEOMETRY</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504</span>
 <span class="co">#&gt; Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="co">#&gt; First 10 features:</span>
-<span class="co">#&gt;           GEOID TOTAL_E WARD         area                       geometry</span>
-<span class="co">#&gt; 15  29510106500    2863    1 4.271176e+05 POLYGON ((738110.9 4283989,...</span>
-<span class="co">#&gt; 19  29510106700    3168    1 5.946820e+05 POLYGON ((738335.2 4283055,...</span>
-<span class="co">#&gt; 21  29510107500    1991    1 6.146361e+05 POLYGON ((740111.6 4286547,...</span>
-<span class="co">#&gt; 22  29510107600    1958    1 1.071347e+06 POLYGON ((739386.1 4285082,...</span>
-<span class="co">#&gt; 40  29510110100    2820    1 5.563665e+01 POLYGON ((739542.5 4283728,...</span>
-<span class="co">#&gt; 62  29510109600    3050    1 3.586828e+03 POLYGON ((740899.6 4285240,...</span>
-<span class="co">#&gt; 68  29510126900    4462    1 8.903340e+05 POLYGON ((739115.9 4285807,...</span>
-<span class="co">#&gt; 69  29510127000    1826    1 1.015451e+03 MULTIPOLYGON (((740936.1 42...</span>
-<span class="co">#&gt; 83  29510106400    1986    1 6.866924e+05 POLYGON ((738500.9 4284750,...</span>
-<span class="co">#&gt; 103 29510108100    3309    1 1.198667e+02 POLYGON ((740163.9 4286467,...</span></code></pre></div>
+<span class="co">#&gt;            GEOID TOTAL_E WARD         area                       geometry</span>
+<span class="co">#&gt; 12   29510106500    2863    1 4.271176e+05 POLYGON ((738110.9 4283989,...</span>
+<span class="co">#&gt; 16   29510106700    3168    1 5.946820e+05 POLYGON ((738335.2 4283055,...</span>
+<span class="co">#&gt; 18   29510107500    1991    1 6.146315e+05 POLYGON ((740111.6 4286547,...</span>
+<span class="co">#&gt; 19   29510107600    1958    1 1.074938e+06 POLYGON ((739386.1 4285082,...</span>
+<span class="co">#&gt; 40   29510110100    2820    1 5.563665e+01 POLYGON ((739542.5 4283728,...</span>
+<span class="co">#&gt; 68   29510126900    4462    1 8.903340e+05 POLYGON ((739115.9 4285807,...</span>
+<span class="co">#&gt; 69   29510127000    1826    1 1.015451e+03 MULTIPOLYGON (((740936.1 42...</span>
+<span class="co">#&gt; 85   29510108100    3309    1 1.198667e+02 POLYGON ((740163.9 4286467,...</span>
+<span class="co">#&gt; 86   29510106400    1986    1 6.866924e+05 POLYGON ((738500.9 4284750,...</span>
+<span class="co">#&gt; 18.1 29510107500    1991    2 1.550040e+01 POLYGON ((740287.6 4286283,...</span></code></pre></div>
 <p>Note that <code><a href="../reference/aw_intersect.html">aw_intersect()</a></code> automatically calculates the area of the intersected feature.</p>
 </div>
 <div class="section level3">
@@ -930,34 +672,34 @@
              type <span class="op">=</span> <span class="st">"extensive"</span>, weight <span class="op">=</span> <span class="st">"sum"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">intersect</span>
 
 <span class="va">intersect</span>
-<span class="co">#&gt; Simple feature collection with 287 features and 5 fields</span>
+<span class="co">#&gt; Simple feature collection with 286 features and 5 fields</span>
 <span class="co">#&gt; Geometry type: GEOMETRY</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504</span>
 <span class="co">#&gt; Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="co">#&gt; First 10 features:</span>
 <span class="co">#&gt;          GEOID TOTAL_E WARD         area  totalArea</span>
-<span class="co">#&gt; 1  29510106500    2863    1 4.271176e+05  1064776.2</span>
+<span class="co">#&gt; 1  29510106500    2863    1 4.271176e+05  1064796.1</span>
 <span class="co">#&gt; 2  29510106700    3168    1 5.946820e+05  1239241.5</span>
-<span class="co">#&gt; 3  29510107500    1991    1 6.146361e+05   912325.0</span>
-<span class="co">#&gt; 4  29510107600    1958    1 1.071347e+06  1146634.4</span>
-<span class="co">#&gt; 5  29510110100    2820    1 5.563665e+01   994606.5</span>
-<span class="co">#&gt; 6  29510109600    3050    1 3.586828e+03  3157835.4</span>
-<span class="co">#&gt; 7  29510126900    4462    1 8.903340e+05  4334701.5</span>
-<span class="co">#&gt; 8  29510127000    1826    1 1.015451e+03 14726832.5</span>
-<span class="co">#&gt; 9  29510106400    1986    1 6.866924e+05  1107191.4</span>
-<span class="co">#&gt; 10 29510108100    3309    1 1.198667e+02  3216478.2</span>
+<span class="co">#&gt; 3  29510107500    1991    1 6.146315e+05   912348.9</span>
+<span class="co">#&gt; 4  29510107600    1958    1 1.074938e+06  1168920.9</span>
+<span class="co">#&gt; 5  29510110100    2820    1 5.563665e+01   994531.0</span>
+<span class="co">#&gt; 6  29510126900    4462    1 8.903340e+05  4335012.3</span>
+<span class="co">#&gt; 7  29510127000    1826    1 1.015451e+03 14708574.9</span>
+<span class="co">#&gt; 8  29510108100    3309    1 1.198667e+02  3200973.4</span>
+<span class="co">#&gt; 9  29510106400    1986    1 6.866924e+05  1107191.6</span>
+<span class="co">#&gt; 10 29510107500    1991    2 1.550040e+01   912348.9</span>
 <span class="co">#&gt;                          geometry</span>
 <span class="co">#&gt; 1  POLYGON ((738110.9 4283989,...</span>
 <span class="co">#&gt; 2  POLYGON ((738335.2 4283055,...</span>
 <span class="co">#&gt; 3  POLYGON ((740111.6 4286547,...</span>
 <span class="co">#&gt; 4  POLYGON ((739386.1 4285082,...</span>
 <span class="co">#&gt; 5  POLYGON ((739542.5 4283728,...</span>
-<span class="co">#&gt; 6  POLYGON ((740899.6 4285240,...</span>
-<span class="co">#&gt; 7  POLYGON ((739115.9 4285807,...</span>
-<span class="co">#&gt; 8  MULTIPOLYGON (((740936.1 42...</span>
+<span class="co">#&gt; 6  POLYGON ((739115.9 4285807,...</span>
+<span class="co">#&gt; 7  MULTIPOLYGON (((740936.1 42...</span>
+<span class="co">#&gt; 8  POLYGON ((740163.9 4286467,...</span>
 <span class="co">#&gt; 9  POLYGON ((738500.9 4284750,...</span>
-<span class="co">#&gt; 10 POLYGON ((740163.9 4286467,...</span></code></pre></div>
+<span class="co">#&gt; 10 POLYGON ((740287.6 4286283,...</span></code></pre></div>
 <p>Changing <code>type</code> to <code>"intensive"</code> would be necessary for spatially intensive interpolations. Likewise, changing <code>weight</code> to <code>"total"</code> is necessary if areas that lack overlap should not be allocated into the target features.</p>
 </div>
 <div class="section level3">
@@ -970,34 +712,34 @@
             areaWeight <span class="op">=</span> <span class="st">"areaWeight"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">intersect</span>
 
 <span class="va">intersect</span>
-<span class="co">#&gt; Simple feature collection with 287 features and 6 fields</span>
+<span class="co">#&gt; Simple feature collection with 286 features and 6 fields</span>
 <span class="co">#&gt; Geometry type: GEOMETRY</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504</span>
 <span class="co">#&gt; Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="co">#&gt; First 10 features:</span>
 <span class="co">#&gt;          GEOID TOTAL_E WARD         area  totalArea</span>
-<span class="co">#&gt; 1  29510106500    2863    1 4.271176e+05  1064776.2</span>
+<span class="co">#&gt; 1  29510106500    2863    1 4.271176e+05  1064796.1</span>
 <span class="co">#&gt; 2  29510106700    3168    1 5.946820e+05  1239241.5</span>
-<span class="co">#&gt; 3  29510107500    1991    1 6.146361e+05   912325.0</span>
-<span class="co">#&gt; 4  29510107600    1958    1 1.071347e+06  1146634.4</span>
-<span class="co">#&gt; 5  29510110100    2820    1 5.563665e+01   994606.5</span>
-<span class="co">#&gt; 6  29510109600    3050    1 3.586828e+03  3157835.4</span>
-<span class="co">#&gt; 7  29510126900    4462    1 8.903340e+05  4334701.5</span>
-<span class="co">#&gt; 8  29510127000    1826    1 1.015451e+03 14726832.5</span>
-<span class="co">#&gt; 9  29510106400    1986    1 6.866924e+05  1107191.4</span>
-<span class="co">#&gt; 10 29510108100    3309    1 1.198667e+02  3216478.2</span>
+<span class="co">#&gt; 3  29510107500    1991    1 6.146315e+05   912348.9</span>
+<span class="co">#&gt; 4  29510107600    1958    1 1.074938e+06  1168920.9</span>
+<span class="co">#&gt; 5  29510110100    2820    1 5.563665e+01   994531.0</span>
+<span class="co">#&gt; 6  29510126900    4462    1 8.903340e+05  4335012.3</span>
+<span class="co">#&gt; 7  29510127000    1826    1 1.015451e+03 14708574.9</span>
+<span class="co">#&gt; 8  29510108100    3309    1 1.198667e+02  3200973.4</span>
+<span class="co">#&gt; 9  29510106400    1986    1 6.866924e+05  1107191.6</span>
+<span class="co">#&gt; 10 29510107500    1991    2 1.550040e+01   912348.9</span>
 <span class="co">#&gt;                          geometry   areaWeight</span>
-<span class="co">#&gt; 1  POLYGON ((738110.9 4283989,... 4.011337e-01</span>
+<span class="co">#&gt; 1  POLYGON ((738110.9 4283989,... 4.011262e-01</span>
 <span class="co">#&gt; 2  POLYGON ((738335.2 4283055,... 4.798758e-01</span>
-<span class="co">#&gt; 3  POLYGON ((740111.6 4286547,... 6.737030e-01</span>
-<span class="co">#&gt; 4  POLYGON ((739386.1 4285082,... 9.343406e-01</span>
-<span class="co">#&gt; 5  POLYGON ((739542.5 4283728,... 5.593835e-05</span>
-<span class="co">#&gt; 6  POLYGON ((740899.6 4285240,... 1.135850e-03</span>
-<span class="co">#&gt; 7  POLYGON ((739115.9 4285807,... 2.053968e-01</span>
-<span class="co">#&gt; 8  MULTIPOLYGON (((740936.1 42... 6.895245e-05</span>
-<span class="co">#&gt; 9  POLYGON ((738500.9 4284750,... 6.202111e-01</span>
-<span class="co">#&gt; 10 POLYGON ((740163.9 4286467,... 3.726645e-05</span></code></pre></div>
+<span class="co">#&gt; 3  POLYGON ((740111.6 4286547,... 6.736803e-01</span>
+<span class="co">#&gt; 4  POLYGON ((739386.1 4285082,... 9.195989e-01</span>
+<span class="co">#&gt; 5  POLYGON ((739542.5 4283728,... 5.594260e-05</span>
+<span class="co">#&gt; 6  POLYGON ((739115.9 4285807,... 2.053821e-01</span>
+<span class="co">#&gt; 7  MULTIPOLYGON (((740936.1 42... 6.903804e-05</span>
+<span class="co">#&gt; 8  POLYGON ((740163.9 4286467,... 3.744696e-05</span>
+<span class="co">#&gt; 9  POLYGON ((738500.9 4284750,... 6.202110e-01</span>
+<span class="co">#&gt; 10 POLYGON ((740287.6 4286283,... 1.698955e-05</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="calculate-estimated-population">Calculate Estimated Population<a class="anchor" aria-label="anchor" href="#calculate-estimated-population"></a>
@@ -1008,34 +750,34 @@
   <span class="fu"><a href="../reference/aw_calculate.html">aw_calculate</a></span><span class="op">(</span>value <span class="op">=</span> <span class="va">TOTAL_E</span>, areaWeight <span class="op">=</span> <span class="st">"areaWeight"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">intersect</span>
 
 <span class="va">intersect</span>
-<span class="co">#&gt; Simple feature collection with 287 features and 6 fields</span>
+<span class="co">#&gt; Simple feature collection with 286 features and 6 fields</span>
 <span class="co">#&gt; Geometry type: GEOMETRY</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504</span>
 <span class="co">#&gt; Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="co">#&gt; First 10 features:</span>
 <span class="co">#&gt;          GEOID      TOTAL_E WARD         area  totalArea</span>
-<span class="co">#&gt; 1  29510106500 1148.4457826    1 4.271176e+05  1064776.2</span>
-<span class="co">#&gt; 2  29510106700 1520.2464178    1 5.946820e+05  1239241.5</span>
-<span class="co">#&gt; 3  29510107500 1341.3426720    1 6.146361e+05   912325.0</span>
-<span class="co">#&gt; 4  29510107600 1829.4388297    1 1.071347e+06  1146634.4</span>
-<span class="co">#&gt; 5  29510110100    0.1577461    1 5.563665e+01   994606.5</span>
-<span class="co">#&gt; 6  29510109600    3.4643427    1 3.586828e+03  3157835.4</span>
-<span class="co">#&gt; 7  29510126900  916.4807234    1 8.903340e+05  4334701.5</span>
-<span class="co">#&gt; 8  29510127000    0.1259072    1 1.015451e+03 14726832.5</span>
-<span class="co">#&gt; 9  29510106400 1231.7392274    1 6.866924e+05  1107191.4</span>
-<span class="co">#&gt; 10 29510108100    0.1233147    1 1.198667e+02  3216478.2</span>
+<span class="co">#&gt; 1  29510106500 1.148424e+03    1 4.271176e+05  1064796.1</span>
+<span class="co">#&gt; 2  29510106700 1.520246e+03    1 5.946820e+05  1239241.5</span>
+<span class="co">#&gt; 3  29510107500 1.341298e+03    1 6.146315e+05   912348.9</span>
+<span class="co">#&gt; 4  29510107600 1.800575e+03    1 1.074938e+06  1168920.9</span>
+<span class="co">#&gt; 5  29510110100 1.577581e-01    1 5.563665e+01   994531.0</span>
+<span class="co">#&gt; 6  29510126900 9.164150e+02    1 8.903340e+05  4335012.3</span>
+<span class="co">#&gt; 7  29510127000 1.260635e-01    1 1.015451e+03 14708574.9</span>
+<span class="co">#&gt; 8  29510108100 1.239120e-01    1 1.198667e+02  3200973.4</span>
+<span class="co">#&gt; 9  29510106400 1.231739e+03    1 6.866924e+05  1107191.6</span>
+<span class="co">#&gt; 10 29510107500 3.382619e-02    2 1.550040e+01   912348.9</span>
 <span class="co">#&gt;                          geometry   areaWeight</span>
-<span class="co">#&gt; 1  POLYGON ((738110.9 4283989,... 4.011337e-01</span>
+<span class="co">#&gt; 1  POLYGON ((738110.9 4283989,... 4.011262e-01</span>
 <span class="co">#&gt; 2  POLYGON ((738335.2 4283055,... 4.798758e-01</span>
-<span class="co">#&gt; 3  POLYGON ((740111.6 4286547,... 6.737030e-01</span>
-<span class="co">#&gt; 4  POLYGON ((739386.1 4285082,... 9.343406e-01</span>
-<span class="co">#&gt; 5  POLYGON ((739542.5 4283728,... 5.593835e-05</span>
-<span class="co">#&gt; 6  POLYGON ((740899.6 4285240,... 1.135850e-03</span>
-<span class="co">#&gt; 7  POLYGON ((739115.9 4285807,... 2.053968e-01</span>
-<span class="co">#&gt; 8  MULTIPOLYGON (((740936.1 42... 6.895245e-05</span>
-<span class="co">#&gt; 9  POLYGON ((738500.9 4284750,... 6.202111e-01</span>
-<span class="co">#&gt; 10 POLYGON ((740163.9 4286467,... 3.726645e-05</span></code></pre></div>
+<span class="co">#&gt; 3  POLYGON ((740111.6 4286547,... 6.736803e-01</span>
+<span class="co">#&gt; 4  POLYGON ((739386.1 4285082,... 9.195989e-01</span>
+<span class="co">#&gt; 5  POLYGON ((739542.5 4283728,... 5.594260e-05</span>
+<span class="co">#&gt; 6  POLYGON ((739115.9 4285807,... 2.053821e-01</span>
+<span class="co">#&gt; 7  MULTIPOLYGON (((740936.1 42... 6.903804e-05</span>
+<span class="co">#&gt; 8  POLYGON ((740163.9 4286467,... 3.744696e-05</span>
+<span class="co">#&gt; 9  POLYGON ((738500.9 4284750,... 6.202110e-01</span>
+<span class="co">#&gt; 10 POLYGON ((740287.6 4286283,... 1.698955e-05</span></code></pre></div>
 <p>There is an optional <code>newVar</code> argument that can be used to store the estimates in a new column rather than in the existing <code>value</code> column.</p>
 </div>
 <div class="section level3">
@@ -1045,7 +787,6 @@
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">intersect</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/aw_aggregate.html">aw_aggregate</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, interVar <span class="op">=</span> <span class="va">TOTAL_E</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">result</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 
 <span class="va">result</span>
 <span class="co">#&gt; Simple feature collection with 28 features and 2 fields</span>
@@ -1055,16 +796,16 @@
 <span class="co">#&gt; Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="co">#&gt; First 10 features:</span>
 <span class="co">#&gt;    WARD   TOTAL_E                       geometry</span>
-<span class="co">#&gt; 1     1  7991.565 POLYGON ((740184.2 4286431,...</span>
-<span class="co">#&gt; 2     2 12145.021 POLYGON ((742392.1 4289178,...</span>
-<span class="co">#&gt; 3     3  7344.287 POLYGON ((742956.1 4284113,...</span>
-<span class="co">#&gt; 4     4  8457.672 POLYGON ((739557.6 4284080,...</span>
-<span class="co">#&gt; 5     5  8783.377 POLYGON ((744883.8 4281632,...</span>
-<span class="co">#&gt; 6     6 14050.399 POLYGON ((742501.6 4279976,...</span>
-<span class="co">#&gt; 7     7 15840.086 POLYGON ((745618.6 4279867,...</span>
-<span class="co">#&gt; 8     8 12188.131 POLYGON ((739842.8 4277724,...</span>
-<span class="co">#&gt; 9     9 14217.149 POLYGON ((742619.4 4276734,...</span>
-<span class="co">#&gt; 10   10 11239.213 POLYGON ((737257.7 4277050,...</span></code></pre></div>
+<span class="co">#&gt; 1     1  7959.105 POLYGON ((740184.2 4286431,...</span>
+<span class="co">#&gt; 2     2 12110.562 POLYGON ((742392.1 4289178,...</span>
+<span class="co">#&gt; 3     3  7356.533 POLYGON ((742956.1 4284113,...</span>
+<span class="co">#&gt; 4     4  8457.694 POLYGON ((739557.6 4284080,...</span>
+<span class="co">#&gt; 5     5  8807.579 POLYGON ((744883.8 4281632,...</span>
+<span class="co">#&gt; 6     6 14052.989 POLYGON ((742501.6 4279976,...</span>
+<span class="co">#&gt; 7     7 15841.534 POLYGON ((745618.6 4279867,...</span>
+<span class="co">#&gt; 8     8 12188.977 POLYGON ((739842.8 4277724,...</span>
+<span class="co">#&gt; 9     9 14217.922 POLYGON ((742619.4 4276734,...</span>
+<span class="co">#&gt; 10   10 11239.132 POLYGON ((737257.7 4277050,...</span></code></pre></div>
 </div>
 </div>
   </div>

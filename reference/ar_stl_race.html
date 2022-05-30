@@ -149,67 +149,65 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ar_stl_race</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Classes ‘sf’ and 'data.frame':	106 obs. of  24 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ GEOID    : chr  "29510112100" "29510116500" "29510110300" "29510103700" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ GEOID    : chr  "29510102300" "29510102400" "29510104500" "29510106100" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ STATEFP  : chr  "29" "29" "29" "29" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ COUNTYFP : chr  "510" "510" "510" "510" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TRACTCE  : chr  "112100" "116500" "110300" "103700" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ NAMELSAD : chr  "Census Tract 1121" "Census Tract 1165" "Census Tract 1103" "Census Tract 1037" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ ALAND    : num  6936664 904024 938287 910953 1640334 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ AWATER   : num  0 0 0 0 35369 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TOTAL_E  : num  4253 4590 1936 2406 3856 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TOTAL_M  : num  468 525 360 215 242 225 285 488 308 408 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ WHITE_E  : num  2827 2194 47 2184 3383 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ WHITE_M  : num  378 411 40 255 269 195 25 56 215 198 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ BLACK_E  : num  1147 1885 1889 122 300 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ BLACK_M  : num  393 414 361 117 208 125 281 493 221 388 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ AIAN_E   : num  0 0 0 0 0 1 0 0 39 0 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ AIAN_M   : num  11 11 11 11 11 3 11 11 60 11 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ ASIAN_E  : num  179 279 0 48 62 280 0 24 196 40 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ ASIAN_M  : num  86 172 11 55 60 132 11 28 98 36 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ NHPI_E   : num  0 0 0 0 0 0 7 0 0 0 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ NHPI_M   : num  11 11 11 11 11 11 13 11 11 11 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ OTHER_E  : num  15 59 0 0 77 0 0 0 0 0 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ OTHER_M  : num  23 67 11 11 120 11 11 11 11 11 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TWOPLUS_E: num  85 173 0 52 34 60 0 15 120 66 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TWOPLUS_M: num  68 126 11 49 38 39 11 33 97 96 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TRACTCE  : chr  "102300" "102400" "104500" "106100" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ NAMELSAD : chr  "Census Tract 1023" "Census Tract 1024" "Census Tract 1045" "Census Tract 1061" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ ALAND    : num  1282334 584695 1939714 962329 1195496 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ AWATER   : num  49882 0 0 0 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TOTAL_E  : num  2126 2499 1990 1826 2819 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TOTAL_M  : num  207 180 225 285 488 308 408 279 227 166 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ WHITE_E  : num  1763 2252 1487 32 67 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ WHITE_M  : num  227 227 195 25 56 215 198 233 229 144 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ BLACK_E  : num  97 217 162 1787 2713 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ BLACK_M  : num  83 167 125 281 493 221 388 251 86 30 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ AIAN_E   : num  0 0 1 0 0 39 0 0 9 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ AIAN_M   : num  11 11 3 11 11 60 11 11 14 11 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ ASIAN_E  : num  237 0 280 0 24 196 40 0 217 12 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ ASIAN_M  : num  143 11 132 11 28 98 36 11 105 13 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ NHPI_E   : num  0 0 0 7 0 0 0 5 16 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ NHPI_M   : num  11 11 11 13 11 11 11 7 23 11 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ OTHER_E  : num  16 0 0 0 0 0 0 90 31 11 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ OTHER_M  : num  25 11 11 11 11 11 11 72 36 12 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TWOPLUS_E: num  13 30 60 0 15 120 66 122 55 49 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TWOPLUS_M: num  22 49 39 11 33 97 96 86 50 68 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ geometry :sfc_POLYGON of length 106; first list element: List of 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:284, 1:2] 734633 734636 734644 734662 734671 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:137, 1:2] 735510 735516 735523 735546 735554 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "class")= chr [1:3] "XY" "POLYGON" "sfg"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "sf_column")= chr "geometry"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "agr")= Factor w/ 3 levels "constant","aggregate",..: NA NA NA NA NA NA NA NA NA NA ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "names")= chr [1:23] "GEOID" "STATEFP" "COUNTYFP" "TRACTCE" ...</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ar_stl_race</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 6 features and 23 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POLYGON</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 733360 ymin: 4274925 xmax: 741440.9 ymax: 4283867</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 735419.3 ymin: 4270933 xmax: 738124.7 ymax: 4284280</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         GEOID STATEFP COUNTYFP TRACTCE          NAMELSAD   ALAND AWATER TOTAL_E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 29510112100      29      510  112100 Census Tract 1121 6936664      0    4253</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 29510116500      29      510  116500 Census Tract 1165  904024      0    4590</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 29510110300      29      510  110300 Census Tract 1103  938287      0    1936</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 29510103700      29      510  103700 Census Tract 1037  910953      0    2406</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 29510103800      29      510  103800 Census Tract 1038 1640334  35369    3856</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 29510104500      29      510  104500 Census Tract 1045 1939712      0    1990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 29510102300      29      510  102300 Census Tract 1023 1282334  49882    2126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 29510102400      29      510  102400 Census Tract 1024  584695      0    2499</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 29510104500      29      510  104500 Census Tract 1045 1939714      0    1990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 29510106100      29      510  106100 Census Tract 1061  962329      0    1826</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 29510105500      29      510  105500 Census Tract 1055 1195496      0    2819</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 29510105200      29      510  105200 Census Tract 1052  830997      0    2981</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   TOTAL_M WHITE_E WHITE_M BLACK_E BLACK_M AIAN_E AIAN_M ASIAN_E ASIAN_M NHPI_E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     468    2827     378    1147     393      0     11     179      86      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     525    2194     411    1885     414      0     11     279     172      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     360      47      40    1889     361      0     11       0      11      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     215    2184     255     122     117      0     11      48      55      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     242    3383     269     300     208      0     11      62      60      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     225    1487     195     162     125      1      3     280     132      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     207    1763     227      97      83      0     11     237     143      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     180    2252     227     217     167      0     11       0      11      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     225    1487     195     162     125      1      3     280     132      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     285      32      25    1787     281      0     11       0      11      7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     488      67      56    2713     493      0     11      24      28      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     308    1098     215    1528     221     39     60     196      98      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   NHPI_M OTHER_E OTHER_M TWOPLUS_E TWOPLUS_M                       geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     11      15      23        85        68 POLYGON ((734633.3 4279479,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     11      59      67       173       126 POLYGON ((740098.5 4275728,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     11       0      11         0        11 POLYGON ((740110.8 4283146,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     11       0      11        52        49 POLYGON ((735225.3 4276168,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     11      77     120        34        38 POLYGON ((733360 4275146, 7...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     11       0      11        60        39 POLYGON ((735553.7 4278190,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     11      16      25        13        22 POLYGON ((735510.2 4271678,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     11       0      11        30        49 POLYGON ((736561.2 4273007,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     11       0      11        60        39 POLYGON ((735553.7 4278190,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     13       0      11         0        11 POLYGON ((735763.1 4283707,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     11       0      11        15        33 POLYGON ((736153 4282431, 7...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     11       0      11       120        97 POLYGON ((735437.7 4281253,...</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ar_stl_race</span><span class="op">$</span><span class="va">ALAND</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   506383   913320  1121494  1513755  1651019 10530448 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   506376   913345  1121825  1508633  1651801 10277994 </span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

@@ -106,16 +106,8 @@ the <code>interVar</code> argument will be used as the new field name.</p></dd>
 <span class="r-in">             weight <span class="op">=</span> <span class="st">"sum"</span>, type <span class="op">=</span> <span class="st">"extensive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">    <span class="fu"><a href="aw_weight.html">aw_weight</a></span><span class="op">(</span>areaVar <span class="op">=</span> <span class="st">"area"</span>, totalVar <span class="op">=</span> <span class="st">"totalArea"</span>, areaWeight <span class="op">=</span> <span class="st">"areaWeight"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">    <span class="fu"><a href="aw_calculate.html">aw_calculate</a></span><span class="op">(</span>value <span class="op">=</span> <span class="st">"TOTAL_E"</span>, areaWeight <span class="op">=</span> <span class="st">"areaWeight"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">intersect</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">aw_aggregate</span><span class="op">(</span><span class="va">intersect</span>, target <span class="op">=</span> <span class="va">wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, interVar <span class="op">=</span> <span class="va">TOTAL_E</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 28 features and 2 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POLYGON</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
@@ -123,16 +115,16 @@ the <code>interVar</code> argument will be used as the new field name.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    WARD   TOTAL_E                       geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1  7991.565 POLYGON ((740184.2 4286431,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2 12145.021 POLYGON ((742392.1 4289178,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3  7344.287 POLYGON ((742956.1 4284113,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4  8457.672 POLYGON ((739557.6 4284080,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     5  8783.377 POLYGON ((744883.8 4281632,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     6 14050.399 POLYGON ((742501.6 4279976,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     7 15840.086 POLYGON ((745618.6 4279867,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     8 12188.131 POLYGON ((739842.8 4277724,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     9 14217.149 POLYGON ((742619.4 4276734,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   10 11239.213 POLYGON ((737257.7 4277050,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1  7959.105 POLYGON ((740184.2 4286431,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2 12110.562 POLYGON ((742392.1 4289178,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3  7356.533 POLYGON ((742956.1 4284113,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4  8457.694 POLYGON ((739557.6 4284080,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     5  8807.579 POLYGON ((744883.8 4281632,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     6 14052.989 POLYGON ((742501.6 4279976,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     7 15841.534 POLYGON ((745618.6 4279867,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     8 12188.977 POLYGON ((739842.8 4277724,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     9 14217.922 POLYGON ((742619.4 4276734,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   10 11239.132 POLYGON ((737257.7 4277050,...</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

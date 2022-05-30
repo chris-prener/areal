@@ -98,44 +98,37 @@ created as part of <a href="aw_intersect.html">aw_intersect</a></p></dd>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">wards</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">    <span class="fu"><a href="aw_intersect.html">aw_intersect</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">race</span>, areaVar <span class="op">=</span> <span class="st">"area"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">intersect</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">aw_total</span><span class="op">(</span><span class="va">intersect</span>, source <span class="op">=</span> <span class="va">race</span>, id <span class="op">=</span> <span class="va">GEOID</span>, areaVar <span class="op">=</span> <span class="st">"area"</span>,</span>
 <span class="r-in">         totalVar <span class="op">=</span> <span class="st">"totalArea"</span>, weight <span class="op">=</span> <span class="st">"sum"</span>, type <span class="op">=</span> <span class="st">"extensive"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 287 features and 5 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 286 features and 5 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: GEOMETRY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          GEOID TOTAL_E WARD         area  totalArea</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  29510106500    2863    1 4.271176e+05  1064776.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  29510106500    2863    1 4.271176e+05  1064796.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  29510106700    3168    1 5.946820e+05  1239241.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  29510107500    1991    1 6.146361e+05   912325.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  29510107600    1958    1 1.071347e+06  1146634.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  29510110100    2820    1 5.563665e+01   994606.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  29510109600    3050    1 3.586828e+03  3157835.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  29510126900    4462    1 8.903340e+05  4334701.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  29510127000    1826    1 1.015451e+03 14726832.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  29510106400    1986    1 6.866924e+05  1107191.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 29510108100    3309    1 1.198667e+02  3216478.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  29510107500    1991    1 6.146315e+05   912348.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  29510107600    1958    1 1.074938e+06  1168920.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  29510110100    2820    1 5.563665e+01   994531.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  29510126900    4462    1 8.903340e+05  4335012.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  29510127000    1826    1 1.015451e+03 14708574.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  29510108100    3309    1 1.198667e+02  3200973.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  29510106400    1986    1 6.866924e+05  1107191.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 29510107500    1991    2 1.550040e+01   912348.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          geometry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  POLYGON ((738110.9 4283989,...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  POLYGON ((738335.2 4283055,...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  POLYGON ((740111.6 4286547,...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4  POLYGON ((739386.1 4285082,...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5  POLYGON ((739542.5 4283728,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POLYGON ((740899.6 4285240,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POLYGON ((739115.9 4285807,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  MULTIPOLYGON (((740936.1 42...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POLYGON ((739115.9 4285807,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  MULTIPOLYGON (((740936.1 42...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POLYGON ((740163.9 4286467,...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9  POLYGON ((738500.9 4284750,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POLYGON ((740163.9 4286467,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POLYGON ((740287.6 4286283,...</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

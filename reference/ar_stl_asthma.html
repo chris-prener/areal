@@ -104,42 +104,40 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ar_stl_asthma</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Classes ‘sf’ and 'data.frame':	106 obs. of  9 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ GEOID   : chr  "29510112100" "29510116500" "29510110300" "29510103700" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ GEOID   : chr  "29510102300" "29510102400" "29510104500" "29510106100" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ STATEFP : chr  "29" "29" "29" "29" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ COUNTYFP: chr  "510" "510" "510" "510" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TRACTCE : chr  "112100" "116500" "110300" "103700" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ NAMELSAD: chr  "Census Tract 1121" "Census Tract 1165" "Census Tract 1103" "Census Tract 1037" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ ALAND   : num  6936664 904024 938287 910953 1640334 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ AWATER  : num  0 0 0 0 35369 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ ASTHMA  : num  8.8 10.8 13 8.6 9.1 8.8 14.6 12.3 10.1 13.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ TRACTCE : chr  "102300" "102400" "104500" "106100" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ NAMELSAD: chr  "Census Tract 1023" "Census Tract 1024" "Census Tract 1045" "Census Tract 1061" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ ALAND   : num  1282334 584695 1939714 962329 1195496 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ AWATER  : num  49882 0 0 0 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ ASTHMA  : num  9.2 10.3 8.8 14.6 12.3 10.1 13.1 12.5 8.6 9.6 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ geometry:sfc_POLYGON of length 106; first list element: List of 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:284, 1:2] 734633 734636 734644 734662 734671 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:137, 1:2] 735510 735516 735523 735546 735554 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "class")= chr [1:3] "XY" "POLYGON" "sfg"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "sf_column")= chr "geometry"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "agr")= Factor w/ 3 levels "constant","aggregate",..: NA NA NA NA NA NA NA NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "names")= chr [1:8] "GEOID" "STATEFP" "COUNTYFP" "TRACTCE" ...</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ar_stl_asthma</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 6 features and 8 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POLYGON</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 733360 ymin: 4274925 xmax: 741440.9 ymax: 4283867</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 735419.3 ymin: 4270933 xmax: 738124.7 ymax: 4284280</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         GEOID STATEFP COUNTYFP TRACTCE          NAMELSAD   ALAND AWATER ASTHMA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 29510112100      29      510  112100 Census Tract 1121 6936664      0    8.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 29510116500      29      510  116500 Census Tract 1165  904024      0   10.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 29510110300      29      510  110300 Census Tract 1103  938287      0   13.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 29510103700      29      510  103700 Census Tract 1037  910953      0    8.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 29510103800      29      510  103800 Census Tract 1038 1640334  35369    9.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 29510104500      29      510  104500 Census Tract 1045 1939712      0    8.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 29510102300      29      510  102300 Census Tract 1023 1282334  49882    9.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 29510102400      29      510  102400 Census Tract 1024  584695      0   10.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 29510104500      29      510  104500 Census Tract 1045 1939714      0    8.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 29510106100      29      510  106100 Census Tract 1061  962329      0   14.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 29510105500      29      510  105500 Census Tract 1055 1195496      0   12.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 29510105200      29      510  105200 Census Tract 1052  830997      0   10.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 POLYGON ((734633.3 4279479,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 POLYGON ((740098.5 4275728,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 POLYGON ((740110.8 4283146,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 POLYGON ((735225.3 4276168,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 POLYGON ((733360 4275146, 7...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 POLYGON ((735553.7 4278190,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 POLYGON ((735510.2 4271678,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 POLYGON ((736561.2 4273007,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 POLYGON ((735553.7 4278190,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 POLYGON ((735763.1 4283707,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 POLYGON ((736153 4282431, 7...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 POLYGON ((735437.7 4281253,...</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ar_stl_asthma</span><span class="op">$</span><span class="va">ASTHMA</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    8.50    9.50   12.05   11.61   13.47   16.50 </span>

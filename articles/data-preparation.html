@@ -107,26 +107,17 @@
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">asthmaTbl</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
 
 <span class="co"># create example data - wrong crs</span>
-<span class="va">race83</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">race</span>, crs <span class="op">=</span> <span class="fl">4269</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></code></pre></div>
+<span class="va">race83</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">race</span>, crs <span class="op">=</span> <span class="fl">4269</span><span class="op">)</span></code></pre></div>
 <div class="section level2">
 <h2 id="validating-data">Validating Data<a class="anchor" aria-label="anchor" href="#validating-data"></a>
 </h2>
 <p><code>areal</code> has a built-in tool for data validation, <code><a href="../reference/ar_validate.html">ar_validate()</a></code>, that provides an excellent starting place for ensuring your data are ready to interpolate. The validation process covers the first three issues listed in the introduction. It can be run in a simple format:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">asthma</span>, target <span class="op">=</span> <span class="va">wards</span>, varList <span class="op">=</span> <span class="st">"ASTHMA"</span>, method <span class="op">=</span> <span class="st">"aw"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>If <code><a href="../reference/ar_validate.html">ar_validate()</a></code> returns a <code>FALSE</code> value, it can also be run in a verbose manner that returns a detailed tibble:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">asthma</span>, target <span class="op">=</span> <span class="va">wards</span>, varList <span class="op">=</span> <span class="st">"ASTHMA"</span>, method <span class="op">=</span> <span class="st">"aw"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
@@ -219,9 +210,6 @@
 <p>The <code>EPSG</code> value <code>4269</code> refers to a specific type of coordinate system known as as geographic coordinate system. These data use latitude-longitude values, which vary in length and thus cannot be used to calculate area (a key component of carrying out areal interpolations). These data would fail the <code><a href="../reference/ar_validate.html">ar_validate()</a></code> process:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">race83</span>, target <span class="op">=</span> <span class="va">wards</span>, varList <span class="op">=</span> <span class="st">"TOTAL_E"</span>, method <span class="op">=</span> <span class="st">"aw"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
@@ -235,7 +223,6 @@
 <p>These data fail both the matching CRS validation and the planar CRS validation because the <code>race</code> and <code>wards</code> data are in two different coordinate systems. We’ve already seen the CRS data for <code>race</code> above so we’ll look at the <code>CRS data for</code>wards`:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">wards</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   User input: EPSG:26915 </span>
 <span class="co">#&gt;   wkt:</span>
@@ -273,8 +260,8 @@
 <span class="co">#&gt;             ORDER[2],</span>
 <span class="co">#&gt;             LENGTHUNIT["metre",1]],</span>
 <span class="co">#&gt;     USAGE[</span>
-<span class="co">#&gt;         SCOPE["unknown"],</span>
-<span class="co">#&gt;         AREA["North America - 96°W to 90°W and NAD83 by country"],</span>
+<span class="co">#&gt;         SCOPE["Engineering survey, topographic mapping."],</span>
+<span class="co">#&gt;         AREA["North America - between 96°W and 90°W - onshore and offshore. Canada - Manitoba; Nunavut; Ontario. United States (USA) - Arkansas; Illinois; Iowa; Kansas; Louisiana; Michigan; Minnesota; Mississippi; Missouri; Nebraska; Oklahoma; Tennessee; Texas; Wisconsin."],</span>
 <span class="co">#&gt;         BBOX[25.61,-96,84,-90]],</span>
 <span class="co">#&gt;     ID["EPSG",26915]]</span></code></pre></div>
 <p>If these data fail that process, <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs()</a></code> can be used to identify whether the source or the target (or both) are in an inappropriate coordinate system. The <code>EPSG</code> value <code>26915</code> refers to another type of coordinate system known as as projected coordinate system (or “planar” data). Further, <code>26915</code> is a particular type of projected coordinate system known as the <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system" class="external-link">Universal Transverse Mercator</a> coordinate system. This is a good option for using <code>areal</code> because it is available around the world. There are a variety of tools for identifying the appropriate UTM zone, including this excellent <a href="https://mangomap.com/robertyoung/maps/69585/what-utm-zone-am-i-in-#" class="external-link">interactive map</a>. Once you have an EPSG zone, the website <a href="https://epsg.io" class="external-link">epsg.io</a> can be used to search for the appropriate <code>EPSG</code> value.</p>
@@ -284,8 +271,6 @@
 <p>Once this is done, these data should pass the <code><a href="../reference/ar_validate.html">ar_validate()</a></code> process:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">raceFixed</span>, target <span class="op">=</span> <span class="va">wards</span>, varList <span class="op">=</span> <span class="st">"TOTAL_E"</span>, method <span class="op">=</span> <span class="st">"aw"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
@@ -303,10 +288,6 @@
 <p>If a variable does not exist in the source data, the validation process will fail:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">race</span>, target <span class="op">=</span> <span class="va">wards</span>, varList <span class="op">=</span> <span class="st">"TOTAL"</span>, method <span class="op">=</span> <span class="st">"aw"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
@@ -329,10 +310,6 @@
 <code class="sourceCode R"><span class="va">wardsVar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">wards</span>, TOTAL_E <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">28</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">race</span>, target <span class="op">=</span> <span class="va">wardsVar</span>, varList <span class="op">=</span> <span class="st">"TOTAL_E"</span>, method <span class="op">=</span> <span class="st">"aw"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
@@ -348,10 +325,6 @@
 <code class="sourceCode R"><span class="va">wardsFixed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">wardsVar</span>, <span class="op">-</span><span class="va">TOTAL_E</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/ar_validate.html">ar_validate</a></span><span class="op">(</span>source <span class="op">=</span> <span class="va">race</span>, target <span class="op">=</span> <span class="va">wardsFixed</span>, varList <span class="op">=</span> <span class="st">"TOTAL_E"</span>, method <span class="op">=</span> <span class="st">"aw"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span>
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>

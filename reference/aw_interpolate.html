@@ -113,19 +113,6 @@ interpolations, this will only impact the calculation of the extensive variables
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">aw_interpolate</span><span class="op">(</span><span class="va">ar_stl_wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">ar_stl_race</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, weight <span class="op">=</span> <span class="st">"sum"</span>,</span>
 <span class="r-in">    output <span class="op">=</span> <span class="st">"sf"</span>, extensive <span class="op">=</span> <span class="st">"TOTAL_E"</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 28 features and 4 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POLYGON</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
@@ -133,32 +120,19 @@ interpolations, this will only impact the calculation of the extensive variables
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    OBJECTID WARD      AREA   TOTAL_E                       geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         1    1  46138761  7991.565 POLYGON ((740184.2 4286431,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         2    2 267817711 12145.021 POLYGON ((742392.1 4289178,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         3    3  66291644  7344.287 POLYGON ((742956.1 4284113,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         4    4  53210707  8457.672 POLYGON ((739557.6 4284080,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         5    5  60462396  8783.377 POLYGON ((744883.8 4281632,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6         6    6  64337271 14050.399 POLYGON ((742501.6 4279976,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         7    7 101268146 15840.086 POLYGON ((745618.6 4279867,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         8    8  45966410 12188.131 POLYGON ((739842.8 4277724,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9         9    9  73993891 14217.149 POLYGON ((742619.4 4276734,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10       10   10  62915358 11239.213 POLYGON ((737257.7 4277050,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         1    1  46138761  7959.105 POLYGON ((740184.2 4286431,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         2    2 267817711 12110.562 POLYGON ((742392.1 4289178,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         3    3  66291644  7356.533 POLYGON ((742956.1 4284113,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         4    4  53210707  8457.694 POLYGON ((739557.6 4284080,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         5    5  60462396  8807.579 POLYGON ((744883.8 4281632,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6         6    6  64337271 14052.989 POLYGON ((742501.6 4279976,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7         7    7 101268146 15841.534 POLYGON ((745618.6 4279867,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         8    8  45966410 12188.977 POLYGON ((739842.8 4277724,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9         9    9  73993891 14217.922 POLYGON ((742619.4 4276734,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10       10   10  62915358 11239.132 POLYGON ((737257.7 4277050,...</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">aw_interpolate</span><span class="op">(</span><span class="va">ar_stl_wards</span>, tid <span class="op">=</span> <span class="va">WARD</span>, source <span class="op">=</span> <span class="va">ar_stl_asthma</span>, sid <span class="op">=</span> <span class="va">GEOID</span>, weight <span class="op">=</span> <span class="st">"sum"</span>,</span>
 <span class="r-in">    output <span class="op">=</span> <span class="st">"tibble"</span>, intensive <span class="op">=</span> <span class="st">"ASTHMA"</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 28 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    OBJECTID  WARD       AREA ASTHMA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
