@@ -1,18 +1,24 @@
 ## Release summary
-This is a minor update that addresses the ERRORs and WARNINGs appearing on CRAN package check results.
+This version of `areal` is a maintenance release: it addresses some user submitted issues on Github, but is primarily focused on updating the maintainer contact information.
 
 ## Test environments
-* local OS X install: R 4.0.0
-* Linux xenial distribution (on Travis CI): R-release, R-oldrel, R-devel, R-3.5.3, and R-3.4.4
-* macOS (on Travis CI): R-release, R-oldrel, R-3.5.3, and R-3.4.4
-* windows x64 (on Appveyor): R-release, R-patched, R-oldrel, R-3.5.3, and R-3.4.4
-* windows i386 (on Appveyor): R-patched
-* winbuilder, R-release, R-oldrel, R-devel
-
-* r-hub not used because it lacks dependencies needed to build `sf` on Debian
+* local macOS install: R 4.1.2
+* Linux ubuntu distribution (via GitHub Actions): R-devel, R-release, past four R-oldrel (4.1.3, 4.0.5, 3.6.3, 3.5.3, 3.4.4)
+* macOS (via GitHub Actions): R-release
+* windows (via GitHub Actions): R-release
+* winbuilder: R-release, R-oldrel, R-devel
 
 ## R CMD check results
-There were no ERRORs, WARNINGs, or NOTEs with local or CI checks.
+There were no ERRORs, WARNINGs, or NOTEs with local or CI checks. There is one NOTE on winbuilder:
 
-## Reverse dependencies
-Not applicable.
+```r
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Christopher Prener <chris.prener@gmail.com>'
+
+New maintainer:
+  Christopher Prener <chris.prener@gmail.com>
+Old maintainer(s):
+  Christopher Prener <chris.prener@slu.edu>
+```
+
+I am still the maintainer - I have just changed my contact information due to new employment! 
