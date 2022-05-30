@@ -150,6 +150,7 @@ aw_validate_preview <- function(source, target){
 
     crs_result <- NA
     longlat_result <- NA
+    polygon_result <- NA
 
   } else if (sf_result == TRUE){
 
