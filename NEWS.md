@@ -1,4 +1,4 @@
-# areal 0.1.8.9000
+# areal 0.1.8
 
 * Fix issue with default arguments in `aw_interpolate` causing unnecessary errors
 * Updated spatial data to modern CRS formats
