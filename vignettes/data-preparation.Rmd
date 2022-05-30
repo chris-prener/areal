@@ -92,7 +92,7 @@ sf_object <- sf::st_as_sf(sp_object)
 ```
 
 ### Data From tidycensus and tigris
-If you are using either the [`tidycensus`](https://walker-data.com/tigris) or [`tigris`](https://github.com/walkerke/tigris) packages to access spatial data, there are options for downloading data as `sf` objects as well. In `tidycensus`, the `geometry = TRUE` option should be used. In `tigris`, the `class = "sf"` option should be used.
+If you are using either the [`tidycensus`](https://walker-data.com/tidycensus) or [`tigris`](https://github.com/walkerke/tigris) packages to access spatial data, there are options for downloading data as `sf` objects as well. In `tidycensus`, the `geometry = TRUE` option should be used. In `tigris`, the `class = "sf"` option should be used.
 
 ```r
 stl_race <- tidycensus::get_acs(geography = "tract", state = 29, county = 510, year = 2017, 
