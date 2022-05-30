@@ -224,29 +224,29 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">wards</span><span class="op">)</span>
 <span class="co">#&gt; Coordinate Reference System:</span>
-<span class="co">#&gt;   User input: EPSG:26915 </span>
+<span class="co">#&gt;   User input: ESRI:102296 </span>
 <span class="co">#&gt;   wkt:</span>
-<span class="co">#&gt; PROJCRS["NAD83 / UTM zone 15N",</span>
-<span class="co">#&gt;     BASEGEOGCRS["NAD83",</span>
-<span class="co">#&gt;         DATUM["North American Datum 1983",</span>
+<span class="co">#&gt; PROJCRS["NAD_1983_HARN_StatePlane_Missouri_East_FIPS_2401",</span>
+<span class="co">#&gt;     BASEGEOGCRS["NAD83(HARN)",</span>
+<span class="co">#&gt;         DATUM["NAD83 (High Accuracy Reference Network)",</span>
 <span class="co">#&gt;             ELLIPSOID["GRS 1980",6378137,298.257222101,</span>
 <span class="co">#&gt;                 LENGTHUNIT["metre",1]]],</span>
 <span class="co">#&gt;         PRIMEM["Greenwich",0,</span>
 <span class="co">#&gt;             ANGLEUNIT["degree",0.0174532925199433]],</span>
-<span class="co">#&gt;         ID["EPSG",4269]],</span>
-<span class="co">#&gt;     CONVERSION["UTM zone 15N",</span>
+<span class="co">#&gt;         ID["EPSG",4152]],</span>
+<span class="co">#&gt;     CONVERSION["NAD_1983_HARN_StatePlane_Missouri_East_FIPS_2401",</span>
 <span class="co">#&gt;         METHOD["Transverse Mercator",</span>
 <span class="co">#&gt;             ID["EPSG",9807]],</span>
-<span class="co">#&gt;         PARAMETER["Latitude of natural origin",0,</span>
+<span class="co">#&gt;         PARAMETER["Latitude of natural origin",35.8333333333333,</span>
 <span class="co">#&gt;             ANGLEUNIT["degree",0.0174532925199433],</span>
 <span class="co">#&gt;             ID["EPSG",8801]],</span>
-<span class="co">#&gt;         PARAMETER["Longitude of natural origin",-93,</span>
+<span class="co">#&gt;         PARAMETER["Longitude of natural origin",-90.5,</span>
 <span class="co">#&gt;             ANGLEUNIT["degree",0.0174532925199433],</span>
 <span class="co">#&gt;             ID["EPSG",8802]],</span>
-<span class="co">#&gt;         PARAMETER["Scale factor at natural origin",0.9996,</span>
+<span class="co">#&gt;         PARAMETER["Scale factor at natural origin",0.999933333333333,</span>
 <span class="co">#&gt;             SCALEUNIT["unity",1],</span>
 <span class="co">#&gt;             ID["EPSG",8805]],</span>
-<span class="co">#&gt;         PARAMETER["False easting",500000,</span>
+<span class="co">#&gt;         PARAMETER["False easting",250000,</span>
 <span class="co">#&gt;             LENGTHUNIT["metre",1],</span>
 <span class="co">#&gt;             ID["EPSG",8806]],</span>
 <span class="co">#&gt;         PARAMETER["False northing",0,</span>
@@ -260,10 +260,10 @@
 <span class="co">#&gt;             ORDER[2],</span>
 <span class="co">#&gt;             LENGTHUNIT["metre",1]],</span>
 <span class="co">#&gt;     USAGE[</span>
-<span class="co">#&gt;         SCOPE["Engineering survey, topographic mapping."],</span>
-<span class="co">#&gt;         AREA["North America - between 96°W and 90°W - onshore and offshore. Canada - Manitoba; Nunavut; Ontario. United States (USA) - Arkansas; Illinois; Iowa; Kansas; Louisiana; Michigan; Minnesota; Mississippi; Missouri; Nebraska; Oklahoma; Tennessee; Texas; Wisconsin."],</span>
-<span class="co">#&gt;         BBOX[25.61,-96,84,-90]],</span>
-<span class="co">#&gt;     ID["EPSG",26915]]</span></code></pre></div>
+<span class="co">#&gt;         SCOPE["Not known."],</span>
+<span class="co">#&gt;         AREA["United States (USA) - Missouri - counties of Bollinger; Butler; Cape Girardeau; Carter; Clark; Crawford; Dent; Dunklin; Franklin; Gasconade; Iron; Jefferson; Lewis; Lincoln; Madison; Marion; Mississippi; Montgomery; New Madrid; Oregon; Pemiscot; Perry; Pike; Ralls; Reynolds; Ripley; Scott; Shannon; St Charles; St Francois; St Louis; Ste. Genevieve; Stoddard; Warren; Washington; Wayne."],</span>
+<span class="co">#&gt;         BBOX[35.98,-91.97,40.61,-89.1]],</span>
+<span class="co">#&gt;     ID["ESRI",102296]]</span></code></pre></div>
 <p>If these data fail that process, <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs()</a></code> can be used to identify whether the source or the target (or both) are in an inappropriate coordinate system. The <code>EPSG</code> value <code>26915</code> refers to another type of coordinate system known as as projected coordinate system (or “planar” data). Further, <code>26915</code> is a particular type of projected coordinate system known as the <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system" class="external-link">Universal Transverse Mercator</a> coordinate system. This is a good option for using <code>areal</code> because it is available around the world. There are a variety of tools for identifying the appropriate UTM zone, including this excellent <a href="https://mangomap.com/robertyoung/maps/69585/what-utm-zone-am-i-in-#" class="external-link">interactive map</a>. Once you have an EPSG zone, the website <a href="https://epsg.io" class="external-link">epsg.io</a> can be used to search for the appropriate <code>EPSG</code> value.</p>
 <p>In this case, the <code>wards</code> data are in an appropriate system but the <code>race</code> data need to be transformed. The <code><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform()</a></code> function can be used to modify them to an appropriate coordinate system:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -275,12 +275,12 @@
 <span class="co">#&gt;   test                            result</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sf Objects                      TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> CRS Match                       TRUE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> CRS Match                       FALSE </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CRS is Planar                   TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Polygon Geometries              TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Variables Exist in Source       TRUE  </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">6</span> No Variable Conflicts in Target TRUE  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Overall Evaluation              TRUE</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Overall Evaluation              FALSE</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="variable-conflicts">Variable Conflicts<a class="anchor" aria-label="anchor" href="#variable-conflicts"></a>
