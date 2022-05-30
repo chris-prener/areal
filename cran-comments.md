@@ -1,5 +1,5 @@
 ## Release summary
-This version of `areal` is a maintenance release: it addresses some user submitted issues on Github, but is primarily focused on updating the maintainer contact information.
+This version of `areal` is a maintenance release: it addresses some user submitted issues on Github, but is primarily focused on updating the maintainer contact information. Minor documentation updates have been made as well.
 
 ## Test environments
 * local macOS install: R 4.1.2
