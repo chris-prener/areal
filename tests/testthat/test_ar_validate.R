@@ -53,6 +53,8 @@ sf::st_geometry(racedf) <- NULL
 wards83 <- sf::st_transform(ar_stl_wards, crs = 4269)
 race83 <- sf::st_transform(ar_stl_race, crs = 4269)
 
+wards_points <- suppressWarnings(sf::st_centroid(ar_stl_wards))
+
 ar_stl_wards_conflict <- dplyr::mutate(ar_stl_wards, WHITE_E = FALSE)
 
 test_that("validation result is false", {
@@ -106,4 +108,12 @@ test_that("invalid crs returns appropriate verbose output", {
   expect_equal(invalidV6$result, invalidSourceVars)
   expect_equal(invalidV7$result, invalidTargetVars)
   expect_equal(invalidV8$result, invalidVarsConflict)
+})
+
+invalidV9 <- ar_validate(source = ar_stl_race, target = wards_points, varList = "WHITE_E", method = "aw",
+                         verbose = TRUE)
+invalidPolygon <- c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE)
+
+test_that("point data appropriate verbose output", {
+  expect_equal(invalidV9$result, invalidPolygon)
 })
